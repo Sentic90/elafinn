@@ -1,0 +1,68 @@
+{% extends 'dashboard/base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block sidbar %}
+    {% include 'dashboard/partials/sideBar.html' %}
+{% endblock %}
+{% block page_title %}معرض الصور{% endblock %}
+{% block page_title_p %}إضافة واستعراض الصور الخاصة بالفندق والمرافق{% endblock %}
+{% block page_title_btn %}
+    <ul class="row g-gs">
+        <li class="col-sm-6 col-lg-3">
+            <a href="{% url 'hotel_upload_images' hotel.slug %}" class="btn btn-primary">
+                <span>إضافة الصور </span>
+                <em class="icon ni ni-img"></em>
+            </a>
+        </li>
+    </ul>
+{% endblock %}
+
+{% include 'dashboard/partials/_alerts.html' %}
+
+{% block content %}
+    {% if images %}
+        <div class="nk-block mt-5">
+            <div class="row g-gs">
+                {% for image in images %}
+                    <div class="col-sm-6 col-lg-4 col-xxl-3">
+                        <div class="gallery card card-bordered">
+                            <a class="gallery-image popup-image" href="{{ image.images.url }}">
+                                <img class="w-100 rounded-top" src="{{ image.images.url }}" alt="">
+                            </a>
+                            <div class="gallery-body card-inner align-center justify-between flex-wrap g-2">
+                                <button class="btn btn-p-0 btn-nofocus">
+                                    <em class="icon ni ni-trash text-danger"></em>
+                                    <span>حذف الصورة</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    {% else %}
+        <div class="card-inner card-inner-lg">
+            <div class="row">
+                <div class="col">
+                    <div class="example-alert m-2">
+                        <div class="alert alert-warning alert-icon">
+                            <em class="icon ni ni-alert-circle"></em>
+                            لم يتم العثور على صور.
+                            <a href="{% url 'hotel_image' hotel.slug %}" class="alert-link">
+                                يمكنك إضافة الصور من هنا
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        </div>
+
+    {% endif %}
+
+
+
+
+{% endblock %}
+

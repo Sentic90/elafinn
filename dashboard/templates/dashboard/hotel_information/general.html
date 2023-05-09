@@ -1,0 +1,26 @@
+{% extends 'dashboard/base.html' %}
+{% load static %}
+{% block sidbar %}
+    {% include 'dashboard/partials/sideBar.html' %}
+{% endblock %}
+{% block page_title %}البيانات الأساسية للفندق{% endblock %}
+{% include 'dashboard/partials/_alerts.html' %}
+
+{% block content %}
+
+    <div class="card card-bordered card-preview">
+        <div class="card-inner card-inner-lg">
+            <div class="nk-block">
+                <div class="card card-bordered product-card w-25">
+                    <div class="product-thumb">
+                        <img class="card-img-top img-circle" src="{{ hotel.logo.url }}" alt="">
+                    </div>
+                </div>
+                {% include 'dashboard/update_hotel_form.html' %}
+
+            </div><!-- .nk-block-head -->
+        </div><!-- .card -->
+    </div><!-- .nk-block -->
+
+
+{% endblock %}

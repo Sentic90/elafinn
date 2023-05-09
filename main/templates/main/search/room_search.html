@@ -1,0 +1,28 @@
+{% extends 'main/search/base.html' %}
+
+{% block content %}
+    <h1>Available Rooms</h1>
+    {% if available_rooms %}
+        {% for room in available_rooms %}
+            <h2>{{ room.hotel.name }}</h2>
+            <ul>
+                <li>Room Number: {{ room }}</li>
+                <li>Capacity: {{ room.room_capacity }}</li>
+            </ul>
+        {% endfor %}
+    {% else %}
+        <p>No available rooms found.</p>
+    {% endif %}
+
+    <hr>
+
+
+
+
+
+
+
+
+
+
+{% endblock %}

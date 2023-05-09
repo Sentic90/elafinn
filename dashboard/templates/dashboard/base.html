@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+{% load static %}
+{% load i18n %}
+<html lang="zxx" class="js">
+
+<head>
+    <base href="../../">
+    <meta charset="utf-8">
+    <meta name="author" content="Softnio">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description"
+          content="A powerful and conceptual apps base dashboard template that especially build for developers and programmers.">
+    <!-- Fav Icon  -->
+    <link rel="shortcut icon" href="{% static 'images/elaf-inn-website-favicon-color.png' %}">
+    <!-- Page Title  -->
+    <title>ُايلاف ان - لوحة التحكم</title>
+    <!-- StyleSheets  -->
+    <link rel="stylesheet" href="{% static 'assets/css/dashlite.rtl.css' %}">
+    <link id="skin-default" rel="stylesheet" href="{% static 'assets/css/theme.css' %}">
+    <!-- Premade Skin style -->
+    <link rel="stylesheet" href="{% static 'assets/css/skins/theme-egyptian.css' %}">
+    <style>
+        .form-label {
+            font-weight: bold;
+        }
+
+        .language-item {
+            background: none;
+            border: none;
+            width: 100%;
+        }
+
+        .breadcrumb-item {
+            font-size: 12pt !important;
+        }
+
+        .badge {
+            font-family: "DIN", serif;
+        }
+
+    </style>
+</head>
+
+<body class="nk-body bg-lighter npc-general has-sidebar has-rtl" dir="rtl">
+<div class="nk-app-root">
+    <!-- main @s -->
+    <div class="nk-main ">
+        {% block sidbar %}
+        {% endblock %}
+        <!-- wrap @s -->
+        <div class="nk-wrap ">
+            <!-- main header @s -->
+            <div class="nk-header nk-header-fixed is-light">
+                <div class="container-fluid">
+                    <div class="nk-header-wrap">
+                        <div class="nk-menu-trigger d-xl-none ms-n1">
+                            <a href="#" class="nk-nav-toggle nk-quick-nav-icon" data-target="sidebarMenu"><em
+                                    class="icon ni ni-menu"></em></a>
+                        </div>
+                        <div class="nk-header-brand d-xl-none">
+                            <a href="html/index.html" class="logo-link">
+                                <img class="logo-light logo-img"
+                                     src="{% static 'images/elaf-inn-high-resolution-logo-white-on-transparent-background.png' %}"
+                                     srcset="{% static 'images/elaf-inn-high-resolution-logo-white-on-transparent-background.png' %}"
+                                     alt="logo">
+                                <img class="logo-dark logo-img"
+                                     src="{% static 'images/elaf-inn-high-resolution-logo-color-on-transparent-background.png' %}"
+                                     srcset="{% static 'images/elaf-inn-high-resolution-logo-color-on-transparent-background.png' %} 2x"
+                                     alt="logo-dark">
+                            </a>
+                        </div><!-- .nk-header-brand -->
+                        <div class="nk-header-news d-none d-xl-block">
+                            <div class="nk-news-list">
+                                <a class="nk-news-item" href="{% url 'my-hotel' %}">
+                                    <div class="nk-news-icon">
+{#                                        <em class="icon ni ni-home"></em>#}
+                                    </div>
+                                    <div class="nk-news-text">
+                                        <h5 class="w-100 fw-bolder">Elaf Inn | <span > ايلاف ان</span>
+                                        </h5>
+                                    </div>
+                                </a>
+                            </div>
+                        </div><!-- .nk-header-news -->
+                        <div class="nk-header-tools">
+                            <ul class="nk-quick-nav">
+                                <li class="dropdown language-dropdown d-none d-sm-block me-n1">
+                                    <a href="#" class="dropdown-toggle nk-quick-nav-icon" data-bs-toggle="dropdown">
+                                        {% get_current_language as LANGUAGE_CODE %}
+                                        {% get_available_languages as LANGUAGES %}
+                                        <div class="quick-icon border border-light">
+                                            <img class="icon" src="/static/images/flags/{{ LANGUAGE_CODE }}.png" alt="">
+                                        </div>
+                                    </a>
+                                    <div class="dropdown-menu dropdown-menu-end dropdown-menu-s1">
+                                        <ul class="language-list">
+                                            <form action="{% url 'set_language' %}" method="post">
+                                                {% csrf_token %}
+                                                {% for language in LANGUAGES %}
+                                                    {% if language.0 != LANGUAGE_CODE %}
+                                                        <li>
+                                                            <button class="language-item" type="submit" name="language"
+                                                                    value="{{ language.0 }}">
+                                                                <img src="/static/images/flags/{{ language.0 }}.png"
+                                                                     alt=""
+                                                                     class="language-flag">
+                                                                <span class="language-name">{{ language.1 }}</span>
+
+                                                            </button>
+                                                        </li>
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </form>
+                                        </ul>
+                                    </div>
+                                </li><!-- .dropdown -->
+                                <li class="dropdown user-dropdown">
+                                    <a href="#" class="dropdown-toggle" data-bs-toggle="dropdown">
+                                        <div class="user-toggle">
+                                            <div class="user-avatar sm">
+                                                <em class="icon ni ni-user-alt"></em>
+                                            </div>
+                                            <div class="user-info d-none d-md-block">
+                                                <div class="user-status">الإدارة</div>
+                                                <div class="user-name dropdown-indicator">{{ request.user.first_name }}</div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    <div class="dropdown-menu dropdown-menu-md dropdown-menu-end dropdown-menu-s1">
+                                        <div class="dropdown-inner user-card-wrap bg-lighter d-none d-md-block">
+                                            <div class="user-card">
+                                                <div class="user-avatar">
+                                                    <span>AB</span>
+                                                </div>
+                                                <div class="user-info">
+                                                    <span class="lead-text">{{ request.user.first_name }}</span>
+                                                    <span class="sub-text">{{ request.user.email }}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="dropdown-inner">
+                                            <ul class="link-list">
+                                                <li><a href="#"><em
+                                                        class="icon ni ni-user-alt"></em><span>الملف الشخصي</span></a>
+                                                </li>
+                                                <li><a href="html/hotel/settings.html"><em
+                                                        class="icon ni ni-setting-alt"></em><span>إعدادات الحساب</span></a>
+                                                </li>
+                                                <li><a class="dark-switch" href="#"><em
+                                                        class="icon ni ni-moon"></em><span>Dark Mode</span></a></li>
+                                            </ul>
+                                        </div>
+                                        <div class="dropdown-inner">
+                                            <ul class="link-list">
+                                                <li><a href="{% url 'main:logout' %}"><em
+                                                        class="icon ni ni-signout"></em><span>تسجيل الخروج</span></a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </li><!-- .dropdown -->
+                                <li class="dropdown notification-dropdown me-n1">
+                                    <a href="#" class="dropdown-toggle nk-quick-nav-icon" data-bs-toggle="dropdown">
+                                        <div class="icon-status icon-status-info"><em class="icon ni ni-bell"></em>
+                                        </div>
+                                    </a>
+                                    <div class="dropdown-menu dropdown-menu-xl dropdown-menu-end dropdown-menu-s1">
+                                        <div class="dropdown-head">
+                                            <span class="sub-title nk-dropdown-title">الإشعارات</span>
+                                            <a href="#">وضع علامة مقروء</a>
+                                        </div>
+                                        <div class="dropdown-body">
+                                            <div class="nk-notification">
+                                                <div class="nk-notification-item dropdown-inner">
+                                                    <div class="nk-notification-icon">
+                                                        <em class="icon icon-circle bg-warning-dim ni ni-curve-down-right"></em>
+                                                    </div>
+                                                    <div class="nk-notification-content">
+                                                        <div class="nk-notification-text">لديك طلب من
+                                                            <span>اسم العميل</span></div>
+                                                        <div class="nk-notification-time">2 hrs ago</div>
+                                                    </div>
+                                                </div>
+                                                <div class="nk-notification-item dropdown-inner">
+                                                    <div class="nk-notification-icon">
+                                                        <em class="icon icon-circle bg-warning-dim ni ni-curve-down-right"></em>
+                                                    </div>
+                                                    <div class="nk-notification-content">
+                                                        <div class="nk-notification-text">لديك طلب من
+                                                            <span>اسم العميل</span></div>
+                                                        <div class="nk-notification-time">2 hrs ago</div>
+                                                    </div>
+                                                </div>
+                                                {#                                                    <div class="nk-notification-item dropdown-inner">#}
+                                                {#                                                        <div class="nk-notification-icon">#}
+                                                {#                                                            <em class="icon icon-circle bg-success-dim ni ni-curve-down-left"></em>#}
+                                                {#                                                        </div>#}
+                                                {#                                                        <div class="nk-notification-content">#}
+                                                {#                                                            <div class="nk-notification-text">Your <span>Deposit Order</span> is placed</div>#}
+                                                {#                                                            <div class="nk-notification-time">2 hrs ago</div>#}
+                                                {#                                                        </div>#}
+                                                {#                                                    </div>#}
+                                                {#                                                    <div class="nk-notification-item dropdown-inner">#}
+                                                {#                                                        <div class="nk-notification-icon">#}
+                                                {#                                                            <em class="icon icon-circle bg-warning-dim ni ni-curve-down-right"></em>#}
+                                                {#                                                        </div>#}
+                                                {#                                                        <div class="nk-notification-content">#}
+                                                {#                                                            <div class="nk-notification-text">You have requested to <span>Widthdrawl</span></div>#}
+                                                {#                                                            <div class="nk-notification-time">2 hrs ago</div>#}
+                                                {#                                                        </div>#}
+                                                {#                                                    </div>#}
+                                                {#                                                    <div class="nk-notification-item dropdown-inner">#}
+                                                {#                                                        <div class="nk-notification-icon">#}
+                                                {#                                                            <em class="icon icon-circle bg-success-dim ni ni-curve-down-left"></em>#}
+                                                {#                                                        </div>#}
+                                                {#                                                        <div class="nk-notification-content">#}
+                                                {#                                                            <div class="nk-notification-text">Your <span>Deposit Order</span> is placed</div>#}
+                                                {#                                                            <div class="nk-notification-time">2 hrs ago</div>#}
+                                                {#                                                        </div>#}
+                                                {#                                                    </div>#}
+                                            </div><!-- .nk-notification -->
+                                        </div><!-- .nk-dropdown-body -->
+                                        <div class="dropdown-foot center">
+                                            <a href="#">View All</a>
+                                        </div>
+                                    </div>
+                                </li><!-- .dropdown -->
+                            </ul><!-- .nk-quick-nav -->
+                        </div><!-- .nk-header-tools -->
+                    </div><!-- .nk-header-wrap -->
+                </div><!-- .container-fliud -->
+            </div>
+            <!-- main header @e -->
+            <!-- content @s -->
+            <!-- content @s -->
+            <div class="nk-content ">
+                <div class="container-fluid">
+                    <div class="nk-content-inner">
+                        <div class="nk-content-body">
+                            <div class="nk-block-head nk-block-head-sm">
+                                <div class="nk-block-between">
+                                    <div class="nk-block-head-content">
+                                        <div class="nk-block-head-sub">
+                                            {% block back %}{% endblock %}
+                                        </div>
+                                        <h3 class="nk-block-title page-title">
+                                            {% block page_title %}{% endblock %}</h3>
+                                        <div class="nk-block-des text-soft">
+                                            <p>{% block page_title_p %}{% endblock %}</p>
+                                        </div>
+                                    </div><!-- .nk-block-head-content -->
+                                    <div class="nk-block-head-content">
+                                        <ul class="nk-block-tools g-3">
+                                            <li>
+                                                {% block page_title_btn %}{% endblock %}
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div><!-- .nk-block-between -->
+                            </div><!-- .nk-block-head -->
+                            {% block content %}
+                            {% endblock %}
+                        </div>
+                    </div>
+                </div>
+                <!-- content @e -->
+            </div>
+            <!-- wrap @e -->
+        </div>
+        <!-- footer @s -->
+
+        <div class="nk-footer nk-auth-footer-full">
+            <div class="container wide-lg">
+                <div class="row g-3">
+                    <div class="col-lg-6 order-lg-last">
+                        <ul class="nav nav-sm justify-content-center justify-content-lg-end">
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">الشروط والأحكام</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">سياسة الخصوصية</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">المساعدة</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="nk-block-content" dir="ltr">
+                            <p class="text-soft">&copy; 2023 ElafInn. All Rights Reserved.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- footer @e -->
+
+        <!-- main @e -->
+    </div>
+</div>
+<!-- app-root @e -->
+<!-- select region modal -->
+<div class="modal fade" tabindex="-1" role="dialog" id="region">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <a href="#" class="close" data-bs-dismiss="modal"><em class="icon ni ni-cross-sm"></em></a>
+            <div class="modal-body modal-body-md">
+                <h5 class="title mb-4">Select Your Country</h5>
+                <div class="nk-country-region">
+                    <ul class="country-list text-center gy-2">
+                        <li>
+                            <a href="#" class="country-item">
+                                <img src="{% static 'images/flags/arg.png' %}" alt=""
+                                     class="country-flag">
+                                <span class="country-name">Argentina</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="country-item">
+                                <img src="{% static 'images/flags/aus.png' %}" alt=""
+                                     class="country-flag">
+                                <span class="country-name">Australia</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="country-item">
+                                <img src="{% static 'images/flags/bangladesh.png' %}" alt=""
+                                     class="country-flag">
+                                <span class="country-name">Bangladesh</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="country-item">
+                                <img src="{% static 'images/flags/canada.png' %}" alt=""
+                                     class="country-flag">
+                                <span class="country-name">Canada <small>(English)</small></span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="country-item">
+                                <img src="{% static 'images/flags/china.png' %}" alt=""
+                                     class="country-flag">
+                                <span class="country-name">Centrafricaine</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="country-item">
+                                <img src="{% static 'images/flags/china.png' %}" alt=""
+                                     class="country-flag">
+                                <span class="country-name">China</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="country-item">
+                                <img src="{% static 'images/flags/french.png' %}" alt=""
+                                     class="country-flag">
+                                <span class="country-name">France</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="country-item">
+                                <img src="{% static '' %}images/flags/germany.png" alt=""
+                                     class="country-flag">
+                                <span class="country-name">Germany</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="country-item">
+                                <img src="{% static 'images/flags/iran.png' %}" alt=""
+                                     class="country-flag">
+                                <span class="country-name">Iran</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="country-item">
+                                <img src="{% static 'images/flags/italy.png' %}" alt=""
+                                     class="country-flag">
+                                <span class="country-name">Italy</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="country-item">
+                                <img src="{% static 'images/flags/mexico.png' %}" alt=""
+                                     class="country-flag">
+                                <span class="country-name">México</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="country-item">
+                                <img src="{% static 'images/flags/philipine.png' %}" alt=""
+                                     class="country-flag">
+                                <span class="country-name">Philippines</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="country-item">
+                                <img src="{% static 'images/flags/portugal.png' %}" alt=""
+                                     class="country-flag">
+                                <span class="country-name">Portugal</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="country-item">
+                                <img src="{% static 'images/flags/s-africa.png' %}" alt=""
+                                     class="country-flag">
+                                <span class="country-name">South Africa</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="country-item">
+                                <img src="{% static 'images/flags/spanish.png' %}" alt=""
+                                     class="country-flag">
+                                <span class="country-name">Spain</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="country-item">
+                                <img src="{% static 'images/flags/switzerland.png' %}" alt=""
+                                     class="country-flag">
+                                <span class="country-name">Switzerland</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="country-item">
+                                <img src="{% static 'images/flags/uk.png' %}" alt=""
+                                     class="country-flag">
+                                <span class="country-name">United Kingdom</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="country-item">
+                                <img src="{% static 'images/flags/english.png' %}" alt=""
+                                     class="country-flag">
+                                <span class="country-name">United State</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div><!-- .modal-content -->
+    </div><!-- .modla-dialog -->
+</div><!-- .modal -->
+<!-- JavaScript -->
+<script src="{% static 'assets/js/bundle.js' %}"></script>
+<script src="{% static 'assets/js/scripts.js' %}"></script>
+<script src="{% static 'assets/js/charts/chart-hotel.js' %}"></script>
+
+<script>
+    setTimeout(function () {
+        document.getElementById('message').style.display = 'none';
+    }, 3000);
+</script>
+
+</body>
+
+</html>

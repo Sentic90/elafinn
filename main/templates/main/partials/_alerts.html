@@ -1,0 +1,26 @@
+{% if messages %}
+    {% for message in messages %}
+        <div id="message" class="container mt-2 mb-2">
+            <div class="example-alert">
+                <div class="alert alert-fill alert-{{ message.tags }} alert-dismissible alert-icon">
+                    <em class="icon ni ni-cross-circle"></em>
+                    <strong>
+                        {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+                        {% else %}
+                        {% endif %}
+                    </strong>
+                    {{ message }}
+                    <button class="close" data-bs-dismiss="alert"></button>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+{% endif %}
+
+
+
+
+
+
+
+

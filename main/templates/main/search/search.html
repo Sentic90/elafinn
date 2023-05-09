@@ -1,0 +1,15 @@
+{% extends "main/search/base.html" %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+    البحث
+{% endblock %}
+
+{% block content %}
+    <h1>Welcome to Hotel Search</h1>
+    <form action="{% url 'main:room_search' %}" method="GET">
+        {% csrf_token %}
+         {{ form|crispy }}
+        <button type="submit">Search</button>
+    </form>
+{% endblock %}

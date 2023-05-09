@@ -1,0 +1,666 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block content %}
+    <style>
+        .filter-section {
+            border-top-right-radius: var(--bs-card-inner-border-radius);
+            border-top-left-radius: var(--bs-card-inner-border-radius);
+            border-color: rgba(0, 0, 0, 0.125) !important;
+            background: rgba(49, 53, 65, .03) !important;
+            padding: 2%;
+            border: 1px solid grey;
+            height: 100vh;
+        }
+
+        .card-inner {
+            background: #fff !important;
+            padding: 2%;
+        }
+
+        .results {
+            border-color: white;
+        }
+
+        .search-filter p {
+            font-weight: bold;
+        }
+
+        .search-filter p > span {
+            font-weight: normal;
+        }
+
+        .box-shdow {
+            border: 1px solid #d4d2d2;
+            box-shadow: inset 0 0 10px 0 rgb(155 24 143 / 5%);
+        }
+
+        p {
+            font-size: 10pt;
+        }
+
+        .result-price-box {
+            position: relative;
+            display: grid;
+            padding-top: 5%;
+            overflow: hidden;
+            background: #fff;
+            box-shadow: 0 0 1px 0 rgba(64, 67, 77, 0.37);
+            grid-template-rows: 10%;
+            transition: all .3s ease-in-out;
+            align-items: center;
+            text-align: center !important;
+        }
+
+        .nk-msg-tags li > span .icon {
+            color: rgba(189, 179, 161, 0.92);
+            margin-left: 0.25rem;
+        }
+
+        .rating .icon {
+            font-size: .9rem;
+            margin-top: 10px;
+        }
+
+        .product-rating-filter .icon {
+            font-size: 1rem;
+            margin-right: 8px;
+        }
+
+        .nk-msg-tags li {
+            /* padding: 0 0.75rem; */
+            color: #89929d;
+            margin-top: 8px;
+        }
+
+        .custom-control-label {
+            font-size: 13px;
+        }
+
+        .custom-control-input {
+            height: 0.25px;
+            width: 0.25px;
+        }
+
+        .filter-section-star {
+            border-bottom: 1px solid #dbdfea;
+            padding-bottom: 10px;
+        }
+
+        .map-show-btn {
+            background: none;
+            border: none;
+            font-size: 14pt;
+        }
+
+        .hotel-gallery {
+            display: grid;
+            grid-template-columns: repeat(3, 30%);
+            grid-template-rows: auto;
+            grid-column-gap: 2px;
+        }
+
+        .hotel-gallery-img {
+            max-height: 350px;
+            padding: 2px;
+        }
+
+        .color-lahmi {
+            color: #9a1550;
+            font-size: 12pt;
+        }
+    </style>
+    <div class="row  box-shdow p-3">
+        <div class="col">
+            <nav>
+                <ul class="breadcrumb justify-content-center text-center">
+                    <li class="breadcrumb-item"><a href="#">مكة المكرمة</a></li>
+                    <li class="breadcrumb-item active">فندق ابيات النسيم</li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+    <div class="row text-center">
+        <div class="row text-center justify-content-center p-2">
+            <div class="col-lg-5">
+                <div class="row justify-content-center">
+                    <div class="col-3 ms-5">
+                        <div class="product-thumb ">
+                            <a href="{% url 'main:hotel_detail' %}">
+                                <img class="card-img-top mt-1"
+                                     style="max-width: 100px !important;"
+                                     src="{% static '/images/product/hotel-1.webp' %}"
+                                     alt="">
+                            </a>
+                            <ul class="product-actions">
+                                <li><a href="#"><em class="icon ni ni-cart"></em></a></li>
+                                <li><a href="#"><em class="icon ni ni-heart"></em></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col" style="text-align: right">
+                        <div class="product-rating">
+                            <ul class="rating" style="font-size: x-small">
+                                <li><em class="icon ni ni-star-fill"></em></li>
+                                <li><em class="icon ni ni-star-fill"></em></li>
+                                <li><em class="icon ni ni-star"></em></li>
+                                <li><em class="icon ni ni-star"></em></li>
+                                <li><em class="icon ni ni-star"></em></li>
+                            </ul>
+                        </div>
+                        <h5 class="product-title" style="text-align: right; font-weight: normal">
+                            <a href="html/product-details.html">
+                                فندق ابيات النسيم
+                            </a>
+                            <p class="mt-1 text-gray" style="font-weight: normal; font-size: 10pt">
+                                شارع اجياد، مكة المكرمة
+                            </p>
+                        </h5>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col mt-4 ms-5" style="text-align: right !important;">
+                <em class="icon ni ni-map-pin" style="font-size: 20pt"></em>
+                <button class="map-show-btn">اعرض الخريطة</button>
+            </div>
+            <div class="col mt-2">
+                <div class=" h2 m-0" style="color: #9a1550">
+                    <small
+                            class="text-muted del fs-13px">169</small>
+                    120
+                    <span style="font-size: 11px; font-weight: lighter">
+                              SAR، لليلة الواحدة
+                          </span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row py5">
+        <div class="col">
+            <div class="row">
+                <div class="col-lg-3 col-md-6 hotel-gallery-img">
+                    <img style=""
+                         src="https://storage.googleapis.com/legate-development/content-test-new/4858/al-murjan-crom-hotel-makkah-saudi-arabia-9.jpg">
+                </div>
+                <div class="col-lg-3 col-md-6 hotel-gallery-img">
+                    <img style=""
+                         src="https://storage.googleapis.com/legate-development/content-test-new/4858/al-murjan-crom-hotel-makkah-saudi-arabia-3.jpg">
+                </div>
+                <div class="col-lg-3 col-md-6 hotel-gallery-img">
+                    <img style=""
+                         src="https://storage.googleapis.com/legate-development/content-test-new/4858/al-murjan-crom-hotel-makkah-saudi-arabia-7.jpg">
+                </div>
+                <div class="col-lg-3 col-md-6 hotel-gallery-img">
+                    <img style=""
+                         src="https://storage.googleapis.com/legate-development/content-test-new/4858/al-murjan-crom-hotel-makkah-saudi-arabia-5.jpg">
+                </div>
+                <div class="col-lg-3 col-md-6 hotel-gallery-img">
+                    <img style=""
+                         src="https://storage.googleapis.com/legate-development/content-test-new/4858/al-murjan-crom-hotel-makkah-saudi-arabia-6.jpg">
+                </div>
+                <div class="col-lg-3 col-md-6 hotel-gallery-img">
+                    <img style=""
+                         src="https://storage.googleapis.com/legate-development/content-test-new/4858/al-murjan-crom-hotel-makkah-saudi-arabia-4.jpg">
+                </div>
+                <div class="col-lg-3 col-md-6 hotel-gallery-img">
+                    <img style=""
+                         src="https://storage.googleapis.com/legate-development/content-test-new/4858/al-murjan-crom-hotel-makkah-saudi-arabia-11.jpg">
+                </div>
+                <div class="col-lg-3 col-md-6 hotel-gallery-img">
+                    <img style=""
+                         src="https://storage.googleapis.com/legate-development/content-test-new/4858/al-murjan-crom-hotel-makkah-saudi-arabia-4.jpg">
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="row box-shdow text-center" style="border-top: none">
+        <div class="col search-filter" style="height: 10vh;">
+            <div class="row py-4 pe-7 ps-7">
+                <div class="col">
+                    <p>الوجهة: <span> مكة المكرمة</span></p>
+                </div>
+                <div class="col-4">
+                    <p>تاريخ الوصول: <span> 2023/03/07م</span> إلى تاريخ <span> 2023/03/13م</span></p>
+                </div>
+                <div class="col">
+                    <p>عدد الأشخاص: <span> 25</span></p>
+                </div>
+                <div class="col">
+                    <a href="" class="btn btn-outline-secondary">تعديل البحث</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <div class="nk-content ">
+                    <div class="container-fluid">
+                        <div class="nk-content-inner">
+                            <div class="nk-content-body">
+                                <div class="nk-block-head nk-block-head-sm">
+                                    <div class="nk-block-between g-3">
+                                        <div class="nk-block-head-content">
+                                            <h6 class="nk-block-title page-title" style="font-weight: normal">
+                                                الغرف المتاحة <span class="color-lahmi">17 غرفة</span></h6>
+                                        </div><!-- .nk-block-head-content -->
+                                    </div><!-- .nk-block-between -->
+                                </div><!-- .nk-block-head -->
+                                <div class="nk-block">
+                                    <div class="card card-bordered card-stretch">
+                                        <div class="card-inner-group">
+                                            <div class="card-inner position-relative card-tools-toggle">
+                                                <div class="card-title-group">
+                                                    <div class="card-tools">
+                                                        <li>
+                                                            <a href="#" class="btn btn-icon search-toggle toggle-search"
+                                                               data-target="search"><em class="icon ni ni-search"></em></a>
+                                                        </li><!-- li -->
+                                                    </div><!-- .card-tools -->
+                                                    <div class="card-tools me-n1">
+                                                        <ul class="btn-toolbar gx-1">
+
+                                                            <li class="btn-toolbar-sep"></li><!-- li -->
+                                                            <li>
+                                                                <div class="toggle-wrap">
+                                                                    <a href="#" class="btn btn-icon btn-trigger toggle"
+                                                                       data-target="cardTools"><em
+                                                                            class="icon ni ni-menu-right"></em></a>
+                                                                    <div class="toggle-content"
+                                                                         data-content="cardTools">
+                                                                        <ul class="btn-toolbar gx-1">
+                                                                            <li class="toggle-close">
+                                                                                <a href="#"
+                                                                                   class="btn btn-icon btn-trigger toggle"
+                                                                                   data-target="cardTools"><em
+                                                                                        class="icon ni ni-arrow-left"></em></a>
+                                                                            </li><!-- li -->
+                                                                            <li>
+                                                                                <div class="dropdown">
+                                                                                    <a href="#"
+                                                                                       class="btn btn-trigger btn-icon dropdown-toggle"
+                                                                                       data-bs-toggle="dropdown">
+                                                                                        <div class="dot dot-primary"></div>
+                                                                                        <em class="icon ni ni-filter-alt"></em>
+                                                                                    </a>
+                                                                                    <div class="filter-wg dropdown-menu dropdown-menu-xl dropdown-menu-end">
+                                                                                        <div class="dropdown-head">
+                                                                                            <span class="sub-title dropdown-title">Filter Room Type</span>
+                                                                                            <div class="dropdown">
+                                                                                                <a href="#"
+                                                                                                   class="btn btn-sm btn-icon">
+                                                                                                    <em class="icon ni ni-more-h"></em>
+                                                                                                </a>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="dropdown-body dropdown-body-rg">
+                                                                                            <div class="row gx-6 gy-3">
+                                                                                                <div class="col-12">
+                                                                                                    <div class="form-group">
+                                                                                                        <label class="overline-title overline-title-alt">Status</label>
+                                                                                                        <select class="form-select js-select2 js-select2-sm">
+                                                                                                            <option value="any">
+                                                                                                                Any
+                                                                                                                Status
+                                                                                                            </option>
+                                                                                                            <option value="Active">
+                                                                                                                active
+                                                                                                            </option>
+                                                                                                            <option value="inactive">
+                                                                                                                Inactive
+                                                                                                            </option>
+                                                                                                        </select>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                                <div class="col-12">
+                                                                                                    <div class="form-group">
+                                                                                                        <button type="button"
+                                                                                                                class="btn btn-secondary">
+                                                                                                            Filter
+                                                                                                        </button>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="dropdown-foot between">
+                                                                                            <a class="clickable"
+                                                                                               href="#">Reset Filter</a>
+                                                                                            <a href="#">Save Filter</a>
+                                                                                        </div>
+                                                                                    </div><!-- .filter-wg -->
+                                                                                </div><!-- .dropdown -->
+                                                                            </li><!-- li -->
+                                                                            <li>
+                                                                            </li><!-- li -->
+                                                                        </ul><!-- .btn-toolbar -->
+                                                                    </div><!-- .toggle-content -->
+                                                                </div><!-- .toggle-wrap -->
+                                                            </li><!-- li -->
+                                                        </ul><!-- .btn-toolbar -->
+                                                    </div><!-- .card-tools -->
+                                                </div><!-- .card-title-group -->
+                                            </div><!-- .card-inner -->
+                                            <div class="card-inner p-0 text-center">
+                                                <div class="nk-tb-list nk-tb-ulist">
+                                                    <div class="nk-tb-item nk-tb-head">
+                                                        <div class="nk-tb-col nk-tb-col-check">
+                                                            <div class="custom-control custom-control-sm custom-checkbox notext">
+                                                                <input type="checkbox" class="custom-control-input"
+                                                                       id="uid">
+                                                                <label class="custom-control-label" for="uid"></label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="nk-tb-col"><span class="sub-text">#</span></div>
+                                                        <div class="nk-tb-col"><span class="sub-text">نوع الغرفة</span>
+                                                        </div>
+                                                        <div class="nk-tb-col tb-col-lg"><span class="sub-text">خيارات الغرفة</span>
+                                                        </div>
+                                                        <div class="nk-tb-col tb-col-mb"><span class="sub-text">سعر الليلة الواحدة</span>
+                                                        </div>
+                                                        <div class="nk-tb-col tb-col-md"><span class="sub-text">اختر الغرفة</span>
+                                                        </div>
+                                                    </div><!-- .nk-tb-item -->
+                                                    <div class="nk-tb-item">
+                                                        <div class="nk-tb-col nk-tb-col-check">
+                                                            <div class="custom-control custom-control-sm custom-checkbox notext">
+                                                                <input type="checkbox" class="custom-control-input"
+                                                                       id="uid1">
+                                                                <label class="custom-control-label" for="uid1"></label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="nk-tb-col">
+                                                            <span class="text-primary">01</span>
+                                                        </div>
+                                                        <div class="nk-tb-col">
+                                                            <span>Single Room<span
+                                                                    class="dot dot-success d-md-none ms-1"></span> </span>
+                                                        </div>
+                                                        <div class="nk-tb-col tb-col-lg">
+                                                            <p class="m-0">ROOM ONLY</p>
+                                                            <p class="text-danger">
+                                                                غير قابل للاسترجاع
+                                                                <a placement="auto" class="btn-pop-hover">
+                                                                    <i class="fal fa-info-circle"></i>
+                                                                </a>
+                                                            </p>
+                                                        </div>
+                                                        <div class="nk-tb-col tb-col-mb">
+                                                                <span class="tb-amount">102.99<span
+                                                                        class="currency">SAR</span></span>
+                                                        </div>
+                                                        <div class="nk-tb-col nk-tb-col-tools">
+                                                            <div class="dropdown">
+                                                                <a href="#" class="btn btn-round btn-outline-primary"
+                                                                   data-bs-toggle="dropdown"><span>اختر غرفة</span><em
+                                                                        class="icon ni ni-chevron-down"></em></a>
+                                                                <div class="dropdown-menu dropdown-menu-end dropdown-menu-sm mt-1">
+                                                                    <ul class="link-list-plain">
+                                                                        <li><a href="{% url 'main:payment' %}">1</a></li>
+                                                                        <li><a href="{% url 'main:payment' %}">2</a></li>
+                                                                        <li><a href="{% url 'main:payment' %}">3</a></li>
+                                                                        <li><a href="{% url 'main:payment' %}">4</a></li>
+                                                                        <li><a href="{% url 'main:payment' %}">5</a></li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div><!-- .nk-tb-item  -->
+                                                    <div class="nk-tb-item">
+                                                        <div class="nk-tb-col nk-tb-col-check">
+                                                            <div class="custom-control custom-control-sm custom-checkbox notext">
+                                                                <input type="checkbox" class="custom-control-input"
+                                                                       id="uid1">
+                                                                <label class="custom-control-label" for="uid1"></label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="nk-tb-col">
+                                                            <span class="text-primary">02</span>
+                                                        </div>
+                                                        <div class="nk-tb-col">
+                                                            <span>Delux<span
+                                                                    class="dot dot-success d-md-none ms-1"></span> </span>
+                                                        </div>
+                                                        <div class="nk-tb-col tb-col-lg">
+                                                            <p class="m-0">BED AND BREAKFAST</p>
+                                                            <p class="text-danger">
+                                                                غير قابل للاسترجاع
+                                                                <a placement="auto" class="btn-pop-hover">
+                                                                    <i class="fal fa-info-circle"></i>
+                                                                </a>
+                                                            </p>
+                                                        </div>
+                                                        <div class="nk-tb-col tb-col-mb">
+                                                                <span class="tb-amount">102.99<span
+                                                                        class="currency">SAR</span></span>
+                                                        </div>
+                                                        <div class="nk-tb-col nk-tb-col-tools">
+                                                            <div class="dropdown">
+                                                                <a href="#" class="btn btn-round btn-outline-primary"
+                                                                   data-bs-toggle="dropdown"><span>اختر غرفة</span><em
+                                                                        class="icon ni ni-chevron-down"></em></a>
+                                                                <div class="dropdown-menu dropdown-menu-end dropdown-menu-sm mt-1">
+                                                                    <ul class="link-list-plain">
+                                                                        <li><a href="#">1</a></li>
+                                                                        <li><a href="#">2</a></li>
+                                                                        <li><a href="#">3</a></li>
+                                                                        <li><a href="#">4</a></li>
+                                                                        <li><a href="#">5</a></li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div><!-- .nk-tb-item  -->
+                                                    <div class="nk-tb-item">
+                                                        <div class="nk-tb-col nk-tb-col-check">
+                                                            <div class="custom-control custom-control-sm custom-checkbox notext">
+                                                                <input type="checkbox" class="custom-control-input"
+                                                                       id="uid1">
+                                                                <label class="custom-control-label" for="uid1"></label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="nk-tb-col">
+                                                            <span class="text-primary">03</span>
+                                                        </div>
+                                                        <div class="nk-tb-col">
+                                                            <span>Super Delux<span
+                                                                    class="dot dot-success d-md-none ms-1"></span> </span>
+                                                        </div>
+                                                        <div class="nk-tb-col tb-col-lg">
+                                                            <p class="m-0">ROOM ONLY</p>
+                                                            <p class="text-danger">
+                                                                غير قابل للاسترجاع
+                                                                <a placement="auto" class="btn-pop-hover">
+                                                                    <i class="fal fa-info-circle"></i>
+                                                                </a>
+                                                            </p>
+                                                        </div>
+                                                        <div class="nk-tb-col tb-col-mb">
+                                                                <span class="tb-amount">102.99<span
+                                                                        class="currency">SAR</span></span>
+                                                        </div>
+                                                        <div class="nk-tb-col nk-tb-col-tools">
+                                                            <div class="dropdown">
+                                                                <a href="#" class="btn btn-round btn-outline-primary"
+                                                                   data-bs-toggle="dropdown"><span>اختر غرفة</span><em
+                                                                        class="icon ni ni-chevron-down"></em></a>
+                                                                <div class="dropdown-menu dropdown-menu-end dropdown-menu-sm mt-1">
+                                                                    <ul class="link-list-plain">
+                                                                        <li><a href="#">1</a></li>
+                                                                        <li><a href="#">2</a></li>
+                                                                        <li><a href="#">3</a></li>
+                                                                        <li><a href="#">4</a></li>
+                                                                        <li><a href="#">5</a></li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div><!-- .nk-tb-item  -->
+                                                    <div class="nk-tb-item">
+                                                        <div class="nk-tb-col nk-tb-col-check">
+                                                            <div class="custom-control custom-control-sm custom-checkbox notext">
+                                                                <input type="checkbox" class="custom-control-input"
+                                                                       id="uid1">
+                                                                <label class="custom-control-label" for="uid1"></label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="nk-tb-col">
+                                                            <span class="text-primary">04</span>
+                                                        </div>
+                                                        <div class="nk-tb-col">
+                                                            <span>Single Room<span
+                                                                    class="dot dot-success d-md-none ms-1"></span> </span>
+                                                        </div>
+                                                        <div class="nk-tb-col tb-col-lg">
+                                                            <p class="m-0">ROOM ONLY</p>
+                                                            <p class="text-danger">
+                                                                غير قابل للاسترجاع
+                                                                <a placement="auto" class="btn-pop-hover">
+                                                                    <i class="fal fa-info-circle"></i>
+                                                                </a>
+                                                            </p>
+                                                        </div>
+                                                        <div class="nk-tb-col tb-col-mb">
+                                                                <span class="tb-amount">102.99<span
+                                                                        class="currency">SAR</span></span>
+                                                        </div>
+                                                        <div class="nk-tb-col nk-tb-col-tools">
+                                                            <div class="dropdown">
+                                                                <a href="#" class="btn btn-round btn-outline-primary"
+                                                                   data-bs-toggle="dropdown"><span>اختر غرفة</span><em
+                                                                        class="icon ni ni-chevron-down"></em></a>
+                                                                <div class="dropdown-menu dropdown-menu-end dropdown-menu-sm mt-1">
+                                                                    <ul class="link-list-plain">
+                                                                        <li><a href="#">1</a></li>
+                                                                        <li><a href="#">2</a></li>
+                                                                        <li><a href="#">3</a></li>
+                                                                        <li><a href="#">4</a></li>
+                                                                        <li><a href="#">5</a></li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div><!-- .nk-tb-item  -->
+                                                    <div class="nk-tb-item">
+                                                        <div class="nk-tb-col nk-tb-col-check">
+                                                            <div class="custom-control custom-control-sm custom-checkbox notext">
+                                                                <input type="checkbox" class="custom-control-input"
+                                                                       id="uid1">
+                                                                <label class="custom-control-label" for="uid1"></label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="nk-tb-col">
+                                                            <span class="text-primary">05</span>
+                                                        </div>
+                                                        <div class="nk-tb-col">
+                                                            <span>Double<span
+                                                                    class="dot dot-success d-md-none ms-1"></span> </span>
+                                                        </div>
+                                                        <div class="nk-tb-col tb-col-lg">
+                                                            <p class="m-0">ROOM ONLY</p>
+                                                            <p class="text-success">
+                                                                إلغاء مجاني قبل 02-03-2023
+                                                                <a placement="auto" class="btn-pop-hover">
+                                                                    <i class="fal fa-info-circle"></i>
+                                                                </a>
+                                                            </p>
+                                                        </div>
+                                                        <div class="nk-tb-col tb-col-mb">
+                                                                <span class="tb-amount">102.99<span
+                                                                        class="currency">SAR</span></span>
+                                                        </div>
+                                                        <div class="nk-tb-col nk-tb-col-tools">
+                                                            <div class="dropdown">
+                                                                <a href="#" class="btn btn-round btn-outline-primary"
+                                                                   data-bs-toggle="dropdown"><span>اختر غرفة</span><em
+                                                                        class="icon ni ni-chevron-down"></em></a>
+                                                                <div class="dropdown-menu dropdown-menu-end dropdown-menu-sm mt-1">
+                                                                    <ul class="link-list-plain">
+                                                                        <li><a href="#">1</a></li>
+                                                                        <li><a href="#">2</a></li>
+                                                                        <li><a href="#">3</a></li>
+                                                                        <li><a href="#">4</a></li>
+                                                                        <li><a href="#">5</a></li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div><!-- .nk-tb-item  -->
+                                                </div><!-- .nk-tb-list -->
+                                            </div><!-- .card-inner -->
+                                        </div><!-- .card-inner-group -->
+                                    </div><!-- .card -->
+                                </div><!-- .nk-block -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <div class="nk-content ">
+                    <div class="container-fluid">
+                        <div class="nk-content-inner">
+                            <div class="nk-content-body">
+                                <div class="row">
+                                    <div class="col-lg-8 box-shdow ms-2 p-2">
+                                        <h4 style="font-weight: normal">عن الفندق</h4>
+                                        <h6 class="mt-4" style="font-weight: normal">عن الفندق</h6>
+                                        <p>
+                                            الإقامة في فندق الدانة الماسية مكة المكرمة في مكة المكرمة تضعك على بُعد 5
+                                            دقائق بالسيارة من الحرم المكي وبئر زمزم. الإقامة في هذا الفندق، منشأة تتّسم
+                                            بتصنيف 4 نجوم، تضعك على بُعد ٤٫٦ كم من الكعبة و ٧٫٢ كم من مكة مول.
+                                        </p>
+
+                                        <h6 class="mt-4" style="font-weight: normal">الغرف</h6>
+                                        <p>
+                                            اشعر وكأنك في منزلك عند الإقامة في واحدة من 611 غرفة ضيافة مكيفة، والتي
+                                            تحتوي على ثلاجات وتلفزيون بشاشة مسطحة. تتاح لك اتصال لاسلكي بالإنترنت مجانًا
+                                            لتبقى على اتصال دائمًا، بالإضافة إلى قنوات فضائية من أجل متعتك. تضم الغرف
+                                            حمامات خاصة بها تجهيزات دش مع مستلزمات مجانية للعناية الشخصية وبيديه. تضم
+                                            وسائل الراحة خزنات ومكاتب، وتتوفر خدمة تدبير الغرف يوميًا.
+                                        </p>
+
+                                        <h6 class="mt-4" style="font-weight: normal">الخدمات الترفيهية</h6>
+                                        <p>
+                                            تمتع بوسائل الراحة المتاحة في هذه المنشأة والتي تضم إنترنت لاسلكي مجاناً وخدمات الاستعلامات والإرشاد وقاعة رقص.
+                                        </p>
+
+                                        <h6 class="mt-4" style="font-weight: normal">تناول الطعام</h6>
+                                        <p>
+                                            استمتع بوجبة في مطعم هذا الفندق، أو أقم هنا للاسترخاء والاستفادة من خدمة الغرف (خلال ساعات محدودة). يتم تقديم فطور أوروبي يوميًا من 6:30 صباحاً إلى 10:30 صباحاً مقابل رسم إضافي.
+                                        </p>
+
+                                        <h6 class="mt-4" style="font-weight: normal">خدمات الأعمال ووسائل الراحة الأخرى</h6>
+
+                                        <p>
+                                            تضم وسائل الرائحة المميزة مركز لرجال الأعمال مفتوح 24 ساعة وخدمة سريعة لإجراءات تسجيل الوصول وخدمة سريعة لإنهاء إجراءات المغادرة. يتاح خدمة مواقف السيارات لفترة محدودة داخل موقع المنشأة.
+                                        </p>
+
+                                    </div>
+                                    <div class="col box-shdow ms-2 me-2 p-2" style="height: min-content">
+                                        <h4 style="font-weight: normal">سياسات الفندق</h4>
+                                        <h6 class="mt-4" style="font-weight: normal">سياسة الدخول</h6>
+                                        <p>
+                                            وقت الدخول من , وقت الخروج حتي
+                                        </p>
+                                        <h6 class="mt-4" style="font-weight: normal">سياسة الإلغاء</h6>
+                                        <p>
+                                          قد تختلف سياسات الإلغاء حسب الموسم أو حسب نوع الفندق أو الغرفة. يمكنك مراجعة سياسة الفندق أثناء الحجز.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

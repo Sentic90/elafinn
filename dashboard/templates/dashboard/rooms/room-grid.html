@@ -1,0 +1,99 @@
+{% extends 'dashboard/base.html' %}
+{% load static %}
+{% block sidbar %}
+    {% include 'dashboard/partials/sideBar.html' %}
+{% endblock %}
+{% block page_title %}الغرف{% endblock %}
+{% block page_title_p %}استعراض حالة الغرف، وإضافة وتعديل الغرف، وإضافة التفاصيل لكل غرفة.{% endblock %}
+{% block page_title_btn %}
+    <ul class="row g-gs">
+        <li class="col-sm-6 col-lg-3">
+            <a href="{% url 'add-room' hotel.slug %}" class="btn btn-primary">
+                <span>إضافة غرفة </span>
+                <em class="icon ni ni-property-add"></em>
+            </a>
+        </li>
+    </ul>
+{% endblock %}
+{% block content %}
+    {% include 'main/partials/_alerts.html' %}
+
+    <div class="nk-block">
+        <div class="card card-bordered card-stretch">
+            <div class="card-inner-group">
+                <div class="card-inner position-relative card-tools-toggle">
+                    <div class="card-title-group">
+                        <div class="card-tools">
+                            <div class="form-inline flex-nowrap gx-3">
+                                <div class="form-wrap w-150px">
+                                    <ul>
+                                        <li>
+                                            <a href="{% url 'room-list' hotel.slug %}" class="">
+                                                <em class="icon ni ni-list-index"></em>
+                                                عرض قائمة
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div><!-- .form-inline -->
+                        </div><!-- .card-tools -->
+                        <div class="card-tools me-n1">
+                            <ul class="btn-toolbar gx-1">
+                                <li>
+                                    <div class="d-inline">
+                                        <span class="badge badge-md border-secondary bg-success">متاح</span>
+                                    </div>
+                                    <div class="d-inline">
+                                        <span class="badge badge-md border-secondary bg-primary">محجوز</span>
+                                    </div>
+                                    <div class="d-inline">
+                                        <span class="badge badge-md border-secondary bg-warning">انتظار</span>
+                                    </div>
+                                    <div class="d-inline">
+                                        <span class="badge badge-md border-secondary bg-danger">معطل</span>
+                                    </div>
+                                </li>
+{#                                <li class="btn-toolbar-sep"></li><!-- li -->#}
+                            </ul><!-- .btn-toolbar -->
+                        </div><!-- .card-tools -->
+                    </div><!-- .card-title-group -->
+                </div><!-- .card-inner -->
+                <div class="card card-bordered card-preview">
+                    <div class="card-inner">
+                        <div class="d-flex flex-wrap example-border">
+                            {% for room in rooms %}
+                                {% if room.status == 1 %}
+                            <div class="btn border border-secondary mt-5 bg-danger">
+                                <a class="w-100">
+                                    <h4 class="text-light">{{ room.roomNo }}</h4>
+                                </a>
+                            </div>
+                                    {% elif room.status == 2 %}
+                            <div class="btn border border-secondary mt-5 bg-teal">
+                                <a class="w-100">
+                                    <h4 class="text-light">{{ room.roomNo }}</h4>
+                                </a>
+                            </div>
+                                    {% elif room.status == 3 %}
+                            <div class="btn border border-secondary mt-5 bg-warning">
+                                <a class="w-100">
+                                    <h4 class="text-light">{{ room.roomNo }}</h4>
+                                </a>
+                            </div>
+                                    {% elif room.status == 4 %}
+                            <div class="btn border border-secondary mt-5 bg-primary">
+                                <a class="w-100">
+                                    <h4 class="text-light">{{ room.roomNo }}</h4>
+                                </a>
+                            </div>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}

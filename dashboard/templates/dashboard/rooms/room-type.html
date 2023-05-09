@@ -1,0 +1,203 @@
+{% extends 'dashboard/base.html' %}
+{% load static %}
+{% block sidbar %}
+    {% include 'dashboard/partials/sideBar.html' %}
+{% endblock %}
+{% block page_title %}أنواع الغرف{% endblock %}
+{% block page_title_p %}إضافة أنواع الغرف (مفردة، مزدوجة ..الخ)، وتحديد عدد كل نوع.{% endblock %}
+{% if locations %}
+    {% block page_title_btn %}
+        <ul class="row g-gs">
+            <li class="col-sm-6 col-lg-3">
+                <a href="{% url 'add_room_type' hotel.slug %}" class="btn btn-primary">
+                    <span>إضافة نوع غرفة </span>
+                    <em class="icon ni ni-property-add"></em>
+                </a>
+            </li>
+        </ul>
+    {% endblock %}
+{% endif %}
+{% block content %}
+    {% include 'main/partials/_alerts.html' %}
+
+    <div class="card card-bordered card-stretch">
+        <div class="card-inner-group">
+            <div class="card-inner p-0">
+                <div class="nk-tb-list nk-tb-ulist">
+                    <div class="nk-tb-item nk-tb-head">
+                        <div class="nk-tb-col"><span class="sub-text">#</span></div>
+                        <div class="nk-tb-col"><span class="sub-text">النوع</span></div>
+                        <div class="nk-tb-col tb-col-md"><span class="sub-text">الاستيعاب</span>
+                        </div>
+                        <div class="nk-tb-col nk-tb-col-tools text-end">
+                            <div class="dropdown">
+                                <a href="#"
+                                   class="btn btn-xs btn-outline-light btn-icon dropdown-toggle"
+                                   data-bs-toggle="dropdown" data-offset="0,5"><em
+                                        class="icon ni ni-plus"></em></a>
+                                <div class="dropdown-menu dropdown-menu-xs dropdown-menu-end">
+                                    <ul class="link-tidy sm no-bdr">
+                                        <li>
+                                            <div class="custom-control custom-control-sm custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input"
+                                                       checked="" id="active">
+                                                <label class="custom-control-label" for="active">نشطة</label>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="custom-control custom-control-sm custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input"
+                                                       id="inac">
+                                                <label class="custom-control-label"
+                                                       for="inac">معطلة</label>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div><!-- .nk-tb-item -->
+                    {% for roomtype in types %}
+                        <div class="nk-tb-item">
+                            <div class="nk-tb-col">
+                                <span class="text-primary">{{ forloop.counter }}</span>
+                            </div>
+                            <div class="nk-tb-col">
+                                <span>{{ roomtype.get_roomType_display }}<span class="dot dot-success d-md-none ms-1"></span></span>
+                            </div>
+                            <div class="nk-tb-col tb-col-lg">
+                                <span>{{ roomtype.capacity }}</span>
+                            </div>
+                            <div class="nk-tb-col nk-tb-col-tools">
+                                <ul class="nk-tb-actions gx-1">
+                                    <li>
+                                        <div class="drodown">
+                                            <a href="#" class="dropdown-toggle btn btn-icon btn-trigger"
+                                               data-bs-toggle="dropdown"><em
+                                                    class="icon ni ni-more-h"></em></a>
+                                            <div class="dropdown-menu dropdown-menu-end">
+                                                <ul class="link-list-opt no-bdr">
+                                                    <li><a href="{{ roomtype.get_absolute_url }}"><em
+                                                            class="icon ni ni-edit"></em><span>تعديل</span></a>
+                                                    </li>
+                                                    <li><a href="#"><em
+                                                            class="icon ni ni-trash"></em><span>حذف</span></a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div><!-- .nk-tb-item  -->
+                    {% endfor %}
+                </div><!-- .nk-tb-list -->
+            </div><!-- .card-inner -->
+            <div class="card-inner">
+                <div class="nk-block-between-md g-3">
+                    <div class="g">
+                        <ul class="pagination justify-content-center justify-content-md-start">
+                            <li class="page-item"><a class="page-link" href="#">السابق</a></li>
+                            <li class="page-item"><a class="page-link" href="#">1</a></li>
+                            <li class="page-item"><a class="page-link" href="#">2</a></li>
+                            <li class="page-item"><span class="page-link"><em
+                                    class="icon ni ni-more-h"></em></span></li>
+                            <li class="page-item"><a class="page-link" href="#">6</a></li>
+                            <li class="page-item"><a class="page-link" href="#">7</a></li>
+                            <li class="page-item"><a class="page-link" href="#">التالي</a></li>
+                        </ul><!-- .pagination -->
+                    </div>
+                    <div class="g">
+                        <div class="pagination-goto d-flex justify-content-center justify-content-md-start gx-3">
+                            <div>صفحة</div>
+                            <div>
+                                <select class="form-select js-select2" data-search="on"
+                                        data-dropdown="xs center">
+                                    <option value="page-1">1</option>
+                                    <option value="page-2">2</option>
+                                    <option value="page-4">4</option>
+                                    <option value="page-5">5</option>
+                                    <option value="page-6">6</option>
+                                    <option value="page-7">7</option>
+                                    <option value="page-8">8</option>
+                                    <option value="page-9">9</option>
+                                    <option value="page-10">10</option>
+                                    <option value="page-11">11</option>
+                                    <option value="page-12">12</option>
+                                    <option value="page-13">13</option>
+                                    <option value="page-14">14</option>
+                                    <option value="page-15">15</option>
+                                    <option value="page-16">16</option>
+                                    <option value="page-17">17</option>
+                                    <option value="page-18">18</option>
+                                    <option value="page-19">19</option>
+                                    <option value="page-20">20</option>
+                                </select>
+                            </div>
+                            <div>من 102</div>
+                        </div>
+                    </div><!-- .pagination-goto -->
+                </div><!-- .nk-block-between -->
+            </div><!-- .card-inner -->
+        </div><!-- .card-inner-group -->
+    </div><!-- .card -->
+
+    <!-- Edit Room Type-->
+    <div class="modal fade" tabindex="-1" role="dialog" id="edit-room-type">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <a href="#" class="close" data-bs-dismiss="modal"><em class="icon ni ni-cross-sm"></em></a>
+                <div class="modal-body modal-body-md">
+                    <h5 class="modal-title">تعديل نوع غرفة</h5>
+                    <form action="#" class="mt-2">
+                        <div class="row g-gs">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="form-label" for="room-name">نوع الغرفة</label>
+                                    <input type="text" class="form-control" id="room-name" placeholder="الاسم">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="form-label" for="rent">السعر</label>
+                                    <input type="number" class="form-control" id="rent" placeholder="30.99  SAR">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="form-label" for="no-of-room">عدد الغرف من هذا النوع</label>
+                                    <input type="text" class="form-control" id="no-of-room" placeholder="عدد الغرف">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="form-label" for="status">الحالة</label>
+                                    <select class="form-select js-select2" id="status">
+                                        <option>نشطة</option>
+                                        <option>معطلة</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="form-label" for="status">صورة لهذا النوع من الغرف</label>
+                                    <input type="file" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <ul class="align-center flex-wrap flex-sm-nowrap gx-4 gy-2">
+                                    <li>
+                                        <button class="btn btn-primary">حفظ التحديث</button>
+                                    </li>
+                                    <li>
+                                        <a href="#" class="link" data-bs-dismiss="modal">إلغاء</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </form>
+                </div><!-- .modal-body -->
+            </div><!-- .modal-content -->
+        </div><!-- .modal-dialog -->
+    </div><!-- .modal -->
+{% endblock %}

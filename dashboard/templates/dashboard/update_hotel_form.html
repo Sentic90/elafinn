@@ -1,0 +1,35 @@
+<form action="{% url 'hotel_information' hotel.slug %}" class="gy-3 form-settings" method="post"
+      enctype="multipart/form-data"
+      autocomplete="off">
+    {% csrf_token %}
+    {% for field in form %}
+        <div class="row g-3 align-center">
+            <div class="col-lg-5">
+                <div class="form-group">
+                    <label class="form-label"
+                           for="site-name">{{ field.label_tag }}</label>
+                    <span class="form-note">{{ field.errors }}</span>
+                </div>
+            </div>
+            <div class="col-lg-7">
+                <div class="form-group">
+                    <div class="form-control-wrap">
+                        {{ field }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+    <div class="row g-3">
+        <div class="col-lg-7">
+            <div class="form-group mt-2">
+                <button type="submit" class="btn btn-lg btn-primary">حفظ
+                </button>
+                <button type="button" class="btn btn-default"
+                        data-dismiss="modal">
+                    إلغاء
+                </button>
+            </div>
+        </div>
+    </div>
+</form>

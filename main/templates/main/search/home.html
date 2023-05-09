@@ -1,0 +1,8 @@
+
+{% extends 'main/search/base.html' %}
+
+{% block content %}
+    <h1>Welcome to the Hotel Reservation System</h1>
+    <p>Use the search form below to find available rooms.</p>
+    <a href="{% url 'main:search' %}">Search for Rooms</a>
+{% endblock %}

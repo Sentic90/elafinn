@@ -1,0 +1,189 @@
+{% extends 'dashboard/base.html' %}
+{% load static %}
+{% block sidbar %}
+    {% include 'dashboard/partials/sideBar.html' %}
+{% endblock %}
+{% block page_title %}إضافة الموقع الجغرافي{% endblock %}
+{% block page_title_p %}حرك المؤشر لتحديد الموقع الخاص بك.{% endblock %}
+{% include 'dashboard/partials/_alerts.html' %}
+
+{% block content %}
+    <div class="card card-bordered card-view">
+        <div class="card-aside-wrap">
+            <div class="card-inner card-inner-lg">
+                <div class="nk-block">
+                    <div id="infoPanel" style="display:none;">
+                        <b>حالة المؤشر:</b>
+                        <div id="markerStatus"><i>إضغط وحرّك المؤشر</i></div>
+                        <div id="info" style="display: none">
+                            <input type="hidden" value="" id="info_address" name="info">
+                        </div>
+                    </div>
+                    <form action="{% url 'hotel_location' hotel.slug %}" method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="hotel" value="{{ hotel.id }}">
+                        <input type="hidden" name="city" value="{{ hotel.city }}">
+                        <div class="row">
+                            <div class="form-group col-lg-6 col-sm-12">
+                                <label for="id_latitude">Latitude:</label>
+                                <input type="text" name="latitude" class="form-control"
+                                       id="id_latitude"
+                                       value="{{ latitude }}"
+                                >
+                            </div>
+
+                            <div class="form-group  col-lg-6 col-sm-12">
+                                <label for="id_longitude">Longitude:</label>
+                                <input type="text" name="longitude" class="form-control"
+                                       id="id_longitude"
+                                       value="{{ longitude }}">
+                            </div>
+                        </div>
+                        <div class="w-100 p-1 border" id="map" style="height: 350px"></div>
+                        <div class="row mt-4">
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <button class="btn btn-primary form-control justify-content-center"
+                                            type="submit">حفظ الموقع
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </form>
+                </div>
+                <!-- .nk-block-head -->
+            </div><!-- .card-inner -->
+        </div><!-- .card -->
+    </div><!-- .nk-block -->
+
+    <script>
+
+
+        var map, infoWindow;
+        var geocoder;
+
+        function initMap() {
+            geocoder = new google.maps.Geocoder();
+            map = new google.maps.Map(document.getElementById('map'), {
+                center: {
+                    lat: 24.6740903,
+                    lng: 46.694911400000024
+                },
+                zoom: 15
+            });
+            infoWindow = new google.maps.InfoWindow;
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function (position) {
+                    var pos = {
+                        lat: position.coords.latitude,
+                        lng: position.coords.longitude
+                    };
+
+                    var marker = new google.maps.Marker({
+                        position: pos,
+                        map: map,
+                        draggable: true,
+                        title: 'موقعك الحالي'
+                    });
+                    infoWindow.setPosition(pos);
+                    infoWindow.setContent('Your position');
+                    marker.addListener('click', function () {
+                        infoWindow.open(map, marker);
+                    });
+                    infoWindow.open(map, marker);
+                    map.setCenter(pos);
+
+
+                    updateMarkerPosition(marker.getPosition());
+                    geocodePosition(pos);
+
+                    // Add dragging event listeners.
+                    google.maps.event.addListener(marker, 'dragstart', function () {
+                        updateMarkerAddress('إنتظار....');
+                    });
+
+                    google.maps.event.addListener(marker, 'drag', function () {
+                        updateMarkerStatus('تحريك....');
+                        updateMarkerPosition(marker.getPosition());
+                    });
+
+                    google.maps.event.addListener(marker, 'dragend', function () {
+                        updateMarkerStatus('إنتهاء التحريك');
+                        geocodePosition(marker.getPosition());
+                        map.panTo(marker.getPosition());
+                    });
+
+                    google.maps.event.addListener(map, 'click', function (e) {
+                        updateMarkerPosition(e.latLng);
+                        geocodePosition(marker.getPosition());
+                        marker.setPosition(e.latLng);
+                        map.panTo(marker.getPosition());
+                    });
+
+                }, function () {
+                    handleLocationError(true, infoWindow, map.getCenter());
+                });
+            } else {
+                // Browser doesn't support Geolocation
+                handleLocationError(false, infoWindow, map.getCenter());
+            }
+
+        }
+
+        function geocodePosition(pos) {
+            geocoder.geocode({
+                latLng: pos
+            }, function (responses) {
+                if (responses && responses.length > 0) {
+                    updateMarkerAddress(responses[0].formatted_address);
+                } else {
+                    updateMarkerAddress('Cannot determine address at this location.');
+                }
+            });
+        }
+
+        function updateMarkerStatus(str) {
+            document.getElementById('markerStatus').value = str;
+        }
+
+        function updateMarkerPosition(latLng) {
+            document.getElementById('info').innerHTML = [
+                latLng.lat(),
+                latLng.lng()
+            ].join(', ');
+            document.getElementById('id_latitude').value = latLng.lat().toFixed(8);
+            document.getElementById('id_longitude').value = latLng.lng().toFixed(8);
+        }
+
+        function updateMarkerAddress(str) {
+            document.getElementById('id_address').value = str;
+            document.getElementById('markerStatus').innerHTML = str;
+            var a = str.replace(/\d+/g, '');
+            var b = a.split("،");
+
+
+            document.getElementById('id_country').value = b[3];
+            document.getElementById('id_city').value = b[2];
+            document.getElementById('id_district').value = b[1];
+        }
+
+        function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+            infoWindow.setPosition(pos);
+            infoWindow.setContent(browserHasGeolocation ?
+                'Error: The Geolocation service failed.' :
+                'Error: Your browser doesn\'t support geolocation.');
+            infoWindow.open(map);
+        }
+    </script>
+    <script async defer
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBr7bxFmnh5nWSmhnXCEfYGTo1G0OQ1ZlA&language=ar&callback=initMap">
+    </script>
+
+
+{% endblock %}
+
+
+
+

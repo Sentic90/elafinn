@@ -1,0 +1,102 @@
+{% extends 'dashboard/base.html' %}
+{% load static %}
+{% load tag_library %}
+{% block sidbar %}
+    {% include 'dashboard/partials/sideBar.html' %}
+{% endblock %}
+
+<style>
+    #map {
+        height: 100%;
+    }
+</style>
+{% block page_title %}الموقع الجغرافي الحالي{% endblock %}
+{% if locations %}
+    {% block page_title_btn %}
+        <ul class="row g-gs">
+            <li class="col-sm-6 col-lg-3">
+                <a href="{{ locations.get_absolute_url }}" class="btn btn-primary">
+                    <span>تغيير الموقع الحالي </span>
+                    <em class="icon ni ni-map-pin"></em>
+                </a>
+            </li>
+        </ul>
+    {% endblock %}
+{% endif %}
+{% include 'dashboard/partials/_alerts.html' %}
+
+{% block content %}
+    <div class="card card-bordered card-preview">
+        <div class="card-inner card-inner-lg">
+            <div class="nk-block">
+                {% if locations %}
+                    <div class="row mt-2 p-0">
+                        <div class="col border p-0 m-0">
+                            <div id="map" class="border" style="height: 450px"></div>
+                        </div>
+                    </div>
+                {% else %}
+                    <div class="row">
+                        <div class="col">
+                            <div class="example-alert m-2">
+                                <div class="alert alert-warning alert-icon">
+                                    <em class="icon ni ni-alert-circle"></em>
+                                    لا يوجد لديك موقع جغرافي.
+                                    <a href="{% url 'hotel_location' hotel.slug %}" class="alert-link">
+                                        يمكنك إضافة الموقع من هنا
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+            <!-- .nk-block-head -->
+
+            <!-- .nk-block-head -->
+        </div><!-- .card-inner -->
+    </div><!-- .nk-block -->
+
+    <input type="hidden" name="" id="Latitude" value="{{ late }}">
+    <input type="hidden" name="" id="longitude" value="{{ lange }}">
+    <script>
+        {#const late = document.getElementById("Latitude").value;#}
+        const late = {{ late|safe }};
+        const lange = {{ lange|safe }};
+
+        function initMap() {
+
+
+            const myLatLng = {lat: late, lng: lange};
+            const map = new google.maps.Map(document.getElementById("map"), {
+                zoom: 15,
+                center: myLatLng,
+            });
+            const marker = new google.maps.Marker({
+                position: myLatLng,
+                map,
+            });
+            const contentString =
+                '<div id="content" class="text-center">' +
+                '<div id="siteNotice" class="text-center">' +
+                "</div>" +
+                '<h6 id="firstHeading" class="mr-4">{{ hotel|safe }}</h6>' +
+                "</div>" +
+                "</div>";
+            const infowindow = new google.maps.InfoWindow({
+                content: contentString,
+            });
+
+            infowindow.open(map, marker);
+        }
+    </script>
+    <script async defer
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBr7bxFmnh5nWSmhnXCEfYGTo1G0OQ1ZlA&language=ar&callback=initMap">
+    </script>
+
+
+{% endblock %}
+
+
+
+

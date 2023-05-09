@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="zxx" class="js">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}{% endblock %}</title>
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="{% url 'main:home' %}">Home</a></li>
+            <li><a href="{% url 'main:search' %}">Room Search</a></li>
+        </ul>
+    </nav>
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+</body>
+</html>

@@ -1,0 +1,15 @@
+
+
+<form id="upload-file" enctype="multipart/form-data">
+     {% csrf_token %}
+    <div class="col-sm-6">
+        <label class="form-label">Dropzone Default</label>
+        <div class="upload-zone">
+            <div class="dz-message" data-dz-message>
+                <span class="dz-message-text">Drag and drop file</span>
+                <span class="dz-message-or">or</span>
+                <button class="btn btn-primary">SELECT</button>
+            </div>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,66 @@
+{% extends "main/base.html" %}
+
+{% block content %}
+
+    {% load crispy_forms_tags %}
+
+    <div class="nk-content ">
+
+        <div class="nk-block nk-block-middle nk-auth-body  wide-xs">
+            {% include 'main/partials/_alerts.html' %}
+            <div class="card card-bordered">
+                <div class="card-inner card-inner-lg">
+                    <div class="nk-block-head">
+                        <div class="nk-block-head-content">
+                            <h4 class="nk-block-title">تسجيل الدخول</h4>
+                            <div class="nk-block-des">
+                                <p>الدخول إلى لوحة التحكم للأعمال باستخدام البريد الإلكتروني</p>
+                            </div>
+                        </div>
+                    </div>
+                    <form action="" method="post" class="form-validate is-alter">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <div class="form-label-group">
+                                <label class="form-label" for="default-01">البريد الإلكتروني</label>
+                            </div>
+                            <div class="form-control-wrap">
+                                <input type="text" name="username" class="form-control form-control-lg" id="id_username"
+                                       placeholder="أدخل البريد الإلكتروني" required>
+                            </div>
+                        </div>
+                        <!-- .form-group -->
+                                    <div class="form-group">
+                                        <div class="form-label-group">
+                                            <label class="form-label" for="password">كلمة المرور</label>
+                                            <a class="link link-primary link-sm" tabindex="-1" href="html/pages/auths/auth-reset.html">نسيت كلمة المرور؟</a>
+                                        </div>
+                                        <div class="form-control-wrap">
+                                            <a tabindex="-1" href="#" class="form-icon form-icon-right passcode-switch lg is-hidden" data-target="password">
+                                                <em class="passcode-icon icon-show icon ni ni-eye"></em>
+                                                <em class="passcode-icon icon-hide icon ni ni-eye-off"></em>
+                                            </a>
+                                            <input name="password" autocomplete="new-password" type="password" class="form-control form-control-lg valid is-hidden" required="" id="password" placeholder="أدخل كلمة المرور" aria-invalid="false">
+                                        </div>
+                                    </div><!-- .form-group -->
+                        <div class="form-group">
+                            <button class="btn btn-lg btn-primary btn-block">تسجيل الدخول</button>
+                        </div>
+                    </form>
+                    <div class="form-note-s2 text-center pt-4"> هل أنت مستخدم جديد؟ <a
+                            href="{% url 'main:register' %}">إنشاء حساب جديد</a>
+                    </div>
+                    <div class="text-center pt-4 pb-3">
+                        <h6 class="overline-title overline-title-sap"><span>أو</span></h6>
+                    </div>
+                    <ul class="nav justify-center gx-4">
+                        <li class="nav-item"><a class="nav-link" href="#">Facebook</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#">Google</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+{% endblock %}
