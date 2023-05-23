@@ -7,12 +7,14 @@
 {% block page_title_p %}استعراض حالة الغرف، وإضافة وتعديل الغرف، وإضافة التفاصيل لكل غرفة.{% endblock %}
 {% block page_title_btn %}
     <ul class="row g-gs">
-        <li class="col-sm-6 col-lg-3">
-            <a href="{% url 'add-room' hotel.slug %}" class="btn btn-primary">
-                <span>إضافة غرفة </span>
-                <em class="icon ni ni-property-add"></em>
-            </a>
-        </li>
+        {% if roomType.count > 0 %}
+            <li class="col-sm-6 col-lg-3">
+                <a href="{% url 'add-room' hotel.slug %}" class="btn btn-primary">
+                    <span>إضافة غرفة </span>
+                    <em class="icon ni ni-property-add"></em>
+                </a>
+            </li>
+        {% endif %}
     </ul>
 {% endblock %}
 {% block content %}
@@ -91,58 +93,87 @@
                                 </div>
                             </div>
                         </div><!-- .nk-tb-item -->
-                        {% for room in rooms %}
 
-                        <div class="nk-tb-item">
-                            <div class="nk-tb-col nk-tb-col-check">
+                        {% if roomType.count > 0 %}
+                            {% for room in rooms %}
+                                <div class="nk-tb-item">
+                                    <div class="nk-tb-col nk-tb-col-check">
 
-                            </div>
-                            <div class="nk-tb-col">
-                                <span class="text-primary">{{ room.roomNo }}</span>
-                            </div>
-                            <div class="nk-tb-col">
-                                <span>{{ room.roomType.get_roomType_display }} <span class="dot dot-primary d-md-none ms-1"></span></span>
-                            </div>
-                            <div class="nk-tb-col tb-col-md">
-                                <span>{{ room.floor }}</span>
-                            </div>
-                            <div class="nk-tb-col tb-col-lg">
-                                <span>إدارتي</span>
-                            </div>
-                            <div class="nk-tb-col tb-col-md">
-                                {% if room.status == 1 %}
-                                <span class="tb-status text-danger">{{ room.get_status_display }}</span>
-                                    {% elif room.status == 2 %}
-                                <span class="tb-status text-success">{{ room.get_status_display }}</span>
-                                    {% elif room.status == 3 %}
-                                <span class="tb-status text-warning">{{ room.get_status_display }}</span>
-                                    {% elif room.status == 4 %}
-                                <span class="tb-status text-primary">{{ room.get_status_display }}</span>
-                                {% endif %}
-                            </div>
-                            <div class="nk-tb-col nk-tb-col-tools">
-                                <ul class="nk-tb-actions gx-1">
-                                    <li>
-                                        <div class="drodown">
-                                            <a href="#" class="dropdown-toggle btn btn-icon btn-trigger"
-                                               data-bs-toggle="dropdown"><em
-                                                    class="icon ni ni-more-h"></em></a>
-                                            <div class="dropdown-menu dropdown-menu-end">
-                                                <ul class="link-list-opt no-bdr">
-                                                    <li><a href="{{ room.get_absolute_url }}"><em
-                                                            class="icon ni ni-edit"></em><span>تعديل</span></a>
-                                                    </li>
-                                                    <li><a href="#"><em
-                                                            class="icon ni ni-trash"></em><span>حذف</span></a>
-                                                    </li>
-                                                </ul>
-                                            </div>
+                                    </div>
+                                    <div class="nk-tb-col">
+                                        <span class="text-primary">{{ room.roomNo }}</span>
+                                    </div>
+                                    <div class="nk-tb-col">
+                                    <span>{{ room.roomType.get_roomType_display }} <span
+                                            class="dot dot-primary d-md-none ms-1"></span></span>
+                                    </div>
+                                    <div class="nk-tb-col tb-col-md">
+                                        <span>{{ room.floor }}</span>
+                                    </div>
+                                    <div class="nk-tb-col tb-col-lg">
+                                        <span>إدارتي</span>
+                                    </div>
+                                    <div class="nk-tb-col tb-col-md">
+                                        {% if room.status == 1 %}
+                                            <span class="tb-status text-danger">{{ room.get_status_display }}</span>
+                                        {% elif room.status == 2 %}
+                                            <span class="tb-status text-success">{{ room.get_status_display }}</span>
+                                        {% elif room.status == 3 %}
+                                            <span class="tb-status text-warning">{{ room.get_status_display }}</span>
+                                        {% elif room.status == 4 %}
+                                            <span class="tb-status text-primary">{{ room.get_status_display }}</span>
+                                        {% endif %}
+                                    </div>
+                                    <div class="nk-tb-col nk-tb-col-tools">
+                                        <ul class="nk-tb-actions gx-1">
+                                            <li>
+                                                <div class="drodown">
+                                                    <a href="#" class="dropdown-toggle btn btn-icon btn-trigger"
+                                                       data-bs-toggle="dropdown"><em
+                                                            class="icon ni ni-more-h"></em></a>
+                                                    <div class="dropdown-menu dropdown-menu-end">
+                                                        <ul class="link-list-opt no-bdr">
+                                                            <li><a href="{{ room.get_absolute_url }}"><em
+                                                                    class="icon ni ni-edit"></em><span>تعديل</span></a>
+                                                            </li>
+                                                            <li><a href="#"><em
+                                                                    class="icon ni ni-trash"></em><span>حذف</span></a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div><!-- .nk-tb-item  -->
+                            {% empty %}
+                                <div class="nk-tb-item">
+                                    لا يوجد غرف
+                                </div>
+                            {% endfor %}
+
+
+                        {% else %}
+                              <div class="nk-tb-item">
+                                    <div class="nk-tb-col nk-tb-col-check">
+     <div class="row">
+                                <div class="col w-100">
+                                    <div class="example-alert w-100 m-2">
+                                        <div class="alert alert-warning alert-icon" style="width: max-content">
+                                            <em class="icon ni ni-alert-circle"></em>
+                                            يجب إضافة نوع الغرف أولاً.
+                                            <a href="{% url 'room-type' hotel.slug %}" class="alert-link">
+                                                يمكنك إضافة نوع الغرف من هنا
+                                            </a>
                                         </div>
-                                    </li>
-                                </ul>
+                                    </div>
+                                </div>
+
                             </div>
-                        </div><!-- .nk-tb-item  -->
-                        {% endfor %}
+                                    </div>
+                              </div>
+                        {% endif %}
+
                     </div><!-- .nk-tb-list -->
                 </div><!-- .card-inner -->
 

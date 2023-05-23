@@ -7,12 +7,14 @@
 {% block page_title_p %}يتم تحديد أسعار المواسم حسب نوع الغرفة.{% endblock %}
 {% block page_title_btn %}
     <ul class="row g-gs">
-        <li class="col-sm-6 col-lg-3">
-            <a href="{% url 'add-season-price' hotel.slug %}" class="btn btn-primary">
-                <span>إضافة سعر </span>
-                <em class="icon ni ni-property-add"></em>
-            </a>
-        </li>
+        {% if roomType.count > 0 %}
+            <li class="col-sm-6 col-lg-3">
+                <a href="{% url 'add-season-price' hotel.slug %}" class="btn btn-primary">
+                    <span>إضافة سعر </span>
+                    <em class="icon ni ni-property-add"></em>
+                </a>
+            </li>
+        {% endif %}
     </ul>
 {% endblock %}
 {% block content %}
@@ -80,50 +82,72 @@
                                 </div>
                             </div>
                         </div><!-- .nk-tb-item -->
-                        {% for season in seasons %}
+                        {% if roomType.count > 0 %}
+                            {% for season in seasons %}
 
-                        <div class="nk-tb-item">
-                            <div class="nk-tb-col nk-tb-col-check">
+                                <div class="nk-tb-item">
+                                    <div class="nk-tb-col nk-tb-col-check">
 
-                            </div>
-                            <div class="nk-tb-col">
-                                <span class="text-primary">{{ season.roomType.get_roomType_display }}</span>
-                            </div>
-                            <div class="nk-tb-col">
-                                <span>{{season.season }} <span class="dot dot-primary d-md-none ms-1"></span></span>
-                            </div>
-                            <div class="nk-tb-col tb-col-md">
-                                <span>{{ season.season.startDate }}</span>
-                            </div>
-                            <div class="nk-tb-col tb-col-lg">
-                                <span>{{ season.season.endDate }}</span>
-                            </div>
-                            <div class="nk-tb-col tb-col-lg">
-                                <span>{{ season.price }}</span>
-                            </div>
-                            <div class="nk-tb-col nk-tb-col-tools">
-                                <ul class="nk-tb-actions gx-1">
-                                    <li>
-                                        <div class="drodown">
-                                            <a href="#" class="dropdown-toggle btn btn-icon btn-trigger"
-                                               data-bs-toggle="dropdown"><em
-                                                    class="icon ni ni-more-h"></em></a>
-                                            <div class="dropdown-menu dropdown-menu-end">
-                                                <ul class="link-list-opt no-bdr">
-                                                    <li><a href="{{ season.get_absolute_url }}"><em
-                                                            class="icon ni ni-edit"></em><span>تعديل</span></a>
-                                                    </li>
-                                                    <li><a href="#"><em
-                                                            class="icon ni ni-trash"></em><span>حذف</span></a>
-                                                    </li>
-                                                </ul>
+                                    </div>
+                                    <div class="nk-tb-col">
+                                        <span class="text-primary">{{ season.roomType.get_roomType_display }}</span>
+                                    </div>
+                                    <div class="nk-tb-col">
+                                        <span>{{ season.season }} <span
+                                                class="dot dot-primary d-md-none ms-1"></span></span>
+                                    </div>
+                                    <div class="nk-tb-col tb-col-md">
+                                        <span>{{ season.season.startDate }}</span>
+                                    </div>
+                                    <div class="nk-tb-col tb-col-lg">
+                                        <span>{{ season.season.endDate }}</span>
+                                    </div>
+                                    <div class="nk-tb-col tb-col-lg">
+                                        <span>{{ season.price }}</span>
+                                    </div>
+                                    <div class="nk-tb-col nk-tb-col-tools">
+                                        <ul class="nk-tb-actions gx-1">
+                                            <li>
+                                                <div class="drodown">
+                                                    <a href="#" class="dropdown-toggle btn btn-icon btn-trigger"
+                                                       data-bs-toggle="dropdown"><em
+                                                            class="icon ni ni-more-h"></em></a>
+                                                    <div class="dropdown-menu dropdown-menu-end">
+                                                        <ul class="link-list-opt no-bdr">
+                                                            <li><a href="{{ season.get_absolute_url }}"><em
+                                                                    class="icon ni ni-edit"></em><span>تعديل</span></a>
+                                                            </li>
+                                                            <li><a href="#"><em
+                                                                    class="icon ni ni-trash"></em><span>حذف</span></a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div><!-- .nk-tb-item  -->
+                            {% endfor %}
+                        {% else %}
+                            <div class="nk-tb-item">
+                                <div class="nk-tb-col nk-tb-col-check">
+                                    <div class="row">
+                                        <div class="col w-100">
+                                            <div class="example-alert w-100 m-2">
+                                                <div class="alert alert-warning alert-icon" style="width: max-content">
+                                                    <em class="icon ni ni-alert-circle"></em>
+                                                    يجب إضافة نوع الغرف أولاً.
+                                                    <a href="{% url 'room-type' hotel.slug %}" class="alert-link">
+                                                        يمكنك إضافة نوع الغرف من هنا
+                                                    </a>
+                                                </div>
                                             </div>
                                         </div>
-                                    </li>
-                                </ul>
+
+                                    </div>
+                                </div>
                             </div>
-                        </div><!-- .nk-tb-item  -->
-                        {% endfor %}
+                        {% endif %}
                     </div><!-- .nk-tb-list -->
                 </div><!-- .card-inner -->
 

@@ -62,12 +62,12 @@
                     <li class="nk-menu-heading">
                         <h6 class="overline-title text-primary-alt">العمليات والمتابعة</h6>
                     </li>
-                      <li class="nk-menu-item">
-                        <a href="{% url 'annual_rent' hotel.slug %}" class="nk-menu-link">
-                            <span class="nk-menu-icon"><em class="icon  ni ni-tranx-fill"></em></span>
-                            <span class="nk-menu-text">عرض غرف للإيجار السنوي</span>
-                        </a>
-                    </li><!-- .nk-menu-item -->
+{#                      <li class="nk-menu-item">#}
+{#                        <a href="{% url 'annual_rent' hotel.slug %}" class="nk-menu-link">#}
+{#                            <span class="nk-menu-icon"><em class="icon  ni ni-tranx-fill"></em></span>#}
+{#                            <span class="nk-menu-text">عرض غرف للإيجار السنوي</span>#}
+{#                        </a>#}
+{#                    </li><!-- .nk-menu-item -->#}
                     <li class="nk-menu-item has-sub">
                         <a href="#" class="nk-menu-link nk-menu-toggle">
                             <span class="nk-menu-icon"><em class="icon ni ni-calendar-booking-fill"></em></span>
@@ -145,20 +145,20 @@
                                 <a href="{% url 'payment-methods' hotel.slug %}" class="nk-menu-link"><span class="nk-menu-text">طرق الدفع</span></a>
                             </li>
                             <li class="nk-menu-item">
-                                <a href="html/hotel/invoice-list.html" class="nk-menu-link"><span class="nk-menu-text">قائمة الفواتير</span></a>
+                                <a href="" class="nk-menu-link" disabled=""><span class="nk-menu-text">قائمة الفواتير</span></a>
                             </li>
                             <li class="nk-menu-item">
-                                <a href="html/hotel/invoice-details.html" class="nk-menu-link"><span
+                                <a href="#" class="nk-menu-link"><span
                                         class="nk-menu-text">تفاصيل الفواتير</span></a>
                             </li>
                         </ul>
                     </li><!-- .nk-menu-item -->
-                    <li class="nk-menu-item">
-                        <a href="html/hotel/support.html" class="nk-menu-link">
-                            <span class="nk-menu-icon"><em class="icon ni ni-chat-circle-fill"></em></span>
-                            <span class="nk-menu-text">الدعم</span>
-                        </a>
-                    </li>
+{#                    <li class="nk-menu-item">#}
+{#                        <a href="html/hotel/support.html" class="nk-menu-link">#}
+{#                            <span class="nk-menu-icon"><em class="icon ni ni-chat-circle-fill"></em></span>#}
+{#                            <span class="nk-menu-text">الدعم</span>#}
+{#                        </a>#}
+{#                    </li>#}
                     <!-- .nk-menu-item -->
                 </ul><!-- .nk-menu -->
             </div><!-- .nk-sidebar-menu -->

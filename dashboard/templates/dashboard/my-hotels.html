@@ -7,12 +7,12 @@
 {% endblock %}
 {% block page_title_btn %}
     <ul class="row g-gs">
-        <li class="col-sm-6 col-lg-3">
-            <a href="{% url 'add-hotel' %}" class="btn btn-outline-primary btn-lg">
-                <span>البحث عن غرف للإيجار السنوي</span>
-                <em class="icon ni ni-search"></em>
-            </a>
-        </li>
+{#        <li class="col-sm-6 col-lg-3">#}
+{#            <a href="{% url 'add-hotel' %}" class="btn btn-outline-primary btn-lg">#}
+{#                <span>البحث عن غرف للإيجار السنوي</span>#}
+{#                <em class="icon ni ni-search"></em>#}
+{#            </a>#}
+{#        </li>#}
     </ul>
 {% endblock %}
 {% block content %}
@@ -51,11 +51,12 @@
                                         <span class="sub-text">{{ hotel.address }}</span>
                                     </div>
                                 </div>
-                                <ul class="team-statistics">
-                                    <li><span>213</span><span>عدد الغرف</span></li>
-                                    <li><span>87.5%</span><span>الغرف المحجوزة</span></li>
-                                    <li><span>587</span><span>الحجوزات</span></li>
-                                </ul>
+{#                                <ul class="team-statistics">#}
+{#                                    <li><span>{{ hotel.roomtype_set.count }}</span><span>عدد الغرف</span></li>#}
+{#                                    <li><span>87.5%</span><span>الغرف المحجوزة</span></li>#}
+{#                                    <li><span>587</span><span>الحجوزات</span></li>#}
+{#                                </ul>#}
+                                <br>
                                 <div class="team-view">
                                     <a href="{{ hotel.get_absolute_url }}"
                                        class="btn btn-round btn-outline-light w-150px"><span>لوحة التحكم</span></a>

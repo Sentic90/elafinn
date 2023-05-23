@@ -406,15 +406,19 @@ class CreateRoomTypeView(SuccessMessageMixin, generic.CreateView):
 class RoomListView(generic.ListView):
     model = Room
     template_name = 'dashboard/rooms/room-list.html'
-    context_object_name = 'rooms'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['hotel'] = Hotel.objects.get(slug=self.kwargs['slug'])
         try:
             context['rooms'] = Room.objects.filter(hotel__slug=self.kwargs['slug'])
-        except RoomType.DoesNotExist:
+        except Room.DoesNotExist:
             context['rooms'] = None
+
+        try:
+            context['roomType'] = RoomType.objects.filter(hotel__slug=self.kwargs['slug'])
+        except RoomType.DoesNotExist:
+            context['roomType'] = None
         return context
 
     def get_success_url(self):
@@ -431,10 +435,13 @@ def room_list(request, slug):
     slug = h.slug
     hotel = Hotel.objects.get(slug=slug)
     rooms = Room.objects.filter(roomType__hotel__slug=slug)
+    roomType = RoomType.objects.filter(hotel__slug=slug)
+
     context = {
         'hotel': hotel,
         'slug': slug,
-        'rooms': rooms
+        'rooms': rooms,
+        'roomType': roomType,
     }
     return render(request, 'dashboard/rooms/room-list.html', context)
 
@@ -445,10 +452,12 @@ def room_grid(request, slug):
     slug = h.slug
     hotel = Hotel.objects.get(slug=slug)
     rooms = Room.objects.filter(roomType__hotel__slug=slug)
+    roomType = RoomType.objects.filter(hotel__slug=slug)
     context = {
         'hotel': hotel,
         'slug': slug,
-        'rooms': rooms
+        'rooms': rooms,
+        'roomType': roomType,
     }
     return render(request, 'dashboard/rooms/room-grid.html', context)
 
@@ -537,11 +546,14 @@ def season_price_list(request, slug):
     slug = h.slug
     hotel = Hotel.objects.get(slug=slug)
     rooms = RoomType.objects.filter(hotel__slug=slug)
+    roomType = RoomType.objects.filter(hotel__slug=slug)
+
     seasons = SeasonPrice.objects.filter(roomType__hotel__slug=slug)
     context = {
         'hotel': hotel,
         'slug': slug,
         'rooms': rooms,
+        'roomType': roomType,
         'seasons': seasons
     }
     return render(request, 'dashboard/price/price_list.html', context)

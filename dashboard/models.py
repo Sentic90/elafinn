@@ -452,7 +452,7 @@ class Room(models.Model):
     status = models.IntegerField(default=2, choices=STATUS, blank=True, verbose_name='حالة الغرفة')
     is_mine = models.BooleanField(default=True, verbose_name='تحت إدارتي؟')
     owner = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='مالك الغرفة', blank=True, null=True)
-    is_view = models.CharField(max_length=250, choices=VIEW, blank=True, null=True, verbose_name='الإطلالة')
+    is_view = models.IntegerField(choices=VIEW, blank=True, null=True, verbose_name='الإطلالة')
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
