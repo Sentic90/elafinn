@@ -297,6 +297,12 @@ CANCELLATION = (
     (2, 'غير مستردة'),
 )
 
+CANCELLATION_HOURS = (
+    (1, '24 ساعة'),
+    (2, '48 ساعة'),
+    (3, '72 ساعة'),
+)
+
 RTYPE = (
     (1, 'مفردة'),
     (2, 'ثنائية'),
@@ -366,6 +372,7 @@ class Hotel(models.Model):
     mobile = models.CharField(max_length=200, verbose_name='رقم الجوال', blank=True, null=True)
     category = models.IntegerField(choices=CATEGORY, verbose_name='التصنيف')
     Cancellation_policy = models.IntegerField(choices=CANCELLATION, verbose_name='سياسة الإلغاء', blank=True, null=True)
+    Cancellation_hours = models.IntegerField(choices=CANCELLATION_HOURS, verbose_name='إلغاء الحجز بعد', blank=True, null=True)
     Check_in = models.CharField(max_length=100, verbose_name='سياسة وقت الدخول', blank=True, null=True)
     Check_out = models.CharField(max_length=100, verbose_name='سياسة وقت الخروج', blank=True, null=True)
     nationality = CountryField(multiple=True, verbose_name='جنسية الضيوف')
@@ -373,7 +380,7 @@ class Hotel(models.Model):
     about_hotel = models.TextField(verbose_name='نبذة عن الفندق', blank=True, null=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
-    logo = models.ImageField(upload_to='images/gallery/', blank=True, null=True, verbose_name='صورة رمزية')
+    logo = models.ImageField(upload_to='images/gallery/', null=True, blank=True, verbose_name='صورة رمزية')
     is_active = models.BooleanField(default=False)
     slug = models.SlugField(null=True, blank=True, unique=True)  # new
 

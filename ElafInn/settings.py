@@ -24,7 +24,7 @@ SECRET_KEY = 'django-insecure-s2csur@gfp4^-5pu+l_+)@66z@$mqax&%j3-a=lis*!#$l_ca%
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [u'elafinn.pythonanywhere.com', 'www.elafinn.com', '127.0.0.1']
 
 # Application definition
 

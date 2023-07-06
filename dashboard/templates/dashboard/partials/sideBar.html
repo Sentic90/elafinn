@@ -11,14 +11,14 @@
         </div>
         <div class="nk-sidebar-brand">
             <a href="{{ hotel.get_absolute_url }}" class="logo-link nk-sidebar-logo">
-                <img class="logo-light logo-img"
-                     src="{% static 'images/elaf-inn-high-resolution-logo-white-on-transparent-background.png' %}"
-                     srcset="{% static 'images/elaf-inn-high-resolution-logo-white-on-transparent-background.png' %}"
-                     alt="logo">
-                <img class="logo-dark logo-img"
-                     src="{% static 'images/elaf-inn-high-resolution-logo-color-on-transparent-background.png' %}"
-                     srcset="{% static 'images/elaf-inn-high-resolution-logo-color-on-transparent-background.png' %}"
-                     alt="logo-dark">
+{#                <img class="logo-light logo-img"#}
+{#                     src=""#}
+{#                     srcset=""#}
+{#                     alt="logo">#}
+{#                <img class="logo-dark logo-img"#}
+{#                     src=""#}
+{#                     srcset=""#}
+{#                     alt="logo-dark">#}
             </a>
         </div>
     </div><!-- .nk-sidebar-element -->
@@ -145,10 +145,10 @@
                                 <a href="{% url 'payment-methods' hotel.slug %}" class="nk-menu-link"><span class="nk-menu-text">طرق الدفع</span></a>
                             </li>
                             <li class="nk-menu-item">
-                                <a href="" class="nk-menu-link" disabled=""><span class="nk-menu-text">قائمة الفواتير</span></a>
+                                <a class="nk-menu-link" disabled=""><span class="nk-menu-text">قائمة الفواتير</span></a>
                             </li>
                             <li class="nk-menu-item">
-                                <a href="#" class="nk-menu-link"><span
+                                <a  class="nk-menu-link"><span
                                         class="nk-menu-text">تفاصيل الفواتير</span></a>
                             </li>
                         </ul>

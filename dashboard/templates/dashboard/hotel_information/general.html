@@ -13,7 +13,13 @@
             <div class="nk-block">
                 <div class="card card-bordered product-card w-25">
                     <div class="product-thumb">
-                        <img class="card-img-top img-circle" src="{{ hotel.logo.url }}" alt="">
+                        {% if hotel.logo %}
+                            <img class="card-img-top img-circle" src="{{ hotel.logo.url }}" alt="">
+
+                        {% else %}
+                            <img class="card-img-top img-circle" src="{% static 'images/logo-ElafInn.png' %}" alt="">
+
+                        {% endif %}
                     </div>
                 </div>
                 {% include 'dashboard/update_hotel_form.html' %}

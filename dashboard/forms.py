@@ -20,11 +20,13 @@ class HotelForm(forms.ModelForm):
         self.fields["mobile"].widget.attrs.update({"class": "form-control"})
         self.fields["category"].widget.attrs.update({"class": "form-control"})
         self.fields["Cancellation_policy"].widget.attrs.update({"class": "form-control"})
+        self.fields["Cancellation_hours"].widget.attrs.update({"class": "form-control"})
         self.fields["Check_in"].widget.attrs.update({"class": "form-control time-picker w-30"})
         self.fields["Check_out"].widget.attrs.update({"class": "form-control time-picker w-30"})
         self.fields["nationality"].widget.attrs.update({"class": "form-select js-select2 select2-hidden-accessible"})
         self.fields["about_hotel"].widget.attrs.update({"class": "form-control"})
         self.fields["logo"].widget.attrs.update({"class": "form-control"})
+        self.fields["logo"].widget.attrs['required'] = 'required'
 
 
 class HotelLocationForm(forms.ModelForm):
