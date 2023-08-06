@@ -21,10 +21,12 @@ def result(request):
 
 
 def hotel_detail(request):
+    # hotels/hotel_detail
     return render(request, 'main/hotel_detail.html')
 
 
 def payment(request):
+    # hotels/hotel_detail/payment
     return render(request, 'main/payment.html')
 
 
