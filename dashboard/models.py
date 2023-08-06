@@ -358,29 +358,41 @@ VIEW = (
 #         slug = "%s-%s" % (slug, qs.first().id)
 #     return slug
 
+
 def rand_slug():
     return ''.join(random.choice(string.ascii_letters + string.digits) for _ in range(6))
 
 
 # Create your models here.
 class Hotel(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='اسم المالك')
+    user = models.ForeignKey(
+        User, on_delete=models.CASCADE, verbose_name='اسم المالك')
     hotel_name = models.CharField(max_length=200, verbose_name='اسم الفندق')
-    city = models.CharField(max_length=200, choices=CITY, verbose_name='المدينة')
-    address = models.CharField(max_length=200, verbose_name='العنوان', blank=True, null=True)
-    tel = models.CharField(max_length=200, verbose_name='رقم الهاتف', blank=True, null=True)
-    mobile = models.CharField(max_length=200, verbose_name='رقم الجوال', blank=True, null=True)
+    city = models.CharField(
+        max_length=200, choices=CITY, verbose_name='المدينة')
+    address = models.CharField(
+        max_length=200, verbose_name='العنوان', blank=True, null=True)
+    tel = models.CharField(
+        max_length=200, verbose_name='رقم الهاتف', blank=True, null=True)
+    mobile = models.CharField(
+        max_length=200, verbose_name='رقم الجوال', blank=True, null=True)
     category = models.IntegerField(choices=CATEGORY, verbose_name='التصنيف')
-    Cancellation_policy = models.IntegerField(choices=CANCELLATION, verbose_name='سياسة الإلغاء', blank=True, null=True)
-    Cancellation_hours = models.IntegerField(choices=CANCELLATION_HOURS, verbose_name='إلغاء الحجز بعد', blank=True, null=True)
-    Check_in = models.CharField(max_length=100, verbose_name='سياسة وقت الدخول', blank=True, null=True)
-    Check_out = models.CharField(max_length=100, verbose_name='سياسة وقت الخروج', blank=True, null=True)
+    Cancellation_policy = models.IntegerField(
+        choices=CANCELLATION, verbose_name='سياسة الإلغاء', blank=True, null=True)
+    Cancellation_hours = models.IntegerField(
+        choices=CANCELLATION_HOURS, verbose_name='إلغاء الحجز بعد', blank=True, null=True)
+    Check_in = models.CharField(
+        max_length=100, verbose_name='سياسة وقت الدخول', blank=True, null=True)
+    Check_out = models.CharField(
+        max_length=100, verbose_name='سياسة وقت الخروج', blank=True, null=True)
     nationality = CountryField(multiple=True, verbose_name='جنسية الضيوف')
     is_priority = models.BooleanField(default=False, verbose_name='أولوية؟')
-    about_hotel = models.TextField(verbose_name='نبذة عن الفندق', blank=True, null=True)
+    about_hotel = models.TextField(
+        verbose_name='نبذة عن الفندق', blank=True, null=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
-    logo = models.ImageField(upload_to='images/gallery/', null=True, blank=True, verbose_name='صورة رمزية')
+    logo = models.ImageField(upload_to='images/gallery/',
+                             null=True, blank=True, verbose_name='صورة رمزية')
     is_active = models.BooleanField(default=False)
     slug = models.SlugField(null=True, blank=True, unique=True)  # new
 
@@ -392,7 +404,7 @@ class Hotel(models.Model):
             self.slug = slugify(rand_slug() + "-" + self.hotel_name)
         super().save(*args, **kwargs)
         img = Image.open(self.logo.path)
-        img = img.resize((640,480))
+        img = img.resize((640, 480))
         img.save(self.logo.path)
 
     class Meta:
@@ -401,12 +413,17 @@ class Hotel(models.Model):
     def get_absolute_url(self):
         return reverse("hotel_dashboard", kwargs={"slug": self.slug})
 
+    def get_hotel_page(self):
+        return reverse('main:hotel_detail', kwargs={"slug": self.slug})
+
 
 class HotelLocation(models.Model):
-    hotel = models.ForeignKey(Hotel, on_delete=models.CASCADE, verbose_name='اسم الفندق')
+    hotel = models.ForeignKey(
+        Hotel, on_delete=models.CASCADE, verbose_name='اسم الفندق')
     latitude = models.FloatField(blank=True, verbose_name='Latitude')
     longitude = models.FloatField(blank=True, verbose_name='Longitude')
-    hrm = models.CharField(max_length=200, verbose_name='المسافة عن الحرم', blank=True, null=True)
+    hrm = models.CharField(
+        max_length=200, verbose_name='المسافة عن الحرم', blank=True, null=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
@@ -418,26 +435,33 @@ class HotelLocation(models.Model):
 
 
 class HotelMultipleImage(models.Model):
-    hotel = models.ForeignKey(Hotel, on_delete=models.CASCADE, verbose_name='اسم الفندق')
+    hotel = models.ForeignKey(
+        Hotel, on_delete=models.CASCADE, verbose_name='اسم الفندق')
     images = models.FileField(upload_to='images/hotel_images')
     date = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-        ordering=['-date']
+        ordering = ['-date']
 
     def __str__(self):
         return str(self.date)
 
 
 class RoomType(models.Model):
-    hotel = models.ForeignKey(Hotel, on_delete=models.CASCADE, verbose_name='اسم الفندق')
-    roomType = models.IntegerField(default=1, choices=RTYPE, blank=True, verbose_name='نوع الغرفة')
-    #Delete
+    hotel = models.ForeignKey(
+        Hotel, on_delete=models.CASCADE, verbose_name='اسم الفندق')
+    roomType = models.IntegerField(
+        default=1, choices=RTYPE, blank=True, verbose_name='نوع الغرفة')
+    # Delete
     # NoOfRoom = models.IntegerField(blank=True, verbose_name='عدد الغرف من هذا النوع')
-    capacity = models.IntegerField(blank=True, verbose_name='عدد استيعاب الغرفة للأشخاص من هذا النوع')
-    Electric = MultiSelectField(choices=ELECTRIC, max_choices=7, max_length=10, null=True, verbose_name='الأجهزة الكهربائية')
-    Facilities = MultiSelectField(choices=FACILITIES, max_choices=3, max_length=10, null=True, verbose_name='المرافق')
-    Services = MultiSelectField(choices=SERVICES, max_choices=3, max_length=10, null=True,  verbose_name='الخدمات المجانية')
+    capacity = models.IntegerField(
+        blank=True, verbose_name='عدد استيعاب الغرفة للأشخاص من هذا النوع')
+    Electric = MultiSelectField(choices=ELECTRIC, max_choices=7,
+                                max_length=10, null=True, verbose_name='الأجهزة الكهربائية')
+    Facilities = MultiSelectField(
+        choices=FACILITIES, max_choices=3, max_length=10, null=True, verbose_name='المرافق')
+    Services = MultiSelectField(choices=SERVICES, max_choices=3,
+                                max_length=10, null=True,  verbose_name='الخدمات المجانية')
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
@@ -449,19 +473,31 @@ class RoomType(models.Model):
 
 
 class Room(models.Model):
-    roomType = models.ForeignKey(RoomType,on_delete=models.CASCADE, verbose_name='نوع الغرفة')
-    roomNo = models.CharField(max_length=250, blank=True, null=True, verbose_name='رقم الغرفة')
-    floor = models.CharField(max_length=250, blank=True, null=True, verbose_name='رقم الطابق')
-    capacity = models.IntegerField(blank=True, verbose_name='عدد استيعاب الغرفة للأشخاص من هذا النوع')
-    Electric = MultiSelectField(choices=ELECTRIC, max_choices=7, max_length=10, null=True, verbose_name='الأجهزة الكهربائية')
-    Facilities = MultiSelectField(choices=FACILITIES, max_choices=3, max_length=10, null=True, verbose_name='المرافق')
-    Services = MultiSelectField(choices=SERVICES, max_choices=3, max_length=10, null=True,  verbose_name='الخدمات المجانية')
-    status = models.IntegerField(default=2, choices=STATUS, blank=True, verbose_name='حالة الغرفة')
+    roomType = models.ForeignKey(
+        RoomType, on_delete=models.CASCADE, verbose_name='نوع الغرفة')
+    roomNo = models.CharField(
+        max_length=250, blank=True, null=True, verbose_name='رقم الغرفة')
+    floor = models.CharField(max_length=250, blank=True,
+                             null=True, verbose_name='رقم الطابق')
+    capacity = models.IntegerField(
+        blank=True, verbose_name='عدد استيعاب الغرفة للأشخاص من هذا النوع')
+    Electric = MultiSelectField(choices=ELECTRIC, max_choices=7,
+                                max_length=10, null=True, verbose_name='الأجهزة الكهربائية')
+    Facilities = MultiSelectField(
+        choices=FACILITIES, max_choices=3, max_length=10, null=True, verbose_name='المرافق')
+    Services = MultiSelectField(choices=SERVICES, max_choices=3,
+                                max_length=10, null=True,  verbose_name='الخدمات المجانية')
+    status = models.IntegerField(
+        default=2, choices=STATUS, blank=True, verbose_name='حالة الغرفة')
     is_mine = models.BooleanField(default=True, verbose_name='تحت إدارتي؟')
-    owner = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='مالك الغرفة', blank=True, null=True)
-    is_view = models.IntegerField(choices=VIEW, blank=True, null=True, verbose_name='الإطلالة')
+    owner = models.ForeignKey(User, on_delete=models.CASCADE,
+                              verbose_name='مالك الغرفة', blank=True, null=True)
+    is_view = models.IntegerField(
+        choices=VIEW, blank=True, null=True, verbose_name='الإطلالة')
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
+
+    # price
 
     def __str__(self):
         return self.roomNo
@@ -482,8 +518,10 @@ class Season(models.Model):
 
 
 class SeasonPrice(models.Model):
-    season = models.ForeignKey(Season, on_delete=models.CASCADE, verbose_name='الموسم')
-    roomType = models.ForeignKey(RoomType, on_delete=models.CASCADE, verbose_name='نوع الغرفة')
+    season = models.ForeignKey(
+        Season, on_delete=models.CASCADE, verbose_name='الموسم')
+    roomType = models.ForeignKey(
+        RoomType, on_delete=models.CASCADE, verbose_name='نوع الغرفة')
     price = models.CharField(max_length=250, verbose_name='السعر')
 
     def __str__(self):
@@ -494,11 +532,15 @@ class SeasonPrice(models.Model):
 
 
 class AnnualRent(models.Model):
-    hotel = models.ForeignKey(Hotel, on_delete=models.CASCADE, verbose_name='اسم الفندق')
-    rooms = models.ManyToManyField(Room, verbose_name='الغرف', related_name='rooms')
-    season = models.ForeignKey(Season, on_delete=models.CASCADE, verbose_name='الموسم')
+    hotel = models.ForeignKey(
+        Hotel, on_delete=models.CASCADE, verbose_name='اسم الفندق')
+    rooms = models.ManyToManyField(
+        Room, verbose_name='الغرف', related_name='rooms')
+    season = models.ForeignKey(
+        Season, on_delete=models.CASCADE, verbose_name='الموسم')
     price = models.CharField(max_length=250, verbose_name='السعر')
-    status = models.IntegerField(default=2, choices=RENT_STATUS, blank=True, verbose_name='حالة الغرفة')
+    status = models.IntegerField(
+        default=2, choices=RENT_STATUS, blank=True, verbose_name='حالة الغرفة')
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
@@ -508,6 +550,28 @@ class AnnualRent(models.Model):
     def get_absolute_url(self):
         return reverse("update_annual_rent", kwargs={"slug": self.hotel.slug, "pk": self.pk})
 
+
+ORDER_STATUS = (
+    ("pending", 'في الانتظار'),
+    ("proccessed", "تم الحجز"),
+    ("rejected", "مرفوض")
+)
+
+
+class Order(models.Model):
+    # user =
+    hotel = models.ForeignKey(
+        to=Hotel, on_delete=models.CASCADE, verbose_name="الفندق")
+    vat = models.FloatField(verbose_name="ضريبة القيمة المضافة")
+    total_with_vat = models.FloatField(
+        verbose_name="الاجمالي مع القيمة المضافة")
+    coupon = models.FloatField(verbose_name="كوبون خصم")
+    roomNo = models.IntegerField(verbose_name="الغرفة")
+    status = models.CharField(
+        choices=ORDER_STATUS, verbose_name="حالة الطلب", max_length=50)
+    created = models.DateTimeField(
+        auto_now_add=True, verbose_name="تاريخ الطلب")
+    updated = models.DateTimeField(auto_now=True)
 
 
 # from django.db import models

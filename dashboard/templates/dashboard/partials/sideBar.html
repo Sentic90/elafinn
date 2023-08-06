@@ -68,6 +68,20 @@
 {#                            <span class="nk-menu-text">عرض غرف للإيجار السنوي</span>#}
 {#                        </a>#}
 {#                    </li><!-- .nk-menu-item -->#}
+
+                    <!-- Booking Sidebar -->
+                    <li class="nk-menu-item has-sub">
+                        <a href="#" class="nk-menu-link nk-menu-toggle">
+                            <span class="nk-menu-icon"><em class="icon ni ni-calendar-booking-fill"></em></span>
+                            <span class="nk-menu-text">ألطلبات</span>
+                        <ul class="nk-menu-sub">
+                            <li class="nk-menu-item">
+                                <a href="{% url 'orders' hotel.slug %}" class="nk-menu-link"><span class="nk-menu-text">قائمة ألطلبات</span></a>
+                            </li>
+                        </ul>
+                    </li>
+                    <!-- end Booking Sidebar -->
+
                     <li class="nk-menu-item has-sub">
                         <a href="#" class="nk-menu-link nk-menu-toggle">
                             <span class="nk-menu-icon"><em class="icon ni ni-calendar-booking-fill"></em></span>

@@ -231,7 +231,9 @@
                                             <div class="tab-pane fade active show" id="faq_tab_1"
                                                  role="tabpanel" aria-labelledby="faq_tab_1-tab">
                                                 <div class="container p-3 ">
-                                                    <form action="{% url 'main:result' %}">
+
+                                                    <!-- filter form -->
+                                                    <form method="get" action="{% url 'main:result' %}">
                                                         <div class="container p-3">
                                                             <div class="row">
                                                                 <div class="col-lg-6">
@@ -265,6 +267,7 @@
                                                                             </div>
                                                                             <select class="form-select js-select2 form-control"
                                                                                     data-search="on"
+                                                                                    name="nationality"
                                                                             >
 
                                                                                 <option>اختر الجنسية</option>
@@ -529,7 +532,8 @@
                                                                                 </div>
                                                                                 <input class="form-control"
                                                                                        data-bs-toggle="modal"
-                                                                                       data-bs-target="#modalDefault">
+                                                                                       data-bs-target="#modalDefault"
+                                                                                       name="guests">
                                                                             </div>
                                                                         </div>
                                                                     </div>

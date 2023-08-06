@@ -109,7 +109,8 @@ class AddHotelLocation(SuccessMessageMixin, generic.CreateView):
         context = super().get_context_data(**kwargs)
         context['hotel'] = Hotel.objects.get(slug=self.kwargs['slug'])
         try:
-            context['locations'] = HotelLocation.objects.get(hotel__slug=self.kwargs['slug'])
+            context['locations'] = HotelLocation.objects.get(
+                hotel__slug=self.kwargs['slug'])
         except HotelLocation.DoesNotExist:
             context['locations'] = None
         return context
@@ -154,7 +155,8 @@ class CurrentLocation(generic.CreateView):
         context = super().get_context_data(**kwargs)
         context['hotel'] = Hotel.objects.get(slug=self.kwargs['slug'])
         try:
-            context['locations'] = HotelLocation.objects.get(hotel__slug=self.kwargs['slug'])
+            context['locations'] = HotelLocation.objects.get(
+                hotel__slug=self.kwargs['slug'])
             context['late'] = context['locations'].latitude
             context['lange'] = context['locations'].longitude
         except HotelLocation.DoesNotExist:
@@ -185,7 +187,8 @@ class UpdateHotelLocation(SuccessMessageMixin, generic.UpdateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['hotel'] = Hotel.objects.get(slug=self.kwargs['slug'])
-        context['locations'] = HotelLocation.objects.get(hotel__slug=self.kwargs['slug'])
+        context['locations'] = HotelLocation.objects.get(
+            hotel__slug=self.kwargs['slug'])
         context['late'] = context['locations'].latitude
         context['lange'] = context['locations'].longitude
         context['pk'] = context['locations'].pk
@@ -224,7 +227,8 @@ class HotelImage(generic.CreateView):
         context = super().get_context_data(**kwargs)
         context['hotel'] = Hotel.objects.get(slug=self.kwargs['slug'])
         try:
-            context['images'] = HotelMultipleImage.objects.filter(hotel__slug=self.kwargs['slug'])
+            context['images'] = HotelMultipleImage.objects.filter(
+                hotel__slug=self.kwargs['slug'])
         except HotelMultipleImage.DoesNotExist:
             context['images'] = None
         return context
@@ -323,6 +327,24 @@ def booking_edit(request, slug):
     return render(request, 'dashboard/booking/booking-edit.html', context)
 
 
+def orders(request, slug):
+    hotels = Hotel.objects.filter(user=request.user)
+    h = get_object_or_404(Hotel, slug=slug)
+    slug = h.slug
+    hotel = Hotel.objects.get(slug=slug)
+    rooms = Room.objects.filter(roomType__hotel__slug=slug)
+    context = {
+        'hotel': hotel,
+        'slug': slug,
+        'rooms': rooms
+    }
+    return render(request, 'dashboard/orders/orders.html', context)
+
+
+def orders_add(request):
+    pass
+
+
 class RoomTypeView(generic.ListView):
     model = RoomType
     form_class = RoomTypeForm
@@ -333,7 +355,8 @@ class RoomTypeView(generic.ListView):
         context = super().get_context_data(**kwargs)
         context['hotel'] = Hotel.objects.get(slug=self.kwargs['slug'])
         try:
-            context['types'] = RoomType.objects.filter(hotel__slug=self.kwargs['slug'])
+            context['types'] = RoomType.objects.filter(
+                hotel__slug=self.kwargs['slug'])
         except RoomType.DoesNotExist:
             context['types'] = None
         return context
@@ -357,7 +380,8 @@ class RoomTypeDetailView(generic.UpdateView):
         context = super().get_context_data(**kwargs)
         context['hotel'] = Hotel.objects.get(slug=self.kwargs['slug'])
         try:
-            context['types'] = RoomType.objects.filter(hotel__slug=self.kwargs['slug'])
+            context['types'] = RoomType.objects.filter(
+                hotel__slug=self.kwargs['slug'])
         except RoomType.DoesNotExist:
             context['types'] = None
         return context
@@ -385,7 +409,8 @@ class CreateRoomTypeView(SuccessMessageMixin, generic.CreateView):
         context = super().get_context_data(**kwargs)
         context['hotel'] = Hotel.objects.get(slug=self.kwargs['slug'])
         try:
-            context['types'] = RoomType.objects.filter(hotel__slug=self.kwargs['slug'])
+            context['types'] = RoomType.objects.filter(
+                hotel__slug=self.kwargs['slug'])
         except RoomType.DoesNotExist:
             context['types'] = None
         return context
@@ -411,12 +436,14 @@ class RoomListView(generic.ListView):
         context = super().get_context_data(**kwargs)
         context['hotel'] = Hotel.objects.get(slug=self.kwargs['slug'])
         try:
-            context['rooms'] = Room.objects.filter(hotel__slug=self.kwargs['slug'])
+            context['rooms'] = Room.objects.filter(
+                hotel__slug=self.kwargs['slug'])
         except Room.DoesNotExist:
             context['rooms'] = None
 
         try:
-            context['roomType'] = RoomType.objects.filter(hotel__slug=self.kwargs['slug'])
+            context['roomType'] = RoomType.objects.filter(
+                hotel__slug=self.kwargs['slug'])
         except RoomType.DoesNotExist:
             context['roomType'] = None
         return context
@@ -472,7 +499,8 @@ class CreateRoomView(SuccessMessageMixin, generic.CreateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['hotel'] = Hotel.objects.get(slug=self.kwargs['slug'])
-        context['Types'] = RoomType.objects.filter(hotel__slug=self.kwargs['slug'])
+        context['Types'] = RoomType.objects.filter(
+            hotel__slug=self.kwargs['slug'])
         return context
 
     def get_success_url(self):
@@ -525,7 +553,8 @@ class RoomDetailView(generic.UpdateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['hotel'] = Hotel.objects.get(slug=self.kwargs['slug'])
-        context['Types'] = RoomType.objects.filter(hotel__slug=self.kwargs['slug'])
+        context['Types'] = RoomType.objects.filter(
+            hotel__slug=self.kwargs['slug'])
         return context
 
     def get_success_url(self):
@@ -569,7 +598,8 @@ class CreateSeasonPriceView(SuccessMessageMixin, generic.CreateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['hotel'] = Hotel.objects.get(slug=self.kwargs['slug'])
-        context['Types'] = RoomType.objects.filter(hotel__slug=self.kwargs['slug'])
+        context['Types'] = RoomType.objects.filter(
+            hotel__slug=self.kwargs['slug'])
         return context
 
     def get_success_url(self):
@@ -596,7 +626,8 @@ class SeasonPriceDetailView(generic.UpdateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['hotel'] = Hotel.objects.get(slug=self.kwargs['slug'])
-        context['Types'] = RoomType.objects.filter(hotel__slug=self.kwargs['slug'])
+        context['Types'] = RoomType.objects.filter(
+            hotel__slug=self.kwargs['slug'])
         return context
 
     def get_success_url(self):
@@ -714,5 +745,3 @@ class AnnualRentView(SuccessMessageMixin, generic.UpdateView):
         else:
             pk = ''
         return reverse('annual_rent', kwargs={'slug': slug})
-
-

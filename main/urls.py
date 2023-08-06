@@ -12,12 +12,13 @@ urlpatterns = [
     path("search", views.search_rooms, name="search"),
     path("search_room", views.search_rooms, name="room_search"),
 
-    path("hotels/hotel_detail", views.hotel_detail, name="hotel_detail"),
-    path("hotels/hotel_detail/payment", views.payment, name="payment"),
+    path("hotels/hotel_detail/<slug:slug>/",
+         views.hotel_detail, name="hotel_detail"),
+    path("hotels/hotel_detail/orders-add", views.order_add, name="order-add"),
 
     path("register", views.register_request, name="register"),
     path("login", views.login_request, name="login"),
-    path("logout", views.logout_request, name= "logout"),
+    path("logout", views.logout_request, name="logout"),
     #
     # path('passwords_change/', views.change_password, name='change_password'),
 

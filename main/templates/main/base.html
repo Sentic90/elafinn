@@ -1,163 +1,215 @@
 <!DOCTYPE html>
 {% load static %}
 <html lang="zxx" class="js">
-
-<head>
-    <base href="../">
-    <meta charset="utf-8">
-    <meta name="author" content="Softnio">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description"
-          content="A powerful and conceptual apps base dashboard template that especially build for developers and programmers.">
+  <head>
+    <base href="../" />
+    <meta charset="utf-8" />
+    <meta name="author" content="Softnio" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <meta
+      name="description"
+      content="A powerful and conceptual apps base dashboard template that especially build for developers and programmers."
+    />
     <!-- Fav Icon  -->
-    <link rel="shortcut icon" href="{% static 'images/logo/ElafInn_icon 1.png' %}">
+    <link
+      rel="shortcut icon"
+      href="{% static 'images/logo/ElafInn_icon 1.png' %}"
+    />
     <!-- Page Title  -->
     <title>Elaf Inn</title>
     <!-- StyleSheets  -->
-    <link rel="stylesheet" href="{% static 'main/assets/css/dashlite.rtl.css' %}">
-    <link rel="stylesheet" href="{% static 'assets/css/dashlite.rtl.css' %}">
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css"/>
+    <link
+      rel="stylesheet"
+      href="{% static 'main/assets/css/dashlite.rtl.css' %}"
+    />
+    <link rel="stylesheet" href="{% static 'assets/css/dashlite.rtl.css' %}" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css"
+    />
 
-    <link id="skin-default" rel="stylesheet" href="{% static 'main/assets/css/theme.css' %}">
-
+    <link
+      id="skin-default"
+      rel="stylesheet"
+      href="{% static 'main/assets/css/theme.css' %}"
+    />
 
     <!-- Premade Skin style -->
     <style>
-        .menu-link {
-            padding: 0.5rem 1.5rem !important;
-        }
+      .menu-link {
+        padding: 0.5rem 1.5rem !important;
+      }
 
-        .fixed-bottom {
-            position: absolute !important;
-        }
-        .breadcrumb-item{
-            font-size: 12pt !important;
-        }
+      .fixed-bottom {
+        position: absolute !important;
+      }
+      .breadcrumb-item {
+        font-size: 12pt !important;
+      }
     </style>
-</head>
+  </head>
 
-<body class="nk-body bg-white npc-landing has-rtl" dir="rtl">
-<div class="nk-app-root">
-    <!-- main @s -->
-    <div class="nk-main ">
+  <body class="nk-body bg-white npc-landing has-rtl" dir="rtl">
+    <div class="nk-app-root">
+      <!-- main @s -->
+      <div class="nk-main">
         <header class="header has-header-main-s1 bg-dark" id="home">
-            <div class="header-main header-main-s1 is-sticky is-transparent on-dark">
+          <div
+            class="header-main header-main-s1 is-sticky is-transparent on-dark"
+          >
+            <div class="container header-container">
+              <div class="header-wrap">
+                <div class="header-logo">
+                  <a href="{% url 'main:login' %}" class="logo-link">
+                    <img
+                      class="logo-light logo-img"
+                      src="{% static 'images/logo/ElafInn_logo 3.png' %}"
+                      srcset=""
+                      alt="logo"
+                    />
+                    <img
+                      class="logo-dark logo-img"
+                      src="{% static 'images/logo/ElafInn_logo 3.png' %}"
+                      srcset="{% static 'images/logo/ElafInn_logo 3.png' %}"
+                      alt="logo-dark"
+                    />
+                  </a>
+                </div>
+                <div class="header-toggle">
+                  <button class="menu-toggler" data-target="mainNav">
+                    <em class="menu-on icon ni ni-menu"></em>
+                    <em class="menu-off icon ni ni-cross"></em>
+                  </button>
+                </div>
+                <!-- .header-nav-toggle -->
+                <nav class="header-menu" data-content="mainNav">
+                  <ul class="menu-list ms-lg-auto">
+                    <li class="menu-item">
+                      <a
+                        href="{% url 'main:login' %}"
+                        class="menu-link nav-link"
+                      >
+                        <em class="icon ni ni-user-alt"></em> حسابي
+                      </a>
+                    </li>
+                    {#
+                    <li class="menu-item">
+                      <a href="#feature" class="menu-link nav-link"
+                        >#} {#
+                        <em class="icon ni ni-calendar-alt"></em> حجوزاتي#} {#
+                      </a>
+                    </li>
+                    #}
+                    <li class="menu-item">
+                      <a href="#package" class="menu-link nav-link">
+                        <em class="icon ni ni-globe"></em> English
+                      </a>
+                    </li>
+                  </ul>
+                  <ul class="menu-btns"></ul>
+                </nav>
+                <!-- .nk-nav-menu -->
+              </div>
+              <!-- .header-warp-->
+            </div>
+            <!-- .container-->
+          </div>
+          <!-- .header-main-->
+          {% block search %} {% endblock %}
+        </header>
+        <!-- .header -->
 
-                <div class="container header-container">
-
-                    <div class="header-wrap">
-                        <div class="header-logo">
-                            <a href="{% url 'main:login' %}" class="logo-link">
-                                <img class="logo-light logo-img"
-                                     src="{% static 'images/logo/ElafInn_logo 3.png' %}"
-                                     srcset=""
-                                     alt="logo" >
-                                <img class="logo-dark logo-img"
-                                     src="{% static 'images/elaf-inn-high-resolution-logo-black-on-transparent-background.png' %}"
-                                     srcset="{% static 'images/elaf-inn-high-resolution-logo-black-on-transparent-background.png' %}"
-                                     alt="logo-dark">
-                            </a>
-                        </div>
-                        <div class="header-toggle">
-                            <button class="menu-toggler" data-target="mainNav">
-                                <em class="menu-on icon ni ni-menu"></em>
-                                <em class="menu-off icon ni ni-cross"></em>
-                            </button>
-                        </div><!-- .header-nav-toggle -->
-                        <nav class="header-menu" data-content="mainNav">
-                            <ul class="menu-list ms-lg-auto">
-                                <li class="menu-item"><a href="{% url 'main:login' %}" class="menu-link nav-link">
-                                    <em class="icon ni ni-user-alt"></em> حسابي
-                                </a></li>
-{#                                <li class="menu-item"><a href="#feature" class="menu-link nav-link">#}
-{#                                    <em class="icon ni ni-calendar-alt"></em> حجوزاتي#}
-{#                                </a></li>#}
-                                <li class="menu-item"><a href="#package" class="menu-link nav-link">
-                                    <em class="icon ni ni-globe"></em> English
-                                </a></li>
-                            </ul>
-                            <ul class="menu-btns">
-                            </ul>
-                        </nav><!-- .nk-nav-menu -->
-                    </div><!-- .header-warp-->
-                </div><!-- .container-->
-            </div><!-- .header-main-->
-            {% block search %}
-            {% endblock %}
-        </header
-        ><!-- .header -->
-
-        {% block content %}
-
-        {% endblock %}
+        {% block content %} {% endblock %}
 
         <div class="nk-footer nk-auth-footer-full">
-            <div class="container wide-lg">
-                <div class="row g-3">
-                    <div class="col-lg-6 order-lg-last">
-                        <ul class="nav nav-sm justify-content-center justify-content-lg-end">
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">الشروط والأحكام</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">سياسة الخصوصية</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">المساعدة</a>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="nk-block-content text-center text-lg-right" dir="ltr">
-                            <p class="text-soft">&copy; 2023 ElafInn. All Rights Reserved.</p>
-                        </div>
-                    </div>
+          <div class="container wide-lg">
+            <div class="row g-3">
+              <div class="col-lg-6 order-lg-last">
+                <ul
+                  class="nav nav-sm justify-content-center justify-content-lg-end"
+                >
+                  <li class="nav-item">
+                    <a class="nav-link" href="#">الشروط والأحكام</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="#">سياسة الخصوصية</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="#">المساعدة</a>
+                  </li>
+                </ul>
+              </div>
+              <div class="col-lg-6">
+                <div
+                  class="nk-block-content text-center text-lg-right"
+                  dir="ltr"
+                >
+                  <p class="text-soft">
+                    &copy; 2023 ElafInn. All Rights Reserved.
+                  </p>
                 </div>
+              </div>
             </div>
+          </div>
         </div>
+      </div>
+      <!-- main @e -->
     </div>
-    <!-- main @e -->
-</div>
-<!-- app-root @e -->
-<!-- JavaScript -->
-<script src="{% static 'main/assets/js/bundle.js' %}"></script>
-<script src="{% static 'main/assets/js/scripts.js' %}"></script>
+    <!-- app-root @e -->
+    <!-- JavaScript -->
+    <script src="{% static 'main/assets/js/bundle.js' %}"></script>
+    <script src="{% static 'main/assets/js/scripts.js' %}"></script>
 
-<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
-<script>
-    $('.date-picker-range').datepicker({});
+    <script
+      type="text/javascript"
+      src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"
+    ></script>
+    <script>
+      $(".date-picker-range").datepicker({});
 
-    $(function () {
-
+      $(function () {
         $('input[name="datefilter"]').daterangepicker({
-            autoUpdateInput: false,
-            autoApply: false,
-            showCustomRangeLabel: false,
-            locale: {
-                cancelLabel: 'مسح',
-                applyLabel: 'حفظ التاريخ'
-            }
+          autoUpdateInput: false,
+          autoApply: false,
+          showCustomRangeLabel: false,
+          locale: {
+            cancelLabel: "مسح",
+            applyLabel: "حفظ التاريخ",
+          },
         });
 
-        $('input[name="datefilter"]').on('apply.daterangepicker', function (ev, picker) {
-            $(this).val(picker.startDate.format('DD/MM/YYYY') + ' إلى تاريخ ' + picker.endDate.format('DD/MM/YYYY'));
-        });
+        $('input[name="datefilter"]').on(
+          "apply.daterangepicker",
+          function (ev, picker) {
+            $(this).val(
+              picker.startDate.format("DD/MM/YYYY") +
+                " إلى تاريخ " +
+                picker.endDate.format("DD/MM/YYYY")
+            );
+          }
+        );
 
-        $('input[name="datefilter"]').on('cancel.daterangepicker', function (ev, picker) {
-            $(this).val('');
-        });
+        $('input[name="datefilter"]').on(
+          "cancel.daterangepicker",
+          function (ev, picker) {
+            $(this).val("");
+          }
+        );
+      });
+    </script>
 
-    });
-
-</script>
-
-<script>
-    setTimeout(function () {
-        document.getElementById('message').style.display = 'none';
-    }, 3000);
-</script>
-
-</body>
-
+    <script>
+      setTimeout(function () {
+        document.getElementById("message").style.display = "none";
+      }, 3000);
+    </script>
+  </body>
 </html>

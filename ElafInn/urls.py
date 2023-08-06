@@ -24,9 +24,10 @@ urlpatterns = [
     path('i18n/', include('django.conf.urls.i18n')),
 ]
 urlpatterns += i18n_patterns(
-        path('', include('dashboard.urls')),
-        path('', include('main.urls')),
-        path('virtual/', include('virtual.urls')),
-    )
+    path('', include('dashboard.urls')),
+    path('', include('main.urls'), name='main'),
+    path('virtual/', include('virtual.urls')),
+)
 if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    urlpatterns += static(settings.MEDIA_URL,
+                          document_root=settings.MEDIA_ROOT)

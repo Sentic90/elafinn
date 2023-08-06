@@ -5,7 +5,8 @@ from django.contrib.auth.forms import AuthenticationForm  # add this
 from django.contrib.auth import login, authenticate, logout
 from django.db.models import Q
 from datetime import datetime, timedelta
-from .models import Hotel, Room, Reservation
+from .models import Reservation
+from dashboard.models import Hotel, Room
 from .forms import SearchForm, RoomSearchForm
 from django.shortcuts import render
 from itertools import groupby
@@ -17,17 +18,20 @@ def index(request):
 
 
 def result(request):
-    return render(request, 'main/result.html')
+    # hotels/
+    hotels = Hotel.objects.filter(id=1)
+    return render(request, 'main/result.html', {'hotels': hotels})
 
 
-def hotel_detail(request):
+def hotel_detail(request, slug):
+    hotel = Hotel.objects.get(slug=slug)
     # hotels/hotel_detail
-    return render(request, 'main/hotel_detail.html')
+    return render(request, 'main/hotel_detail.html', {'hotel': hotel})
 
 
-def payment(request):
+def order_add(request):
     # hotels/hotel_detail/payment
-    return render(request, 'main/payment.html')
+    return render(request, 'main/order-add.html')
 
 
 def register_request(request):
@@ -38,7 +42,8 @@ def register_request(request):
             login(request, user)
             messages.success(request, "تم إنشاء الحساب بنجاح.")
             return redirect("main:login")
-        messages.error(request, "لم يتم إنشاء الحساب. الرجاء التأكد من المعلومات المدخلة.")
+        messages.error(
+            request, "لم يتم إنشاء الحساب. الرجاء التأكد من المعلومات المدخلة.")
     form = NewUserForm()
     return render(request=request, template_name="main/register.html", context={"register_form": form})
 
@@ -55,7 +60,8 @@ def login_request(request):
                 messages.info(request, f"تم تسجيل دخولك بنجاح {username}.")
                 return redirect("my-hotel")
             else:
-                messages.error(request, "خطأ في البريد الإلكتروني أو كلمة المرور.")
+                messages.error(
+                    request, "خطأ في البريد الإلكتروني أو كلمة المرور.")
         else:
             messages.error(request, "خطأ في البريد الإلكتروني أو كلمة المرور.")
     form = AuthenticationForm()
@@ -142,14 +148,18 @@ def search_rooms(request):
             to_date = form.cleaned_data.get('to_date')
             guest_nationality = form.cleaned_data.get('guest_nationality')
 
-            hotels = Hotel.objects.filter(city__icontains=city, nationality__icontains=guest_nationality)
+            hotels = Hotel.objects.filter(
+                city__icontains=city, nationality__icontains=guest_nationality)
 
             available_rooms = []
             for hotel in hotels:
-                rm = Room.objects.filter(hotel=hotel, room_capacity__gte=num_guests, is_available=True)
-                rooms = rm.values('hotel__name', 'room_number', 'room_capacity').annotate(num_rooms=Count('hotel__id'))
+                rm = Room.objects.filter(
+                    hotel=hotel, room_capacity__gte=num_guests, is_available=True)
+                rooms = rm.values('hotel__name', 'room_number', 'room_capacity').annotate(
+                    num_rooms=Count('hotel__id'))
                 for room in rooms:
-                    reservations = Reservation.objects.filter(room__room_number=room)
+                    reservations = Reservation.objects.filter(
+                        room__room_number=room)
                     reserved_dates = []
                     for reservation in reservations:
                         check_in = reservation.check_in_date
