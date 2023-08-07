@@ -341,8 +341,7 @@ def orders(request, slug):
     return render(request, 'dashboard/orders/orders.html', context)
 
 
-def orders_add(request):
-    pass
+
 
 
 class RoomTypeView(generic.ListView):

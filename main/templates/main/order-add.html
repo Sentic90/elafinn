@@ -148,13 +148,14 @@
                         <div class="col box-shdow">
                             <h5 class="">بيانات النزيل</h5>
                             <br>
-                            <form action="#">
+                            <form method="post" action="{%url 'main:order-create' hotel.slug room.id%}">
+                                {% csrf_token %}
                                 <div class="row g-4">
                                     <div class="col-lg-12">
                                         <div class="form-group">
                                             <label class="form-label" for="full-name-1">الاسم الكامل</label>
                                             <div class="form-control-wrap">
-                                                <input type="text" class="form-control" id="full-name-1">
+                                                <input type="text" value="Test guests" class="form-control" id="full-name-1" name="full_name" required>
                                             </div>
                                         </div>
                                     </div>
@@ -162,7 +163,7 @@
                                         <div class="form-group">
                                             <label class="form-label" for="email-address-1">البريد الإلكتروني</label>
                                             <div class="form-control-wrap">
-                                                <input type="text" class="form-control" id="email-address-1">
+                                                <input type="text" value="example@gmail.com" class="form-control" name="email" id="email-address-1" required>
                                             </div>
                                         </div>
                                     </div>
@@ -170,7 +171,15 @@
                                         <div class="form-group">
                                             <label class="form-label" for="phone-no-1">رقم الجوال</label>
                                             <div class="form-control-wrap">
-                                                <input type="text" class="form-control" id="phone-no-1">
+                                                <input type="text" value="+96612345678"class="form-control" name="phone" id="phone-no-1" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label class="form-label" for="number-of-guests">عدد الزوار</label>
+                                            <div class="form-control-wrap">
+                                                <input type="number" value="1" name="gustes" class="form-control" id="number-of-guests" required>
                                             </div>
                                         </div>
                                     </div>
@@ -191,58 +200,21 @@
                                             </ul>
                                         </div>
                                     </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                    <div class="row mb-3">
-                        <div class="col box-shdow">
-                            <h5>طرق الدفع</h5>
-                            <br>
-                            <form action="#">
-                                <div class="row">
-
-
-                                    <div class="col-lg-6">
-                                        <div class="form-group">
-                                            <label class="form-label" for="cf-full-name">رقم البطاقة</label>
-                                            <input type="text" class="form-control" id="cf-full-name">
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="form-group">
-                                            <label class="form-label" for="cf-email-address">اسم حامل البطاقة</label>
-                                            <input type="text" class="form-control" id="cf-email-address">
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="form-group">
-                                            <label class="form-label" for="cf-phone-no">تاريخ الانتهاء</label>
-                                            <input type="text" class="form-control" id="cf-phone-no">
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="form-group">
-                                            <label class="form-label" for="cf-subject">رمز الحماية</label>
-                                            <input type="text" class="form-control" id="cf-subject">
+                                    <div class="row mt-5 justify-content-center" style="height: 20vh">
+                                        <div class="col text-center">
+                                            <div class="form-group">
+                                                <button type="submit" class="btn btn-xl btn-primary">أرسال الطلب</button>
+                                                <p class="pt-1" style="font-size: small">
+                                                    بإكمال هذه العملية ، انت تقر بأنك قمت بمراجعة وقبول الشروط المذكورة في
+                                                    الرابط
+                                                    <a href="" class="color-lahmi sq-md" style="font-size: small">الشروط
+                                                        والأحكام</a>.
+    
+                                                </p>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row mt-5 justify-content-center" style="height: 20vh">
-                                    <div class="col text-center">
-                                        <div class="form-group">
-                                            <button type="submit" class="btn btn-xl btn-primary">أرسال الطلب</button>
-                                            <p class="pt-1" style="font-size: small">
-                                                بإكمال هذه العملية ، انت تقر بأنك قمت بمراجعة وقبول الشروط المذكورة في
-                                                الرابط
-                                                <a href="" class="color-lahmi sq-md" style="font-size: small">الشروط
-                                                    والأحكام</a>.
-
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-
                             </form>
                         </div>
                     </div>
@@ -263,10 +235,10 @@
                             </div>
                             <p class="product-title m-0" style="text-align: right; font-size: 12pt">
                                 <a href="html/product-details.html">
-                                    فندق ابيات النسيم
+                                    {{ hotel.hotel_name}}
                                 </a>
                             <p class="text-gray" style="font-weight: normal; font-size: 9pt">
-                                شارع اجياد، مكة المكرمة
+                                {{hotel.address}}
                             </p>
                             <div class="row">
                                 <div class="col">
@@ -291,7 +263,7 @@
                             <div class="row">
                                 <div class="col">
                                     <br>
-                                    <p class="fw-bold m-0">Double Room</p>
+                                    <p class="fw-bold m-0">{{ room.roomType}}</p>
                                     <p class="m-0 text-soft">ROOM ONLY</p>
                                     <p class="text-danger">
                                         غير قابل للاسترجاع
@@ -299,7 +271,7 @@
                                             <i class="fal fa-info-circle"></i>
                                         </a>
                                     </p>
-                                    <span class="tb-amount fw-bold">102.99<span
+                                    <span class="tb-amount fw-bold">{{ room.price}}<span
                                             class="currency"> SAR</span>
                                     </span>
                                 </div>

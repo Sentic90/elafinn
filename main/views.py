@@ -6,11 +6,12 @@ from django.contrib.auth import login, authenticate, logout
 from django.db.models import Q, Sum
 from datetime import datetime, timedelta
 from .models import Reservation
-from dashboard.models import Hotel, Room
+from dashboard.models import Hotel, Room, Order
 from .forms import SearchForm, RoomSearchForm
 from django.shortcuts import render
 from itertools import groupby
 from django.db.models import Count
+from django.http import HttpResponse
 
 
 def index(request):
@@ -37,7 +38,9 @@ def result(request):
         queryset = queryset.filter(nationality__contains=nationality)
     if guests:
         # Avaliabe accomadion space in hotels
+        request.session['guests_number'] = guests
         queryset = queryset.filter(Q(room__capacity__gte=int(guests)) & Q(room__status=2))
+        
         return render(request, 'main/result.html', {'hotels': queryset})    
     return render(request, 'main/result.html', {'hotels': queryset})    
     
@@ -49,10 +52,26 @@ def hotel_detail(request, slug):
     return render(request, 'main/hotel_detail.html', {'hotel': hotel})
 
 
-def order_add(request):
-    # hotels/hotel_detail/payment
-    return render(request, 'main/order-add.html')
+def order_add(request, slug, roomId):
+    if request.method == 'GET':
+        hotel = Hotel.objects.filter(slug=slug)[0]
+        room = Room.objects.filter(id=roomId)[0]
+        return render(request, 'main/order-add.html', {'hotel': hotel, 'room':room})
+        
 
+    # hotels/hotel_detail/payment
+
+def order_create(request, slug, roomId):
+    if request.method=='POST':
+        hotel = Hotel.objects.get(slug=slug)
+        room = Room.objects.get(id=roomId)
+        Order.objects.create(
+            hotel=hotel, 
+            room=room,
+            total_with_vat=150
+        )
+        return render(request, 'main/success_order.html')
+        
 
 def register_request(request):
     if request.method == "POST":

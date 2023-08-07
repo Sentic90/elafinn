@@ -44,8 +44,8 @@ urlpatterns = [
 
     # <------------ Orders ------------>
     path('dashboard/my_hotel/<slug:slug>/orders', views.orders, name='orders'),
-    path('dashboard/my_hotel/<slug:slug>/orders/add',
-         views.orders_add, name='order-add'),
+#     path('dashboard/my_hotel/<slug:slug>/orders/add',
+#          views.orders_add, name='order-add'),
     #     path('dashboard/my_hotel/<slug:slug>/orders/edit',
     #          views.orders_edit, name='order-edit'),
 

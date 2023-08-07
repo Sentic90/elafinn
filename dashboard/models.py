@@ -415,6 +415,9 @@ class Hotel(models.Model):
     def get_hotel_page(self):
         return reverse('main:hotel_detail', kwargs={"slug": self.slug})
 
+    @property
+    def rooms(self):
+        return self.room_set.filter(status=2)
     @property 
     def total_room(self):
         return self.room_set.all().count()
@@ -508,7 +511,7 @@ class Room(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
-    # price
+    price = models.FloatField(verbose_name='سعر الغرفة')
 
     def __str__(self):
         return self.roomNo
@@ -573,13 +576,13 @@ class Order(models.Model):
     # user =
     hotel = models.ForeignKey(
         to=Hotel, on_delete=models.CASCADE, verbose_name="الفندق")
-    vat = models.FloatField(verbose_name="ضريبة القيمة المضافة")
+    vat = models.FloatField(verbose_name="ضريبة القيمة المضافة", default=7)
     total_with_vat = models.FloatField(
         verbose_name="الاجمالي مع القيمة المضافة")
-    coupon = models.FloatField(verbose_name="كوبون خصم")
-    roomNo = models.IntegerField(verbose_name="الغرفة")
+    coupon = models.FloatField(verbose_name="كوبون خصم", default=1)
+    room = models.ForeignKey(to=Room,on_delete=models.CASCADE,verbose_name="الغرفة")
     status = models.CharField(
-        choices=ORDER_STATUS, verbose_name="حالة الطلب", max_length=50)
+        choices=ORDER_STATUS, verbose_name="حالة الطلب", max_length=50, default="pending")
     created = models.DateTimeField(
         auto_now_add=True, verbose_name="تاريخ الطلب")
     updated = models.DateTimeField(auto_now=True)
