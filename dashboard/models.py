@@ -4,7 +4,6 @@ import string
 from django.db import models
 from multiselectfield import MultiSelectField
 from django.contrib.auth.models import AbstractUser, User
-
 from django_countries.fields import CountryField
 from PIL import Image
 from django.urls import reverse
@@ -416,6 +415,18 @@ class Hotel(models.Model):
     def get_hotel_page(self):
         return reverse('main:hotel_detail', kwargs={"slug": self.slug})
 
+    @property 
+    def total_room(self):
+        return self.room_set.all().count()
+
+    @property
+    def total_capacity(self):
+        return self.room_set.all().aggregate(total_capacity=models.Sum('capacity'))['total_capacity']
+
+    @property 
+    def accomadate_space(self):
+        return self.room_set.filter(status=2).aggregate(accomadate_space=models.Sum('capacity'))['accomadate_space']
+
 
 class HotelLocation(models.Model):
     hotel = models.ForeignKey(
@@ -490,7 +501,7 @@ class Room(models.Model):
     status = models.IntegerField(
         default=2, choices=STATUS, blank=True, verbose_name='حالة الغرفة')
     is_mine = models.BooleanField(default=True, verbose_name='تحت إدارتي؟')
-    owner = models.ForeignKey(User, on_delete=models.CASCADE,
+    hotel = models.ForeignKey(Hotel, on_delete=models.CASCADE,
                               verbose_name='مالك الغرفة', blank=True, null=True)
     is_view = models.IntegerField(
         choices=VIEW, blank=True, null=True, verbose_name='الإطلالة')

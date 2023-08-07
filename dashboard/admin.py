@@ -1,11 +1,14 @@
 from django.contrib import admin
-
+from django.db.models import Count
 # Register your models here.
 from .models import *
 
 
+class HotelAdmin(admin.ModelAdmin):
+    list_display = ['hotel_name', 'total_room', 'total_capacity', 'accomadate_space']
+
 class RoomAdmin(admin.ModelAdmin):
-    list_display = ['roomNo', 'status', 'owner']
+    list_display = ['roomNo', 'status','capacity', 'hotel']
 
 
 class OrderAdmin(admin.ModelAdmin):
@@ -14,7 +17,7 @@ class OrderAdmin(admin.ModelAdmin):
     readonly_fields = ['vat', 'total_with_vat', 'created']
 
 
-admin.site.register(Hotel)
+admin.site.register(Hotel, HotelAdmin)
 admin.site.register(Order, OrderAdmin)
 admin.site.register(HotelLocation)
 admin.site.register(HotelMultipleImage)

@@ -1,0 +1,87 @@
+{% load static %}
+
+{% for hotel in hotels %}
+<!-- Hotel row -->
+<div class="col-xxl-12 col-lg-12 col-md-12 col-sm-12" style="">
+    <div class="card card-bordered product-card box-shdow"
+         style="border-radius: 10px">
+        <div class="row">
+            <div class="col-4">
+                <div class="product-thumb">
+                    <a href="{{ hotel.get_hotel_page}}">
+                        <img class="card-img-top"
+                             style="max-height: 180px !important; width: 100% !important;"
+                             src="{{ hotel.logo.url}}"
+                             alt="">
+                    </a>
+                    <ul class="product-actions">
+                        <li><a href="#"><em class="icon ni ni-cart"></em></a></li>
+                        <li><a href="#"><em class="icon ni ni-heart"></em></a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card-inner mt-2">
+                    <h5 class="product-title">
+                        <a href="{{ hotel.get_hotel_page}}">
+                            {{ hotel.hotel_name}}
+                        </a>
+                    </h5>
+                    <div class="product-rating">
+                        <ul class="rating" style="font-size: x-small">
+                            <li><em class="icon ni ni-star-fill"></em></li>
+                            <li><em class="icon ni ni-star-fill"></em></li>
+                            <li><em class="icon ni ni-star"></em></li>
+                            <li><em class="icon ni ni-star"></em></li>
+                            <li><em class="icon ni ni-star"></em></li>
+                        </ul>
+                    </div>
+                    <div class="d-none d-lg-block">
+                        <ul class="nk-msg-tags">
+                            <li>
+                                <span class="label-tag">
+                                    <em class="icon ni ni-map-pin"></em>
+                                    <span>مكة المكرمة، شارع اجياد</span>
+                                </span>
+                            </li>
+                        </ul>
+                    </div>
+                    <ul class="list-status mt-4" style="font-size: 10pt">
+                        <li>
+                            <img class="kabba" src="{% static 'images/kaaba.png' %}"
+                                 alt="">
+                            </i>
+                            <span>يبعد 0.2 كم عن الحرم</span>
+                        </li>
+                        <li>
+                            <img class="kabba"
+                                 src="{% static 'images/bed-solid.svg' %}" alt="">
+                            <span>يتسع لـ {{ hotel.total_capacity}} ضيف</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-3  text-center result-price-box">
+                <div class="product-price text-dark h5"><small
+                        class="text-muted del fs-13px">169</small> 120
+                    <br>
+                    <span style="font-size: 10px; font-weight: lighter; color: #3a4553">
+                        SAR / اجمالي الليالي
+                        شامل الضريبة والخدمة
+
+                    </span>
+                </div>
+
+                <div>
+                    <a href="#"
+                       class="btn btn-outline-secondary">اختر الغرف</a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Hotel row -->
+
+{% endfor %}
+<!-- End Hotels rows Loop -->

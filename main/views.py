@@ -3,7 +3,7 @@ from .forms import NewUserForm
 from django.contrib import messages
 from django.contrib.auth.forms import AuthenticationForm  # add this
 from django.contrib.auth import login, authenticate, logout
-from django.db.models import Q
+from django.db.models import Q, Sum
 from datetime import datetime, timedelta
 from .models import Reservation
 from dashboard.models import Hotel, Room
@@ -18,9 +18,29 @@ def index(request):
 
 
 def result(request):
-    # hotels/
-    hotels = Hotel.objects.filter(id=1)
-    return render(request, 'main/result.html', {'hotels': hotels})
+    # GET:  hotels/
+    queryset = Hotel.objects.filter(is_active=True)
+
+    # Queries params 
+    city = request.GET.get('city', '')
+    guests = request.GET.get("guests", '')
+    nationality = request.GET.get("nationality")#TODO
+    # datefilter = request.GET.get("datefilter")#TODO    
+
+    """
+      Search Algorithm
+        - filter by city -> nationality -> number of guests
+    """
+    if city:
+        queryset = queryset.filter(city=city)
+    if nationality: 
+        queryset = queryset.filter(nationality__contains=nationality)
+    if guests:
+        # Avaliabe accomadion space in hotels
+        queryset = queryset.filter(Q(room__capacity__gte=int(guests)) & Q(room__status=2))
+        return render(request, 'main/result.html', {'hotels': queryset})    
+    return render(request, 'main/result.html', {'hotels': queryset})    
+    
 
 
 def hotel_detail(request, slug):
