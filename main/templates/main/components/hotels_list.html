@@ -1,5 +1,6 @@
 {% load static %}
 
+{% if hotels %}
 {% for hotel in hotels %}
 <!-- Hotel row -->
 <div class="col-xxl-12 col-lg-12 col-md-12 col-sm-12" style="">
@@ -82,6 +83,9 @@
     </div>
 </div>
 <!-- End Hotel row -->
-
 {% endfor %}
+{% else %}
+    <h1>No results</h1>
+{% endif %}
+
 <!-- End Hotels rows Loop -->

@@ -12,7 +12,7 @@ class RoomAdmin(admin.ModelAdmin):
 
 
 class OrderAdmin(admin.ModelAdmin):
-    list_display = ['hotel', 'status', 'total_with_vat']
+    list_display = ['hotel', 'status', 'total_with_vat', 'full_name', 'email']
 
     readonly_fields = ['vat', 'total_with_vat', 'created']
 

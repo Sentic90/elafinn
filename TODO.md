@@ -1,8 +1,28 @@
 ## TAKEWAY 
     - hotel.user.room_set.all()
 
+## TODO 
+    - Seasons package active or disabled 
+    - User have to register create accounts
+    - dashboard for customers 
+    - button disabled 
+    - Hotel details 
+    - Owner of rooms if rented 
+    - add year field to seasons
+    - Orders -> Booking
+
+
+
+##  searching (done)
+##  Hotel Details page (done)
+##  Sending Order (done)
+##  
+##
 ## search hotels 
+    * The owner of Room is the Hotel not user 
     * I need to calculate the avaliable guests foreach hotel
+    * matching nationality 
+    * city Makkah | Madinah
 
     - Queries:
         guests 

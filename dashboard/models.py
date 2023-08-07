@@ -573,7 +573,9 @@ ORDER_STATUS = (
 
 
 class Order(models.Model):
-    # user =
+    full_name = models.CharField(max_length=255, verbose_name='الاسم كامل')
+    email = models.EmailField(verbose_name='البريد الالكتروني')
+    phone = models.CharField(max_length=255, verbose_name="رقم الهاتف")
     hotel = models.ForeignKey(
         to=Hotel, on_delete=models.CASCADE, verbose_name="الفندق")
     vat = models.FloatField(verbose_name="ضريبة القيمة المضافة", default=7)

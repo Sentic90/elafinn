@@ -1,0 +1,62 @@
+
+{% for order in orders %}
+<div class="nk-tb-item">
+    <div class="nk-tb-col nk-tb-col-check">
+        <div class="custom-control custom-control-sm custom-checkbox notext">
+            <input type="checkbox" class="custom-control-input" id="uid2">
+            <label class="custom-control-label" for="uid2"></label>
+        </div>
+    </div>
+    <div class="nk-tb-col">
+        <span class="text-primary">{{order.id}}</span>
+    </div>
+    <div class="nk-tb-col">
+        <div class="user-card">
+            <div class="user-avatar">
+                <img src="./images/avatar/a-sm.jpg" alt="">
+            </div>
+            <div class="user-info">
+                <span class="tb-lead">{{order.full_name}} <span class="dot dot-warning d-md-none ms-1"></span></span>
+                <span>{{ order.email}}</span>
+            </div>
+        </div>
+    </div>
+    <div class="nk-tb-col tb-col-mb">
+        <span>Strater </span>
+    </div>
+    <div class="nk-tb-col tb-col-md">
+        <span class="tb-status text-warning">Pending</span>
+    </div>
+    <div class="nk-tb-col tb-col-lg">
+        <span>{{ order.room.roomType}}</span>
+    </div>
+    <div class="nk-tb-col tb-col-xxl">
+        <span>+124 394-1787</span>
+    </div>
+    <div class="nk-tb-col tb-col-lg">
+        <span>{{ order.created}}</span>
+    </div>
+    <div class="nk-tb-col tb-col-xxl">
+        <span>08 Feb 2021</span>
+    </div>
+    <div class="nk-tb-col tb-col-md">
+        <span class="tb-status text-warning">Due</span>
+    </div>
+    <div class="nk-tb-col nk-tb-col-tools">
+        <ul class="nk-tb-actions gx-1">
+            <li>
+                <div class="drodown">
+                    <a href="#" class="dropdown-toggle btn btn-icon btn-trigger" data-bs-toggle="dropdown"><em class="icon ni ni-more-h"></em></a>
+                    <div class="dropdown-menu dropdown-menu-end">
+                        <ul class="link-list-opt no-bdr">
+                            <li><a href="#"><em class="icon ni ni-mail-fill"></em><span>إرسال بريد</span></a></li>
+                            <li><a href="{% url 'booking-edit' hotel.slug %}"><em class="icon ni ni-edit-fill"></em><span>تعديل</span></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div><!-- .nk-tb-item -->
+
+{% endfor %}

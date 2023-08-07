@@ -327,16 +327,17 @@ def booking_edit(request, slug):
     return render(request, 'dashboard/booking/booking-edit.html', context)
 
 
+# @login_required TODO
 def orders(request, slug):
     hotels = Hotel.objects.filter(user=request.user)
     h = get_object_or_404(Hotel, slug=slug)
     slug = h.slug
     hotel = Hotel.objects.get(slug=slug)
-    rooms = Room.objects.filter(roomType__hotel__slug=slug)
+    orders = Order.objects.filter(hotel=h)
     context = {
-        'hotel': hotel,
-        'slug': slug,
-        'rooms': rooms
+        'hotel':hotel,
+        'orders': orders,
+        'slug': slug
     }
     return render(request, 'dashboard/orders/orders.html', context)
 
