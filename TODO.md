@@ -3,10 +3,10 @@
 
 ## TODO 
     - Seasons package active or disabled 
-    - User have to register create accounts
+    - User have to register create accounts 
     - dashboard for customers 
     - button disabled 
-    - Hotel details 
+    - Hotel details page 80%
     - Owner of rooms if rented 
     - add year field to seasons
     - Orders -> Booking
@@ -49,7 +49,24 @@
     # total_room
     # total_capacity
     # accomadate_space
+    # rooms
 
+
+## ROOM:
+    - roomType
+    - roomNo
+    - floor
+    - capacity
+    - Electric
+    - Facilities
+    - Services
+    - status
+    - is_mine
+    - hotel
+    - is_view
+    - created
+    - updated
+    - price
 ## Tools:
     - django_toolbar
     - django_extentions
