@@ -134,10 +134,10 @@
                     <p>الوجهة: <span> مكة المكرمة</span></p>
                 </div>
                 <div class="col-4">
-                    <p>تاريخ الوصول: <span> 2023/03/07م</span> إلى تاريخ <span> 2023/03/13م</span></p>
+                    <p>تاريخ الوصول: <span> {{start_date}}م</span> إلى تاريخ <span> {{end_date}}م</span></p>
                 </div>
                 <div class="col">
-                    <p>عدد الأشخاص: <span> 25</span></p>
+                    <p>عدد الأشخاص: <span> {% if not guests_number%}غير محدد{%else%}{{guests_number}}{%endif%}</span></p>
                 </div>
                 <div class="col">
                     <a href="" class="btn btn-outline-secondary">تعديل البحث</a>
@@ -257,10 +257,22 @@
                                 <div class="nk-block-head nk-block-head-sm">
                                     <div class="nk-block-between">
                                         <div class="nk-block-head-content w-75">
+
+                                            {% if hotels.count%}
                                             <h6 class="text-center"
                                                 style="font-weight: normal; color: #21ad21;">
                                                 <em class="icon ni ni-check-circle"></em>
-                                                تم العثور على (30) فندق/فنادق</h6>
+                                                تم العثور على ({{hotels.count}}) فندق/فنادق</h6>
+                                            
+                                                <!-- No results -->
+                                                {%else %}
+                                            <h6 class="text-center"
+                                                style="font-weight: normal; color: #d61010;">
+                                                
+                                                لم يتم العثور على فندق 
+                                            </h6>
+                                            {% endif%}
+
                                         </div><!-- .nk-block-head-content -->
                                         <div class="nk-block-head-content">
                                             <div class="toggle-wrap nk-block-tools-toggle">

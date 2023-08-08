@@ -3,6 +3,7 @@
 
 ## TODO 
     - Seasons package active or disabled 
+    - filtering 
     - User have to register create accounts 
     - dashboard for customers 
     - button disabled 

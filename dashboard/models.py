@@ -572,7 +572,7 @@ ORDER_STATUS = (
 )
 
 
-class Order(models.Model):
+class Booking(models.Model):
     full_name = models.CharField(max_length=255, verbose_name='الاسم كامل')
     email = models.EmailField(verbose_name='البريد الالكتروني')
     phone = models.CharField(max_length=255, verbose_name="رقم الهاتف")
@@ -580,11 +580,14 @@ class Order(models.Model):
         to=Hotel, on_delete=models.CASCADE, verbose_name="الفندق")
     vat = models.FloatField(verbose_name="ضريبة القيمة المضافة", default=7)
     total_with_vat = models.FloatField(
-        verbose_name="الاجمالي مع القيمة المضافة")
+        verbose_name="الاجمالي مع القيمة المضافة", default=0)
     coupon = models.FloatField(verbose_name="كوبون خصم", default=1)
-    room = models.ForeignKey(to=Room,on_delete=models.CASCADE,verbose_name="الغرفة")
+    room = models.ManyToManyField(to=Room,verbose_name="الغرفة")
     status = models.CharField(
         choices=ORDER_STATUS, verbose_name="حالة الطلب", max_length=50, default="pending")
+
+    start_date = models.DateField()
+    end_date = models.DateField()
     created = models.DateTimeField(
         auto_now_add=True, verbose_name="تاريخ الطلب")
     updated = models.DateTimeField(auto_now=True)

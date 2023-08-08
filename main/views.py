@@ -6,50 +6,85 @@ from django.contrib.auth import login, authenticate, logout
 from django.db.models import Q, Sum
 from datetime import datetime, timedelta
 from .models import Reservation
-from dashboard.models import Hotel, Room, Order
+from dashboard.models import Hotel, Room, Booking
 from .forms import SearchForm, RoomSearchForm
 from django.shortcuts import render
 from itertools import groupby
 from django.db.models import Count
-from django.http import HttpResponse
-
 
 def index(request):
     return render(request, 'main/home.html')
 
 
 def result(request):
-    # GET:  hotels/
-    queryset = Hotel.objects.filter(is_active=True)
+    # Initial queryset with active hotels
+    queryset = Hotel.objects.filter(is_active=True, room__capacity__gt=0)
 
-    # Queries params 
+    # Other filter parameters
     city = request.GET.get('city', '')
-    guests = request.GET.get("guests", '')
-    nationality = request.GET.get("nationality")#TODO
-    # datefilter = request.GET.get("datefilter")#TODO    
+    nationality = request.GET.get('nationality', '')
+    guests = request.GET.get('guests', '')
+    datefilter = request.GET.get("datefilter", '')
 
-    """
-      Search Algorithm
-        - filter by city -> nationality -> number of guests
-    """
+    # Convert start and end date strings to datetime objects
+    start_date = None
+    end_date = None
+    if datefilter:
+        date_range = datefilter.split(" ")
+        if date_range:
+            start_date_str = date_range[0]
+            end_date_str = date_range[3]
+            start_date = datetime.strptime(start_date_str, '%d/%m/%Y')
+            end_date = datetime.strptime(end_date_str, '%d/%m/%Y')
+
+    # Apply filters
     if city:
         queryset = queryset.filter(city=city)
-    if nationality: 
+    
+    if nationality:
         queryset = queryset.filter(nationality__contains=nationality)
+
     if guests:
-        # Avaliabe accomadion space in hotels
-        request.session['guests_number'] = guests
-        queryset = queryset.filter(Q(room__capacity__gte=int(guests)) & Q(room__status=2))
-        
-        return render(request, 'main/result.html', {'hotels': queryset})    
-    return render(request, 'main/result.html', {'hotels': queryset})    
+        guests_number = int(guests)
+        queryset = queryset.filter(room__capacity__gte=guests_number, room__status=2)
+
+    if start_date and end_date:
+        queryset = queryset.filter(
+            (Q(room__booking__start_date__lte=start_date) &
+             Q(room__booking__end_date__gte=end_date)) |
+            Q(room__status=2)
+        )
+    print(queryset)
+
+    context = {
+        'hotels': queryset,
+        'guests_number': guests_number if guests else None,
+        'start_date': start_date.strftime('%m/%d/%Y') if start_date else '',
+        'end_date': end_date.strftime('%m/%d/%Y') if end_date else '',
+    }
+
+    return render(request, 'main/result.html', context)
+
     
 
 
-def hotel_detail(request, slug):
+def hotel_details(request, slug):
     hotel = Hotel.objects.get(slug=slug)
     # hotels/hotel_detail
     return render(request, 'main/hotel_detail.html', {'hotel': hotel})
+
+def room_details(request, slug, roomId):
+    # hotels/hotel_detail/<slug:slug>/rooms/<int:roomId>
+    hotel = Hotel.objects.get(slug=slug)
+    room = Room.objects.get(id=roomId)
+
+    context = {
+        'hotel': hotel,
+        'room': room
+
+    }
+
+    return render(request, 'main/room_details.html', context)
 
 
 def order_add(request, slug, roomId):

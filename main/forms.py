@@ -5,7 +5,6 @@ from django.forms.widgets import DateInput
 from .models import Reservation
 from django.forms.widgets import SelectDateWidget
 
-
 # Create your forms here.
 
 class NewUserForm(UserCreationForm):
