@@ -15,9 +15,9 @@ urlpatterns = [
     path("hotels/hotel_detail/<slug:slug>/",
          views.hotel_detail, name="hotel_detail"),
     
-    # Handle Order
+    # Handle Booking
     path("hotels/hotel_detail/<slug:slug>/orders/add/<int:roomId>", views.order_add, name="order-add"),
-    path("hotels/hotel_detail/<slug:slug>/orders/add/<int:roomId>/new", views.order_create, name="order-create"),
+    path("hotels/hotel_detail/<slug:slug>/booking/add/", views.booking_add, name="booking-add"),
     
 
 

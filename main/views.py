@@ -53,24 +53,24 @@ def hotel_detail(request, slug):
 
 
 def order_add(request, slug, roomId):
+    # hotels/hotel_detail/<slug:slug>/orders/add/<int:roomId>
     if request.method == 'GET':
         hotel = Hotel.objects.filter(slug=slug)[0]
         room = Room.objects.filter(id=roomId)[0]
         return render(request, 'main/order-add.html', {'hotel': hotel, 'room':room})
         
 
-    # hotels/hotel_detail/payment
 
-def order_create(request, slug, roomId):
+def booking_add(request, slug):
     if request.method=='POST':
         hotel = Hotel.objects.get(slug=slug)
-        room = Room.objects.get(id=roomId)
-        Order.objects.create(
-            hotel=hotel, 
-            room=room,
-            total_with_vat=150
-        )
-        return render(request, 'main/success_order.html')
+        
+        # Order.objects.create(
+        #     hotel=hotel, 
+        #     room=room,
+        #     total_with_vat=150
+        # )
+        return render(request, 'main/booking_submited.html')
         
 
 def register_request(request):

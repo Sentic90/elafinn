@@ -1,0 +1,287 @@
+
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <div class="nk-content">
+        <div class="container-fluid">
+          <div class="nk-content-inner">
+            <div class="nk-content-body">
+              <div class="nk-block-head nk-block-head-sm">
+                <div class="nk-block-between g-3">
+                  <div class="nk-block-head-content">
+                    <h6
+                      class="nk-block-title page-title"
+                      style="font-weight: normal"
+                    >
+                      الغرف المتاحة <span class="color-lahmi">{{ hotel.total_room}} غرفة</span>
+                    </h6>
+                  </div>
+                  <!-- .nk-block-head-content -->
+                </div>
+                <!-- .nk-block-between -->
+              </div>
+              <!-- .nk-block-head -->
+              <div class="nk-block">
+                <div class="card card-bordered card-stretch">
+                  <div class="card-inner-group">
+                    <div class="card-inner position-relative card-tools-toggle">
+                      <div class="card-title-group">
+                        <div class="card-tools">
+                          <li>
+                            <a
+                              href="#"
+                              class="btn btn-icon search-toggle toggle-search"
+                              data-target="search"
+                              ><em class="icon ni ni-search"></em
+                            ></a>
+                          </li>
+                          <!-- li -->
+                        </div>
+                        <!-- .card-tools -->
+                        <div class="card-tools me-n1">
+                          <ul class="btn-toolbar gx-1">
+                            <li class="btn-toolbar-sep"></li>
+                            <!-- li -->
+                            <li>
+                              <div class="toggle-wrap">
+                                <a
+                                  href="#"
+                                  class="btn btn-icon btn-trigger toggle"
+                                  data-target="cardTools"
+                                  ><em class="icon ni ni-menu-right"></em
+                                ></a>
+                                <div
+                                  class="toggle-content"
+                                  data-content="cardTools"
+                                >
+                                  <ul class="btn-toolbar gx-1">
+                                    <li class="toggle-close">
+                                      <a
+                                        href="#"
+                                        class="btn btn-icon btn-trigger toggle"
+                                        data-target="cardTools"
+                                        ><em class="icon ni ni-arrow-left"></em
+                                      ></a>
+                                    </li>
+                                    <!-- li -->
+                                    <li>
+                                      <div class="dropdown">
+                                        <a
+                                          href="#"
+                                          class="btn btn-trigger btn-icon dropdown-toggle"
+                                          data-bs-toggle="dropdown"
+                                        >
+                                          <div class="dot dot-primary"></div>
+                                          <em
+                                            class="icon ni ni-filter-alt"
+                                          ></em>
+                                        </a>
+                                        <div
+                                          class="filter-wg dropdown-menu dropdown-menu-xl dropdown-menu-end"
+                                        >
+                                          <div class="dropdown-head">
+                                            <span
+                                              class="sub-title dropdown-title"
+                                              >Filter Room Type</span
+                                            >
+                                            <div class="dropdown">
+                                              <a
+                                                href="#"
+                                                class="btn btn-sm btn-icon"
+                                              >
+                                                <em
+                                                  class="icon ni ni-more-h"
+                                                ></em>
+                                              </a>
+                                            </div>
+                                          </div>
+                                          <div
+                                            class="dropdown-body dropdown-body-rg"
+                                          >
+                                            <div class="row gx-6 gy-3">
+                                              <div class="col-12">
+                                                <div class="form-group">
+                                                  <label
+                                                    class="overline-title overline-title-alt"
+                                                    >Status</label
+                                                  >
+                                                  <select
+                                                    class="form-select js-select2 js-select2-sm"
+                                                  >
+                                                    <option value="any">
+                                                      Any Status
+                                                    </option>
+                                                    <option value="Active">
+                                                      active
+                                                    </option>
+                                                    <option value="inactive">
+                                                      Inactive
+                                                    </option>
+                                                  </select>
+                                                </div>
+                                              </div>
+                                              <div class="col-12">
+                                                <div class="form-group">
+                                                  <button
+                                                    type="button"
+                                                    class="btn btn-secondary"
+                                                  >
+                                                    Filter
+                                                  </button>
+                                                </div>
+                                              </div>
+                                            </div>
+                                          </div>
+                                          <div class="dropdown-foot between">
+                                            <a class="clickable" href="#"
+                                              >Reset Filter</a
+                                            >
+                                            <a href="#">Save Filter</a>
+                                          </div>
+                                        </div>
+                                        <!-- .filter-wg -->
+                                      </div>
+                                      <!-- .dropdown -->
+                                    </li>
+                                    <!-- li -->
+                                    <li></li>
+                                    <!-- li -->
+                                  </ul>
+                                  <!-- .btn-toolbar -->
+                                </div>
+                                <!-- .toggle-content -->
+                              </div>
+                              <!-- .toggle-wrap -->
+                            </li>
+                            <!-- li -->
+                          </ul>
+                          <!-- .btn-toolbar -->
+                        </div>
+                        <!-- .card-tools -->
+                      </div>
+                      <!-- .card-title-group -->
+                    </div>
+                    <!-- .card-inner -->
+                    <div class="card-inner p-0 text-center">
+<div class="nk-tb-list nk-tb-ulist">
+    <div class="nk-tb-item nk-tb-head">
+      <div class="nk-tb-col nk-tb-col-check">
+        <div
+          class="custom-control custom-control-sm custom-checkbox notext"
+        >
+          <input
+            type="checkbox"
+            class="custom-control-input"
+            id="uid"
+          />
+          <label
+            class="custom-control-label"
+            for="uid"
+          ></label>
+        </div>
+      </div>
+      <div class="nk-tb-col">
+        <span class="sub-text">نوع الغرفة</span>
+      </div>
+      <div class="nk-tb-col">
+        <span class="sub-text">الاطلالة</span>
+      </div>
+      <div class="nk-tb-col tb-col-lg">
+        <span class="sub-text">خيارات الغرفة</span>
+      </div>
+      <div class="nk-tb-col tb-col-mb">
+        <span class="sub-text">سعر الليلة الواحدة</span>
+      </div>
+      <div class="nk-tb-col tb-col-mb">
+        <span class="sub-text">عدد استيعاب الغرفة</span>
+      </div>
+      <div class="nk-tb-col tb-col-md">
+        <span class="sub-text">اختر الغرفة</span>
+      </div>
+    </div>
+
+    <!-- Room Loop -->
+    
+    {% for room in hotel.rooms %}
+    <!-- .nk-tb-item -->
+    <div class="nk-tb-item">
+      <div class="nk-tb-col nk-tb-col-check">
+        <div
+          class="custom-control custom-control-sm custom-checkbox notext"
+        >
+          <input
+            type="checkbox"
+            class="custom-control-input"
+            name="id"
+            id="{{ room.id}}"
+            value="{{ room.id}}"
+          />
+          <label
+            class="custom-control-label"
+            for="{{room.id }}"
+          ></label>
+        </div>
+      </div>
+      <!-- RoomType -->
+      <div class="nk-tb-col">
+        <span class="text-primary">{{ room.roomType}}</span>
+      </div>
+      <!-- Room View -->
+      <div class="nk-tb-col">
+        <span
+          >{%if room.is_view %} على الحرم{%endif%}<span
+            class="dot dot-success d-md-none ms-1"
+          ></span>
+        </span>
+      </div>
+      <!-- Room Options -->
+      <div class="nk-tb-col tb-col-lg">
+        <p class="m-0">ROOM ONLY</p>
+        <p class="text-danger">
+          غير قابل للاسترجاع
+          <a placement="auto" class="btn-pop-hover">
+            <i class="fal fa-info-circle"></i>
+          </a>
+        </p>
+      </div>
+
+      <!-- Room Price -->
+      <div class="nk-tb-col tb-col-mb">
+        <span class="tb-amount"
+          >{{ room.price }}<span class="currency">SAR</span></span
+        >
+      </div>
+<!-- RoomType -->
+      <div class="nk-tb-col">
+        <span class="text-primary">{{ room.capacity}}</span>
+      </div>
+      <div class="nk-tb-col nk-tb-col-tools">
+        <div>
+          <a
+            href="{% url 'main:order-add' hotel.slug room.id%}"
+            class="btn btn-round btn-outline-primary"
+            ><span>تفاصيل الغرفة</span
+          ></a>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  
+  </div>
+
+  <!-- .nk-tb-list -->
+</div>
+<!-- .card-inner -->
+</div>
+<!-- .card-inner-group -->
+</div>
+<!-- .card -->
+</div>
+<!-- .nk-block -->
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>

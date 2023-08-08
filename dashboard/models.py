@@ -506,8 +506,8 @@ class Room(models.Model):
     is_mine = models.BooleanField(default=True, verbose_name='تحت إدارتي؟')
     hotel = models.ForeignKey(Hotel, on_delete=models.CASCADE,
                               verbose_name='مالك الغرفة', blank=True, null=True)
-    is_view = models.IntegerField(
-        choices=VIEW, blank=True, null=True, verbose_name='الإطلالة')
+    is_view  = models.IntegerField(
+        choices=VIEW, blank=True, null=True, verbose_name='الإطلالة') #TODO
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 

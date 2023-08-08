@@ -257,185 +257,176 @@
   </div>
 </div>
 
+<!-- Room Component -->
+
+                      {% include 'main/components/room_component.html' with hotel=hotel %}
+                      
+<!-- End Room -->
 <div class="container">
   <div class="row">
-    <div class="col">
-      <div class="nk-content">
-        <div class="container-fluid">
-          <div class="nk-content-inner">
-            <div class="nk-content-body">
-              <div class="nk-block-head nk-block-head-sm">
-                <div class="nk-block-between g-3">
-                  <div class="nk-block-head-content">
-                    <h6
-                      class="nk-block-title page-title"
-                      style="font-weight: normal"
-                    >
-                      الغرف المتاحة <span class="color-lahmi">{{ hotel.total_room}} غرفة</span>
-                    </h6>
-                  </div>
-                  <!-- .nk-block-head-content -->
-                </div>
-                <!-- .nk-block-between -->
-              </div>
-              <!-- .nk-block-head -->
-              <div class="nk-block">
-                <div class="card card-bordered card-stretch">
-                  <div class="card-inner-group">
-                    <div class="card-inner position-relative card-tools-toggle">
-                      <div class="card-title-group">
-                        <div class="card-tools">
-                          <li>
-                            <a
-                              href="#"
-                              class="btn btn-icon search-toggle toggle-search"
-                              data-target="search"
-                              ><em class="icon ni ni-search"></em
-                            ></a>
-                          </li>
-                          <!-- li -->
-                        </div>
-                        <!-- .card-tools -->
-                        <div class="card-tools me-n1">
-                          <ul class="btn-toolbar gx-1">
-                            <li class="btn-toolbar-sep"></li>
-                            <!-- li -->
-                            <li>
-                              <div class="toggle-wrap">
-                                <a
-                                  href="#"
-                                  class="btn btn-icon btn-trigger toggle"
-                                  data-target="cardTools"
-                                  ><em class="icon ni ni-menu-right"></em
-                                ></a>
-                                <div
-                                  class="toggle-content"
-                                  data-content="cardTools"
-                                >
-                                  <ul class="btn-toolbar gx-1">
-                                    <li class="toggle-close">
-                                      <a
-                                        href="#"
-                                        class="btn btn-icon btn-trigger toggle"
-                                        data-target="cardTools"
-                                        ><em class="icon ni ni-arrow-left"></em
-                                      ></a>
-                                    </li>
-                                    <!-- li -->
-                                    <li>
-                                      <div class="dropdown">
-                                        <a
-                                          href="#"
-                                          class="btn btn-trigger btn-icon dropdown-toggle"
-                                          data-bs-toggle="dropdown"
-                                        >
-                                          <div class="dot dot-primary"></div>
-                                          <em
-                                            class="icon ni ni-filter-alt"
-                                          ></em>
-                                        </a>
-                                        <div
-                                          class="filter-wg dropdown-menu dropdown-menu-xl dropdown-menu-end"
-                                        >
-                                          <div class="dropdown-head">
-                                            <span
-                                              class="sub-title dropdown-title"
-                                              >Filter Room Type</span
-                                            >
-                                            <div class="dropdown">
-                                              <a
-                                                href="#"
-                                                class="btn btn-sm btn-icon"
-                                              >
-                                                <em
-                                                  class="icon ni ni-more-h"
-                                                ></em>
-                                              </a>
-                                            </div>
-                                          </div>
-                                          <div
-                                            class="dropdown-body dropdown-body-rg"
-                                          >
-                                            <div class="row gx-6 gy-3">
-                                              <div class="col-12">
-                                                <div class="form-group">
-                                                  <label
-                                                    class="overline-title overline-title-alt"
-                                                    >Status</label
-                                                  >
-                                                  <select
-                                                    class="form-select js-select2 js-select2-sm"
-                                                  >
-                                                    <option value="any">
-                                                      Any Status
-                                                    </option>
-                                                    <option value="Active">
-                                                      active
-                                                    </option>
-                                                    <option value="inactive">
-                                                      Inactive
-                                                    </option>
-                                                  </select>
-                                                </div>
-                                              </div>
-                                              <div class="col-12">
-                                                <div class="form-group">
-                                                  <button
-                                                    type="button"
-                                                    class="btn btn-secondary"
-                                                  >
-                                                    Filter
-                                                  </button>
-                                                </div>
-                                              </div>
-                                            </div>
-                                          </div>
-                                          <div class="dropdown-foot between">
-                                            <a class="clickable" href="#"
-                                              >Reset Filter</a
-                                            >
-                                            <a href="#">Save Filter</a>
-                                          </div>
-                                        </div>
-                                        <!-- .filter-wg -->
+      <div class="row justify-content-center p-3">
+          <div class="col-lg-8 m-3">
+              <div class="row mb-3">
+                  <div class="col box-shdow">
+                      <h5 class="">بيانات الحجز</h5>
+                      <br>
+                      <form method="post" action="{% url 'main:booking-add' hotel.slug%}">
+                          {% csrf_token %}
+                          <div class="row g-4">
+                              <div class="col-lg-12">
+                                  <div class="form-group">
+                                      <label class="form-label" for="full-name-1">الاسم الكامل</label>
+                                      <div class="form-control-wrap">
+                                          <input type="text" value="Test guests" class="form-control" id="full-name-1" name="full_name" required>
                                       </div>
-                                      <!-- .dropdown -->
-                                    </li>
-                                    <!-- li -->
-                                    <li></li>
-                                    <!-- li -->
-                                  </ul>
-                                  <!-- .btn-toolbar -->
-                                </div>
-                                <!-- .toggle-content -->
+                                  </div>
                               </div>
-                              <!-- .toggle-wrap -->
-                            </li>
-                            <!-- li -->
-                          </ul>
-                          <!-- .btn-toolbar -->
-                        </div>
-                        <!-- .card-tools -->
-                      </div>
-                      <!-- .card-title-group -->
-                    </div>
-                    <!-- .card-inner -->
-                    <div class="card-inner p-0 text-center">
-                      {% include 'main/components/room_list.html' with hotel=hotel %}
-                      <!-- .nk-tb-list -->
-                    </div>
-                    <!-- .card-inner -->
+                              <div class="col-lg-6">
+                                  <div class="form-group">
+                                      <label class="form-label" for="email-address-1">البريد الإلكتروني</label>
+                                      <div class="form-control-wrap">
+                                          <input type="text" value="example@gmail.com" class="form-control" name="email" id="email-address-1" required>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="col-lg-6">
+                                  <div class="form-group">
+                                      <label class="form-label" for="phone-no-1">رقم الجوال</label>
+                                      <div class="form-control-wrap">
+                                          <input type="text" value="+96612345678"class="form-control" name="phone" id="phone-no-1" required>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="col-lg-6">
+                                  <div class="form-group">
+                                      <ul class="custom-control-group g-3 align-center">
+                                          <li>
+                                              <div class="custom-control custom-control-sm custom-checkbox">
+                                                  <input type="checkbox" class="custom-control-input"
+                                                         id="pay-cash-1">
+                                                  <label class="custom-control-label"
+                                                         for="pay-cash-1">
+                                                      أقوم بهذا الحجز نيابةًً عن شخص آخر ولا أنوي الإقامة في هذا
+                                                      الفندق.
+                                                  </label>
+                                              </div>
+                                          </li>
+                                      </ul>
+                                  </div>
+                              </div>
+                              <div class="row mt-5 justify-content-center" style="height: 20vh">
+                                  <div class="col text-center">
+                                      <div class="form-group">
+                                          <button type="submit" class="btn btn-xl btn-primary">أرسال الطلب</button>
+                                          <p class="pt-1" style="font-size: small">
+                                              بإكمال هذه العملية ، انت تقر بأنك قمت بمراجعة وقبول الشروط المذكورة في
+                                              الرابط
+                                              <a href="" class="color-lahmi sq-md" style="font-size: small">الشروط
+                                                  والأحكام</a>.
+
+                                          </p>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                      </form>
                   </div>
-                  <!-- .card-inner-group -->
-                </div>
-                <!-- .card -->
               </div>
-              <!-- .nk-block -->
-            </div>
           </div>
-        </div>
+          <div class="col m-3">
+              <div class="row mb-3">
+                  <div class="col box-shdow">
+                      <h5 class="p-0 m-0">تفاصيل الحجز</h5>
+                      <br>
+                      <div class="product-rating" style="font-size: 5px">
+                          <ul class="rating">
+                              <li><em class="icon ni ni-star-fill"></em></li>
+                              <li><em class="icon ni ni-star-fill"></em></li>
+                              <li><em class="icon ni ni-star"></em></li>
+                              <li><em class="icon ni ni-star"></em></li>
+                              <li><em class="icon ni ni-star"></em></li>
+                          </ul>
+                      </div>
+                      <p class="product-title m-0" style="text-align: right; font-size: 12pt">
+                          <a href="html/product-details.html">
+                              {{ hotel.hotel_name}}
+                          </a>
+                      <p class="text-gray" style="font-weight: normal; font-size: 9pt">
+                          {{hotel.address}}
+                      </p>
+                      <div class="row">
+                          <div class="col">
+                              <div class="d-flex flex-column mb-3">
+                                  <div class=" "><em class="icon ni ni-calendar"></em></div>
+                                  <div class=" ">09-03-2023</div>
+                              </div>
+                          </div>
+                          <div class="col">
+                              <div class="d-flex flex-column mb-3">
+                                  <div class=" "><em class="icon ni ni-moon"></em></div>
+                                  <div class=" ">1 ليلة</div>
+                              </div>
+                          </div>
+                          <div class="col">
+                              <div class="d-flex flex-column mb-3">
+                                  <div class=" "><em class="icon ni ni-calendar"></em></div>
+                                  <div class=" ">10-03-2023</div>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="row">
+                        {% for room in hotel.rooms %}  
+                        <div class="col">
+                              <br>
+                              
+                              <p class="fw-bold m-0">{{ room.roomType}}</p>
+                              <p class="m-0 text-soft">ROOM ONLY</p>
+                              <p class="text-danger">
+                                  غير قابل للاسترجاع
+                                  <a placement="auto" class="btn-pop-hover">
+                                      <i class="fal fa-info-circle"></i>
+                                  </a>
+                              </p>
+                              <span class="tb-amount fw-bold">{{ room.price}}<span
+                                      class="currency"> SAR</span>
+                              </span>
+                          </div>
+                          {% endfor %}
+                      </div>
+                  </div>
+              </div>
+              <div class="row mb-3">
+                  <div class="col box-shdow">
+                      <h5 class="p-0 m-0">ملخص السعر</h5>
+                      <br>
+                      <table style="font-size: 13px; width: 100%">
+                          <tr>
+                              <td>ضريبة القيمة المضافة</td>
+                              <td class="text-sm-end">SAR 7.32</td>
+                          </tr>
+                          <tr>
+                              <td>الإجمالي شامل ضريبة القيمة المضافة</td>
+                              <td class="text-sm-end">SAR 163.90</td>
+                          </tr>
+                          <tr>
+                              <td>كود الخصم</td>
+                              <td class="text-sm-end">SAR 17.08</td>
+                          </tr>
+                      </table>
+
+                      <hr>
+                      <div class="row">
+                          <div class="col">
+                              <h6 class="fw-bold">السعر الإجمالي</h6>
+                          </div>
+                          <div class="col">
+                              <h5 class="text-teal text-lg-end">SAR 146.82</h5>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
       </div>
-    </div>
   </div>
 </div>
 <div class="container">
