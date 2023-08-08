@@ -6,14 +6,16 @@ from django.contrib.auth import login, authenticate, logout
 from django.db.models import Q, Sum
 from datetime import datetime, timedelta
 from .models import Reservation
-from dashboard.models import Hotel, Room, Booking
+from django.contrib.auth.decorators import login_required
+from dashboard.models import Hotel, Room, Booking, Season
 from .forms import SearchForm, RoomSearchForm
 from django.shortcuts import render
 from itertools import groupby
 from django.db.models import Count
 
 def index(request):
-    return render(request, 'main/home.html')
+    seasons = Season.objects.all()
+    return render(request, 'main/home.html', {'seasons':seasons})
 
 
 def result(request):

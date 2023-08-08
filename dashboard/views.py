@@ -88,6 +88,12 @@ class HotelInformation(SuccessMessageMixin, generic.UpdateView):
         return reverse('hotel_information', kwargs={'slug': slug})
 
 
+
+def change_hotel_status(self, hotelId):
+    hotel = Hotel.objects.get(id=hotelId)
+    hotel.is_active = not hotel.is_active
+    hotel.save()
+    return redirect("my-hotel")
 # def show_location(request, self):
 #     if 'slug' in self.kwargs:
 #         slug = self.kwargs['slug']

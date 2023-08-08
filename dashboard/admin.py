@@ -28,12 +28,16 @@ class BookingAdmin(admin.ModelAdmin):
     readonly_fields = ['vat', 'total_with_vat', 'created']
     filter_horizontal = ['room']
 
+class AnnualRentAdmin(admin.ModelAdmin):
+    filter_horizontal = ['rooms']
+
+
 admin.site.register(Hotel, HotelAdmin)
 admin.site.register(Booking, BookingAdmin)
 admin.site.register(HotelLocation)
 admin.site.register(HotelMultipleImage)
 admin.site.register(RoomType)
 admin.site.register(Room, RoomAdmin)
-admin.site.register(AnnualRent)
+admin.site.register(AnnualRent, AnnualRentAdmin)
 admin.site.register(Season)
 admin.site.register(SeasonPrice)

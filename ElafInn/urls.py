@@ -27,6 +27,7 @@ urlpatterns += i18n_patterns(
     path('', include('dashboard.urls')),
     path('', include('main.urls'), name='main'),
     path('virtual/', include('virtual.urls')),
+    path('customers/', include('customer.urls')),
 
     # Debug
     path("__debug__/", include("debug_toolbar.urls")),

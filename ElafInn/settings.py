@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'dashboard.apps.DashboardConfig',
     'main.apps.MainConfig',
     'virtual.apps.VirtualConfig',
+    'customer.apps.CustomerConfig',
     "crispy_forms",
     "crispy_bootstrap5",
     'django_countries',
@@ -157,3 +158,5 @@ LANGUAGES = [
 # set your default language.
 LANGUAGE = LANGUAGES[0][0]
 
+
+LOGIN_URL = 'main:login'

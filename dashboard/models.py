@@ -519,16 +519,22 @@ class Room(models.Model):
     def get_absolute_url(self):
         return reverse("room_detail", kwargs={"slug": self.roomType.hotel.slug, "pk": self.pk})
 
+SEASON_TYPE = (
+    (1, 'موسم الحج'),
+    (2, 'موسم رمضان'),
+    (3, 'موسم الزيارة والعمرة'),
 
+)
 class Season(models.Model):
     season = models.CharField(max_length=250, verbose_name='الموسم')
     startDate = models.DateField(verbose_name='بداية الموسم')
+    year = models.PositiveIntegerField(verbose_name='للعام')
     endDate = models.DateField(verbose_name='نهاية الموسم')
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
-
+    is_active = models.BooleanField(default=True)
     def __str__(self):
-        return self.season
+        return self.season + ' -' + str(self.year)
 
 
 class SeasonPrice(models.Model):
@@ -565,7 +571,7 @@ class AnnualRent(models.Model):
         return reverse("update_annual_rent", kwargs={"slug": self.hotel.slug, "pk": self.pk})
 
 
-ORDER_STATUS = (
+BOOKING_STATUS = (
     ("pending", 'في الانتظار'),
     ("proccessed", "تم الحجز"),
     ("rejected", "مرفوض")
@@ -584,7 +590,7 @@ class Booking(models.Model):
     coupon = models.FloatField(verbose_name="كوبون خصم", default=1)
     room = models.ManyToManyField(to=Room,verbose_name="الغرفة")
     status = models.CharField(
-        choices=ORDER_STATUS, verbose_name="حالة الطلب", max_length=50, default="pending")
+        choices=BOOKING_STATUS, verbose_name="حالة الطلب", max_length=50, default="pending")
 
     start_date = models.DateField()
     end_date = models.DateField()

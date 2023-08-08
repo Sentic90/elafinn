@@ -41,11 +41,15 @@
                                         <h6>
                                             {{ hotel.hotel_name }}
                                             {% if hotel.is_active == True %}
-                                                <span class="badge bg-success m-0"
-                                                      style="font-family: DIN, serif">نشط</span>
+                                                <a href="{% url 'change_status' hotel.id%}">
+                                                    <span class="badge bg-success m-0"
+                                                          style="font-family: DIN, serif">نشط</span>
+                                                </a>
                                             {% else %}
-                                                <span class="badge bg-danger m-0"
-                                                      style="font-family: DIN, serif">معطل</span>
+                                                <a href="{% url 'change_status' hotel.id%}">
+                                                    <span class="badge bg-danger m-0"
+                                                          style="font-family: DIN, serif">معطل</span>
+                                                </a>
                                             {% endif %}
                                         </h6>
                                         <span class="sub-text">{{ hotel.address }}</span>

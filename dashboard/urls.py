@@ -12,6 +12,8 @@ urlpatterns = [
     # path('passwords_change/', views.change_password, name='change_password'),
 
     path('dashboard/my_hotel/', views.my_hotel, name='my-hotel'),
+    path('dashboard/my_hotel/edit/status/<int:hotelId>', views.change_hotel_status, name='change_status'),
+
     path('dashboard/my_hotel/add', views.add_hotel, name='add-hotel'),
     path('dashboard/my_hotel/<slug>',
          views.HotelDashboard.as_view(), name='hotel_dashboard'),
