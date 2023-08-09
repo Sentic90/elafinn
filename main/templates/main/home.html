@@ -910,12 +910,11 @@
                 <div class="p-3 bg-light fw-bold text-dark" style="text-align: right; direction: rtl; right: 0">
                     <span class="">إجمالي عدد النزلاء: </span>
                     <input type="hidden" id="countroom">
-                    <span class="text-danger" id="countroomp"></span>
-                    <!-- Inside your modal -->
-<button id="populateMainFormBtn" class="btn btn-primary"
-data-bs-room-type="single" data-bs-guests="0">Populate Main Form</button>
-
-                    </span>
+                    <span class="text-danger" id="countroomp"></span>                    
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="applyButton">Apply</button>
+                    <button type="button" class="btn btn-secondary" id="closeModalButton" data-bs-dismiss="modal">Close</button>
                 </div>
             
             </div>
@@ -1093,31 +1092,59 @@ data-bs-room-type="single" data-bs-guests="0">Populate Main Form</button>
                 $('#countroom').val(countroom);
                 $('#countroomp').text(countroom);
             });
-            document.addEventListener('DOMContentLoaded', function() {
-  const populateMainFormBtn = document.getElementById('populateMainFormBtn');
-  const modal = new bootstrap.Modal(document.getElementById('modalDefault'));
-
-  populateMainFormBtn.addEventListener('click', function() {
-    // Get room type and guests count from data attributes
-    const roomType = populateMainFormBtn.getAttribute('data-bs-room-type');
-    const guestsCount = populateMainFormBtn.getAttribute('data-bs-guests');
-
-    // Populate main form input fields based on room type
-    document.getElementById('main-form-' + roomType + '-guests').value = guestsCount;
-
-    // Hide the modal
-    modal.hide();
-  });
-});
-
             
 });
+    </script>
+<!-- add values to Main form -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Modal data
+        const singleRoomInput = document.getElementById('single-input');
+        const doubleRoomInput = document.getElementById('double-input');
+        const tripleRoomInput = document.getElementById('triple-input');
+        const quadrupleRoomInput = document.getElementById('quadruple-input');
+        const quintupleRoomInput = document.getElementById('quintuple-input');
 
+        const totalGuestsNumber = document.getElementById('countroom')
+        // End Modal data
         
 
-    </script>
+        // main form input fields 
+        const mainSingleRoomInput = document.getElementById('mainSingleRoom');
+        const mainDoubleRoomInput = document.getElementById('mainDoubleRoom');
+        const mainTripleRoomInput = document.getElementById('mainTripleRoom')
+        const mainQuadrupleRoomInput = document.getElementById('mainQuadrupleRoom')
+        const mainQuintupleRoomInput = document.getElementById('mainQuintupleRoom')
 
+        const mainGuestsNumberInput = document.getElementById('guests');
+        
+        const applyButton = document.getElementById('applyButton');
+        const closeModalButton = document.getElementById('closeModalButton');
 
+        applyButton.addEventListener('click', function() {
+            // Get values from modal inputs
+            const singleRoomValue = singleRoomInput.value;
+            const doubleRoomValue = doubleRoomInput.value;
+            const tripleRoomInputValue = tripleRoomInput.value;
+            const quadrupleRoomInputValue = quadrupleRoomInput.value;
+            const quintupleRoomInputValue = quintupleRoomInput.value;
+
+            const totalGuestsNumberValue = totalGuestsNumber.value
+            
+            // Update main form inputs with modal values
+            mainSingleRoomInput.value = singleRoomValue;
+            mainDoubleRoomInput.value = doubleRoomValue;
+            mainTripleRoomInput.value = tripleRoomInputValue
+            mainQuadrupleRoomInput.value = quadrupleRoomInputValue
+            mainQuintupleRoomInput.value = quintupleRoomInputValue
+
+            mainGuestsNumberInput.value = totalGuestsNumberValue
+
+            // Close the modal
+            closeModalButton.click()
+        });
+    });
+</script>
 
 
 
