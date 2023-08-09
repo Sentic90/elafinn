@@ -14,7 +14,8 @@ from itertools import groupby
 from django.db.models import Count
 
 def index(request):
-    seasons = Season.objects.all()
+    seasons = Season.objects.all().order_by('-created')
+    # nationality = Hotel.objects.all().values_list('nationality')
     return render(request, 'main/home.html', {'seasons':seasons})
 
 

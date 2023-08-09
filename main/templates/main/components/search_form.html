@@ -1,5 +1,6 @@
+
 <form method="get" action="{% url 'main:result'%}">
-    <div class="container p-3">
+    <div class="container p-3 ">
         <div class="row">
             <div class="col-lg-6">
                 <div class="form-group">
@@ -26,9 +27,9 @@
                                 <em class="icon ni ni-globe" style="font-size: large;"></em>
                             </span>
                         </div>
-                        <select class="form-select js-select2 form-control"  name="nationality">
+                        <select class="form-select form-control"  name="nationality">
 
-                            <option value="" selected>اختر الجنسية</option>
+                            <option value="a">اختر الجنسية</option>
                             <option value="SA">السعودية</option>
                             <option value="SD">السودان</option>
                             <option value="226">أفغانستان</option>
@@ -282,7 +283,10 @@
                                     عدد النزلاء
                                 </button>
                             </div>
+                            <!-- Above there a field for nationality + date  -->
                             <input class="form-control"
+                            data-bs-toggle="modal"
+                            data-bs-target="#modalDefault"
                                 name="guests">
                         </div>
                     </div>

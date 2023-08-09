@@ -2,15 +2,15 @@
     - hotel.user.room_set.all()
 
 ## TODO 
-    - Seasons package active or disabled 
-    - filtering 
-    - User have to register create accounts 
-    - dashboard for customers 
-    - button disabled 
-    - Hotel details page 80%
-    - Owner of rooms if rented 
-    - add year field to seasons
-    - Orders -> Booking
+### Seasons package active or disabled (done)
+### filtering (done)
+### User have to register create accounts (done)
+### dashboard for customers (done)
+### button disabled (done)
+### Hotel details page 80% (done)
+### Owner of rooms if rented (done)
+### add year field to seasons (done)
+### Orders -> Booking (done)
 
 
 

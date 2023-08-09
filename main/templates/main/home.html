@@ -199,17 +199,22 @@
                                 <div class="col-md-10 col-sm-12">
                                     <div class="bg-white" style="border-radius: 20px !important">
                                         <ul class="nav nav-tabs nav-fill" id="myTab" role="tablist">
+                                            {% for season in seasons %}
                                             <li class="nav-item" role="presentation">
-                                                <button class="nav-link active" id="faq_tab_1-tab"
-                                                        data-bs-toggle="tab" data-bs-target="#faq_tab_1"
-                                                        type="button" role="tab" aria-controls="faq_tab_1"
-                                                        aria-selected="true">
+                                                <button class="nav-link{% if forloop.first %} active{% endif %}" 
+                                                        id="faq_tab_{{ season.id }}-tab"
+                                                        data-bs-toggle="tab" 
+                                                        data-bs-target="#faq_tab_{{ season.id }}"
+                                                        type="button" role="tab" 
+                                                        aria-controls="faq_tab_{{season.id}}"
+                                                        aria-selected="{{ season.id }}">
                                                     <div class="d-flex flex-column lh-lg">
-                                                        <span>باقة الزيارة والعمرة</span>
+                                                        <span>{{ season.season }}</span>
                                                     </div>
                                                 </button>
                                             </li>
-                                            <li class="nav-item" role="presentation">
+                                            {% endfor %}
+                                            <!-- <li class="nav-item" role="presentation">
                                                 <button class="nav-link" id="faq_tab_2-tab" data-bs-toggle="tab"
                                                         data-bs-target="#faq_tab_2" type="button" role="tab"
                                                         aria-controls="faq_tab_2" aria-selected="false">
@@ -224,23 +229,27 @@
                                                     <div class="d-flex flex-column lh-lg">
                                                         <span>باقة الحج</span></div>
                                                 </button>
-                                            </li>
+                                            </li> -->
                                         </ul>
                                         <div class="tab-content" id="myTabContent">
                                             <!-- باقة الحج -->
-                                            <div class="tab-pane fade active show" id="faq_tab_1"
-                                                 role="tabpanel" aria-labelledby="faq_tab_1-tab">
-                                                <div class="container p-3 ">
+                                            {% for season in seasons %}
+                                                <div class="tab-pane fade{% if forloop.first %} show active{% endif %}" 
+                                                        id="faq_tab_{{ season.id}}"
+                                                        role="tabpanel" 
+                                                        aria-labelledby="faq_tab_{{ season.id }}-tab">
+                                                    <div class="container p-3 ">
+                                                            <!-- filter form  -->
+                                                        {% include 'main/components/search_form.html'%}
+                                                            <!-- end -->
+                                                    </div>
                                                     
-                                                    
-                                                    <!-- filter form -->
-                                                    {% include 'main/components/search_form.html' with bla='bla'%}
                                                 </div>
-                                            </div>
-                                            <div class="tab-pane fade" id="faq_tab_2" role="tabpanel"
+                                            {% endfor %}
+                                            <!-- <div class="tab-pane fade" id="faq_tab_2" role="tabpanel"
                                                  aria-labelledby="faq_tab_2-tab">
-                                                 <h3 class="fw-medium text-danger">عذراً الباقة غير متوفرة حالياً</h3>
-                                                <!-- <div class="container p-3">
+
+                                                <div class="container p-3">
                                                     <form action="{% url 'main:result' %}">
                                                         <div class="container p-3">
                                                             <div class="input-group mb-4">
@@ -493,7 +502,7 @@
                                                             </div>
                                                         </div>
                                                     </form>
-                                                </div> -->
+                                                </div>
                                             </div>
                                             <div class="tab-pane fade" id="faq_tab_3" role="tabpanel"
                                                  aria-labelledby="faq_tab_3-tab">
@@ -751,7 +760,7 @@
                                                         </div>
                                                     </form>
                                                 </div>
-                                            </div>
+                                            </div> -->
                                         </div>
                                     </div>
                                 </div>
@@ -902,8 +911,16 @@
                     <span class="">إجمالي عدد النزلاء: </span>
                     <input type="hidden" id="countroom">
                     <span class="text-danger" id="countroomp"></span>
+                    <!-- Inside your modal -->
+<button id="populateMainFormBtn" class="btn btn-primary"
+data-bs-room-type="single" data-bs-guests="0">Populate Main Form</button>
+
+                    </span>
                 </div>
+            
             </div>
+            
+
         </div>
 
 
@@ -1024,7 +1041,7 @@
     </div>
 
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <script src="{% static 'js/jquery.min.js' %}"></script>
 
 {#    room type#}
     <script>
@@ -1076,7 +1093,27 @@
                 $('#countroom').val(countroom);
                 $('#countroomp').text(countroom);
             });
-        });
+            document.addEventListener('DOMContentLoaded', function() {
+  const populateMainFormBtn = document.getElementById('populateMainFormBtn');
+  const modal = new bootstrap.Modal(document.getElementById('modalDefault'));
+
+  populateMainFormBtn.addEventListener('click', function() {
+    // Get room type and guests count from data attributes
+    const roomType = populateMainFormBtn.getAttribute('data-bs-room-type');
+    const guestsCount = populateMainFormBtn.getAttribute('data-bs-guests');
+
+    // Populate main form input fields based on room type
+    document.getElementById('main-form-' + roomType + '-guests').value = guestsCount;
+
+    // Hide the modal
+    modal.hide();
+  });
+});
+
+            
+});
+
+        
 
     </script>
 
