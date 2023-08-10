@@ -23,7 +23,7 @@ class RoomInline(admin.TabularInline):
     extra = 0
 
 class BookingAdmin(admin.ModelAdmin):
-    list_display = ['hotel', 'status', 'total_with_vat', 'full_name', 'email']
+    list_display = ['hotel', 'status', 'total_with_vat', 'customer']
 
     readonly_fields = ['vat', 'total_with_vat', 'created']
     filter_horizontal = ['room']

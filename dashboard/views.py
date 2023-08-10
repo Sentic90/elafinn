@@ -300,7 +300,7 @@ def bookings(request, slug):
     context = {
         'hotel': hotel,
         'slug': slug,
-        'rooms': rooms
+        'rooms': rooms, 
     }
     return render(request, 'dashboard/booking/bookings.html', context)
 

@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.urls import reverse
 from .forms import NewUserForm
 from django.contrib import messages
 from django.contrib.auth.forms import AuthenticationForm  # add this
@@ -6,6 +7,7 @@ from django.contrib.auth import login, authenticate, logout
 from django.db.models import Q, Sum
 from datetime import datetime, timedelta
 from .models import Reservation
+from customer.models import Customer
 from django.contrib.auth.decorators import login_required
 from dashboard.models import Hotel, Room, Booking, Season
 from .forms import SearchForm, RoomSearchForm
@@ -76,9 +78,6 @@ def result(request):
 
     return render(request, 'main/result.html', context)
 
-    
-
-
 def hotel_details(request, slug):
     hotel = Hotel.objects.get(slug=slug)
     # hotels/hotel_detail
@@ -96,20 +95,20 @@ def room_details(request, slug, roomId):
     }
 
     return render(request, 'main/room_details.html', context)
-        
-
 
 def booking_add(request, slug):
     if request.method=='POST':
+        
+        customer = Customer.objects.get(user=request.user) #TODO handle execptions
+        rooms = Room.objects.values_list('id')[:2]
         hotel = Hotel.objects.get(slug=slug)
-        
-        # Order.objects.create(
-        #     hotel=hotel, 
-        #     room=room,
-        #     total_with_vat=150
-        # )
-        return redirect('customer-panel')
-        
+        booking = Booking.objects.create(
+            customer=customer, hotel=hotel,start_date = datetime.now(),end_date = datetime.now()
+            )
+        booking.room.set([1,4])
+        return redirect(reverse('customer-panel'))
+    
+    
 
 def register_request(request):
     if request.method == "POST":
@@ -137,6 +136,7 @@ def login_request(request):
                 messages.info(request, f"تم تسجيل دخولك بنجاح {username}.")
                 if user.is_staff:
                     return redirect("my-hotel")
+                # elif user.is_customer:
                 return redirect("customer-panel")
             else:
                 messages.error(

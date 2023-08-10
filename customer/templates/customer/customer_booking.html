@@ -58,7 +58,7 @@
                                                         <div class="nk-tb-col tb-col-xxl"><span class="sub-text">الهاتف</span></div>
                                                         <div class="nk-tb-col tb-col-lg"><span class="sub-text">وقت الوصول</span></div>
                                                         <div class="nk-tb-col tb-col-xxl"><span class="sub-text">المغادرة</span></div>
-                                                        <div class="nk-tb-col tb-col-md"><span class="sub-text">الدفع</span></div>
+                                                        <!-- <div class="nk-tb-col tb-col-md"><span class="sub-text">الدفع</span></div> -->
                                                         <div class="nk-tb-col nk-tb-col-tools text-end">
                                                             <div class="dropdown">
                                                                 <a href="#" class="btn btn-xs btn-outline-light btn-icon dropdown-toggle" data-bs-toggle="dropdown" data-offset="0,5"><em class="icon ni ni-plus"></em></a>
@@ -90,7 +90,7 @@
                                                     
                                                     </div><!-- .nk-tb-item -->
                                                   
-<!-- {% for booking in bookings %} -->
+{% for booking in bookings %}
 <div class="nk-tb-item">
     <div class="nk-tb-col nk-tb-col-check">
         <div class="custom-control custom-control-sm custom-checkbox notext">
@@ -114,28 +114,27 @@
         </div>
     </div>
     <div class="nk-tb-col tb-col-mb">
-        <span>باقة الزيارة والعمرة </span>
+        <span>{{ booking.package.season}}</span>
     </div>
     <div class="nk-tb-col tb-col-mb">
-        <span class="tb-status text-warning">في الانتظار</span>
+        <span class="tb-status text-{% if booking.status == 'processed' %}success{% else %}warning{% endif %}"
+        >{{ booking.status}}</span>
     </div>
     {% for room in booking.room.all %}
     <div class="nk-tb-col tb-col-lg">
         <span>{{ room.roomType }}</span>
     </div>
     {% endfor %}
-    <div class="nk-tb-col tb-col-xxl">
+    <!-- <div class="nk-tb-col tb-col-xxl">
         <span>{{ booking.customer.phone}}</span>
-    </div>
+    </div> -->
     <div class="nk-tb-col tb-col-lg">
         <span>{{ booking.start_date}}</span>
     </div>
     <div class="nk-tb-col tb-col-xxl">
         <span>{{ booking.end_date}}</span>
     </div>
-    <div class="nk-tb-col tb-col-md">
-        <span class="tb-status text-warning">Due</span>
-    </div>
+   
     <div class="nk-tb-col nk-tb-col-tools">
         <ul class="nk-tb-actions gx-1">
             <li>
@@ -155,7 +154,7 @@
 
 
 
-<!-- {% endfor %} -->
+{% endfor %}
                                                   
                                                 </div><!-- .nk-tb-list -->
                                             </div><!-- .card-inner -->

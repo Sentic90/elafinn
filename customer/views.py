@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
+from customer.models import Customer
 from dashboard.models import Booking
 
 
@@ -9,5 +10,6 @@ def panel(request):
 
 
 def customer_booking(request):
-    bookings = Booking.objects.all()
+    customer = Customer.objects.get(user=request.user)
+    bookings = Booking.objects.filter(customer=customer)
     return render(request, 'customer/customer_booking.html', {'bookings':bookings})

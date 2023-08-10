@@ -7,7 +7,7 @@ User = get_user_model()
 class Customer(models.Model):
     full_name= models.CharField(max_length=255)
     # email = models.EmailField(max_length=255)
-    phone = models.CharField(max_length=255)
+    phone = models.CharField(max_length=255, null=True, blank=True)
 
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
@@ -15,3 +15,5 @@ class Customer(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     # booking_set
 
+    def __str__(self) -> str:
+        return self.full_name

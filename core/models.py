@@ -4,4 +4,4 @@ from django.db import models
 # Create your models here.
 class User(AbstractUser):
   email = models.EmailField(unique=True)
-  is_customer = models.BooleanField(default=False)
+  is_customer = models.BooleanField(default=True)

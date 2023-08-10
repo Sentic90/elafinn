@@ -576,15 +576,13 @@ class AnnualRent(models.Model):
 
 BOOKING_STATUS = (
     ("pending", 'في الانتظار'),
-    ("proccessed", "تم الحجز"),
+    ("processed", "تم الحجز"),
     ("rejected", "مرفوض")
 )
 
 
 class Booking(models.Model):
-    full_name = models.CharField(max_length=255, verbose_name='الاسم كامل')
-    email = models.EmailField(verbose_name='البريد الالكتروني')
-    phone = models.CharField(max_length=255, verbose_name="رقم الهاتف")
+    customer = models.ForeignKey(to='customer.Customer', on_delete=models.CASCADE, verbose_name='العميل')
     hotel = models.ForeignKey(
         to=Hotel, on_delete=models.CASCADE, verbose_name="الفندق")
     vat = models.FloatField(verbose_name="ضريبة القيمة المضافة", default=7)
@@ -597,6 +595,8 @@ class Booking(models.Model):
 
     start_date = models.DateField()
     end_date = models.DateField()
+
+    package = models.ForeignKey(to=Season, on_delete=models.CASCADE,verbose_name='الباقة')
     created = models.DateTimeField(
         auto_now_add=True, verbose_name="تاريخ الطلب")
     updated = models.DateTimeField(auto_now=True)

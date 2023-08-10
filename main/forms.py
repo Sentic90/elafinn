@@ -1,12 +1,13 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from django.forms.widgets import DateInput
 from .models import Reservation
 from django.forms.widgets import SelectDateWidget
-
+from customer.models import Customer
 # Create your forms here.
 
+User = get_user_model()
 class NewUserForm(UserCreationForm):
     email = forms.EmailField(required=True)
 
