@@ -1,0 +1,1780 @@
+[
+  {
+    "model": "dashboard.hotel",
+    "pk": 1,
+    "fields": {
+      "user": 3,
+      "hotel_name": "أنجم مكة",
+      "city": "Makkah",
+      "address": "13876 Alhajj,  Makkah",
+      "tel": "1234567",
+      "mobile": "0562684141",
+      "category": 2,
+      "Cancellation_policy": 1,
+      "Cancellation_hours": null,
+      "Check_in": "05:11:32",
+      "Check_out": "05:11:32",
+      "nationality": "BA,BM,CK,SA,SD",
+      "is_priority": false,
+      "about_hotel": "نبذة عن الفندق",
+      "created": "2023-03-16T05:12:08.321Z",
+      "updated": "2023-08-09T13:45:30.133Z",
+      "logo": "images/gallery/no-image-placeholder.webp",
+      "is_active": true,
+      "slug": "maka-hotel"
+    }
+  },
+  {
+    "model": "dashboard.hotel",
+    "pk": 10,
+    "fields": {
+      "user": 3,
+      "hotel_name": "فندق يستقبل جزائرين",
+      "city": "Makkah",
+      "address": "345",
+      "tel": "متنا",
+      "mobile": "نتا",
+      "category": 1,
+      "Cancellation_policy": 1,
+      "Cancellation_hours": null,
+      "Check_in": "12:30 AM",
+      "Check_out": "12:00 AM",
+      "nationality": "DZ",
+      "is_priority": false,
+      "about_hotel": "ماتل",
+      "created": "2023-03-18T03:34:37.397Z",
+      "updated": "2023-08-08T10:33:46.154Z",
+      "logo": "images/gallery/ElafLogo.png",
+      "is_active": true,
+      "slug": "Algeria"
+    }
+  },
+  {
+    "model": "dashboard.hotel",
+    "pk": 12,
+    "fields": {
+      "user": 3,
+      "hotel_name": "سرايا",
+      "city": "Makkah",
+      "address": "نتا",
+      "tel": "نتا",
+      "mobile": "نتا",
+      "category": 1,
+      "Cancellation_policy": 1,
+      "Cancellation_hours": null,
+      "Check_in": "12:00 AM",
+      "Check_out": "12:00 AM",
+      "nationality": "AL",
+      "is_priority": false,
+      "about_hotel": "نتال",
+      "created": "2023-03-18T08:16:05.989Z",
+      "updated": "2023-08-08T17:14:18.364Z",
+      "logo": "images/gallery/ElafLogo_q8TReP5.png",
+      "is_active": false,
+      "slug": "jhgf"
+    }
+  },
+  {
+    "model": "dashboard.hotel",
+    "pk": 13,
+    "fields": {
+      "user": 6,
+      "hotel_name": "فندق1",
+      "city": "Makkah",
+      "address": "12345",
+      "tel": "1234",
+      "mobile": "123",
+      "category": 4,
+      "Cancellation_policy": 1,
+      "Cancellation_hours": null,
+      "Check_in": "12:00 AM",
+      "Check_out": "12:30 AM",
+      "nationality": "DZ",
+      "is_priority": false,
+      "about_hotel": "ثقثقثقثقث",
+      "created": "2023-05-17T08:24:36.812Z",
+      "updated": "2023-05-17T08:24:36.812Z",
+      "logo": "images/gallery/ElafLogo_S1r0obV.png",
+      "is_active": false,
+      "slug": "fqcxjw-1"
+    }
+  },
+  {
+    "model": "dashboard.hotel",
+    "pk": 14,
+    "fields": {
+      "user": 3,
+      "hotel_name": "فندق2",
+      "city": "Makkah",
+      "address": "مكة شارع1",
+      "tel": "12345678",
+      "mobile": "12345678",
+      "category": 2,
+      "Cancellation_policy": 1,
+      "Cancellation_hours": null,
+      "Check_in": "12:00 AM",
+      "Check_out": "12:30 AM",
+      "nationality": "AD,BE",
+      "is_priority": false,
+      "about_hotel": "",
+      "created": "2023-05-24T19:12:05.179Z",
+      "updated": "2023-05-24T19:12:05.179Z",
+      "logo": "",
+      "is_active": false,
+      "slug": "h9tmz2-2"
+    }
+  },
+  {
+    "model": "dashboard.hotel",
+    "pk": 15,
+    "fields": {
+      "user": 3,
+      "hotel_name": "ddd",
+      "city": "Madinah",
+      "address": "dfgfd",
+      "tel": "sdfgf",
+      "mobile": "dfg",
+      "category": 5,
+      "Cancellation_policy": 2,
+      "Cancellation_hours": null,
+      "Check_in": "01:00 AM",
+      "Check_out": "01:30 AM",
+      "nationality": "AS",
+      "is_priority": false,
+      "about_hotel": "dfg",
+      "created": "2023-06-04T23:51:26.928Z",
+      "updated": "2023-06-04T23:51:26.928Z",
+      "logo": "images/gallery/Screenshot_20221124_024027.png",
+      "is_active": false,
+      "slug": "uvduvj-ddd"
+    }
+  },
+  {
+    "model": "dashboard.hotel",
+    "pk": 16,
+    "fields": {
+      "user": 3,
+      "hotel_name": "فندق جديد3",
+      "city": "Makkah",
+      "address": "شارع 45",
+      "tel": "123456",
+      "mobile": "12345",
+      "category": 1,
+      "Cancellation_policy": 1,
+      "Cancellation_hours": 3,
+      "Check_in": "12:00 AM",
+      "Check_out": "12:30 AM",
+      "nationality": "AD",
+      "is_priority": false,
+      "about_hotel": "",
+      "created": "2023-06-05T01:02:05.262Z",
+      "updated": "2023-06-05T01:02:05.262Z",
+      "logo": "images/gallery/Screenshot_20221124_024027_5KxYAsb.png",
+      "is_active": false,
+      "slug": "ial19f-3"
+    }
+  },
+  {
+    "model": "dashboard.hotel",
+    "pk": 17,
+    "fields": {
+      "user": 3,
+      "hotel_name": "فندق يستقبل اكثر من 100 زائر وسعودين",
+      "city": "Makkah",
+      "address": null,
+      "tel": null,
+      "mobile": null,
+      "category": 2,
+      "Cancellation_policy": null,
+      "Cancellation_hours": null,
+      "Check_in": null,
+      "Check_out": null,
+      "nationality": "SA",
+      "is_priority": false,
+      "about_hotel": "",
+      "created": "2023-08-07T13:39:02.623Z",
+      "updated": "2023-08-09T13:57:59.188Z",
+      "logo": "images/gallery/no-image-placeholder_HHWpfGU.webp",
+      "is_active": true,
+      "slug": "guests-100"
+    }
+  },
+  {
+    "model": "dashboard.hotel",
+    "pk": 18,
+    "fields": {
+      "user": 3,
+      "hotel_name": "فندق يستقبل ٣ زوار وسودانين في المدينة",
+      "city": "Madinah",
+      "address": null,
+      "tel": null,
+      "mobile": null,
+      "category": 4,
+      "Cancellation_policy": null,
+      "Cancellation_hours": null,
+      "Check_in": null,
+      "Check_out": null,
+      "nationality": "SD",
+      "is_priority": false,
+      "about_hotel": "",
+      "created": "2023-08-07T13:45:27.330Z",
+      "updated": "2023-08-09T13:59:26.294Z",
+      "logo": "images/gallery/no-image-placeholder_9ZSpRr4.webp",
+      "is_active": true,
+      "slug": "sudanese-1o"
+    }
+  },
+  {
+    "model": "dashboard.hotel",
+    "pk": 19,
+    "fields": {
+      "user": 3,
+      "hotel_name": "فندق في المدينة المنورة يستقبل سودانين ١٠",
+      "city": "Madinah",
+      "address": null,
+      "tel": null,
+      "mobile": null,
+      "category": 3,
+      "Cancellation_policy": null,
+      "Cancellation_hours": null,
+      "Check_in": null,
+      "Check_out": null,
+      "nationality": "SD",
+      "is_priority": false,
+      "about_hotel": "",
+      "created": "2023-08-07T13:54:59.195Z",
+      "updated": "2023-08-07T13:54:59.195Z",
+      "logo": "images/gallery/hotel-1_ow9iOFa.webp",
+      "is_active": true,
+      "slug": "bljakljdsfl"
+    }
+  },
+  {
+    "model": "dashboard.hotellocation",
+    "pk": 5,
+    "fields": {
+      "hotel": 1,
+      "latitude": 24.6120983,
+      "longitude": 46.545161,
+      "hrm": null,
+      "created": "2023-03-20T01:22:43.630Z",
+      "updated": "2023-05-05T18:40:09.120Z"
+    }
+  },
+  {
+    "model": "dashboard.hotellocation",
+    "pk": 13,
+    "fields": {
+      "hotel": 12,
+      "latitude": 24.62527291,
+      "longitude": 46.55325597,
+      "hrm": null,
+      "created": "2023-03-20T02:51:12.652Z",
+      "updated": "2023-03-23T06:30:51.821Z"
+    }
+  },
+  {
+    "model": "dashboard.hotellocation",
+    "pk": 14,
+    "fields": {
+      "hotel": 10,
+      "latitude": 24.63347331,
+      "longitude": 46.55417312,
+      "hrm": null,
+      "created": "2023-03-20T03:07:32.603Z",
+      "updated": "2023-03-20T03:12:52.073Z"
+    }
+  },
+  {
+    "model": "dashboard.hotelmultipleimage",
+    "pk": 1,
+    "fields": {
+      "hotel": 1,
+      "images": "Screenshot_20221111_010545.png",
+      "date": "2023-03-18T18:35:45.376Z"
+    }
+  },
+  {
+    "model": "dashboard.hotelmultipleimage",
+    "pk": 2,
+    "fields": {
+      "hotel": 1,
+      "images": "Screenshot_20230104_085818.png",
+      "date": "2023-03-18T19:28:04.984Z"
+    }
+  },
+  {
+    "model": "dashboard.hotelmultipleimage",
+    "pk": 3,
+    "fields": {
+      "hotel": 1,
+      "images": "Screenshot_20230226_025346.png",
+      "date": "2023-03-18T19:28:30.764Z"
+    }
+  },
+  {
+    "model": "dashboard.hotelmultipleimage",
+    "pk": 4,
+    "fields": {
+      "hotel": 1,
+      "images": "مركز_الابتكار.png",
+      "date": "2023-03-18T19:31:23.319Z"
+    }
+  },
+  {
+    "model": "dashboard.hotelmultipleimage",
+    "pk": 5,
+    "fields": {
+      "hotel": 1,
+      "images": "d-sm.jpg",
+      "date": "2023-03-18T19:32:09.897Z"
+    }
+  },
+  {
+    "model": "dashboard.hotelmultipleimage",
+    "pk": 6,
+    "fields": {
+      "hotel": 1,
+      "images": "images/hotel_images/a-sm.jpg",
+      "date": "2023-03-18T20:15:39.571Z"
+    }
+  },
+  {
+    "model": "dashboard.hotelmultipleimage",
+    "pk": 7,
+    "fields": {
+      "hotel": 1,
+      "images": "images/hotel_images/b-sm.jpg",
+      "date": "2023-03-18T20:18:17.941Z"
+    }
+  },
+  {
+    "model": "dashboard.hotelmultipleimage",
+    "pk": 8,
+    "fields": {
+      "hotel": 1,
+      "images": "images/hotel_images/a-sm_Di1lO3b.jpg",
+      "date": "2023-03-18T20:27:40.409Z"
+    }
+  },
+  {
+    "model": "dashboard.hotelmultipleimage",
+    "pk": 9,
+    "fields": {
+      "hotel": 1,
+      "images": "images/hotel_images/a-sm_PzrAMOs.jpg",
+      "date": "2023-03-18T20:28:34.028Z"
+    }
+  },
+  {
+    "model": "dashboard.hotelmultipleimage",
+    "pk": 10,
+    "fields": {
+      "hotel": 1,
+      "images": "images/hotel_images/a-sm_nRnVEy1.jpg",
+      "date": "2023-03-18T20:28:34.032Z"
+    }
+  },
+  {
+    "model": "dashboard.hotelmultipleimage",
+    "pk": 11,
+    "fields": {
+      "hotel": 1,
+      "images": "images/hotel_images/iran-sq.png",
+      "date": "2023-03-18T20:28:58.824Z"
+    }
+  },
+  {
+    "model": "dashboard.hotelmultipleimage",
+    "pk": 12,
+    "fields": {
+      "hotel": 1,
+      "images": "images/hotel_images/iran-sq_2uO4WDF.png",
+      "date": "2023-03-18T20:28:58.831Z"
+    }
+  },
+  {
+    "model": "dashboard.hotelmultipleimage",
+    "pk": 13,
+    "fields": {
+      "hotel": 1,
+      "images": "images/hotel_images/uk.png",
+      "date": "2023-03-18T20:29:18.844Z"
+    }
+  },
+  {
+    "model": "dashboard.hotelmultipleimage",
+    "pk": 14,
+    "fields": {
+      "hotel": 1,
+      "images": "images/hotel_images/uk_ZR1WVvO.png",
+      "date": "2023-03-18T20:29:18.852Z"
+    }
+  },
+  {
+    "model": "dashboard.hotelmultipleimage",
+    "pk": 15,
+    "fields": {
+      "hotel": 1,
+      "images": "images/hotel_images/Screenshot_20221211_034316.png",
+      "date": "2023-03-20T08:57:43.688Z"
+    }
+  },
+  {
+    "model": "dashboard.hotelmultipleimage",
+    "pk": 16,
+    "fields": {
+      "hotel": 1,
+      "images": "images/hotel_images/Screenshot_20221211_034316_9yt5tOi.png",
+      "date": "2023-03-20T08:57:43.694Z"
+    }
+  },
+  {
+    "model": "dashboard.hotelmultipleimage",
+    "pk": 17,
+    "fields": {
+      "hotel": 10,
+      "images": "images/hotel_images/مركز_الابتكار.png",
+      "date": "2023-03-20T09:16:48.761Z"
+    }
+  },
+  {
+    "model": "dashboard.hotelmultipleimage",
+    "pk": 19,
+    "fields": {
+      "hotel": 10,
+      "images": "images/hotel_images/Screenshot_20230226_025346.png",
+      "date": "2023-03-20T09:50:35.503Z"
+    }
+  },
+  {
+    "model": "dashboard.hotelmultipleimage",
+    "pk": 20,
+    "fields": {
+      "hotel": 10,
+      "images": "images/hotel_images/Screenshot_20230226_025346_fodBBEi.png",
+      "date": "2023-03-20T09:50:35.508Z"
+    }
+  },
+  {
+    "model": "dashboard.hotelmultipleimage",
+    "pk": 21,
+    "fields": {
+      "hotel": 10,
+      "images": "images/hotel_images/Screenshot_20230104_091923.png",
+      "date": "2023-03-20T09:56:53.412Z"
+    }
+  },
+  {
+    "model": "dashboard.hotelmultipleimage",
+    "pk": 22,
+    "fields": {
+      "hotel": 10,
+      "images": "images/hotel_images/Screenshot_20230104_091923_65PBjAy.png",
+      "date": "2023-03-20T09:56:53.420Z"
+    }
+  },
+  {
+    "model": "dashboard.hotelmultipleimage",
+    "pk": 23,
+    "fields": {
+      "hotel": 12,
+      "images": "images/hotel_images/Screenshot_20230226_025346_NzeOYz9.png",
+      "date": "2023-03-22T21:43:01.402Z"
+    }
+  },
+  {
+    "model": "dashboard.hotelmultipleimage",
+    "pk": 24,
+    "fields": {
+      "hotel": 12,
+      "images": "images/hotel_images/Screenshot_20230226_025346_bvHUa9l.png",
+      "date": "2023-03-22T21:43:01.409Z"
+    }
+  },
+  {
+    "model": "dashboard.hotelmultipleimage",
+    "pk": 25,
+    "fields": {
+      "hotel": 12,
+      "images": "images/hotel_images/Screenshot_20221111_011314.png",
+      "date": "2023-03-22T21:43:14.655Z"
+    }
+  },
+  {
+    "model": "dashboard.hotelmultipleimage",
+    "pk": 26,
+    "fields": {
+      "hotel": 12,
+      "images": "images/hotel_images/Screenshot_20221111_011314_Ww8shMa.png",
+      "date": "2023-03-22T21:43:14.663Z"
+    }
+  },
+  {
+    "model": "dashboard.hotelmultipleimage",
+    "pk": 27,
+    "fields": {
+      "hotel": 13,
+      "images": "images/hotel_images/Screenshot_2023-03-08_130112.png",
+      "date": "2023-05-17T08:25:29.977Z"
+    }
+  },
+  {
+    "model": "dashboard.hotelmultipleimage",
+    "pk": 28,
+    "fields": {
+      "hotel": 13,
+      "images": "images/hotel_images/Screenshot_2023-03-08_130112_7scibRd.png",
+      "date": "2023-05-17T08:25:29.986Z"
+    }
+  },
+  {
+    "model": "dashboard.roomtype",
+    "pk": 2,
+    "fields": {
+      "hotel": 1,
+      "roomType": 3,
+      "capacity": 3,
+      "Electric": "1",
+      "Facilities": "1",
+      "Services": "1",
+      "created": "2023-03-22T20:31:49.925Z",
+      "updated": "2023-03-25T23:26:17.586Z"
+    }
+  },
+  {
+    "model": "dashboard.roomtype",
+    "pk": 3,
+    "fields": {
+      "hotel": 1,
+      "roomType": 2,
+      "capacity": 2,
+      "Electric": "6",
+      "Facilities": "3",
+      "Services": "3",
+      "created": "2023-03-22T20:34:41.401Z",
+      "updated": "2023-03-25T23:26:25.934Z"
+    }
+  },
+  {
+    "model": "dashboard.roomtype",
+    "pk": 4,
+    "fields": {
+      "hotel": 12,
+      "roomType": 6,
+      "capacity": 6,
+      "Electric": "1,7",
+      "Facilities": "1",
+      "Services": "1",
+      "created": "2023-03-23T00:49:23.181Z",
+      "updated": "2023-03-23T00:49:23.181Z"
+    }
+  },
+  {
+    "model": "dashboard.roomtype",
+    "pk": 6,
+    "fields": {
+      "hotel": 1,
+      "roomType": 1,
+      "capacity": 1,
+      "Electric": "1,4",
+      "Facilities": "1",
+      "Services": "1",
+      "created": "2023-03-23T06:26:43.906Z",
+      "updated": "2023-03-25T23:26:34.492Z"
+    }
+  },
+  {
+    "model": "dashboard.roomtype",
+    "pk": 7,
+    "fields": {
+      "hotel": 1,
+      "roomType": 6,
+      "capacity": 6,
+      "Electric": "1",
+      "Facilities": "1",
+      "Services": "1",
+      "created": "2023-03-24T17:00:20.998Z",
+      "updated": "2023-03-24T17:00:20.998Z"
+    }
+  },
+  {
+    "model": "dashboard.roomtype",
+    "pk": 8,
+    "fields": {
+      "hotel": 1,
+      "roomType": 4,
+      "capacity": 4,
+      "Electric": "1",
+      "Facilities": "1",
+      "Services": "1",
+      "created": "2023-03-25T23:27:15.275Z",
+      "updated": "2023-08-09T17:57:54.980Z"
+    }
+  },
+  {
+    "model": "dashboard.room",
+    "pk": 24,
+    "fields": {
+      "roomType": 2,
+      "roomNo": "909",
+      "floor": "8",
+      "capacity": 40,
+      "Electric": "1",
+      "Facilities": "1",
+      "Services": "1",
+      "status": 2,
+      "is_mine": true,
+      "hotel": null,
+      "is_view": null,
+      "created": "2023-03-23T05:55:36.675Z",
+      "updated": "2023-07-06T09:51:49.697Z",
+      "price": 100.0
+    }
+  },
+  {
+    "model": "dashboard.room",
+    "pk": 25,
+    "fields": {
+      "roomType": 6,
+      "roomNo": "202",
+      "floor": "2",
+      "capacity": 30,
+      "Electric": "6",
+      "Facilities": "3",
+      "Services": "3",
+      "status": 2,
+      "is_mine": true,
+      "hotel": null,
+      "is_view": 1,
+      "created": "2023-03-23T05:57:59.750Z",
+      "updated": "2023-08-06T14:14:32.141Z",
+      "price": 100.0
+    }
+  },
+  {
+    "model": "dashboard.room",
+    "pk": 26,
+    "fields": {
+      "roomType": 4,
+      "roomNo": "406",
+      "floor": "4",
+      "capacity": 6,
+      "Electric": "1,7",
+      "Facilities": "1",
+      "Services": "1",
+      "status": 3,
+      "is_mine": true,
+      "hotel": null,
+      "is_view": 1,
+      "created": "2023-03-23T06:14:50.814Z",
+      "updated": "2023-03-23T07:00:32.310Z",
+      "price": 100.0
+    }
+  },
+  {
+    "model": "dashboard.room",
+    "pk": 27,
+    "fields": {
+      "roomType": 4,
+      "roomNo": "609",
+      "floor": "8",
+      "capacity": 6,
+      "Electric": "1,7",
+      "Facilities": "1",
+      "Services": "1",
+      "status": 1,
+      "is_mine": true,
+      "hotel": null,
+      "is_view": 0,
+      "created": "2023-03-23T08:07:30.261Z",
+      "updated": "2023-03-23T08:07:30.261Z",
+      "price": 100.0
+    }
+  },
+  {
+    "model": "dashboard.room",
+    "pk": 28,
+    "fields": {
+      "roomType": 7,
+      "roomNo": "108",
+      "floor": "1",
+      "capacity": 6,
+      "Electric": "1",
+      "Facilities": "1",
+      "Services": "1",
+      "status": 4,
+      "is_mine": true,
+      "hotel": 1,
+      "is_view": null,
+      "created": "2023-03-24T17:02:42.679Z",
+      "updated": "2023-08-07T06:12:38.907Z",
+      "price": 100.0
+    }
+  },
+  {
+    "model": "dashboard.room",
+    "pk": 30,
+    "fields": {
+      "roomType": 6,
+      "roomNo": "1001",
+      "floor": "2",
+      "capacity": 3,
+      "Electric": "1",
+      "Facilities": "1",
+      "Services": "1",
+      "status": 2,
+      "is_mine": true,
+      "hotel": 1,
+      "is_view": 4,
+      "created": "2023-08-07T05:55:52.846Z",
+      "updated": "2023-08-07T10:38:16.995Z",
+      "price": 100.75
+    }
+  },
+  {
+    "model": "dashboard.room",
+    "pk": 31,
+    "fields": {
+      "roomType": 7,
+      "roomNo": "1002",
+      "floor": "1",
+      "capacity": 6,
+      "Electric": "2",
+      "Facilities": "1,2",
+      "Services": "1",
+      "status": 2,
+      "is_mine": true,
+      "hotel": 1,
+      "is_view": 1,
+      "created": "2023-08-07T10:39:44.072Z",
+      "updated": "2023-08-08T05:09:54.487Z",
+      "price": 500.0
+    }
+  },
+  {
+    "model": "dashboard.room",
+    "pk": 32,
+    "fields": {
+      "roomType": 2,
+      "roomNo": "1112112",
+      "floor": null,
+      "capacity": 3100,
+      "Electric": "1",
+      "Facilities": "1",
+      "Services": "1",
+      "status": 2,
+      "is_mine": true,
+      "hotel": 17,
+      "is_view": 1,
+      "created": "2023-08-07T13:40:54.452Z",
+      "updated": "2023-08-07T13:41:08.414Z",
+      "price": 10000.0
+    }
+  },
+  {
+    "model": "dashboard.room",
+    "pk": 33,
+    "fields": {
+      "roomType": 4,
+      "roomNo": "2212",
+      "floor": "22",
+      "capacity": 12,
+      "Electric": "1",
+      "Facilities": "1",
+      "Services": "1",
+      "status": 2,
+      "is_mine": true,
+      "hotel": 18,
+      "is_view": 1,
+      "created": "2023-08-08T05:31:35.731Z",
+      "updated": "2023-08-08T05:31:35.731Z",
+      "price": 500.0
+    }
+  },
+  {
+    "model": "dashboard.season",
+    "pk": 1,
+    "fields": {
+      "season": "موسم رمضان",
+      "startDate": "2023-03-23",
+      "year": 2023,
+      "endDate": "2023-04-22",
+      "created": "2023-03-23T07:07:29.370Z",
+      "updated": "2023-08-08T09:37:12.529Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "dashboard.season",
+    "pk": 2,
+    "fields": {
+      "season": "الحج",
+      "startDate": "2023-05-20",
+      "year": 2023,
+      "endDate": "2023-07-17",
+      "created": "2023-03-23T07:09:03.781Z",
+      "updated": "2023-08-08T09:48:43.713Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "dashboard.season",
+    "pk": 3,
+    "fields": {
+      "season": "موسم الزيارة والعمرة",
+      "startDate": "2023-07-18",
+      "year": 2023,
+      "endDate": "2024-03-09",
+      "created": "2023-03-23T07:10:40.099Z",
+      "updated": "2023-08-08T09:36:23.078Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "dashboard.seasonprice",
+    "pk": 1,
+    "fields": { "season": 1, "roomType": 4, "price": "600" }
+  },
+  {
+    "model": "dashboard.seasonprice",
+    "pk": 2,
+    "fields": { "season": 2, "roomType": 2, "price": "708" }
+  },
+  {
+    "model": "dashboard.seasonprice",
+    "pk": 3,
+    "fields": { "season": 1, "roomType": 7, "price": "880" }
+  },
+  {
+    "model": "dashboard.seasonprice",
+    "pk": 4,
+    "fields": { "season": 1, "roomType": 6, "price": "7000" }
+  },
+  {
+    "model": "dashboard.seasonprice",
+    "pk": 5,
+    "fields": { "season": 2, "roomType": 2, "price": "550" }
+  },
+  {
+    "model": "dashboard.annualrent",
+    "pk": 1,
+    "fields": {
+      "hotel": 12,
+      "season": 1,
+      "price": "7777",
+      "status": 2,
+      "created": "2023-04-04T04:53:40.866Z",
+      "updated": "2023-04-04T04:53:40.866Z",
+      "rooms": []
+    }
+  },
+  {
+    "model": "dashboard.annualrent",
+    "pk": 4,
+    "fields": {
+      "hotel": 12,
+      "season": 2,
+      "price": "0000",
+      "status": 2,
+      "created": "2023-04-04T04:58:23.329Z",
+      "updated": "2023-04-04T04:59:06.566Z",
+      "rooms": [26, 28]
+    }
+  },
+  {
+    "model": "dashboard.annualrent",
+    "pk": 5,
+    "fields": {
+      "hotel": 12,
+      "season": 3,
+      "price": "1212",
+      "status": 2,
+      "created": "2023-04-04T06:23:04.542Z",
+      "updated": "2023-04-04T06:23:04.542Z",
+      "rooms": [27]
+    }
+  },
+  {
+    "model": "dashboard.annualrent",
+    "pk": 6,
+    "fields": {
+      "hotel": 12,
+      "season": 1,
+      "price": "3434",
+      "status": 2,
+      "created": "2023-04-04T06:23:24.795Z",
+      "updated": "2023-04-04T06:23:24.795Z",
+      "rooms": [25, 27]
+    }
+  },
+  {
+    "model": "dashboard.annualrent",
+    "pk": 7,
+    "fields": {
+      "hotel": 12,
+      "season": 3,
+      "price": "07",
+      "status": 2,
+      "created": "2023-04-04T06:30:52.407Z",
+      "updated": "2023-04-04T06:30:52.407Z",
+      "rooms": [26]
+    }
+  },
+  {
+    "model": "dashboard.annualrent",
+    "pk": 8,
+    "fields": {
+      "hotel": 12,
+      "season": 3,
+      "price": "2207",
+      "status": 2,
+      "created": "2023-04-04T06:31:17.454Z",
+      "updated": "2023-04-04T06:31:17.454Z",
+      "rooms": [24, 27]
+    }
+  },
+  {
+    "model": "dashboard.annualrent",
+    "pk": 9,
+    "fields": {
+      "hotel": 12,
+      "season": 1,
+      "price": "1",
+      "status": 2,
+      "created": "2023-04-04T07:08:12.224Z",
+      "updated": "2023-04-04T07:08:12.224Z",
+      "rooms": [26]
+    }
+  },
+  {
+    "model": "dashboard.annualrent",
+    "pk": 10,
+    "fields": {
+      "hotel": 12,
+      "season": 2,
+      "price": "3",
+      "status": 2,
+      "created": "2023-04-04T07:13:41.526Z",
+      "updated": "2023-04-04T07:13:41.526Z",
+      "rooms": [27]
+    }
+  },
+  {
+    "model": "dashboard.annualrent",
+    "pk": 11,
+    "fields": {
+      "hotel": 12,
+      "season": 1,
+      "price": "000990000000",
+      "status": 2,
+      "created": "2023-04-04T07:14:08.837Z",
+      "updated": "2023-04-04T07:14:08.837Z",
+      "rooms": [26, 27]
+    }
+  },
+  {
+    "model": "dashboard.annualrent",
+    "pk": 12,
+    "fields": {
+      "hotel": 1,
+      "season": 1,
+      "price": "449000",
+      "status": 2,
+      "created": "2023-04-04T07:14:52.194Z",
+      "updated": "2023-04-04T08:26:13.506Z",
+      "rooms": [24, 25]
+    }
+  },
+  {
+    "model": "dashboard.annualrent",
+    "pk": 13,
+    "fields": {
+      "hotel": 17,
+      "season": 2,
+      "price": "888",
+      "status": 2,
+      "created": "2023-08-08T09:43:48.738Z",
+      "updated": "2023-08-08T09:43:48.738Z",
+      "rooms": [30, 31]
+    }
+  },
+  {
+    "model": "dashboard.booking",
+    "pk": 2,
+    "fields": {
+      "full_name": "Ali Muhammad",
+      "email": "ali5549.o@mail.ru",
+      "phone": "+249900441182",
+      "hotel": 1,
+      "vat": 7.0,
+      "total_with_vat": 0.0,
+      "coupon": 1.0,
+      "status": "pending",
+      "start_date": "2023-08-01",
+      "end_date": "2023-08-08",
+      "created": "2023-08-08T12:19:46.383Z",
+      "updated": "2023-08-09T18:20:56.134Z",
+      "room": [30]
+    }
+  },
+      "price": "449000",
+      "status": 2,
+      "created": "2023-04-04T07:14:52.194Z",
+      "updated": "2023-04-04T08:26:13.506Z",
+      "rooms": [24, 25]
+    }
+  },
+  {
+    "model": "dashboard.annualrent",
+    "pk": 13,
+    "fields": {
+      "hotel": 17,
+      "season": 2,
+      "price": "888",
+      "status": 2,
+      "created": "2023-08-08T09:43:48.738Z",
+      "updated": "2023-08-08T09:43:48.738Z",
+      "rooms": [30, 31]
+    }
+  },
+  {
+    "model": "dashboard.booking",
+    "pk": 2,
+    "fields": {
+      "full_name": "Ali Muhammad",
+      "email": "ali5549.o@mail.ru",
+      "phone": "+249900441182",
+      "hotel": 1,
+      "vat": 7.0,
+      "total_with_vat": 0.0,
+      "coupon": 1.0,
+      "status": "pending",
+      "start_date": "2023-08-01",
+      "end_date": "2023-08-08",
+      "created": "2023-08-08T12:19:46.383Z",
+      "updated": "2023-08-09T18:20:56.134Z",
+      "room": [30]
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 1,
+    "fields": {
+      "name": "Can add log entry",
+      "content_type": 1,
+      "codename": "add_logentry"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 2,
+    "fields": {
+      "name": "Can change log entry",
+      "content_type": 1,
+      "codename": "change_logentry"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 3,
+    "fields": {
+      "name": "Can delete log entry",
+      "content_type": 1,
+      "codename": "delete_logentry"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 4,
+    "fields": {
+      "name": "Can view log entry",
+      "content_type": 1,
+      "codename": "view_logentry"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 5,
+    "fields": {
+      "name": "Can add permission",
+      "content_type": 2,
+      "codename": "add_permission"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 6,
+    "fields": {
+      "name": "Can change permission",
+      "content_type": 2,
+      "codename": "change_permission"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 7,
+    "fields": {
+      "name": "Can delete permission",
+      "content_type": 2,
+      "codename": "delete_permission"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 8,
+    "fields": {
+      "name": "Can view permission",
+      "content_type": 2,
+      "codename": "view_permission"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 9,
+    "fields": {
+      "name": "Can add group",
+      "content_type": 3,
+      "codename": "add_group"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 10,
+    "fields": {
+      "name": "Can change group",
+      "content_type": 3,
+      "codename": "change_group"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 11,
+    "fields": {
+      "name": "Can delete group",
+      "content_type": 3,
+      "codename": "delete_group"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 12,
+    "fields": {
+      "name": "Can view group",
+      "content_type": 3,
+      "codename": "view_group"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 13,
+    "fields": {
+      "name": "Can add user",
+      "content_type": 4,
+      "codename": "add_user"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 14,
+    "fields": {
+      "name": "Can change user",
+      "content_type": 4,
+      "codename": "change_user"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 15,
+    "fields": {
+      "name": "Can delete user",
+      "content_type": 4,
+      "codename": "delete_user"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 16,
+    "fields": {
+      "name": "Can view user",
+      "content_type": 4,
+      "codename": "view_user"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 17,
+    "fields": {
+      "name": "Can add content type",
+      "content_type": 5,
+      "codename": "add_contenttype"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 18,
+    "fields": {
+      "name": "Can change content type",
+      "content_type": 5,
+      "codename": "change_contenttype"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 19,
+    "fields": {
+      "name": "Can delete content type",
+      "content_type": 5,
+      "codename": "delete_contenttype"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 20,
+    "fields": {
+      "name": "Can view content type",
+      "content_type": 5,
+      "codename": "view_contenttype"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 21,
+    "fields": {
+      "name": "Can add session",
+      "content_type": 6,
+      "codename": "add_session"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 22,
+    "fields": {
+      "name": "Can change session",
+      "content_type": 6,
+      "codename": "change_session"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 23,
+    "fields": {
+      "name": "Can delete session",
+      "content_type": 6,
+      "codename": "delete_session"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 24,
+    "fields": {
+      "name": "Can view session",
+      "content_type": 6,
+      "codename": "view_session"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 25,
+    "fields": {
+      "name": "Can add hotel",
+      "content_type": 7,
+      "codename": "add_hotel"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 26,
+    "fields": {
+      "name": "Can change hotel",
+      "content_type": 7,
+      "codename": "change_hotel"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 27,
+    "fields": {
+      "name": "Can delete hotel",
+      "content_type": 7,
+      "codename": "delete_hotel"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 28,
+    "fields": {
+      "name": "Can view hotel",
+      "content_type": 7,
+      "codename": "view_hotel"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 29,
+    "fields": {
+      "name": "Can add hotel location",
+      "content_type": 8,
+      "codename": "add_hotellocation"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 30,
+    "fields": {
+      "name": "Can change hotel location",
+      "content_type": 8,
+      "codename": "change_hotellocation"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 31,
+    "fields": {
+      "name": "Can delete hotel location",
+      "content_type": 8,
+      "codename": "delete_hotellocation"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 32,
+    "fields": {
+      "name": "Can view hotel location",
+      "content_type": 8,
+      "codename": "view_hotellocation"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 33,
+    "fields": {
+      "name": "Can add hotel multiple image",
+      "content_type": 9,
+      "codename": "add_hotelmultipleimage"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 34,
+    "fields": {
+      "name": "Can change hotel multiple image",
+      "content_type": 9,
+      "codename": "change_hotelmultipleimage"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 35,
+    "fields": {
+      "name": "Can delete hotel multiple image",
+      "content_type": 9,
+      "codename": "delete_hotelmultipleimage"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 36,
+    "fields": {
+      "name": "Can view hotel multiple image",
+      "content_type": 9,
+      "codename": "view_hotelmultipleimage"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 37,
+    "fields": {
+      "name": "Can add room type",
+      "content_type": 10,
+      "codename": "add_roomtype"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 38,
+    "fields": {
+      "name": "Can change room type",
+      "content_type": 10,
+      "codename": "change_roomtype"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 39,
+    "fields": {
+      "name": "Can delete room type",
+      "content_type": 10,
+      "codename": "delete_roomtype"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 40,
+    "fields": {
+      "name": "Can view room type",
+      "content_type": 10,
+      "codename": "view_roomtype"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 41,
+    "fields": {
+      "name": "Can add room",
+      "content_type": 11,
+      "codename": "add_room"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 42,
+    "fields": {
+      "name": "Can change room",
+      "content_type": 11,
+      "codename": "change_room"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 43,
+    "fields": {
+      "name": "Can delete room",
+      "content_type": 11,
+      "codename": "delete_room"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 44,
+    "fields": {
+      "name": "Can view room",
+      "content_type": 11,
+      "codename": "view_room"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 45,
+    "fields": {
+      "name": "Can add season",
+      "content_type": 12,
+      "codename": "add_season"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 46,
+    "fields": {
+      "name": "Can change season",
+      "content_type": 12,
+      "codename": "change_season"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 47,
+    "fields": {
+      "name": "Can delete season",
+      "content_type": 12,
+      "codename": "delete_season"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 48,
+    "fields": {
+      "name": "Can view season",
+      "content_type": 12,
+      "codename": "view_season"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 49,
+    "fields": {
+      "name": "Can add season price",
+      "content_type": 13,
+      "codename": "add_seasonprice"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 50,
+    "fields": {
+      "name": "Can change season price",
+      "content_type": 13,
+      "codename": "change_seasonprice"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 51,
+    "fields": {
+      "name": "Can delete season price",
+      "content_type": 13,
+      "codename": "delete_seasonprice"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 52,
+    "fields": {
+      "name": "Can view season price",
+      "content_type": 13,
+      "codename": "view_seasonprice"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 53,
+    "fields": {
+      "name": "Can add hotel",
+      "content_type": 14,
+      "codename": "add_hotel"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 54,
+    "fields": {
+      "name": "Can change hotel",
+      "content_type": 14,
+      "codename": "change_hotel"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 55,
+    "fields": {
+      "name": "Can delete hotel",
+      "content_type": 14,
+      "codename": "delete_hotel"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 56,
+    "fields": {
+      "name": "Can view hotel",
+      "content_type": 14,
+      "codename": "view_hotel"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 57,
+    "fields": {
+      "name": "Can add reservation",
+      "content_type": 15,
+      "codename": "add_reservation"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 58,
+    "fields": {
+      "name": "Can change reservation",
+      "content_type": 15,
+      "codename": "change_reservation"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 59,
+    "fields": {
+      "name": "Can delete reservation",
+      "content_type": 15,
+      "codename": "delete_reservation"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 60,
+    "fields": {
+      "name": "Can view reservation",
+      "content_type": 15,
+      "codename": "view_reservation"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 61,
+    "fields": {
+      "name": "Can add room",
+      "content_type": 16,
+      "codename": "add_room"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 62,
+    "fields": {
+      "name": "Can change room",
+      "content_type": 16,
+      "codename": "change_room"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 63,
+    "fields": {
+      "name": "Can delete room",
+      "content_type": 16,
+      "codename": "delete_room"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 64,
+    "fields": {
+      "name": "Can view room",
+      "content_type": 16,
+      "codename": "view_room"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 65,
+    "fields": {
+      "name": "Can add annual rent",
+      "content_type": 17,
+      "codename": "add_annualrent"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 66,
+    "fields": {
+      "name": "Can change annual rent",
+      "content_type": 17,
+      "codename": "change_annualrent"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 67,
+    "fields": {
+      "name": "Can delete annual rent",
+      "content_type": 17,
+      "codename": "delete_annualrent"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 68,
+    "fields": {
+      "name": "Can view annual rent",
+      "content_type": 17,
+      "codename": "view_annualrent"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 69,
+    "fields": {
+      "name": "Can add order",
+      "content_type": 18,
+      "codename": "add_order"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 70,
+    "fields": {
+      "name": "Can change order",
+      "content_type": 18,
+      "codename": "change_order"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 71,
+    "fields": {
+      "name": "Can delete order",
+      "content_type": 18,
+      "codename": "delete_order"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 72,
+    "fields": {
+      "name": "Can view order",
+      "content_type": 18,
+      "codename": "view_order"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 73,
+    "fields": {
+      "name": "Can add booking",
+      "content_type": 19,
+      "codename": "add_booking"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 74,
+    "fields": {
+      "name": "Can change booking",
+      "content_type": 19,
+      "codename": "change_booking"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 75,
+    "fields": {
+      "name": "Can delete booking",
+      "content_type": 19,
+      "codename": "delete_booking"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 76,
+    "fields": {
+      "name": "Can view booking",
+      "content_type": 19,
+      "codename": "view_booking"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 77,
+    "fields": {
+      "name": "Can add customer",
+      "content_type": 20,
+      "codename": "add_customer"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 78,
+    "fields": {
+      "name": "Can change customer",
+      "content_type": 20,
+      "codename": "change_customer"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 79,
+    "fields": {
+      "name": "Can delete customer",
+      "content_type": 20,
+      "codename": "delete_customer"
+    }
+  },
+  {
+    "model": "auth.permission",
+    "pk": 80,
+    "fields": {
+      "name": "Can view customer",
+      "content_type": 20,
+      "codename": "view_customer"
+    }
+  }
+]

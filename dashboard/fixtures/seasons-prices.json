@@ -1,0 +1,28 @@
+[
+
+  {
+    "model": "dashboard.seasonprice",
+    
+    "fields": { "season": 4, "roomType": 4, "price": "600" }
+  },
+  {
+    "model": "dashboard.seasonprice",
+    
+    "fields": { "season": 5, "roomType": 2, "price": "708" }
+  },
+  {
+    "model": "dashboard.seasonprice",
+    
+    "fields": { "season": 4, "roomType": 2, "price": "880" }
+  },
+  {
+    "model": "dashboard.seasonprice",
+    
+    "fields": { "season": 4, "roomType": 1, "price": "7000" }
+  },
+  {
+    "model": "dashboard.seasonprice",
+    
+    "fields": { "season": 5, "roomType": 2, "price": "550" }
+  }
+]

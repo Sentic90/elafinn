@@ -21,18 +21,20 @@ def index(request):
 
 def result(request):
     # Initial queryset with active hotels
-    queryset = Hotel.objects.filter(is_active=True, room__capacity__gt=0)
+    queryset = Hotel.objects.filter(is_active=True)
 
+    print('Initial QuerySet... ->: ',queryset)
     # Other filter parameters
     city = request.GET.get('city', '')
     nationality = request.GET.get('nationality', '')
-    guests = request.GET.get('guests', '')
+    guests = request.GET.get('guests', 0)
     datefilter = request.GET.get("datefilter", '')
 
     # Convert start and end date strings to datetime objects
     start_date = None
     end_date = None
     if datefilter:
+        print('datefilter...')
         date_range = datefilter.split(" ")
         if date_range:
             start_date_str = date_range[0]
@@ -41,29 +43,35 @@ def result(request):
             end_date = datetime.strptime(end_date_str, '%d/%m/%Y')
 
     # Apply filters
-    if city:
+    if not city =='both':
+        print('city filter..')
+
         queryset = queryset.filter(city=city)
     
-    if nationality:
+    if not nationality == 'all':
+
+        print('nationality filter...')
         queryset = queryset.filter(nationality__contains=nationality)
 
     if guests:
-        guests_number = int(guests)
+        print('guests numbers...')
+        guests_number = guests
         queryset = queryset.filter(room__capacity__gte=guests_number, room__status=2)
 
     if start_date and end_date:
+
         queryset = queryset.filter(
-            (Q(room__booking__start_date__lte=start_date) &
-             Q(room__booking__end_date__gte=end_date)) |
+            Q(room__booking__start_date__lte=start_date) &
+            Q(room__booking__end_date__gte=end_date) &
             Q(room__status=2)
         )
-    print(queryset)
-
+    
     context = {
         'hotels': queryset,
         'guests_number': guests_number if guests else None,
         'start_date': start_date.strftime('%m/%d/%Y') if start_date else '',
         'end_date': end_date.strftime('%m/%d/%Y') if end_date else '',
+        'city':city
     }
 
     return render(request, 'main/result.html', context)
@@ -88,14 +96,6 @@ def room_details(request, slug, roomId):
     }
 
     return render(request, 'main/room_details.html', context)
-
-
-def order_add(request, slug, roomId):
-    # hotels/hotel_detail/<slug:slug>/orders/add/<int:roomId>
-    if request.method == 'GET':
-        hotel = Hotel.objects.filter(slug=slug)[0]
-        room = Room.objects.filter(id=roomId)[0]
-        return render(request, 'main/order-add.html', {'hotel': hotel, 'room':room})
         
 
 
@@ -108,7 +108,7 @@ def booking_add(request, slug):
         #     room=room,
         #     total_with_vat=150
         # )
-        return render(request, 'main/booking_submited.html')
+        return redirect('customer-panel')
         
 
 def register_request(request):
@@ -135,7 +135,9 @@ def login_request(request):
             if user is not None:
                 login(request, user)
                 messages.info(request, f"تم تسجيل دخولك بنجاح {username}.")
-                return redirect("my-hotel")
+                if user.is_staff:
+                    return redirect("my-hotel")
+                return redirect("customer-panel")
             else:
                 messages.error(
                     request, "خطأ في البريد الإلكتروني أو كلمة المرور.")

@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'django_countries',
     'django_extensions',
     'debug_toolbar',
+    'core',
 ]
 
 MIDDLEWARE = [
@@ -160,3 +161,4 @@ LANGUAGE = LANGUAGES[0][0]
 
 
 LOGIN_URL = 'main:login'
+AUTH_USER_MODEL = 'core.User'

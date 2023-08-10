@@ -1,0 +1,182 @@
+[
+    {
+    "model": "dashboard.room",
+    
+    "fields": {
+      "roomType": 3,
+      "roomNo": "909",
+      "floor": "8",
+      "capacity": 40,
+      "Electric": "1",
+      "Facilities": "1",
+      "Services": "1",
+      "status": 2,
+      "is_mine": true,
+      "hotel": 2,
+      "is_view": null,
+      "created": "2023-03-23T05:55:36.675Z",
+      "updated": "2023-07-06T09:51:49.697Z",
+      "price": 100.0
+    }
+  },
+  {
+    "model": "dashboard.room",
+    
+    "fields": {
+      "roomType": 3,
+      "roomNo": "202",
+      "floor": "2",
+      "capacity": 30,
+      "Electric": "6",
+      "Facilities": "3",
+      "Services": "3",
+      "status": 2,
+      "is_mine": true,
+      "hotel": 2,
+      "is_view": 1,
+      "created": "2023-03-23T05:57:59.750Z",
+      "updated": "2023-08-06T14:14:32.141Z",
+      "price": 100.0
+    }
+  },
+  {
+    "model": "dashboard.room",
+    
+    "fields": {
+      "roomType": 1,
+      "roomNo": "406",
+      "floor": "4",
+      "capacity": 6,
+      "Electric": "1,7",
+      "Facilities": "1",
+      "Services": "1",
+      "status": 3,
+      "is_mine": true,
+      "hotel": 2,
+      "is_view": 1,
+      "created": "2023-03-23T06:14:50.814Z",
+      "updated": "2023-03-23T07:00:32.310Z",
+      "price": 100.0
+    }
+  },
+  {
+    "model": "dashboard.room",
+    
+    "fields": {
+      "roomType": 1,
+      "roomNo": "609",
+      "floor": "8",
+      "capacity": 6,
+      "Electric": "1,7",
+      "Facilities": "1",
+      "Services": "1",
+      "status": 1,
+      "is_mine": true,
+      "hotel": 2,
+      "is_view": 0,
+      "created": "2023-03-23T08:07:30.261Z",
+      "updated": "2023-03-23T08:07:30.261Z",
+      "price": 100.0
+    }
+  },
+  {
+    "model": "dashboard.room",
+    
+    "fields": {
+      "roomType": 2,
+      "roomNo": "108",
+      "floor": "1",
+      "capacity": 6,
+      "Electric": "1",
+      "Facilities": "1",
+      "Services": "1",
+      "status": 4,
+      "is_mine": true,
+      "hotel": 2,
+      "is_view": null,
+      "created": "2023-03-24T17:02:42.679Z",
+      "updated": "2023-08-07T06:12:38.907Z",
+      "price": 100.0
+    }
+  },
+  {
+    "model": "dashboard.room",
+    
+    "fields": {
+      "roomType": 1,
+      "roomNo": "1001",
+      "floor": "2",
+      "capacity": 3,
+      "Electric": "1",
+      "Facilities": "1",
+      "Services": "1",
+      "status": 2,
+      "is_mine": true,
+      "hotel": 2,
+      "is_view": 4,
+      "created": "2023-08-07T05:55:52.846Z",
+      "updated": "2023-08-07T10:38:16.995Z",
+      "price": 100.75
+    }
+  },
+  {
+    "model": "dashboard.room",
+    
+    "fields": {
+      "roomType": 3,
+      "roomNo": "1002",
+      "floor": "1",
+      "capacity": 6,
+      "Electric": "2",
+      "Facilities": "1,2",
+      "Services": "1",
+      "status": 2,
+      "is_mine": true,
+      "hotel": 2,
+      "is_view": 1,
+      "created": "2023-08-07T10:39:44.072Z",
+      "updated": "2023-08-08T05:09:54.487Z",
+      "price": 500.0
+    }
+  },
+  {
+    "model": "dashboard.room",
+    
+    "fields": {
+      "roomType": 2,
+      "roomNo": "1112112",
+      "floor": null,
+      "capacity": 3100,
+      "Electric": "1",
+      "Facilities": "1",
+      "Services": "1",
+      "status": 2,
+      "is_mine": true,
+      "hotel": 2,
+      "is_view": 1,
+      "created": "2023-08-07T13:40:54.452Z",
+      "updated": "2023-08-07T13:41:08.414Z",
+      "price": 10000.0
+    }
+  },
+  {
+    "model": "dashboard.room",
+    
+    "fields": {
+      "roomType": 4,
+      "roomNo": "2212",
+      "floor": "22",
+      "capacity": 12,
+      "Electric": "1",
+      "Facilities": "1",
+      "Services": "1",
+      "status": 2,
+      "is_mine": true,
+      "hotel": 2,
+      "is_view": 1,
+      "created": "2023-08-08T05:31:35.731Z",
+      "updated": "2023-08-08T05:31:35.731Z",
+      "price": 500.0
+    }
+  }
+]

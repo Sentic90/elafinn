@@ -1,0 +1,762 @@
+[
+  {
+    "model": "dashboard.hotel",
+    "pk": 1,
+    "fields": {
+      "user": 1,
+      "hotel_name": "أنجم مكة",
+      "city": "Makkah",
+      "address": "13876 Alhajj,  Makkah",
+      "tel": "1234567",
+      "mobile": "0562684141",
+      "category": 2,
+      "Cancellation_policy": 1,
+      "Cancellation_hours": null,
+      "Check_in": "05:11:32",
+      "Check_out": "05:11:32",
+      "nationality": "BA,BM,CK,SA,SD",
+      "is_priority": false,
+      "about_hotel": "نبذة عن الفندق",
+      "created": "2023-03-16T05:12:08.321Z",
+      "updated": "2023-08-09T13:45:30.133Z",
+      "logo": "images/gallery/no-image-placeholder.webp",
+      "is_active": true,
+      "slug": "maka-hotel"
+    }
+  },
+  {
+    "model": "dashboard.hotel",
+    "pk": 10,
+    "fields": {
+      "user": 1,
+      "hotel_name": "فندق يستقبل جزائرين",
+      "city": "Makkah",
+      "address": "345",
+      "tel": "متنا",
+      "mobile": "نتا",
+      "category": 1,
+      "Cancellation_policy": 1,
+      "Cancellation_hours": null,
+      "Check_in": "12:30 AM",
+      "Check_out": "12:00 AM",
+      "nationality": "DZ",
+      "is_priority": false,
+      "about_hotel": "ماتل",
+      "created": "2023-03-18T03:34:37.397Z",
+      "updated": "2023-08-08T10:33:46.154Z",
+      "logo": "images/gallery/ElafLogo.png",
+      "is_active": true,
+      "slug": "Algeria"
+    }
+  },
+  {
+    "model": "dashboard.hotel",
+    "pk": 12,
+    "fields": {
+      "user": 1,
+      "hotel_name": "سرايا",
+      "city": "Makkah",
+      "address": "نتا",
+      "tel": "نتا",
+      "mobile": "نتا",
+      "category": 1,
+      "Cancellation_policy": 1,
+      "Cancellation_hours": null,
+      "Check_in": "12:00 AM",
+      "Check_out": "12:00 AM",
+      "nationality": "AL",
+      "is_priority": false,
+      "about_hotel": "نتال",
+      "created": "2023-03-18T08:16:05.989Z",
+      "updated": "2023-08-08T17:14:18.364Z",
+      "logo": "images/gallery/ElafLogo_q8TReP5.png",
+      "is_active": false,
+      "slug": "jhgf"
+    }
+  },
+  {
+    "model": "dashboard.hotel",
+    "pk": 13,
+    "fields": {
+      "user": 1,
+      "hotel_name": "فندق1",
+      "city": "Makkah",
+      "address": "12345",
+      "tel": "1234",
+      "mobile": "123",
+      "category": 4,
+      "Cancellation_policy": 1,
+      "Cancellation_hours": null,
+      "Check_in": "12:00 AM",
+      "Check_out": "12:30 AM",
+      "nationality": "DZ",
+      "is_priority": false,
+      "about_hotel": "ثقثقثقثقث",
+      "created": "2023-05-17T08:24:36.812Z",
+      "updated": "2023-05-17T08:24:36.812Z",
+      "logo": "images/gallery/ElafLogo_S1r0obV.png",
+      "is_active": false,
+      "slug": "fqcxjw-1"
+    }
+  },
+  {
+    "model": "dashboard.hotel",
+    "pk": 14,
+    "fields": {
+      "user": 1,
+      "hotel_name": "فندق2",
+      "city": "Makkah",
+      "address": "مكة شارع1",
+      "tel": "12345678",
+      "mobile": "12345678",
+      "category": 2,
+      "Cancellation_policy": 1,
+      "Cancellation_hours": null,
+      "Check_in": "12:00 AM",
+      "Check_out": "12:30 AM",
+      "nationality": "AD,BE",
+      "is_priority": false,
+      "about_hotel": "",
+      "created": "2023-05-24T19:12:05.179Z",
+      "updated": "2023-05-24T19:12:05.179Z",
+      "logo": "",
+      "is_active": false,
+      "slug": "h9tmz2-2"
+    }
+  },
+  {
+    "model": "dashboard.hotel",
+    "pk": 15,
+    "fields": {
+      "user": 1,
+      "hotel_name": "ddd",
+      "city": "Madinah",
+      "address": "dfgfd",
+      "tel": "sdfgf",
+      "mobile": "dfg",
+      "category": 5,
+      "Cancellation_policy": 2,
+      "Cancellation_hours": null,
+      "Check_in": "01:00 AM",
+      "Check_out": "01:30 AM",
+      "nationality": "AS",
+      "is_priority": false,
+      "about_hotel": "dfg",
+      "created": "2023-06-04T23:51:26.928Z",
+      "updated": "2023-06-04T23:51:26.928Z",
+      "logo": "images/gallery/Screenshot_20221124_024027.png",
+      "is_active": false,
+      "slug": "uvduvj-ddd"
+    }
+  },
+  {
+    "model": "dashboard.hotel",
+    "pk": 16,
+    "fields": {
+      "user": 1,
+      "hotel_name": "فندق جديد3",
+      "city": "Makkah",
+      "address": "شارع 45",
+      "tel": "123456",
+      "mobile": "12345",
+      "category": 1,
+      "Cancellation_policy": 1,
+      "Cancellation_hours": 3,
+      "Check_in": "12:00 AM",
+      "Check_out": "12:30 AM",
+      "nationality": "AD",
+      "is_priority": false,
+      "about_hotel": "",
+      "created": "2023-06-05T01:02:05.262Z",
+      "updated": "2023-06-05T01:02:05.262Z",
+      "logo": "images/gallery/Screenshot_20221124_024027_5KxYAsb.png",
+      "is_active": false,
+      "slug": "ial19f-3"
+    }
+  },
+  {
+    "model": "dashboard.hotel",
+    "pk": 17,
+    "fields": {
+      "user": 1,
+      "hotel_name": "فندق يستقبل اكثر من 100 زائر وسعودين",
+      "city": "Makkah",
+      "address": null,
+      "tel": null,
+      "mobile": null,
+      "category": 2,
+      "Cancellation_policy": null,
+      "Cancellation_hours": null,
+      "Check_in": null,
+      "Check_out": null,
+      "nationality": "SA",
+      "is_priority": false,
+      "about_hotel": "",
+      "created": "2023-08-07T13:39:02.623Z",
+      "updated": "2023-08-09T13:57:59.188Z",
+      "logo": "images/gallery/no-image-placeholder_HHWpfGU.webp",
+      "is_active": true,
+      "slug": "guests-100"
+    }
+  },
+  {
+    "model": "dashboard.hotel",
+    "pk": 18,
+    "fields": {
+      "user": 1,
+      "hotel_name": "فندق يستقبل ٣ زوار وسودانين في المدينة",
+      "city": "Madinah",
+      "address": null,
+      "tel": null,
+      "mobile": null,
+      "category": 4,
+      "Cancellation_policy": null,
+      "Cancellation_hours": null,
+      "Check_in": null,
+      "Check_out": null,
+      "nationality": "SD",
+      "is_priority": false,
+      "about_hotel": "",
+      "created": "2023-08-07T13:45:27.330Z",
+      "updated": "2023-08-09T13:59:26.294Z",
+      "logo": "images/gallery/no-image-placeholder_9ZSpRr4.webp",
+      "is_active": true,
+      "slug": "sudanese-1o"
+    }
+  },
+  {
+    "model": "dashboard.hotel",
+    "pk": 19,
+    "fields": {
+      "user": 1,
+      "hotel_name": "فندق في المدينة المنورة يستقبل سودانين ١٠",
+      "city": "Madinah",
+      "address": null,
+      "tel": null,
+      "mobile": null,
+      "category": 3,
+      "Cancellation_policy": null,
+      "Cancellation_hours": null,
+      "Check_in": null,
+      "Check_out": null,
+      "nationality": "SD",
+      "is_priority": false,
+      "about_hotel": "",
+      "created": "2023-08-07T13:54:59.195Z",
+      "updated": "2023-08-07T13:54:59.195Z",
+      "logo": "images/gallery/hotel-1_ow9iOFa.webp",
+      "is_active": true,
+      "slug": "bljakljdsfl"
+    }
+  },
+  {
+    "model": "dashboard.hotellocation",
+    "pk": 5,
+    "fields": {
+      "hotel": 1,
+      "latitude": 24.6120983,
+      "longitude": 46.545161,
+      "hrm": null,
+      "created": "2023-03-20T01:22:43.630Z",
+      "updated": "2023-05-05T18:40:09.120Z"
+    }
+  },
+  {
+    "model": "dashboard.hotellocation",
+    "pk": 13,
+    "fields": {
+      "hotel": 12,
+      "latitude": 24.62527291,
+      "longitude": 46.55325597,
+      "hrm": null,
+      "created": "2023-03-20T02:51:12.652Z",
+      "updated": "2023-03-23T06:30:51.821Z"
+    }
+  },
+  {
+    "model": "dashboard.hotellocation",
+    "pk": 14,
+    "fields": {
+      "hotel": 10,
+      "latitude": 24.63347331,
+      "longitude": 46.55417312,
+      "hrm": null,
+      "created": "2023-03-20T03:07:32.603Z",
+      "updated": "2023-03-20T03:12:52.073Z"
+    }
+  },
+  {
+    "model": "dashboard.hotelmultipleimage",
+    "pk": 1,
+    "fields": {
+      "hotel": 1,
+      "images": "Screenshot_20221111_010545.png",
+      "date": "2023-03-18T18:35:45.376Z"
+    }
+  },
+  {
+    "model": "dashboard.hotelmultipleimage",
+    "pk": 2,
+    "fields": {
+      "hotel": 1,
+      "images": "Screenshot_20230104_085818.png",
+      "date": "2023-03-18T19:28:04.984Z"
+    }
+  },
+  {
+    "model": "dashboard.hotelmultipleimage",
+    "pk": 3,
+    "fields": {
+      "hotel": 1,
+      "images": "Screenshot_20230226_025346.png",
+      "date": "2023-03-18T19:28:30.764Z"
+    }
+  },
+  {
+    "model": "dashboard.hotelmultipleimage",
+    "pk": 4,
+    "fields": {
+      "hotel": 1,
+      "images": "مركز_الابتكار.png",
+      "date": "2023-03-18T19:31:23.319Z"
+    }
+  },
+  {
+    "model": "dashboard.hotelmultipleimage",
+    "pk": 5,
+    "fields": {
+      "hotel": 1,
+      "images": "d-sm.jpg",
+      "date": "2023-03-18T19:32:09.897Z"
+    }
+  },
+  {
+    "model": "dashboard.hotelmultipleimage",
+    "pk": 6,
+    "fields": {
+      "hotel": 1,
+      "images": "images/hotel_images/a-sm.jpg",
+      "date": "2023-03-18T20:15:39.571Z"
+    }
+  },
+  {
+    "model": "dashboard.hotelmultipleimage",
+    "pk": 7,
+    "fields": {
+      "hotel": 1,
+      "images": "images/hotel_images/b-sm.jpg",
+      "date": "2023-03-18T20:18:17.941Z"
+    }
+  },
+  {
+    "model": "dashboard.hotelmultipleimage",
+    "pk": 8,
+    "fields": {
+      "hotel": 1,
+      "images": "images/hotel_images/a-sm_Di1lO3b.jpg",
+      "date": "2023-03-18T20:27:40.409Z"
+    }
+  },
+  {
+    "model": "dashboard.hotelmultipleimage",
+    "pk": 9,
+    "fields": {
+      "hotel": 1,
+      "images": "images/hotel_images/a-sm_PzrAMOs.jpg",
+      "date": "2023-03-18T20:28:34.028Z"
+    }
+  },
+  {
+    "model": "dashboard.hotelmultipleimage",
+    "pk": 10,
+    "fields": {
+      "hotel": 1,
+      "images": "images/hotel_images/a-sm_nRnVEy1.jpg",
+      "date": "2023-03-18T20:28:34.032Z"
+    }
+  },
+  {
+    "model": "dashboard.hotelmultipleimage",
+    "pk": 11,
+    "fields": {
+      "hotel": 1,
+      "images": "images/hotel_images/iran-sq.png",
+      "date": "2023-03-18T20:28:58.824Z"
+    }
+  },
+  {
+    "model": "dashboard.hotelmultipleimage",
+    "pk": 12,
+    "fields": {
+      "hotel": 1,
+      "images": "images/hotel_images/iran-sq_2uO4WDF.png",
+      "date": "2023-03-18T20:28:58.831Z"
+    }
+  },
+  {
+    "model": "dashboard.hotelmultipleimage",
+    "pk": 13,
+    "fields": {
+      "hotel": 1,
+      "images": "images/hotel_images/uk.png",
+      "date": "2023-03-18T20:29:18.844Z"
+    }
+  },
+  {
+    "model": "dashboard.hotelmultipleimage",
+    "pk": 14,
+    "fields": {
+      "hotel": 1,
+      "images": "images/hotel_images/uk_ZR1WVvO.png",
+      "date": "2023-03-18T20:29:18.852Z"
+    }
+  },
+  {
+    "model": "dashboard.hotelmultipleimage",
+    "pk": 15,
+    "fields": {
+      "hotel": 1,
+      "images": "images/hotel_images/Screenshot_20221211_034316.png",
+      "date": "2023-03-20T08:57:43.688Z"
+    }
+  },
+  {
+    "model": "dashboard.hotelmultipleimage",
+    "pk": 16,
+    "fields": {
+      "hotel": 1,
+      "images": "images/hotel_images/Screenshot_20221211_034316_9yt5tOi.png",
+      "date": "2023-03-20T08:57:43.694Z"
+    }
+  },
+  {
+    "model": "dashboard.hotelmultipleimage",
+    "pk": 17,
+    "fields": {
+      "hotel": 10,
+      "images": "images/hotel_images/مركز_الابتكار.png",
+      "date": "2023-03-20T09:16:48.761Z"
+    }
+  },
+  {
+    "model": "dashboard.hotelmultipleimage",
+    "pk": 19,
+    "fields": {
+      "hotel": 10,
+      "images": "images/hotel_images/Screenshot_20230226_025346.png",
+      "date": "2023-03-20T09:50:35.503Z"
+    }
+  },
+  {
+    "model": "dashboard.hotelmultipleimage",
+    "pk": 20,
+    "fields": {
+      "hotel": 10,
+      "images": "images/hotel_images/Screenshot_20230226_025346_fodBBEi.png",
+      "date": "2023-03-20T09:50:35.508Z"
+    }
+  },
+  {
+    "model": "dashboard.hotelmultipleimage",
+    "pk": 21,
+    "fields": {
+      "hotel": 10,
+      "images": "images/hotel_images/Screenshot_20230104_091923.png",
+      "date": "2023-03-20T09:56:53.412Z"
+    }
+  },
+  {
+    "model": "dashboard.hotelmultipleimage",
+    "pk": 22,
+    "fields": {
+      "hotel": 10,
+      "images": "images/hotel_images/Screenshot_20230104_091923_65PBjAy.png",
+      "date": "2023-03-20T09:56:53.420Z"
+    }
+  },
+  {
+    "model": "dashboard.hotelmultipleimage",
+    "pk": 23,
+    "fields": {
+      "hotel": 12,
+      "images": "images/hotel_images/Screenshot_20230226_025346_NzeOYz9.png",
+      "date": "2023-03-22T21:43:01.402Z"
+    }
+  },
+  {
+    "model": "dashboard.hotelmultipleimage",
+    "pk": 24,
+    "fields": {
+      "hotel": 12,
+      "images": "images/hotel_images/Screenshot_20230226_025346_bvHUa9l.png",
+      "date": "2023-03-22T21:43:01.409Z"
+    }
+  },
+  {
+    "model": "dashboard.hotelmultipleimage",
+    "pk": 25,
+    "fields": {
+      "hotel": 12,
+      "images": "images/hotel_images/Screenshot_20221111_011314.png",
+      "date": "2023-03-22T21:43:14.655Z"
+    }
+  },
+  {
+    "model": "dashboard.hotelmultipleimage",
+    "pk": 26,
+    "fields": {
+      "hotel": 12,
+      "images": "images/hotel_images/Screenshot_20221111_011314_Ww8shMa.png",
+      "date": "2023-03-22T21:43:14.663Z"
+    }
+  },
+  {
+    "model": "dashboard.hotelmultipleimage",
+    "pk": 27,
+    "fields": {
+      "hotel": 13,
+      "images": "images/hotel_images/Screenshot_2023-03-08_130112.png",
+      "date": "2023-05-17T08:25:29.977Z"
+    }
+  },
+  {
+    "model": "dashboard.hotelmultipleimage",
+    "pk": 28,
+    "fields": {
+      "hotel": 13,
+      "images": "images/hotel_images/Screenshot_2023-03-08_130112_7scibRd.png",
+      "date": "2023-05-17T08:25:29.986Z"
+    }
+  },
+  {
+    "model": "dashboard.roomtype",
+    "pk": 2,
+    "fields": {
+      "hotel": 1,
+      "roomType": 3,
+      "capacity": 3,
+      "Electric": "1",
+      "Facilities": "1",
+      "Services": "1",
+      "created": "2023-03-22T20:31:49.925Z",
+      "updated": "2023-03-25T23:26:17.586Z"
+    }
+  },
+  {
+    "model": "dashboard.roomtype",
+    "pk": 3,
+    "fields": {
+      "hotel": 1,
+      "roomType": 2,
+      "capacity": 2,
+      "Electric": "6",
+      "Facilities": "3",
+      "Services": "3",
+      "created": "2023-03-22T20:34:41.401Z",
+      "updated": "2023-03-25T23:26:25.934Z"
+    }
+  },
+  
+  {
+    "model": "dashboard.annualrent",
+    "pk": 1,
+    "fields": {
+      "hotel": 12,
+      "season": 1,
+      "price": "7777",
+      "status": 2,
+      "created": "2023-04-04T04:53:40.866Z",
+      "updated": "2023-04-04T04:53:40.866Z",
+      "rooms": []
+    }
+  },
+  {
+    "model": "dashboard.annualrent",
+    "pk": 4,
+    "fields": {
+      "hotel": 12,
+      "season": 2,
+      "price": "0000",
+      "status": 2,
+      "created": "2023-04-04T04:58:23.329Z",
+      "updated": "2023-04-04T04:59:06.566Z",
+      "rooms": [26, 28]
+    }
+  },
+  {
+    "model": "dashboard.annualrent",
+    "pk": 5,
+    "fields": {
+      "hotel": 12,
+      "season": 3,
+      "price": "1212",
+      "status": 2,
+      "created": "2023-04-04T06:23:04.542Z",
+      "updated": "2023-04-04T06:23:04.542Z",
+      "rooms": [27]
+    }
+  },
+  {
+    "model": "dashboard.annualrent",
+    "pk": 6,
+    "fields": {
+      "hotel": 12,
+      "season": 1,
+      "price": "3434",
+      "status": 2,
+      "created": "2023-04-04T06:23:24.795Z",
+      "updated": "2023-04-04T06:23:24.795Z",
+      "rooms": [25, 27]
+    }
+  },
+  {
+    "model": "dashboard.annualrent",
+    "pk": 7,
+    "fields": {
+      "hotel": 12,
+      "season": 3,
+      "price": "07",
+      "status": 2,
+      "created": "2023-04-04T06:30:52.407Z",
+      "updated": "2023-04-04T06:30:52.407Z",
+      "rooms": [26]
+    }
+  },
+  {
+    "model": "dashboard.annualrent",
+    "pk": 8,
+    "fields": {
+      "hotel": 12,
+      "season": 3,
+      "price": "2207",
+      "status": 2,
+      "created": "2023-04-04T06:31:17.454Z",
+      "updated": "2023-04-04T06:31:17.454Z",
+      "rooms": [24, 27]
+    }
+  },
+  {
+    "model": "dashboard.annualrent",
+    "pk": 9,
+    "fields": {
+      "hotel": 12,
+      "season": 1,
+      "price": "1",
+      "status": 2,
+      "created": "2023-04-04T07:08:12.224Z",
+      "updated": "2023-04-04T07:08:12.224Z",
+      "rooms": [26]
+    }
+  },
+  {
+    "model": "dashboard.annualrent",
+    "pk": 10,
+    "fields": {
+      "hotel": 12,
+      "season": 2,
+      "price": "3",
+      "status": 2,
+      "created": "2023-04-04T07:13:41.526Z",
+      "updated": "2023-04-04T07:13:41.526Z",
+      "rooms": [27]
+    }
+  },
+  {
+    "model": "dashboard.annualrent",
+    "pk": 11,
+    "fields": {
+      "hotel": 12,
+      "season": 1,
+      "price": "000990000000",
+      "status": 2,
+      "created": "2023-04-04T07:14:08.837Z",
+      "updated": "2023-04-04T07:14:08.837Z",
+      "rooms": [26, 27]
+    }
+  },
+  {
+    "model": "dashboard.annualrent",
+    "pk": 12,
+    "fields": {
+      "hotel": 1,
+      "season": 1,
+      "price": "449000",
+      "status": 2,
+      "created": "2023-04-04T07:14:52.194Z",
+      "updated": "2023-04-04T08:26:13.506Z",
+      "rooms": [24, 25]
+    }
+  },
+  {
+    "model": "dashboard.annualrent",
+    "pk": 13,
+    "fields": {
+      "hotel": 17,
+      "season": 2,
+      "price": "888",
+      "status": 2,
+      "created": "2023-08-08T09:43:48.738Z",
+      "updated": "2023-08-08T09:43:48.738Z",
+      "rooms": [30, 31]
+    }
+  },
+  {
+    "model": "dashboard.booking",
+    "pk": 2,
+    "fields": {
+      "full_name": "Ali Muhammad",
+      "email": "ali5549.o@mail.ru",
+      "phone": "+249900441182",
+      "hotel": 1,
+      "vat": 7.0,
+      "total_with_vat": 0.0,
+      "coupon": 1.0,
+      "status": "pending",
+      "start_date": "2023-08-01",
+      "end_date": "2023-08-08",
+      "created": "2023-08-08T12:19:46.383Z",
+      "updated": "2023-08-09T18:20:56.134Z",
+      "room": [30]
+    }
+  },
+  {
+    "price": "449000",
+    "status": 2,
+    "created": "2023-04-04T07:14:52.194Z",
+    "updated": "2023-04-04T08:26:13.506Z",
+    "rooms": [24, 25]
+  },
+  {
+    "model": "dashboard.annualrent",
+    "pk": 13,
+    "fields": {
+      "hotel": 17,
+      "season": 2,
+      "price": "888",
+      "status": 2,
+      "created": "2023-08-08T09:43:48.738Z",
+      "updated": "2023-08-08T09:43:48.738Z",
+      "rooms": [30, 31]
+    }
+  },
+  {
+    "model": "dashboard.booking",
+    "pk": 2,
+    "fields": {
+      "full_name": "Ali Muhammad",
+      "email": "ali5549.o@mail.ru",
+      "phone": "+249900441182",
+      "hotel": 1,
+      "vat": 7.0,
+      "total_with_vat": 0.0,
+      "coupon": 1.0,
+      "status": "pending",
+      "start_date": "2023-08-01",
+      "end_date": "2023-08-08",
+      "created": "2023-08-08T12:19:46.383Z",
+      "updated": "2023-08-09T18:20:56.134Z",
+      "room": [30]
+    }
+  }
+
+]

@@ -1,0 +1,42 @@
+[
+
+  {
+    "model": "dashboard.season",
+    
+    "fields": {
+      "season": "موسم رمضان",
+      "startDate": "2023-03-23",
+      "year": 2023,
+      "endDate": "2023-04-22",
+      "created": "2023-03-23T07:07:29.370Z",
+      "updated": "2023-08-08T09:37:12.529Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "dashboard.season",
+    
+    "fields": {
+      "season": "الحج",
+      "startDate": "2023-05-20",
+      "year": 2023,
+      "endDate": "2023-07-17",
+      "created": "2023-03-23T07:09:03.781Z",
+      "updated": "2023-08-08T09:48:43.713Z",
+      "is_active": true
+    }
+  },
+  {
+    "model": "dashboard.season",
+    
+    "fields": {
+      "season": "موسم الزيارة والعمرة",
+      "startDate": "2023-07-18",
+      "year": 2023,
+      "endDate": "2024-03-09",
+      "created": "2023-03-23T07:10:40.099Z",
+      "updated": "2023-08-08T09:36:23.078Z",
+      "is_active": true
+    }
+  }
+]

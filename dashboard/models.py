@@ -3,11 +3,14 @@ import string
 
 from django.db import models
 from multiselectfield import MultiSelectField
-from django.contrib.auth.models import AbstractUser, User
+from django.contrib.auth import get_user_model
 from django_countries.fields import CountryField
 from PIL import Image
 from django.urls import reverse
 from django.template.defaultfilters import slugify
+
+
+Admin = get_user_model()
 
 NATIONALITY = (
     ("ALL", "ALL"),
@@ -365,7 +368,7 @@ def rand_slug():
 # Create your models here.
 class Hotel(models.Model):
     user = models.ForeignKey(
-        User, on_delete=models.CASCADE, verbose_name='اسم المالك')
+        Admin, on_delete=models.CASCADE, verbose_name='اسم المالك')
     hotel_name = models.CharField(max_length=200, verbose_name='اسم الفندق')
     city = models.CharField(
         max_length=200, choices=CITY, verbose_name='المدينة')

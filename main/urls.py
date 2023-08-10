@@ -19,7 +19,6 @@ urlpatterns = [
     # Rooms 
     path('hotels/hotel_detail/<slug:slug>/rooms/<int:roomId>', views.room_details, name='room-details'),
     # Handle Booking
-    path("hotels/hotel_detail/<slug:slug>/orders/add/<int:roomId>", views.order_add, name="order-add"),
     path("hotels/hotel_detail/<slug:slug>/booking/add/", views.booking_add, name="booking-add"),
     
 
