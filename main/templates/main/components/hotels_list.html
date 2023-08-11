@@ -28,21 +28,54 @@
                             {{ hotel.hotel_name}}
                         </a>
                     </h5>
+                    <!-- Rating -->
                     <div class="product-rating">
                         <ul class="rating" style="font-size: x-small">
-                            <li><em class="icon ni ni-star-fill"></em></li>
-                            <li><em class="icon ni ni-star-fill"></em></li>
-                            <li><em class="icon ni ni-star"></em></li>
-                            <li><em class="icon ni ni-star"></em></li>
-                            <li><em class="icon ni ni-star"></em></li>
-                        </ul>
+                            {% if hotel.category == 1%}
+                                <li><em class="icon ni ni-star-fill"></em></li>
+                                <li><em class="icon ni ni-star"></em></li>
+                                <li><em class="icon ni ni-star"></em></li>
+                                <li><em class="icon ni ni-star"></em></li>
+                                <li><em class="icon ni ni-star"></em></li>
+                            {% elif hotel.category == 2 %}
+                                <li><em class="icon ni ni-star-fill"></em></li>
+                                <li><em class="icon ni ni-star-fill"></em></li>
+                                <li><em class="icon ni ni-star"></em></li>
+                                <li><em class="icon ni ni-star"></em></li>
+                                <li><em class="icon ni ni-star"></em></li>
+                            {% elif hotel.category == 3 %}
+                                <li><em class="icon ni ni-star-fill"></em></li>
+                                <li><em class="icon ni ni-star-fill"></em></li>
+                                <li><em class="icon ni ni-star-fill"></em></li>
+                                <li><em class="icon ni ni-star"></em></li>
+                                <li><em class="icon ni ni-star"></em></li>
+                            {% elif hotel.category == 4%}
+                                <li><em class="icon ni ni-star-fill"></em></li>
+                                <li><em class="icon ni ni-star-fill"></em></li>
+                                <li><em class="icon ni ni-star-fill"></em></li>
+                                <li><em class="icon ni ni-star-fill"></em></li>
+                                <li><em class="icon ni ni-star"></em></li>
+                            {% elif hotel.category == 5 %}
+                                <li><em class="icon ni ni-star-fill"></em></li>
+                                <li><em class="icon ni ni-star-fill"></em></li>
+                                <li><em class="icon ni ni-star-fill"></em></li>
+                                <li><em class="icon ni ni-star-fill"></em></li>
+                                <li><em class="icon ni ni-star-fill"></em></li>
+                            {% else%}
+                                <li><em class="icon ni ni-star"></em></li>
+                                <li><em class="icon ni ni-star"></em></li>
+                                <li><em class="icon ni ni-star"></em></li>
+                                <li><em class="icon ni ni-star"></em></li>
+                                <li><em class="icon ni ni-star"></em></li>
+                            {% endif %}
+                            </ul>
                     </div>
                     <div class="d-none d-lg-block">
                         <ul class="nk-msg-tags">
                             <li>
                                 <span class="label-tag">
                                     <em class="icon ni ni-map-pin"></em>
-                                    <span>مكة المكرمة، شارع اجياد</span>
+                                    <span>{{hotel.address}}</span>
                                 </span>
                             </li>
                         </ul>
@@ -52,7 +85,7 @@
                             <img class="kabba" src="{% static 'images/kaaba.png' %}"
                                  alt="">
                             </i>
-                            <span>يبعد 0.2 كم عن الحرم</span>
+                            <span>يبعد {{hotel.distance.hrm}} كم عن الحرم</span>
                         </li>
                         <li>
                             <img class="kabba"

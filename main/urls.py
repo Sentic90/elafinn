@@ -21,7 +21,8 @@ urlpatterns = [
     # Handle Booking
     path("hotels/hotel_detail/<slug:slug>/booking/add/", views.booking_add, name="booking-add"),
     
-
+    # Filters 
+    path('filter-distance/', views.filter_data, name='filter-distance'),
 
     path("register", views.register_request, name="register"),
     path("login", views.login_request, name="login"),

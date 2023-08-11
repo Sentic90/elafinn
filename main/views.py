@@ -1,4 +1,6 @@
+from django.http import JsonResponse
 from django.shortcuts import render, redirect
+from django.utils.http import url_has_allowed_host_and_scheme as is_safe_url
 from django.urls import reverse
 from .forms import NewUserForm
 from django.contrib import messages
@@ -9,7 +11,7 @@ from datetime import datetime, timedelta
 from .models import Reservation
 from customer.models import Customer
 from django.contrib.auth.decorators import login_required
-from dashboard.models import Hotel, Room, Booking, Season
+from dashboard.models import Hotel, HotelLocation, Room, Booking, Season
 from .forms import SearchForm, RoomSearchForm
 from django.shortcuts import render
 from itertools import groupby
@@ -20,6 +22,14 @@ def index(request):
     # nationality = Hotel.objects.all().values_list('nationality')
     return render(request, 'main/home.html', {'seasons':seasons})
 
+def filter_data(request):
+    selected_distance = request.GET.get('distance', '')
+    # Perform filtering based on the selected_distance
+    filtered_data = HotelLocation.objects.filter(hrm__gt=float(selected_distance))
+    
+    data = [{'field1': item.field1, 'field2': item.field2} for item in filtered_data]
+    
+    return JsonResponse({'data': data})
 
 def result(request):
     # Initial queryset with active hotels
@@ -32,6 +42,8 @@ def result(request):
     guests = request.GET.get('guests', 0)
     datefilter = request.GET.get("datefilter", '')
 
+    if (city=='both' and nationality=='all') and (guests==0 and not datefilter):
+        return render(request, 'main/result.html', {'hotels': queryset,})
     # Convert start and end date strings to datetime objects
     start_date = None
     end_date = None
@@ -79,9 +91,21 @@ def result(request):
     return render(request, 'main/result.html', context)
 
 def hotel_details(request, slug):
-    hotel = Hotel.objects.get(slug=slug)
-    # hotels/hotel_detail
-    return render(request, 'main/hotel_detail.html', {'hotel': hotel})
+
+    if request.method == 'GET':
+        hotel = Hotel.objects.get(slug=slug)
+        # hotels/hotel_detail
+        return render(request, 'main/hotel_detail.html', {'hotel': hotel})
+
+    if request.method == 'POST':
+        customer = Customer.objects.get(user=request.user) #TODO handle execptions
+        rooms = Room.objects.values_list('id')[:2]
+        hotel = Hotel.objects.get(slug=slug)
+        booking = Booking.objects.create(
+            customer=customer, hotel=hotel,start_date = datetime.now(),end_date = datetime.now()
+            )
+        booking.room.set([1,4])
+        return redirect(reverse('customer-panel'))
 
 def room_details(request, slug, roomId):
     # hotels/hotel_detail/<slug:slug>/rooms/<int:roomId>
@@ -103,10 +127,14 @@ def booking_add(request, slug):
         rooms = Room.objects.values_list('id')[:2]
         hotel = Hotel.objects.get(slug=slug)
         booking = Booking.objects.create(
-            customer=customer, hotel=hotel,start_date = datetime.now(),end_date = datetime.now()
+            customer=customer, 
+            hotel=hotel,
+            start_date = datetime.now(),
+            end_date = datetime.now(),
+            package_id=4
             )
         booking.room.set([1,4])
-        return redirect(reverse('customer-panel'))
+        return redirect(reverse('customer-booking'))
     
     
 
@@ -134,6 +162,13 @@ def login_request(request):
             if user is not None:
                 login(request, user)
                 messages.info(request, f"تم تسجيل دخولك بنجاح {username}.")
+                
+                next_ = request.GET.get('next')
+                next_post = request.POST.get('next')
+                redirect_url = next_ or next_post
+                if is_safe_url(redirect_url, request.get_host()):
+                    return redirect(redirect_url)
+
                 if user.is_staff:
                     return redirect("my-hotel")
                 # elif user.is_customer:

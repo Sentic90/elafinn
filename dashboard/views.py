@@ -348,9 +348,6 @@ def orders(request, slug):
     return render(request, 'dashboard/orders/orders.html', context)
 
 
-
-
-
 class RoomTypeView(generic.ListView):
     model = RoomType
     form_class = RoomTypeForm

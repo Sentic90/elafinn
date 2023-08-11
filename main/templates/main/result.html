@@ -227,38 +227,41 @@
 
                                 <!-- Location Filter -->
                                 <div class="ms-2 mt-3 filter-section-star">
-                                    <form action="">
+                                    <form method="get" id="filter-form">
                                         <p style="font-size: large" class="text-bg-light text-center">الموقع</p>
                                         <ul class="custom-control-group g-3 align-center flex-wrap">
                                             <li>
                                                 <div class="custom-control custom-radio">
-                                                    <input type="radio" class="custom-control-input" checked=""
-                                                           name="reg-public" id="reg-enable">
+                                                    <input type="radio" value="1" class="custom-control-input" checked=""
+                                                           name="distance" id="reg-enable">
                                                     <label class="custom-control-label" for="reg-enable">أقل من
                                                         كيلو</label>
                                                 </div>
                                             </li>
                                             <li>
                                                 <div class="custom-control custom-radio">
-                                                    <input type="radio" class="custom-control-input" name="reg-public"
-                                                           id="reg-disable">
+                                                    <input type="radio" class="custom-control-input" name="distance"
+                                                           id="reg-disable" value="5km">
                                                     <label class="custom-control-label"
                                                            for="reg-disable">من 5 إلى 10 كيلو</label>
                                                 </div>
                                             </li>
                                             <li>
                                                 <div class="custom-control custom-radio checked">
-                                                    <input type="radio" class="custom-control-input" name="reg-public"
-                                                           id="reg-request">
+                                                    <input type="radio" class="custom-control-input" name="distance"
+                                                           id="reg-request" value="10km">
                                                     <label class="custom-control-label" for="reg-request">
                                                         10 كيلو فأكثر
                                                     </label>
                                                 </div>
                                             </li>
                                         </ul>
+                                        <button type="button" class="btn btn-outline-secondary"id="filter-submit">Apply Filters</button>    
                                     </form>
+                                    
                                 </div>
                             </div>
+                            
                             <div class="col m-3 mt-0">
                                 <div class="nk-block-head nk-block-head-sm">
                                     <div class="nk-block-between">
@@ -357,4 +360,23 @@
             }
         });
     </script>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+$(document).ready(function() {
+    $('#filter-submit').click(function() {
+        var selectedDistance = $('input[name="distance"]:checked').val();
+        $.ajax({
+            type: 'GET',
+            url: '{% url "main:filter-distance" %}',  // Replace with your view's URL
+            data: { distance: selectedDistance },
+            success: function(response) {
+                console.log(response)
+                // Update the #filtered-results div with filtered data
+                // You can use response.data to access the filtered data
+            }
+        });
+    });
+});
+</script>
 {% endblock %}
