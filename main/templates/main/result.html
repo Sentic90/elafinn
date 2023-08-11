@@ -137,7 +137,7 @@
                     <p>تاريخ الوصول: <span> {{start_date}}م</span> إلى تاريخ <span> {{end_date}}م</span></p>
                 </div>
                 <div class="col">
-                    <p>عدد الأشخاص: <span> {% if not guests_number%}غير محدد{%else%}{{guests_number}}{%endif%}</span></p>
+                    <p>عدد الأشخاص: <span> {% if not main_search_params.guests %}غير محدد{%else%}{{main_search_params.guests}}{%endif%}</span></p>
                 </div>
                 <div class="col">
                     <a href="" class="btn btn-outline-secondary">تعديل البحث</a>
@@ -154,7 +154,7 @@
                             <div class="col-2 mt-5 box-shdow"
                                  style="border-radius: 10px; height: min-content; margin-top: 4.5% !important;">
                                 
-                                 <!-- Start Filter -->
+                                 <!-- Star Filter -->
                                  <div class="ms-2 mt-4 filter-section-star">
                                     <form action="">
                                         <p style="font-size: large" class="text-bg-light text-center">التصنيف</p>
@@ -214,7 +214,7 @@
                                         </div>
                                     </form>
                                 </div>
-                                
+
                                 <!-- Price Filter-->
                                 <div class="ms-2 mt-3 filter-section-star">
                                     <form action="" >
@@ -226,8 +226,9 @@
                                 </div>
 
                                 <!-- Location Filter -->
+                                <form method="get" action="{% url 'main:result'%}" id="filter-form">
                                 <div class="ms-2 mt-3 filter-section-star">
-                                    <form method="get" id="filter-form">
+                                    
                                         <p style="font-size: large" class="text-bg-light text-center">الموقع</p>
                                         <ul class="custom-control-group g-3 align-center flex-wrap">
                                             <li>
@@ -241,7 +242,7 @@
                                             <li>
                                                 <div class="custom-control custom-radio">
                                                     <input type="radio" class="custom-control-input" name="distance"
-                                                           id="reg-disable" value="5km">
+                                                           id="reg-disable" value="10">
                                                     <label class="custom-control-label"
                                                            for="reg-disable">من 5 إلى 10 كيلو</label>
                                                 </div>
@@ -249,17 +250,23 @@
                                             <li>
                                                 <div class="custom-control custom-radio checked">
                                                     <input type="radio" class="custom-control-input" name="distance"
-                                                           id="reg-request" value="10km">
+                                                           id="reg-request" value="100">
                                                     <label class="custom-control-label" for="reg-request">
                                                         10 كيلو فأكثر
                                                     </label>
                                                 </div>
                                             </li>
                                         </ul>
-                                        <button type="button" class="btn btn-outline-secondary"id="filter-submit">Apply Filters</button>    
-                                    </form>
-                                    
                                 </div>
+                                <div class="ms-2 mt-3 filter-section-star">
+                                <button type="submit" class="btn btn-outline-secondary btn-block"id="filter-submit">بحث</button>    
+                            </div>
+                            <input type="hidden" name="city" value="{{ main_search_params.city }}">
+                            <input type="hidden" name="nationality" value="{{ main_search_params.nationality }}">
+                            <input type="hidden" name="guests" value="{{ main_search_params.guests }}">
+                            <input type="hidden" name="datefilter" value="{{ main_search_params.datefilter }}">
+                            </form>
+                            
                             </div>
                             
                             <div class="col m-3 mt-0">
@@ -360,23 +367,4 @@
             }
         });
     </script>
-
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-$(document).ready(function() {
-    $('#filter-submit').click(function() {
-        var selectedDistance = $('input[name="distance"]:checked').val();
-        $.ajax({
-            type: 'GET',
-            url: '{% url "main:filter-distance" %}',  // Replace with your view's URL
-            data: { distance: selectedDistance },
-            success: function(response) {
-                console.log(response)
-                // Update the #filtered-results div with filtered data
-                // You can use response.data to access the filtered data
-            }
-        });
-    });
-});
-</script>
 {% endblock %}

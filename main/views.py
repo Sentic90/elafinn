@@ -22,70 +22,76 @@ def index(request):
     # nationality = Hotel.objects.all().values_list('nationality')
     return render(request, 'main/home.html', {'seasons':seasons})
 
-def filter_data(request):
-    selected_distance = request.GET.get('distance', '')
-    # Perform filtering based on the selected_distance
-    filtered_data = HotelLocation.objects.filter(hrm__gt=float(selected_distance))
-    
-    data = [{'field1': item.field1, 'field2': item.field2} for item in filtered_data]
-    
-    return JsonResponse({'data': data})
-
 def result(request):
     # Initial queryset with active hotels
     queryset = Hotel.objects.filter(is_active=True)
 
-    print('Initial QuerySet... ->: ',queryset)
-    # Other filter parameters
-    city = request.GET.get('city', '')
-    nationality = request.GET.get('nationality', '')
-    guests = request.GET.get('guests', 0)
-    datefilter = request.GET.get("datefilter", '')
+    # Main search parameters
+    main_search_params = {
+        'city': request.GET.get('city', ''),
+        'nationality': request.GET.get('nationality', ''),
+        'guests': request.GET.get('guests', 0),
+        'datefilter': request.GET.get('datefilter', ''),
+    }
 
-    if (city=='both' and nationality=='all') and (guests==0 and not datefilter):
-        return render(request, 'main/result.html', {'hotels': queryset,})
     # Convert start and end date strings to datetime objects
     start_date = None
     end_date = None
-    if datefilter:
-        print('datefilter...')
-        date_range = datefilter.split(" ")
+    if main_search_params['datefilter']:
+        date_range = main_search_params['datefilter'].split(" ")
         if date_range:
             start_date_str = date_range[0]
             end_date_str = date_range[3]
             start_date = datetime.strptime(start_date_str, '%d/%m/%Y')
             end_date = datetime.strptime(end_date_str, '%d/%m/%Y')
 
-    # Apply filters
-    if not city =='both':
-        print('city filter..')
+    # Apply filters based on main search parameters
+    if main_search_params['city']:
+        queryset = queryset.filter(city=main_search_params['city'])
 
-        queryset = queryset.filter(city=city)
-    
-    if not nationality == 'all':
+    if main_search_params['nationality'] != 'all':
+        queryset = queryset.filter(nationality__contains=main_search_params['nationality'])
 
-        print('nationality filter...')
-        queryset = queryset.filter(nationality__contains=nationality)
-
-    if guests:
-        print('guests numbers...')
-        guests_number = guests
+    if main_search_params['guests']:
+        guests_number = int(main_search_params['guests'])
         queryset = queryset.filter(room__capacity__gte=guests_number, room__status=2)
 
     if start_date and end_date:
-
         queryset = queryset.filter(
             Q(room__booking__start_date__lte=start_date) &
             Q(room__booking__end_date__gte=end_date) &
             Q(room__status=2)
         )
-    
+
+    # Additional sidebar filters
+    additional_filters = {
+        'distance': request.GET.get('distance', ''),
+        # 'filter2': request.GET.get('filter2', ''),
+        # Add more sidebar filter fields as needed
+    }
+
+    if additional_filters['distance']:
+        qs_additional_filter = list(HotelLocation.objects \
+            .filter(hrm__lte=int(additional_filters.get('distance')))\
+            .values('hotel_id'))
+        qs_hotels_ids = [item['hotel_id'] for item in qs_additional_filter]
+        print(qs_hotels_ids)
+        queryset = Hotel.objects.filter(id__in=qs_hotels_ids)
+        print(queryset)
+    # assining to User session #TODO Room in cookies
+    request.session['main_search_params'] = main_search_params
+
+    if all(value == '' for value in main_search_params.values()):
+        # No main search parameters provided, return all hotels
+        return render(request, 'main/result.html', {'hotels': queryset})
     context = {
         'hotels': queryset,
-        'guests_number': guests_number if guests else None,
+        'guests_number': main_search_params['guests'] if main_search_params['guests'] else None,
         'start_date': start_date.strftime('%m/%d/%Y') if start_date else '',
         'end_date': end_date.strftime('%m/%d/%Y') if end_date else '',
-        'city':city
+        'city': main_search_params['city'],
+        'main_search_params': main_search_params,
+        'additional_filters': additional_filters,
     }
 
     return render(request, 'main/result.html', context)
@@ -135,8 +141,6 @@ def booking_add(request, slug):
             )
         booking.room.set([1,4])
         return redirect(reverse('customer-booking'))
-    
-    
 
 def register_request(request):
     if request.method == "POST":
@@ -150,7 +154,6 @@ def register_request(request):
             request, "لم يتم إنشاء الحساب. الرجاء التأكد من المعلومات المدخلة.")
     form = NewUserForm()
     return render(request=request, template_name="main/register.html", context={"register_form": form})
-
 
 def login_request(request):
     if request.method == "POST":
@@ -180,7 +183,6 @@ def login_request(request):
             messages.error(request, "خطأ في البريد الإلكتروني أو كلمة المرور.")
     form = AuthenticationForm()
     return render(request=request, template_name="main/login.html", context={"login_form": form})
-
 
 def logout_request(request):
     logout(request)

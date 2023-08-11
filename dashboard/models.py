@@ -444,21 +444,21 @@ class HotelLocation(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
-    def save(self, *args, **kwargs):
-        if self.latitude and self.longitude:
-            hrm_coordinates_makkah = (21.4230884, 39.8305041)
-            hrm_coordinates_madinah = (24.4672018, 39.6156392)
+    # def save(self, *args, **kwargs):
+    #     if self.latitude and self.longitude:
+    #         hrm_coordinates_makkah = (21.4230884, 39.8305041)
+    #         hrm_coordinates_madinah = (24.4672018, 39.6156392)
 
-            if self.hotel.city == 'Makkah':
-                hrm_coordinates = hrm_coordinates_makkah
-            elif self.hotel.city == 'Madinah':
-                hrm_coordinates = hrm_coordinates_madinah
+    #         if self.hotel.city == 'Makkah':
+    #             hrm_coordinates = hrm_coordinates_makkah
+    #         elif self.hotel.city == 'Madinah':
+    #             hrm_coordinates = hrm_coordinates_madinah
 
-            hotel_coordinates = (self.latitude, self.longitude)
-            distance_km = geopy_distance(hrm_coordinates, hotel_coordinates).kilometers
-            self.hrm = format(distance_km, '.2f')
+    #         hotel_coordinates = (self.latitude, self.longitude)
+    #         distance_km = geopy_distance(hrm_coordinates, hotel_coordinates).kilometers
+    #         self.hrm = format(distance_km, '.2f')
 
-        super().save(*args, **kwargs)
+    #     super().save(*args, **kwargs)
     def __str__(self):
         return self.hotel.hotel_name
 
