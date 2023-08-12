@@ -239,16 +239,16 @@
   <div class="col search-filter" style="height: 10vh">
     <div class="row py-4 pe-7 ps-7">
       <div class="col">
-        <p>الوجهة: <span> مكة المكرمة</span></p>
+        <p>الوجهة: <span>{% if main_search_params.city == 'Makkah' %}مكة المكرمة{%elif main_search_params.city == 'Madinah'%}المدينة المنورة{%else%}غير محددة{%endif%}</span></p>
       </div>
       <div class="col-4">
         <p>
-          تاريخ الوصول: <span> 2023/03/07م</span> إلى تاريخ
-          <span> 2023/03/13م</span>
+          تاريخ الوصول: <span> {{ main_search_params.start_date}}م</span> إلى تاريخ
+          <span> {{ main_search_params.end_date}}م</span>
         </p>
       </div>
       <div class="col">
-        <p>عدد الأشخاص: <span> 25</span></p>
+        <p>عدد الأشخاص: <span> {% if main_search_params.guests %}{{ main_search_params.guests}}{%else%}غير محدد{%endif%}</span></p>
       </div>
       <div class="col">
         <a href="" class="btn btn-outline-secondary">تعديل البحث</a>

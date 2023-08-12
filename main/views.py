@@ -1,5 +1,6 @@
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
+from django.core.paginator import Paginator
 from django.utils.http import url_has_allowed_host_and_scheme as is_safe_url
 from django.urls import reverse
 from .forms import NewUserForm
@@ -26,7 +27,7 @@ def index(request):
 def result(request):
     # Initial queryset with active hotels
     queryset = Hotel.objects.filter(is_active=True)
-
+    
     # Main search parameters
     main_search_params = {
         'city': request.GET.get('city', ''),
@@ -34,7 +35,10 @@ def result(request):
         'guests': request.GET.get('guests', 0),
         'datefilter': request.GET.get('datefilter', ''),
     }
-
+    if 'both' and 'all' and 0 in main_search_params.values():
+    # No main search parameters provided, return all hotels
+        return render(request, 'main/result.html', {'hotels': queryset})
+    # assining to User session #TODO Room in cookies
     # Convert start and end date strings to datetime objects
     start_date = None
     end_date = None
@@ -45,6 +49,8 @@ def result(request):
             end_date_str = date_range[3]
             start_date = datetime.strptime(start_date_str, '%d/%m/%Y')
             end_date = datetime.strptime(end_date_str, '%d/%m/%Y')
+            main_search_params['start_date'] = str(start_date.strftime('%d/%m/%Y'))
+            main_search_params['end_date'] = str(end_date.strftime('%d/%m/%Y'))
 
     # Apply filters based on main search parameters
     if main_search_params['city']:
@@ -63,55 +69,27 @@ def result(request):
             Q(room__booking__end_date__gte=end_date) &
             Q(room__status=2)
         )
-
-    # Additional sidebar filters
-    additional_filters = {
-        'distance': request.GET.get('distance', ''),
-        'star_count': request.GET.get('star_count', ''),
-        # 'filter2': request.GET.get('filter2', ''),
-        # Add more sidebar filter fields as needed
-    }
-
-    if additional_filters['distance']:
-        distance = int(additional_filters.get('distance'))
-        if distance > 10:
-            qs_additional_filter = list(HotelLocation.objects.filter(hrm__gte=10).values('hotel_id'))
-        elif distance > 5 or distance == 10:
-            qs_additional_filter = list(HotelLocation.objects.filter(hrm__gt=5).values('hotel_id')) 
-        else:
-            qs_additional_filter = list(HotelLocation.objects.filter(hrm__lte=distance).values('hotel_id'))
-
-
-        qs_hotels_ids = [item['hotel_id'] for item in qs_additional_filter]
-
-        queryset = Hotel.objects.filter(id__in=qs_hotels_ids)
-
-    # assining to User session #TODO Room in cookies
-
-    if additional_filters['star_count']:
-        category = int(additional_filters['star_count'])
-        queryset = Hotel.objects.filter(category=category)
+    
+    
     request.session['main_search_params'] = main_search_params
 
-    if all(value == '' for value in main_search_params.values()):
-        # No main search parameters provided, return all hotels
-        return render(request, 'main/result.html', {'hotels': queryset})
+    paginator = Paginator(queryset, 3)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
     context = {
-        'hotels': queryset,
+        'hotels': page_obj,
         'guests_number': main_search_params['guests'] if main_search_params['guests'] else None,
         'start_date': start_date.strftime('%m/%d/%Y') if start_date else '',
         'end_date': end_date.strftime('%m/%d/%Y') if end_date else '',
         'city': main_search_params['city'],
-        'main_search_params': main_search_params,
-        'additional_filters': additional_filters,
-        'stars':[1, 2, 3, 4, 5]
+        'main_search_params': main_search_params
     }
 
     return render(request, 'main/result.html', context)
 
 def filtered_sidebar(request):
     queryset = Hotel.objects.filter(is_active=True)
-    
+
     hotel_sidebar_filter = HotelSidebarFilter(request.GET, queryset=queryset)
     hotels = hotel_sidebar_filter.qs
 
@@ -120,12 +98,17 @@ def filtered_sidebar(request):
         'hotel_sidebar_filter':hotel_sidebar_filter
     }
     return render(request, 'main/result.html', context)
-def hotel_details(request, slug):
 
+def hotel_details(request, slug):
+    main_search_params = request.session.get('main_search_params', {})
     if request.method == 'GET':
         hotel = Hotel.objects.get(slug=slug)
-        # hotels/hotel_detail
-        return render(request, 'main/hotel_detail.html', {'hotel': hotel})
+
+        context = {
+            'hotel': hotel,
+            'main_search_params':main_search_params
+        }
+        return render(request, 'main/hotel_detail.html', context)
 
     if request.method == 'POST':
         customer = Customer.objects.get(user=request.user) #TODO handle execptions

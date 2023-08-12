@@ -165,21 +165,7 @@
                     <div class="card-inner p-0 text-center">
 <div class="nk-tb-list nk-tb-ulist">
     <div class="nk-tb-item nk-tb-head">
-      <div class="nk-tb-col nk-tb-col-check">
-        <div
-          class="custom-control custom-control-sm custom-checkbox notext"
-        >
-          <input
-            type="checkbox"
-            class="custom-control-input"
-            id="uid"
-          />
-          <label
-            class="custom-control-label"
-            for="uid"
-          ></label>
-        </div>
-      </div>
+      
       <div class="nk-tb-col">
         <span class="sub-text">نوع الغرفة</span>
       </div>
@@ -205,23 +191,7 @@
     {% for room in hotel.rooms %}
     <!-- .nk-tb-item -->
     <div class="nk-tb-item">
-      <div class="nk-tb-col nk-tb-col-check">
-        <div
-          class="custom-control custom-control-sm custom-checkbox notext"
-        >
-          <input
-            type="checkbox"
-            class="custom-control-input"
-            name="id"
-            id="{{ room.id}}"
-            value="{{ room.id}}"
-          />
-          <label
-            class="custom-control-label"
-            for="{{room.id }}"
-          ></label>
-        </div>
-      </div>
+      
       <!-- RoomType -->
       <div class="nk-tb-col">
         <span class="text-primary">{{ room.roomType}}</span>
