@@ -154,50 +154,49 @@
                             <div class="col-2 mt-5 box-shdow"
                                  style="border-radius: 10px; height: min-content; margin-top: 4.5% !important;">
                                 
-                                 <!-- Star Filter -->
+                                 <!-- SideBar filter  -->
+                                 
+                                 <form method="get" action="{% url 'main:filtered-sidebar'%}">
+                                    <!-- Star Filter -->
                                  <div class="ms-2 mt-4 filter-section-star">
-                                    <form action="">
+                                    
                                         <p style="font-size: large" class="text-bg-light text-center">التصنيف</p>
                                         <div class="product-rating product-rating-filter ">
                                             <ul class="rating">
-                                                <li><em class="icon ni ni-star-fill"></em></li>
-                                                <li><em class="icon ni ni-star-fill"></em></li>
-                                                <li><em class="icon ni ni-star-fill"></em></li>
-                                                <li><em class="icon ni ni-star-fill"></em></li>
-                                                <li><em class="icon ni ni-star-fill"></em></li>
+                                                    
+                                                    <li><input class="mt-1"type="radio" name="category" id="" value="5"></li>
+                                                    <li><em class="icon ni ni-star-fill"></em></li>
+                                                    <li><em class="icon ni ni-star-fill"></em></li>
+                                                    <li><em class="icon ni ni-star-fill"></em></li>
+                                                    <li><em class="icon ni ni-star-fill"></em></li>
+                                                    <li><em class="icon ni ni-star-fill"></em></li>
                                             </ul>
                                         </div>
                                         <div class="product-rating product-rating-filter">
                                             <ul class="rating">
+                                                <input type="radio" name="category" id="" value="4">
                                                 <li><em class="icon ni ni-star-fill"></em></li>
                                                 <li><em class="icon ni ni-star-fill"></em></li>
                                                 <li><em class="icon ni ni-star-fill"></em></li>
                                                 <li><em class="icon ni ni-star-fill"></em></li>
-                                                <li><em class="icon ni ni-star"></em></li>
-                                            </ul>
-                                        </div>
-                                        <div class="product-rating product-rating-filter">
-                                            <ul class="rating">
-                                                <li><em class="icon ni ni-star-fill"></em></li>
-                                                <li><em class="icon ni ni-star-fill"></em></li>
-                                                <li><em class="icon ni ni-star-fill"></em></li>
-                                                <li><em class="icon ni ni-star"></em></li>
                                                 <li><em class="icon ni ni-star"></em></li>
                                             </ul>
                                         </div>
                                         <div class="product-rating product-rating-filter">
                                             <ul class="rating">
+                                                <input type="radio" name="category" id="" value="3">
                                                 <li><em class="icon ni ni-star-fill"></em></li>
                                                 <li><em class="icon ni ni-star-fill"></em></li>
-                                                <li><em class="icon ni ni-star"></em></li>
+                                                <li><em class="icon ni ni-star-fill"></em></li>
                                                 <li><em class="icon ni ni-star"></em></li>
                                                 <li><em class="icon ni ni-star"></em></li>
                                             </ul>
                                         </div>
                                         <div class="product-rating product-rating-filter">
                                             <ul class="rating">
+                                                <input type="radio" name="category" id="" value="2">
                                                 <li><em class="icon ni ni-star-fill"></em></li>
-                                                <li><em class="icon ni ni-star"></em></li>
+                                                <li><em class="icon ni ni-star-fill"></em></li>
                                                 <li><em class="icon ni ni-star"></em></li>
                                                 <li><em class="icon ni ni-star"></em></li>
                                                 <li><em class="icon ni ni-star"></em></li>
@@ -205,6 +204,18 @@
                                         </div>
                                         <div class="product-rating product-rating-filter">
                                             <ul class="rating">
+                                                <input type="radio" name="category" id="" value="1">
+                                                <li><em class="icon ni ni-star-fill"></em></li>
+                                                <li><em class="icon ni ni-star"></em></li>
+                                                <li><em class="icon ni ni-star"></em></li>
+                                                <li><em class="icon ni ni-star"></em></li>
+                                                <li><em class="icon ni ni-star"></em></li>
+                                            </ul>
+                                        </div>
+                                        <div class="product-rating product-rating-filter">
+                                            
+                                            <ul class="rating">
+                                                <input type="radio" name="category" id="" value="0">
                                                 <li><em class="icon ni ni-star"></em></li>
                                                 <li><em class="icon ni ni-star"></em></li>
                                                 <li><em class="icon ni ni-star"></em></li>
@@ -212,36 +223,38 @@
                                                 <li><em class="icon ni ni-star"></em></li>
                                             </ul>
                                         </div>
-                                    </form>
+                                        
+                                    
                                 </div>
 
                                 <!-- Price Filter-->
+                                
                                 <div class="ms-2 mt-3 filter-section-star">
-                                    <form action="" >
+                                
                                         <p style="font-size: large" class="text-bg-light text-center">السعر</p>
                                         <div class="slider-styled w-100 mt-4 mb-2" id="slider-round"></div>
                                         من:  <span class="example-val" id="slider-margin-value-min"> 100</span> ريال <br>
                                           إلى: <span class="example-val" id="slider-margin-value-max"> 10000</span> ريال
-                                    </form>
+                                    
                                 </div>
 
                                 <!-- Location Filter -->
-                                <form method="get" action="{% url 'main:result'%}" id="filter-form">
+                                
                                 <div class="ms-2 mt-3 filter-section-star">
                                     
                                         <p style="font-size: large" class="text-bg-light text-center">الموقع</p>
                                         <ul class="custom-control-group g-3 align-center flex-wrap">
                                             <li>
                                                 <div class="custom-control custom-radio">
-                                                    <input type="radio" value="1" class="custom-control-input" checked=""
-                                                           name="distance" id="reg-enable">
+                                                    <input type="radio" value="1" class="custom-control-input"
+                                                           name="location__hrm__lte" id="reg-enable">
                                                     <label class="custom-control-label" for="reg-enable">أقل من
                                                         كيلو</label>
                                                 </div>
                                             </li>
                                             <li>
                                                 <div class="custom-control custom-radio">
-                                                    <input type="radio" class="custom-control-input" name="distance"
+                                                    <input type="radio" class="custom-control-input" name="location"
                                                            id="reg-disable" value="10">
                                                     <label class="custom-control-label"
                                                            for="reg-disable">من 5 إلى 10 كيلو</label>
@@ -249,8 +262,8 @@
                                             </li>
                                             <li>
                                                 <div class="custom-control custom-radio checked">
-                                                    <input type="radio" class="custom-control-input" name="distance"
-                                                           id="reg-request" value="100">
+                                                    <input type="radio" class="custom-control-input" name="location__hrm__gte"
+                                                           id="reg-request" value="10" >
                                                     <label class="custom-control-label" for="reg-request">
                                                         10 كيلو فأكثر
                                                     </label>
@@ -259,12 +272,12 @@
                                         </ul>
                                 </div>
                                 <div class="ms-2 mt-3 filter-section-star">
-                                <button type="submit" class="btn btn-outline-secondary btn-block"id="filter-submit">بحث</button>    
-                            </div>
-                            <input type="hidden" name="city" value="{{ main_search_params.city }}">
-                            <input type="hidden" name="nationality" value="{{ main_search_params.nationality }}">
-                            <input type="hidden" name="guests" value="{{ main_search_params.guests }}">
-                            <input type="hidden" name="datefilter" value="{{ main_search_params.datefilter }}">
+                                    <button type="submit" class="btn btn-outline-secondary btn-block"id="filter-submit">بحث</button>    
+                                </div>
+                                <input type="hidden" name="city" value="{{ main_search_params.city }}">
+                                <input type="hidden" name="nationality" value="{{ main_search_params.nationality }}">
+                                <input type="hidden" name="guests" value="{{ main_search_params.guests }}">
+                                <input type="hidden" name="datefilter" value="{{ main_search_params.datefilter }}">
                             </form>
                             
                             </div>

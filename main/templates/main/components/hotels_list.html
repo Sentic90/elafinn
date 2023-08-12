@@ -85,7 +85,7 @@
                             <img class="kabba" src="{% static 'images/kaaba.png' %}"
                                  alt="">
                             </i>
-                            <span>يبعد {{hotel.distance.hrm}} كم عن الحرم</span>
+                            <span>يبعد {{hotel.location.hrm}} كم عن الحرم</span>
                         </li>
                         <li>
                             <img class="kabba"
@@ -118,7 +118,6 @@
 <!-- End Hotel row -->
 {% endfor %}
 {% else %}
-    <h1>No results</h1>
 {% endif %}
 
 <!-- End Hotels rows Loop -->

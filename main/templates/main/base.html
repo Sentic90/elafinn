@@ -173,10 +173,7 @@
     <script>
       $(document).ready(function() {
           // Initialize the datepicker
-          $(".date-picker-range").datepicker({
-              minDate: new Date(2023, 0, 1), // Set the minimum allowed date (year, month, day)
-              maxDate: new Date(2023, 11, 31) // Set the maximum allowed date (year, month, day)
-          });
+          $(".date-picker-range").datepicker();
       
           // Initialize the date range picker
           $('input[name="datefilter"]').daterangepicker({
@@ -187,6 +184,7 @@
                   cancelLabel: "مسح",
                   applyLabel: "حفظ التاريخ",
               },
+              
               minDate: new Date(2023, 7, 10), // Set the minimum allowed date (year, month, day)
               maxDate: new Date(2023, 7, 30) // Set the maximum allowed date (year, month, day)
           });

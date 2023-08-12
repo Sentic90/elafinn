@@ -5,7 +5,7 @@ from .models import *
 
 
 class HotelAdmin(admin.ModelAdmin):
-    list_display = ['hotel_name', 'total_room', 'total_capacity', 'accomadate_space']
+    list_display = ['id','hotel_name', 'total_room', 'total_capacity', 'accomadate_space']
 
 class RoomAdmin(admin.ModelAdmin):
     list_display = ['roomNo', 'status','capacity', 'hotel']
@@ -31,10 +31,13 @@ class BookingAdmin(admin.ModelAdmin):
 class AnnualRentAdmin(admin.ModelAdmin):
     filter_horizontal = ['rooms']
 
+@admin.register(HotelLocation)
+class HotelLocationAdmin(admin.ModelAdmin):
+    list_display = ['id', 'hrm', 'latitude','longitude', 'hotel']
 
 admin.site.register(Hotel, HotelAdmin)
 admin.site.register(Booking, BookingAdmin)
-admin.site.register(HotelLocation)
+
 admin.site.register(HotelMultipleImage)
 admin.site.register(RoomType)
 admin.site.register(Room, RoomAdmin)

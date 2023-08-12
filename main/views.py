@@ -16,6 +16,7 @@ from .forms import SearchForm, RoomSearchForm
 from django.shortcuts import render
 from itertools import groupby
 from django.db.models import Count
+from .filters import HotelSidebarFilter
 
 def index(request):
     seasons = Season.objects.all().order_by('-created')
@@ -66,19 +67,30 @@ def result(request):
     # Additional sidebar filters
     additional_filters = {
         'distance': request.GET.get('distance', ''),
+        'star_count': request.GET.get('star_count', ''),
         # 'filter2': request.GET.get('filter2', ''),
         # Add more sidebar filter fields as needed
     }
 
     if additional_filters['distance']:
-        qs_additional_filter = list(HotelLocation.objects \
-            .filter(hrm__lte=int(additional_filters.get('distance')))\
-            .values('hotel_id'))
+        distance = int(additional_filters.get('distance'))
+        if distance > 10:
+            qs_additional_filter = list(HotelLocation.objects.filter(hrm__gte=10).values('hotel_id'))
+        elif distance > 5 or distance == 10:
+            qs_additional_filter = list(HotelLocation.objects.filter(hrm__gt=5).values('hotel_id')) 
+        else:
+            qs_additional_filter = list(HotelLocation.objects.filter(hrm__lte=distance).values('hotel_id'))
+
+
         qs_hotels_ids = [item['hotel_id'] for item in qs_additional_filter]
-        print(qs_hotels_ids)
+
         queryset = Hotel.objects.filter(id__in=qs_hotels_ids)
-        print(queryset)
+
     # assining to User session #TODO Room in cookies
+
+    if additional_filters['star_count']:
+        category = int(additional_filters['star_count'])
+        queryset = Hotel.objects.filter(category=category)
     request.session['main_search_params'] = main_search_params
 
     if all(value == '' for value in main_search_params.values()):
@@ -92,10 +104,22 @@ def result(request):
         'city': main_search_params['city'],
         'main_search_params': main_search_params,
         'additional_filters': additional_filters,
+        'stars':[1, 2, 3, 4, 5]
     }
 
     return render(request, 'main/result.html', context)
 
+def filtered_sidebar(request):
+    queryset = Hotel.objects.filter(is_active=True)
+    
+    hotel_sidebar_filter = HotelSidebarFilter(request.GET, queryset=queryset)
+    hotels = hotel_sidebar_filter.qs
+
+    context = {
+        'hotels':hotels,
+        'hotel_sidebar_filter':hotel_sidebar_filter
+    }
+    return render(request, 'main/result.html', context)
 def hotel_details(request, slug):
 
     if request.method == 'GET':

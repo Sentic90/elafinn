@@ -22,7 +22,7 @@ urlpatterns = [
     path("hotels/hotel_detail/<slug:slug>/booking/add/", views.booking_add, name="booking-add"),
     
     # Filters 
-    # path('filtered-sidebar/', views.filtered_sidebar, name='filtered-sidebar'),
+    path('filtered-sidebar/', views.filtered_sidebar, name='filtered-sidebar'),
 
     path("register", views.register_request, name="register"),
     path("login", views.login_request, name="login"),

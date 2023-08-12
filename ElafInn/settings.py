@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'virtual.apps.VirtualConfig',
     'customer.apps.CustomerConfig',
     "crispy_forms",
+    'django_filters',
     "crispy_bootstrap5",
     'django_countries',
     'django_extensions',

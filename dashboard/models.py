@@ -397,7 +397,10 @@ class Hotel(models.Model):
                              null=True, blank=True, verbose_name='صورة رمزية')
     is_active = models.BooleanField(default=False)
     slug = models.SlugField(null=True, blank=True, unique=True)  # new
-
+    location = models.OneToOneField(
+        to='HotelLocation', on_delete=models.CASCADE, verbose_name='الموقع', 
+        blank=True, null=True, related_name='hotels')
+    
     def __str__(self):
         return self.hotel_name
 
@@ -435,8 +438,6 @@ class Hotel(models.Model):
 
 
 class HotelLocation(models.Model):
-    hotel = models.OneToOneField(
-        Hotel, on_delete=models.CASCADE, verbose_name='اسم الفندق', related_name='distance')
     latitude = models.FloatField(blank=True, verbose_name='Latitude')
     longitude = models.FloatField(blank=True, verbose_name='Longitude')
     hrm = models.FloatField(
@@ -460,11 +461,15 @@ class HotelLocation(models.Model):
 
     #     super().save(*args, **kwargs)
     def __str__(self):
-        return self.hotel.hotel_name
+        return str(self.hrm)
+    @property
+    def hotel(self):
+        return self.hotels
+    # def get_absolute_url(self):
+    #     return reverse("update_hotel_location", kwargs={"slug": self.hotel.slug, "pk": self.pk})
 
-    def get_absolute_url(self):
-        return reverse("update_hotel_location", kwargs={"slug": self.hotel.slug, "pk": self.pk})
-
+    class Meta:
+        ordering = ['-hrm']
 
 class HotelMultipleImage(models.Model):
     hotel = models.ForeignKey(
