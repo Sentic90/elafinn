@@ -25,6 +25,8 @@ class HotelForm(forms.ModelForm):
         self.fields["Check_out"].widget.attrs.update({"class": "form-control time-picker w-30"})
         self.fields["nationality"].widget.attrs.update({"class": "form-select js-select2 select2-hidden-accessible"})
         self.fields["about_hotel"].widget.attrs.update({"class": "form-control"})
+        self.fields["location"].widget.attrs.update({"class": "form-control"})
+        self.fields["location"].widget.attrs['disabled'] = 'disabled'
         self.fields["logo"].widget.attrs.update({"class": "form-control"})
         self.fields["logo"].widget.attrs['required'] = 'required'
 
@@ -124,6 +126,17 @@ class AnnulRoomRentForm(forms.ModelForm):
             self.fields['rooms'].queryset = Room.objects.filter(roomType__hotel__slug=hotel_slug)
 
 
+class BookingForm(forms.ModelForm):
+    class Meta:
+        model = Booking
+        fields = ['status', 'room']
+        widgets = {'room': forms.widgets.SelectMultiple()}
+        # exclude = []
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['status'].widget.attrs.update({'class':'form-select js-select2'})
+        self.fields['room'].widget.attrs.update({'class': 'form-control'})
+    
 # from django import forms
 # from django.utils.translation import gettext_lazy as _
 #

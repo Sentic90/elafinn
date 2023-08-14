@@ -297,10 +297,12 @@ def bookings(request, slug):
     slug = h.slug
     hotel = Hotel.objects.get(slug=slug)
     rooms = Room.objects.filter(roomType__hotel__slug=slug)
+    messages_list = messages.get_messages(request)
     context = {
         'hotel': hotel,
         'slug': slug,
         'rooms': rooms, 
+        'messages':messages_list
     }
     return render(request, 'dashboard/booking/bookings.html', context)
 
@@ -319,33 +321,48 @@ def booking_add(request, slug):
     return render(request, 'dashboard/booking/booking-add.html', context)
 
 
-def booking_edit(request, slug):
+def booking_edit(request, slug, bookingId):
+    """
+        - get booking from db 
+        - check method GET or PUT 
+        - if GET -> give return user form instance
+        - if put -> 
+            form = BookingForm(instance, request.PUT)
+            if form.isvalid 
+                form.save()
+                redirect to booking list 
+
+    
+    """
+    instance = Booking.objects.get(id=bookingId)
+    
+    if request.method == 'POST':
+        form = BookingForm(request.POST, instance=instance)
+        if form.is_valid():
+            form.save()
+
+            messages.success(request, 'تم معالجة الطلب بنجاح')
+            return redirect(reverse('booking-list', kwargs={'slug':slug}))
+
+
+    if request.method == 'DELETE':
+        pass
+    # GET
     hotels = Hotel.objects.filter(user=request.user)
     h = get_object_or_404(Hotel, slug=slug)
     slug = h.slug
     hotel = Hotel.objects.get(slug=slug)
-    rooms = Room.objects.filter(roomType__hotel__slug=slug)
+    if request.method == 'PUT':
+        pass
+
+    form = BookingForm(instance=instance)
     context = {
         'hotel': hotel,
         'slug': slug,
-        'rooms': rooms
+        'booking':instance,
+        'form':form
     }
     return render(request, 'dashboard/booking/booking-edit.html', context)
-
-
-# @login_required TODO
-def orders(request, slug):
-    hotels = Hotel.objects.filter(user=request.user)
-    h = get_object_or_404(Hotel, slug=slug)
-    slug = h.slug
-    hotel = Hotel.objects.get(slug=slug)
-    orders = Order.objects.filter(hotel=h)
-    context = {
-        'hotel':hotel,
-        'orders': orders,
-        'slug': slug
-    }
-    return render(request, 'dashboard/orders/orders.html', context)
 
 
 class RoomTypeView(generic.ListView):

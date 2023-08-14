@@ -461,7 +461,7 @@ class HotelLocation(models.Model):
 
     #     super().save(*args, **kwargs)
     def __str__(self):
-        return str(self.hrm)
+        return str(self.hrm)+ 'كم'
     @property
     def hotel(self):
         return self.hotels

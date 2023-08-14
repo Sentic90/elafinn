@@ -38,18 +38,11 @@ urlpatterns = [
          views.hotel_upload_images, name='hotel_upload_images'),
 
     path('dashboard/my_hotel/<slug:slug>/bookings',
-         views.bookings, name='bookings'),
+         views.bookings, name='booking-list'),
     path('dashboard/my_hotel/<slug:slug>/bookings/add',
          views.booking_add, name='booking-add'),
-    path('dashboard/my_hotel/<slug:slug>/bookings/edit',
+    path('dashboard/my_hotel/<slug:slug>/bookings/edit/<int:bookingId>',
          views.booking_edit, name='booking-edit'),
-
-    # <------------ Orders ------------>
-    path('dashboard/my_hotel/<slug:slug>/orders', views.orders, name='orders'),
-#     path('dashboard/my_hotel/<slug:slug>/orders/add',
-#          views.orders_add, name='order-add'),
-    #     path('dashboard/my_hotel/<slug:slug>/orders/edit',
-    #          views.orders_edit, name='order-edit'),
 
     path('dashboard/my_hotel/<slug:slug>/rooms-list',
          views.room_list, name='room-list'),
