@@ -35,6 +35,10 @@ class AnnualRentAdmin(admin.ModelAdmin):
 class HotelLocationAdmin(admin.ModelAdmin):
     list_display = ['id', 'hrm', 'latitude','longitude', 'hotel']
 
+@admin.register(PaymentMethod)
+class HotelLocationAdmin(admin.ModelAdmin):
+    list_display = ['id', 'name', 'currency', 'status', 'hotel']
+
 admin.site.register(Hotel, HotelAdmin)
 admin.site.register(Booking, BookingAdmin)
 

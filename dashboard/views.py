@@ -677,10 +677,8 @@ def customer(request, slug):
 
 
 def payment_methods(request, slug):
-    hotels = Hotel.objects.filter(user=request.user)
-    h = get_object_or_404(Hotel, slug=slug)
-    slug = h.slug
     hotel = Hotel.objects.get(slug=slug)
+
     rooms = Room.objects.filter(roomType__hotel__slug=slug)
     context = {
         'hotel': hotel,

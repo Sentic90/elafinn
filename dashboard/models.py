@@ -352,13 +352,7 @@ VIEW = (
     (3, 'إطلالة على المدينة'),
     (4, 'غير مطلة'),
 )
-# def create_slug(hotel_name):
-#     slug = slugify(hotel_name)
-#     qs = Hotel.objects.filter(slug=slug)
-#     exists = qs.exists()
-#     if exists:
-#         slug = "%s-%s" % (slug, qs.first().id)
-#     return slug
+
 
 
 def rand_slug():
@@ -445,7 +439,7 @@ class HotelLocation(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
-    # def save(self, *args, **kwargs):
+    # def save(self, *args, **kwargs):TODO
     #     if self.latitude and self.longitude:
     #         hrm_coordinates_makkah = (21.4230884, 39.8305041)
     #         hrm_coordinates_madinah = (24.4672018, 39.6156392)
@@ -470,6 +464,7 @@ class HotelLocation(models.Model):
 
     class Meta:
         ordering = ['-hrm']
+
 
 class HotelMultipleImage(models.Model):
     hotel = models.ForeignKey(
@@ -548,6 +543,8 @@ SEASON_TYPE = (
     (3, 'موسم الزيارة والعمرة'),
 
 )
+
+
 class Season(models.Model):
     season = models.CharField(max_length=250, verbose_name='الموسم')
     startDate = models.DateField(verbose_name='بداية الموسم')
@@ -600,6 +597,11 @@ BOOKING_STATUS = (
     ("rejected", "مرفوض")
 )
 
+GENDER_TYPE = (
+    (1, 'ذكر'),
+    (2, 'انثى')
+)
+
 
 class Booking(models.Model):
     customer = models.ForeignKey(to='customer.Customer', on_delete=models.CASCADE, verbose_name='العميل')
@@ -612,9 +614,15 @@ class Booking(models.Model):
     room = models.ManyToManyField(to=Room,verbose_name="الغرفة")
     status = models.CharField(
         choices=BOOKING_STATUS, verbose_name="حالة الطلب", max_length=50, default="pending")
-
-    start_date = models.DateField()
-    end_date = models.DateField()
+    gender = models.IntegerField(choices=GENDER_TYPE, verbose_name='الجنس')
+    guests = models.PositiveIntegerField(verbose_name='عدد الضيوف')
+    notes = models.TextField(null=True, blank=True,verbose_name='ملاحظات')
+    # docuemnts
+    document = models.FileField(upload_to='documents/', null=True, blank=True, verbose_name='المستندات')
+    payment_receipt = models.FileField(upload_to='payments_receipts/',null=True, blank=True, verbose_name='ايصال الدفع')
+    # date
+    start_date = models.DateField(verbose_name='تاريخ الوصول')
+    end_date = models.DateField(verbose_name='تاريخ المغادرة')
 
     package = models.ForeignKey(to=Season, on_delete=models.CASCADE,verbose_name='الباقة')
     created = models.DateTimeField(
@@ -622,27 +630,27 @@ class Booking(models.Model):
     updated = models.DateTimeField(auto_now=True)
 
 
-# from django.db import models
-#
-#
-# class Hotel(models.Model):
-#     name = models.CharField(max_length=100)
-#     city = models.CharField(max_length=100)
-#     nationality = models.CharField(max_length=100)
-#
-#     def __str__(self):
-#         return self.name
-#
-#
-# class Room(models.Model):
-#     hotel = models.ForeignKey(Hotel, on_delete=models.CASCADE, related_name='rooms')
-#     number = models.CharField(max_length=10)
-#     capacity = models.IntegerField(default=1)
-#
-#     def __str__(self):
-#         return f"{self.hotel.name} - Room {self.number}"
-#
-#
+CURRENCY_CODE = (
+    ('SAR', 'SAR'),
+    ('USD', 'USD'),
+    ('EUR', 'EUR'),
+)
+
+class PaymentMethod(models.Model):
+    name = models.CharField(max_length=250, verbose_name='اسم وسيلة الدفع')
+    email = models.EmailField(verbose_name='البريد الالكتروني')
+    merchant_code = models.CharField(max_length=15, verbose_name='رمز التاجر')
+    currency = models.CharField(choices=CURRENCY_CODE,max_length=3, verbose_name='العملة')
+    status = models.BooleanField(
+        verbose_name="حالة وسيلة الدفع", default=False)
+
+    hotel = models.ForeignKey(
+        to=Hotel, on_delete=models.CASCADE,related_name='payment_methods', verbose_name="الفندق")
+    
+    def __str__(self) -> str:
+        return self.name
+
+
 # class Reservation(models.Model):
 #     room = models.ForeignKey(Room, on_delete=models.CASCADE)
 #     start_date = models.DateField()
