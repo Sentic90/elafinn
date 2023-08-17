@@ -12,27 +12,58 @@
 ### add year field to seasons (done)
 ### Orders -> Booking (done)
 
+# Tasks
+## Booking:
+    - customers 
+        - add booking
+        - add guests & document upload 
+        - upload payment receipt in case of ...
+        - styling...
+    - admins 
+        - receive payment reciept file 
+        - viewing document & data with readOnly property 
+        - add Modal to edit a booking status..
+        - Styling... 
 
 
-##  searching (done)
-##  Hotel Details page (done)
-##  Sending Order (done)
-##  
-##
-## search hotels 
-    * The owner of Room is the Hotel not user 
-    * I need to calculate the avaliable guests foreach hotel
-    * matching nationality 
-    * city Makkah | Madinah
+##  filtering (working)
+    - add rooms to Sessions 
+    - matching nationality 
+        - adding coutnries from Backend 
+    - city Makkah | Madinah
 
     - Queries:
-        guests 
+        rooms
         nationality
         datefilter
+        city
 
     - accommodate space 
         number of avaliable room
 
+## Sidebar Filtering 
+    - filtering by distance
+        - away from hrm 
+
+    - filtering by Star count 
+        - implementation 
+        - 
+    - filtering by prices 
+        - implementation 
+    
+    - filtering by payment methods 
+    - styling....
+
+
+## Payment methods 
+    - updating (done)
+    - viewing (done)
+    - adding from dashboard ...
+    - 
+
+
+
+<!-- Models  -->
 ## Hotel:
     - user PK
     - hotel_name
@@ -68,6 +99,10 @@
     - created
     - updated
     - price
-## Tools:
-    - django_toolbar
-    - django_extentions
+
+## TODO
+
+    - season resrection to Ramdan package
+    - add package to booking...
+    - guests numbers 
+    - rooms 
