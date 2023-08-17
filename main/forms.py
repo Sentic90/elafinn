@@ -3,6 +3,10 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import get_user_model
 from django.forms.widgets import DateInput
 from .models import Reservation
+from django_countries.fields import CountryField
+from django_countries.widgets import CountrySelectWidget
+
+from dashboard.models import Hotel
 from django.forms.widgets import SelectDateWidget
 from customer.models import Customer
 # Create your forms here.
@@ -33,15 +37,19 @@ class RoomSearchForm(forms.Form):
     guest_nationality = forms.ChoiceField(label='Guest Nationality', choices=(('', '---'),) + Reservation._meta.get_field('guest_nationality').choices)
 
 
-class SearchForm(forms.Form):
-    city = forms.CharField(label='City', max_length=100)
+class SearchForm(forms.ModelForm):
+    # city = forms.CharField(label='City', max_length=100)
     num_rooms = forms.IntegerField(label='Number of rooms', min_value=1, max_value=10)
     num_guests = forms.IntegerField(label='Number of guests', min_value=1, max_value=20)
     from_date = forms.DateField(label='Check-in date', widget=SelectDateWidget())
     to_date = forms.DateField(label='Check-out date', widget=SelectDateWidget())
-    guest_nationality_choices = (
-        ('USA', 'USA'),
-        ('Canada', 'Canada'),
-        ('Mexico', 'Mexico'),
-    )
+    # nationality = CountryField().formfield(blank_label="(select country)", widgets=forms.widgets.Select(attrs={'class':'form-select form-control'}))
     guest_nationality = forms.ChoiceField(label='Guest nationality', choices=(('', '---'),) + Reservation._meta.get_field('guest_nationality').choices)
+    
+    class Meta:
+        model = Hotel
+        fields = ['nationality', 'city']
+        widgets = {
+            'nationality': forms.widgets.Select(attrs={'class':'form-select form-control'}),
+            # 'city': forms.widgets.Select(attrs={'class':'form select form-control'})
+            }

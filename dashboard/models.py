@@ -598,8 +598,8 @@ BOOKING_STATUS = (
 )
 
 GENDER_TYPE = (
-    (1, 'ذكر'),
-    (2, 'انثى')
+    ('Male', 'ذكر'),
+    ("Female", 'انثى')
 )
 
 
@@ -614,8 +614,8 @@ class Booking(models.Model):
     room = models.ManyToManyField(to=Room,verbose_name="الغرفة")
     status = models.CharField(
         choices=BOOKING_STATUS, verbose_name="حالة الطلب", max_length=50, default="pending")
-    gender = models.IntegerField(choices=GENDER_TYPE, verbose_name='الجنس')
-    guests = models.PositiveIntegerField(verbose_name='عدد الضيوف')
+    gender = models.CharField(max_length=10, choices=GENDER_TYPE, verbose_name='الجنس', default='Male')
+    guests = models.PositiveIntegerField(verbose_name='عدد الضيوف', default=1)
     notes = models.TextField(null=True, blank=True,verbose_name='ملاحظات')
     # docuemnts
     document = models.FileField(upload_to='documents/', null=True, blank=True, verbose_name='المستندات')
@@ -636,14 +636,24 @@ CURRENCY_CODE = (
     ('EUR', 'EUR'),
 )
 
+PAYMENT_STATUS = (
+    ('active', 'نشطة'),
+    ('inactive','معطلة')
+)
+PAYMENT_TYPE=(
+    (100, 'تحويل بنكي'),
+    (200, 'دفع الكتروني'),
+    (300, 'دفع عند الوصول'),
+)
+
 class PaymentMethod(models.Model):
     name = models.CharField(max_length=250, verbose_name='اسم وسيلة الدفع')
     email = models.EmailField(verbose_name='البريد الالكتروني')
     merchant_code = models.CharField(max_length=15, verbose_name='رمز التاجر')
     currency = models.CharField(choices=CURRENCY_CODE,max_length=3, verbose_name='العملة')
-    status = models.BooleanField(
-        verbose_name="حالة وسيلة الدفع", default=False)
-
+    status = models.CharField(choices=PAYMENT_STATUS,max_length=32,
+        verbose_name="حالة وسيلة الدفع")
+    type = models.IntegerField(choices=PAYMENT_TYPE, default=100, verbose_name='نوع وسيلة الدفع')
     hotel = models.ForeignKey(
         to=Hotel, on_delete=models.CASCADE,related_name='payment_methods', verbose_name="الفندق")
     

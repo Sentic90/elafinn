@@ -37,7 +37,7 @@ class HotelLocationAdmin(admin.ModelAdmin):
 
 @admin.register(PaymentMethod)
 class HotelLocationAdmin(admin.ModelAdmin):
-    list_display = ['id', 'name', 'currency', 'status', 'hotel']
+    list_display = ['id', 'name', 'currency', 'status','type', 'hotel']
 
 admin.site.register(Hotel, HotelAdmin)
 admin.site.register(Booking, BookingAdmin)

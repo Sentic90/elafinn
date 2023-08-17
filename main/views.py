@@ -12,7 +12,7 @@ from datetime import datetime, timedelta
 from .models import Reservation
 from customer.models import Customer
 from django.contrib.auth.decorators import login_required
-from dashboard.models import Hotel, HotelLocation, Room, Booking, Season
+from dashboard.models import Hotel, HotelLocation, PaymentMethod, Room, Booking, Season
 from .forms import SearchForm, RoomSearchForm
 from django.shortcuts import render
 from itertools import groupby
@@ -22,7 +22,8 @@ from .filters import HotelSidebarFilter
 def index(request):
     seasons = Season.objects.all().order_by('-created')
     # nationality = Hotel.objects.all().values_list('nationality')
-    return render(request, 'main/home.html', {'seasons':seasons})
+    form = SearchForm()
+    return render(request, 'main/home.html', {'seasons':seasons, 'form':form})
 
 def result(request):
     # Initial queryset with active hotels
@@ -35,9 +36,9 @@ def result(request):
         'guests': request.GET.get('guests', 0),
         'datefilter': request.GET.get('datefilter', ''),
     }
-    if 'both' and 'all' and 0 in main_search_params.values():
-    # No main search parameters provided, return all hotels
-        return render(request, 'main/result.html', {'hotels': queryset})
+    # if 'both' and 'all' and 0 in main_search_params.values():
+    # # No main search parameters provided, return all hotels
+    #     return render(request, 'main/result.html', {'hotels': queryset})
     # assining to User session #TODO Room in cookies
     # Convert start and end date strings to datetime objects
     start_date = None
@@ -71,18 +72,27 @@ def result(request):
         )
     
     
+    
+    payment_methods_choices = PaymentMethod.objects.values_list('type', flat=True).distinct()
     request.session['main_search_params'] = main_search_params
+    
+    request.session['payment_methods_choices'] = list(payment_methods_choices)
 
+    # paginations
+    queryset = Hotel.objects.all()
     paginator = Paginator(queryset, 3)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
+
+    # end pagination
     context = {
         'hotels': page_obj,
         'guests_number': main_search_params['guests'] if main_search_params['guests'] else None,
         'start_date': start_date.strftime('%m/%d/%Y') if start_date else '',
         'end_date': end_date.strftime('%m/%d/%Y') if end_date else '',
         'city': main_search_params['city'],
-        'main_search_params': main_search_params
+        'main_search_params': main_search_params,
+        'payment_methods_choices': payment_methods_choices
     }
 
     return render(request, 'main/result.html', context)

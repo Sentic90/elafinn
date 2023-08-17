@@ -79,4 +79,6 @@ urlpatterns = [
 
     path('dashboard/my_hotel/<slug:slug>/payment/methods',
          views.payment_methods, name='payment-methods'),
+    path('dashboard/my_hotel/<slug:slug>/payment/methods/<int:paymentMethodId>/edit',
+         views.payment_method_edit, name='payment-methods-edit'),
 ]

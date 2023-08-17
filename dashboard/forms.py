@@ -136,7 +136,29 @@ class BookingForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         self.fields['status'].widget.attrs.update({'class':'form-select js-select2'})
         self.fields['room'].widget.attrs.update({'class': 'form-control'})
+
+class PaymentMethodForm(forms.ModelForm):
+    class Meta:
+        model = PaymentMethod
+        fields = ['name', 'status', 'email', 'currency', 'merchant_code', 'type']
+        widgets = {
+            'status': forms.widgets.Select(),
+            'type': forms.widgets.Select()
+            
+            }
     
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['name'].widget.attrs.update({'class':'form-control', 'id':'payment-name-edit', "placeholder":"اسم طريقة الدفع"})
+        self.fields['status'].widget.attrs.update({'class':'form-select js-select2'})
+        self.fields['currency'].widget.attrs.update({'class':'form-select js-select2'})
+        self.fields['email'].widget.attrs.update({'class':'form-control', 'id':'email-edit'})
+        self.fields['merchant_code'].widget.attrs.update({'class':'form-control', 'id':'march-id-edit', "placeholder":"رمز التاجر"})
+        self.fields['type'].widget.attrs.update({'class':'form-select js-select2', })
+        
+
+
+
 # from django import forms
 # from django.utils.translation import gettext_lazy as _
 #

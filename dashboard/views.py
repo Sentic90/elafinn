@@ -322,18 +322,7 @@ def booking_add(request, slug):
 
 
 def booking_edit(request, slug, bookingId):
-    """
-        - get booking from db 
-        - check method GET or PUT 
-        - if GET -> give return user form instance
-        - if put -> 
-            form = BookingForm(instance, request.PUT)
-            if form.isvalid 
-                form.save()
-                redirect to booking list 
-
     
-    """
     instance = Booking.objects.get(id=bookingId)
     
     if request.method == 'POST':
@@ -678,14 +667,53 @@ def customer(request, slug):
 
 def payment_methods(request, slug):
     hotel = Hotel.objects.get(slug=slug)
+    
+    if request.method == 'POST':
+        form = PaymentMethodForm(request.POST)
+        if form.is_valid():
+            myform = form.save(commit=False)
+            myform.hotel = hotel 
+            myform.save()
+            messages.success(request, 'تم اضافة وسيلة الدفع بنجاح')
+            return redirect(reverse('payment-methods', kwargs={'slug':slug}))
+        print(form.errors.as_text)
+        messages.error(request, form.errors)
+        return redirect(reverse('payment-methods', kwargs={'slug':slug}))
 
+    
+    payment_methods = hotel.payment_methods.all()
+    payment_methods_forms = []
+
+    for payment_method in payment_methods:
+        form = PaymentMethodForm(instance=payment_method)
+        payment_methods_forms.append((payment_method, form))
+    messages_list = messages.get_messages(request)
     rooms = Room.objects.filter(roomType__hotel__slug=slug)
+    form = PaymentMethodForm()
     context = {
         'hotel': hotel,
         'slug': slug,
-        'rooms': rooms
+        'rooms': rooms,
+        'payment_methods_forms':payment_methods_forms,
+        'messages':messages_list,
+        'form':form
     }
     return render(request, 'dashboard/payment/payment-methods.html', context)
+
+def payment_method_edit(request, slug, paymentMethodId):
+    instance = PaymentMethod.objects.get(id=paymentMethodId)
+    print(request.POST)
+    if request.method == 'POST':
+        form = PaymentMethodForm(request.POST, instance=instance )
+
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'تم معالجة الطلب بنجاح')
+            return redirect(reverse('payment-methods', kwargs={'slug':slug}))
+        print(form.errors)
+        messages.error(request, form.errors)
+        return redirect(reverse('payment-methods', kwargs={'slug':slug}))
+
 
 
 def rooms_for_annual_rent(request, slug):

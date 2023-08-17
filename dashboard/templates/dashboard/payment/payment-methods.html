@@ -9,6 +9,19 @@
                     <div class="container-fluid">
                         <div class="nk-content-inner">
                             <div class="nk-content-body">
+
+                                 <!-- messages  -->
+
+                            {% for message in messages %}
+                            <div class="alert alert-{{ message.tags }} alert-dismissible" role="alert">
+                                {{ message }}
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                        {% endfor %}
+                        
+                            <!-- end message -->
                                 <div class="nk-block-head nk-block-head-sm">
                                     <div class="nk-block-between g-3">
                                         <div class="nk-block-head-content">
@@ -61,26 +74,32 @@
                                                             </th>
                                                         </tr><!-- tb-tnx-item -->
                                                     </thead>
-                                                    <tbody>
+                                                    <tbody> 
+                                                        <!-- item -->
+                                                        {% for payment_method, form in payment_methods_forms %}
                                                         <tr class="tb-tnx-item">
                                                             <td class="tb-tnx-id">
-                                                                <a href="#"><span>1</span></a>
+                                                                <a href="#"><span>{{ payment_method.id }}</span></a>
                                                             </td>
                                                             <td class="tb-tnx-info">
                                                                 <div class="tb-tnx-desc">
-                                                                    <span class="title">Paypal</span>
+                                                                    <span class="title">{{ payment_method.name }}</span>
                                                                 </div>
                                                                 <div class="tb-tnx-date">
-                                                                    <span class="date">info@softnio.com</span>
-                                                                    <span class="date">MNB68</span>
+                                                                    <span class="date">{{ payment_method.email }}</span>
+                                                                    <span class="date">{{payment_method.merchant_code}}</span>
                                                                 </div>
                                                             </td>
                                                             <td class="tb-tnx-amount is-alt">
                                                                 <div class="tb-tnx-total">
-                                                                    <span class="amount">SAR</span>
+                                                                    <span class="amount">{{ payment_method.currency }}</span>
                                                                 </div>
                                                                 <div class="tb-tnx-status">
+                                                                    {% if payment_method.status == 'active'%}
                                                                     <span class="badge bg-success">Active</span>
+                                                                    {%else%}
+                                                                    <span class="badge bg-danger">Inactive</span>
+                                                                    {% endif %}
                                                                 </div>
                                                             </td>
                                                             <td class="tb-tnx-action">
@@ -88,137 +107,81 @@
                                                                     <a class="text-soft dropdown-toggle btn btn-icon btn-trigger" data-bs-toggle="dropdown"><em class="icon ni ni-more-h"></em></a>
                                                                     <div class="dropdown-menu dropdown-menu-end dropdown-menu-xs">
                                                                         <ul class="link-list-plain">
-                                                                            <li><a data-bs-toggle="modal" href="#edit-pay-method">تعديل</a></li>
+                                                                            <li><a data-bs-toggle="modal" href="#edit-pay-method-{{payment_method.id}}">تعديل</a></li>
                                                                             <li><a href="#">حذف</a></li>
                                                                         </ul>
                                                                     </div>
                                                                 </div>
                                                             </td>
-                                                        </tr><!-- tb-tnx-item -->
-                                                        <tr class="tb-tnx-item">
-                                                            <td class="tb-tnx-id">
-                                                                <a href="#"><span>2</span></a>
-                                                            </td>
-                                                            <td class="tb-tnx-info">
-                                                                <div class="tb-tnx-desc">
-                                                                    <span class="title">Paypal hosted</span>
-                                                                </div>
-                                                                <div class="tb-tnx-date">
-                                                                    <span class="date">info@softnio.com</span>
-                                                                    <span class="date">99K4</span>
-                                                                </div>
-                                                            </td>
-                                                            <td class="tb-tnx-amount is-alt">
-                                                                <div class="tb-tnx-total">
-                                                                    <span class="amount">SAR</span>
-                                                                </div>
-                                                                <div class="tb-tnx-status"><span class="badge bg-danger">Inactive</span></div>
-                                                            </td>
-                                                            <td class="tb-tnx-action">
-                                                                <div class="dropdown">
-                                                                    <a class="text-soft dropdown-toggle btn btn-icon btn-trigger" data-bs-toggle="dropdown"><em class="icon ni ni-more-h"></em></a>
-                                                                    <div class="dropdown-menu dropdown-menu-end dropdown-menu-xs">
-                                                                        <ul class="link-list-plain">
-                                                                            <li><a data-bs-toggle="modal" href="#edit-pay-method">تعديل</a></li>
-                                                                            <li><a href="#">حذف</a></li>
-                                                                        </ul>
-                                                                    </div>
-                                                                </div>
-                                                            </td>
-                                                        </tr><!-- tb-tnx-item -->
-                                                        <tr class="tb-tnx-item">
-                                                            <td class="tb-tnx-id">
-                                                                <a href="#"><span>3</span></a>
-                                                            </td>
-                                                            <td class="tb-tnx-info">
-                                                                <div class="tb-tnx-desc">
-                                                                    <span class="title">Cash</span>
-                                                                </div>
-                                                                <div class="tb-tnx-date">
-                                                                    <span class="date">ashley@softnio.com</span>
-                                                                    <span class="date">--:--</span>
-                                                                </div>
-                                                            </td>
-                                                            <td class="tb-tnx-amount is-alt">
-                                                                <div class="tb-tnx-total">
-                                                                    <span class="amount">SAR</span>
-                                                                </div>
-                                                                <div class="tb-tnx-status"><span class="badge bg-success">Active</span></div>
-                                                            </td>
-                                                            <td class="tb-tnx-action">
-                                                                <div class="dropdown">
-                                                                    <a class="text-soft dropdown-toggle btn btn-icon btn-trigger" data-bs-toggle="dropdown"><em class="icon ni ni-more-h"></em></a>
-                                                                    <div class="dropdown-menu dropdown-menu-end dropdown-menu-xs">
-                                                                        <ul class="link-list-plain">
-                                                                            <li><a data-bs-toggle="modal" href="#edit-pay-method">تعديل</a></li>
-                                                                            <li><a href="#">حذف</a></li>
-                                                                        </ul>
-                                                                    </div>
-                                                                </div>
-                                                            </td>
-                                                        </tr><!-- tb-tnx-item -->
-                                                        <tr class="tb-tnx-item">
-                                                            <td class="tb-tnx-id">
-                                                                <a href="#"><span>4</span></a>
-                                                            </td>
-                                                            <td class="tb-tnx-info">
-                                                                <div class="tb-tnx-desc">
-                                                                    <span class="title">Visa</span>
-                                                                </div>
-                                                                <div class="tb-tnx-date">
-                                                                    <span class="date">larson@example.com</span>
-                                                                    <span class="date">WBO4</span>
-                                                                </div>
-                                                            </td>
-                                                            <td class="tb-tnx-amount is-alt">
-                                                                <div class="tb-tnx-total">
-                                                                    <span class="amount">SAR/USD</span>
-                                                                </div>
-                                                                <div class="tb-tnx-status"><span class="badge bg-success">Active</span></div>
-                                                            </td>
-                                                            <td class="tb-tnx-action">
-                                                                <div class="dropdown">
-                                                                    <a class="text-soft dropdown-toggle btn btn-icon btn-trigger" data-bs-toggle="dropdown"><em class="icon ni ni-more-h"></em></a>
-                                                                    <div class="dropdown-menu dropdown-menu-end dropdown-menu-xs">
-                                                                        <ul class="link-list-plain">
-                                                                            <li><a data-bs-toggle="modal" href="#edit-pay-method">تعديل</a></li>
-                                                                            <li><a href="#">حذف</a></li>
-                                                                        </ul>
-                                                                    </div>
-                                                                </div>
-                                                            </td>
-                                                        </tr><!-- tb-tnx-item -->
-                                                        <tr class="tb-tnx-item">
-                                                            <td class="tb-tnx-id">
-                                                                <a href="#"><span>5</span></a>
-                                                            </td>
-                                                            <td class="tb-tnx-info">
-                                                                <div class="tb-tnx-desc">
-                                                                    <span class="title">E-Check</span>
-                                                                </div>
-                                                                <div class="tb-tnx-date">
-                                                                    <span class="date">frances@example.com</span>
-                                                                    <span class="date">kk1</span>
-                                                                </div>
-                                                            </td>
-                                                            <td class="tb-tnx-amount is-alt">
-                                                                <div class="tb-tnx-total">
-                                                                    <span class="amount">USD/SAR</span>
-                                                                </div>
-                                                                <div class="tb-tnx-status"><span class="badge bg-success">Active</span></div>
-                                                            </td>
-                                                            <td class="tb-tnx-action">
-                                                                <div class="dropdown">
-                                                                    <a class="text-soft dropdown-toggle btn btn-icon btn-trigger" data-bs-toggle="dropdown"><em class="icon ni ni-more-h"></em></a>
-                                                                    <div class="dropdown-menu dropdown-menu-end dropdown-menu-xs">
-                                                                        <ul class="link-list-plain">
-                                                                            <li><a data-bs-toggle="modal" href="#edit-pay-method">تعديل</a></li>
-                                                                            <li><a href="#">حذف</a></li>
-                                                                        </ul>
-                                                                    </div>
-                                                                </div>
-                                                            </td>
-                                                        </tr><!-- tb-tnx-item -->
+                                                        </tr>
+                                                        <!-- Modal edit -->
+                                                        <div class="modal fade" tabindex="-1" role="dialog" id="edit-pay-method-{{ payment_method.id}}">
+                                                            <div class="modal-dialog modal-lg" role="document">
+                                                                <div class="modal-content">
+                                                                    <a href="#" class="close" data-bs-dismiss="modal"><em class="icon ni ni-cross-sm"></em></a>
+                                                                    <div class="modal-body modal-body-md">
+                                                                        <h5 class="modal-title">تعديل طريقة الدفع</h5>
+                                                                        <form action="{% url 'payment-methods-edit' hotel.slug payment_method.id%}" method="post" class="mt-2">
+                                                                            {% csrf_token %}
+                                                                            <div class="row g-gs">
+                                                                                <div class="col-md-6">
+                                                                                    <div class="form-group">
+                                                                                        <label class="form-label" for="payment-name-edit">{{ form.name.label_tag}}</label>
+                                                                                        {{form.name}}
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-md-6">
+                                                                                    <div class="form-group">
+                                                                                        <label class="form-label" for="email-edit">{{ form.email.label_tag}}</label>
+                                                                                        {{form.email}}
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-md-6">
+                                                                                    <div class="form-group">
+                                                                                        <label class="form-label" for="march-id-edit">رمز التاجر</label>
+                                                                                        {{ form.merchant_code}}
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-md-6">
+                                                                                    <div class="form-group">
+                                                                                        <label class="form-label" for="currency-edit">العملة</label>
+                                                                                        {{ form.currency }}
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-md-6">
+                                                                                    <div class="form-group">
+                                                                                        <label class="form-label" for="edit-status">{{form.status.label_tag}}</label>
+                                                                                        <div class="form-control-wrap">
+                                                                                            {{ form.status}}
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-md-6">
+                                                                                    <div class="form-group">
+                                                                                        <label class="form-label" for="edit-type">{{form.type.label_tag}}</label>
+                                                                                        <div class="form-control-wrap">
+                                                                                            {{ form.type}}
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-12">
+                                                                                    <ul class="align-center flex-wrap flex-sm-nowrap gx-4 gy-2">
+                                                                                        <li>
+                                                                                            <button type="submit" class="btn btn-primary">تحديث</button>
+                                                                                        </li>
+                                                                                        <li>
+                                                                                            <a class="link" data-bs-dismiss="modal">إلغاء</a>
+                                                                                        </li>
+                                                                                    </ul>
+                                                                                </div>
+                                                                            </div>
+                                                                        </form>
+                                                                    </div><!-- .modal-body -->
+                                                                </div><!-- .modal-content -->
+                                                            </div><!-- .modal-dialog -->
+                                                        </div><!-- .modal -->
+                                                        {% endfor %}
+                                                        
                                                     </tbody>
                                                 </table>
                                             </div><!-- .card-inner -->
@@ -236,45 +199,49 @@
                 <a href="#" class="close" data-bs-dismiss="modal"><em class="icon ni ni-cross-sm"></em></a>
                 <div class="modal-body modal-body-md">
                     <h5 class="modal-title">إضافة طريقة دفع</h5>
-                    <form action="#" class="mt-2">
+                    <form action="{% url 'payment-methods' hotel.slug %}" method="post" class="mt-2">
+                        {% csrf_token %}
                         <div class="row g-gs">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label class="form-label" for="payment-name-add">اسم طريقة الدفع</label>
-                                    <input type="text" class="form-control" id="payment-name-add" placeholder="اسم طريقة الدفع">
+                                    <label class="form-label" for="payment-name-add">{{ form.name.label_tag}}</label>
+                                    {{ form.name }}
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label class="form-label" for="email-add">البريد</label>
-                                    <input type="email" class="form-control" id="email-add" placeholder="example@email.com">
+                                    <label class="form-label" for="email-add">{{ form.email.label_tag}}</label>
+                                    {{ form.email }}
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label class="form-label" for="march-id-add">رمز التاجر</label>
-                                    <input type="number" class="form-control" id="march-id-add" placeholder="رمز التاجر">
+                                    <label class="form-label" for="march-id-add">{{ form.merchant_code.label_tag}}</label>
+                                    {{ form.merchant_code }}
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label class="form-label" for="currency-add">العملة</label>
-                                    <input type="text" class="form-control" id="currency-add" placeholder="SAR">
+                                    <label class="form-label" for="currency-add">{{ form.currency.label_tag}}</label>
+                                    {{ form.currency}}
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label class="form-label" for="status-add">الحالة</label>
-                                    <select class="form-select js-select2" id="status-add">
-                                        <option>نشطة</option>
-                                        <option>معطلة</option>
-                                    </select>
+                                    <label class="form-label" for="status-add">{{ form.status.label_tag }}</label>
+                                    {{ form.status }}
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="form-label" for="type-add">{{ form.type.label_tag }}</label>
+                                    {{ form.type }}
                                 </div>
                             </div>
                             <div class="col-12">
                                 <ul class="align-center flex-wrap flex-sm-nowrap gx-4 gy-2">
                                     <li>
-                                        <button class="btn btn-primary">إضافة طريقة الدفع</button>
+                                        <button type="submit" class="btn btn-primary">إضافة طريقة الدفع</button>
                                     </li>
                                     <li>
                                         <a href="#" class="link" data-bs-dismiss="modal">إلغاء</a>
@@ -288,61 +255,5 @@
         </div><!-- .modal-dialog -->
     </div><!-- .modal -->
     <!-- Edit Payment Method-->
-    <div class="modal fade" tabindex="-1" role="dialog" id="edit-pay-method">
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
-                <a href="#" class="close" data-bs-dismiss="modal"><em class="icon ni ni-cross-sm"></em></a>
-                <div class="modal-body modal-body-md">
-                    <h5 class="modal-title">تعديل طريقة الدفع</h5>
-                    <form action="#" class="mt-2">
-                        <div class="row g-gs">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="form-label" for="payment-name-edit">اسم طريقة الدفع</label>
-                                    <input type="text" class="form-control" id="payment-name-edit" value="Paypal" placeholder="اسم طريقة الدفع">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="form-label" for="email-edit">البريد الإلكتروني</label>
-                                    <input type="email" class="form-control" id="email-edit" value="info@softnio.com" placeholder="example@email.com">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="form-label" for="march-id-edit">رمز التاجر</label>
-                                    <input type="text" class="form-control" value="MNB68" id="march-id-edit" placeholder="رمز التاجر">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="form-label" for="currency-edit">العملة</label>
-                                    <input type="text" class="form-control" value="SAR" id="currency-edit" placeholder="SAR">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="form-label" for="edit-status">Status</label>
-                                    <select class="form-select js-select2" id="edit-status">
-                                        <option>نشطة</option>
-                                        <option>معطلة</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-12">
-                                <ul class="align-center flex-wrap flex-sm-nowrap gx-4 gy-2">
-                                    <li>
-                                        <button class="btn btn-primary">تحديث</button>
-                                    </li>
-                                    <li>
-                                        <a class="link" data-bs-dismiss="modal">إلغاء</a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </form>
-                </div><!-- .modal-body -->
-            </div><!-- .modal-content -->
-        </div><!-- .modal-dialog -->
-    </div><!-- .modal -->
+
 {% endblock %}

@@ -164,7 +164,8 @@
                                         <div class="product-rating product-rating-filter ">
                                             <ul class="rating">
                                                     
-                                                    <li><input class="mt-1"type="radio" name="category" id="" value="5"></li>
+                                                    <li><input class="form-check-input" style="cursor: pointer;"
+                                                        type="radio" {% if request.GET.category == '5' %}checked{%endif%} name="category" id="" value="5"></li>
                                                     <li><em class="icon ni ni-star-fill"></em></li>
                                                     <li><em class="icon ni ni-star-fill"></em></li>
                                                     <li><em class="icon ni ni-star-fill"></em></li>
@@ -174,7 +175,14 @@
                                         </div>
                                         <div class="product-rating product-rating-filter">
                                             <ul class="rating">
-                                                <input type="radio" name="category" id="" value="4">
+                                                <li>
+                                                    <input type="radio"
+                                                    class="form-check-input"
+                                                    name="category" 
+                                                    {% if request.GET.category == '4' %}checked{%endif%} id="" 
+                                                    style="cursor: pointer;"
+                                                    value="4">
+                                                </li>
                                                 <li><em class="icon ni ni-star-fill"></em></li>
                                                 <li><em class="icon ni ni-star-fill"></em></li>
                                                 <li><em class="icon ni ni-star-fill"></em></li>
@@ -184,7 +192,12 @@
                                         </div>
                                         <div class="product-rating product-rating-filter">
                                             <ul class="rating">
-                                                <input type="radio" name="category" id="" value="3">
+                                                <input type="radio" 
+                                                class="form-check-input"
+                                                name="category" id="" 
+                                                {% if request.GET.category == '3' %}checked{%endif%} 
+                                                style="cursor: pointer;"
+                                                value="3">
                                                 <li><em class="icon ni ni-star-fill"></em></li>
                                                 <li><em class="icon ni ni-star-fill"></em></li>
                                                 <li><em class="icon ni ni-star-fill"></em></li>
@@ -194,7 +207,14 @@
                                         </div>
                                         <div class="product-rating product-rating-filter">
                                             <ul class="rating">
-                                                <input type="radio" name="category" id="" value="2">
+                                                <input type="radio" 
+                                                class="form-check-input"
+                                                name="category" 
+                                                id="" 
+                                                {% if request.GET.category == '2' %}checked{%endif%} 
+                                                value="2"
+                                                style="cursor: pointer;"
+                                                >
                                                 <li><em class="icon ni ni-star-fill"></em></li>
                                                 <li><em class="icon ni ni-star-fill"></em></li>
                                                 <li><em class="icon ni ni-star"></em></li>
@@ -204,7 +224,12 @@
                                         </div>
                                         <div class="product-rating product-rating-filter">
                                             <ul class="rating">
-                                                <input type="radio" name="category" id="" value="1">
+                                                <input type="radio" 
+                                                class="form-check-input"
+                                                name="category" {% if request.GET.category == '1' %}checked{%endif%} 
+                                                id="" 
+                                                style="cursor: pointer;"
+                                                value="1">
                                                 <li><em class="icon ni ni-star-fill"></em></li>
                                                 <li><em class="icon ni ni-star"></em></li>
                                                 <li><em class="icon ni ni-star"></em></li>
@@ -215,7 +240,13 @@
                                         <div class="product-rating product-rating-filter">
                                             
                                             <ul class="rating">
-                                                <input type="radio" name="category" id="" value="0">
+                                                <input type="radio" 
+                                                class="form-check-input" 
+                                                name="category" 
+                                                {% if request.GET.category == '0' %}checked{%endif%} 
+                                                style="cursor: pointer;"
+                                                id="" 
+                                                value="0">
                                                 <li><em class="icon ni ni-star"></em></li>
                                                 <li><em class="icon ni ni-star"></em></li>
                                                 <li><em class="icon ni ni-star"></em></li>
@@ -238,24 +269,45 @@
                                     
                                 </div>
 
+                                <!-- Payment methods -->
+                                <div class="ms-2 mt-3 filter-section-star">
+                                
+                                    <p style="font-size: large" class="text-bg-light text-center">طريقة الدفع</p>
+                                    {{ hotel_sidebar_filter.form.payment_methods__type}}
+                                    <!-- <select 
+                                        name="payment_methods_name" 
+                                        id="payment_methods_name"
+                                        class="form-select"
+                                        >
+                                        <option value="1" selected>اختر وسيلة الدفع</option>
+                                        {% for choice in request.session.payment_methods_choices%}
+                                        <option value="{{ choice }}" {% if request.GET.payment_methods_name == choice %} selected {% endif %}>{{ choice }}</option>
+                                        {% endfor %}
+                                    </select> -->
+                            </div>
+
                                 <!-- Location Filter -->
                                 
                                 <div class="ms-2 mt-3 filter-section-star">
                                     
-                                        <p style="font-size: large" class="text-bg-light text-center">الموقع</p>
+                                         <p style="font-size: large" class="text-bg-light text-center">الموقع</p>
                                         <ul class="custom-control-group g-3 align-center flex-wrap">
                                             <li>
                                                 <div class="custom-control custom-radio">
-                                                    <input type="radio" value="1" class="custom-control-input"
-                                                           name="location__hrm__lte" id="reg-enable">
+                                                    <input type="radio" class="custom-control-input" 
+                                                           name="location__hrm__lte" id="reg-enable" value="1"
+                                                           {% if request.GET.location__hrm__lte == '1' %} checked {%else%} {% endif %}
+                                                           >
                                                     <label class="custom-control-label" for="reg-enable">أقل من
                                                         كيلو</label>
                                                 </div>
                                             </li>
                                             <li>
                                                 <div class="custom-control custom-radio">
-                                                    <input type="radio" class="custom-control-input" name="location"
-                                                           id="reg-disable" value="10">
+                                                    <input type="radio" class="custom-control-input" name="location__hrm__range"
+                                                    value="5"
+                                                    {% if request.GET.location__hrm__range == '5' %} checked {%else%} {% endif %}
+                                                           id="reg-disable">
                                                     <label class="custom-control-label"
                                                            for="reg-disable">من 5 إلى 10 كيلو</label>
                                                 </div>
@@ -263,7 +315,10 @@
                                             <li>
                                                 <div class="custom-control custom-radio checked">
                                                     <input type="radio" class="custom-control-input" name="location__hrm__gte"
-                                                           id="reg-request" value="10" >
+                                                           id="reg-request"
+                                                           {% if request.GET.location__hrm__gte == '10' %} checked {%else%} {% endif %}
+                                                           value="10"
+                                                           >
                                                     <label class="custom-control-label" for="reg-request">
                                                         10 كيلو فأكثر
                                                     </label>
