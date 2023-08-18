@@ -23,7 +23,7 @@
     font-weight: bold;
   }
 
-  .search-filter p > span {
+  .search-filter p>span {
     font-weight: normal;
   }
 
@@ -49,7 +49,7 @@
     text-align: center !important;
   }
 
-  .nk-msg-tags li > span .icon {
+  .nk-msg-tags li>span .icon {
     color: rgba(189, 179, 161, 0.92);
     margin-left: 0.25rem;
   }
@@ -124,12 +124,8 @@
         <div class="col-3 ms-5">
           <div class="product-thumb">
             <a href="{{ hotel.get_hotel_page}}">
-              <img
-                class="card-img-top mt-1"
-                style="max-width: 100px !important"
-                src="{% static '/images/product/hotel-1.webp' %}"
-                alt=""
-              />
+              <img class="card-img-top mt-1" style="max-width: 100px !important"
+                src="{% static '/images/product/hotel-1.webp' %}" alt="" />
             </a>
             <ul class="product-actions">
               <li>
@@ -151,15 +147,9 @@
               <li><em class="icon ni ni-star"></em></li>
             </ul>
           </div>
-          <h5
-            class="product-title"
-            style="text-align: right; font-weight: normal"
-          >
+          <h5 class="product-title" style="text-align: right; font-weight: normal">
             <a href="{{hotel.get_hotel_page}}"> {{hotel.hotel_name}}</a>
-            <p
-              class="mt-1 text-gray"
-              style="font-weight: normal; font-size: 10pt"
-            >
+            <p class="mt-1 text-gray" style="font-weight: normal; font-size: 10pt">
               شارع اجياد، مكة المكرمة
             </p>
           </h5>
@@ -185,52 +175,36 @@
   <div class="col">
     <div class="row">
       <div class="col-lg-3 col-md-6 hotel-gallery-img">
-        <img
-          style=""
-          src="https://storage.googleapis.com/legate-development/content-test-new/4858/al-murjan-crom-hotel-makkah-saudi-arabia-9.jpg"
-        />
+        <img style=""
+          src="https://storage.googleapis.com/legate-development/content-test-new/4858/al-murjan-crom-hotel-makkah-saudi-arabia-9.jpg" />
       </div>
       <div class="col-lg-3 col-md-6 hotel-gallery-img">
-        <img
-          style=""
-          src="https://storage.googleapis.com/legate-development/content-test-new/4858/al-murjan-crom-hotel-makkah-saudi-arabia-3.jpg"
-        />
+        <img style=""
+          src="https://storage.googleapis.com/legate-development/content-test-new/4858/al-murjan-crom-hotel-makkah-saudi-arabia-3.jpg" />
       </div>
       <div class="col-lg-3 col-md-6 hotel-gallery-img">
-        <img
-          style=""
-          src="https://storage.googleapis.com/legate-development/content-test-new/4858/al-murjan-crom-hotel-makkah-saudi-arabia-7.jpg"
-        />
+        <img style=""
+          src="https://storage.googleapis.com/legate-development/content-test-new/4858/al-murjan-crom-hotel-makkah-saudi-arabia-7.jpg" />
       </div>
       <div class="col-lg-3 col-md-6 hotel-gallery-img">
-        <img
-          style=""
-          src="https://storage.googleapis.com/legate-development/content-test-new/4858/al-murjan-crom-hotel-makkah-saudi-arabia-5.jpg"
-        />
+        <img style=""
+          src="https://storage.googleapis.com/legate-development/content-test-new/4858/al-murjan-crom-hotel-makkah-saudi-arabia-5.jpg" />
       </div>
       <div class="col-lg-3 col-md-6 hotel-gallery-img">
-        <img
-          style=""
-          src="https://storage.googleapis.com/legate-development/content-test-new/4858/al-murjan-crom-hotel-makkah-saudi-arabia-6.jpg"
-        />
+        <img style=""
+          src="https://storage.googleapis.com/legate-development/content-test-new/4858/al-murjan-crom-hotel-makkah-saudi-arabia-6.jpg" />
       </div>
       <div class="col-lg-3 col-md-6 hotel-gallery-img">
-        <img
-          style=""
-          src="https://storage.googleapis.com/legate-development/content-test-new/4858/al-murjan-crom-hotel-makkah-saudi-arabia-4.jpg"
-        />
+        <img style=""
+          src="https://storage.googleapis.com/legate-development/content-test-new/4858/al-murjan-crom-hotel-makkah-saudi-arabia-4.jpg" />
       </div>
       <div class="col-lg-3 col-md-6 hotel-gallery-img">
-        <img
-          style=""
-          src="https://storage.googleapis.com/legate-development/content-test-new/4858/al-murjan-crom-hotel-makkah-saudi-arabia-11.jpg"
-        />
+        <img style=""
+          src="https://storage.googleapis.com/legate-development/content-test-new/4858/al-murjan-crom-hotel-makkah-saudi-arabia-11.jpg" />
       </div>
       <div class="col-lg-3 col-md-6 hotel-gallery-img">
-        <img
-          style=""
-          src="https://storage.googleapis.com/legate-development/content-test-new/4858/al-murjan-crom-hotel-makkah-saudi-arabia-4.jpg"
-        />
+        <img style=""
+          src="https://storage.googleapis.com/legate-development/content-test-new/4858/al-murjan-crom-hotel-makkah-saudi-arabia-4.jpg" />
       </div>
     </div>
   </div>
@@ -239,7 +213,8 @@
   <div class="col search-filter" style="height: 10vh">
     <div class="row py-4 pe-7 ps-7">
       <div class="col">
-        <p>الوجهة: <span>{% if main_search_params.city == 'Makkah' %}مكة المكرمة{%elif main_search_params.city == 'Madinah'%}المدينة المنورة{%else%}غير محددة{%endif%}</span></p>
+        <p>الوجهة: <span>{% if main_search_params.city == 'Makkah' %}مكة المكرمة{%elif main_search_params.city ==
+            'Madinah'%}المدينة المنورة{%else%}غير محددة{%endif%}</span></p>
       </div>
       <div class="col-4">
         <p>
@@ -248,7 +223,8 @@
         </p>
       </div>
       <div class="col">
-        <p>عدد الأشخاص: <span> {% if main_search_params.guests %}{{ main_search_params.guests}}{%else%}غير محدد{%endif%}</span></p>
+        <p>عدد الأشخاص: <span> {% if main_search_params.guests %}{{ main_search_params.guests}}{%else%}غير
+            محدد{%endif%}</span></p>
       </div>
       <div class="col">
         <a href="" class="btn btn-outline-secondary">تعديل البحث</a>
@@ -259,220 +235,407 @@
 
 <!-- Room Component -->
 
-                      {% include 'main/components/room_component.html' with hotel=hotel %}
-                      
+{% include 'main/components/room_component.html' with hotel=hotel %}
+
 <!-- End Room -->
 {% if user.is_authenticated %}
-    <!-- User is authenticated, show content for authenticated users -->
-    <div class="container">
-      <div class="row">
-          <div class="row justify-content-center p-3">
-              <div class="col-lg-8 m-3">
-                  <div class="row mb-3">
-                      <div class="col box-shdow">
-                          <h5 class="">بيانات الحجز</h5>
-                          <br>
-                          <form method="post" action="{% url 'main:booking-add' hotel.slug%}">
-                              {% csrf_token %}
-                              <div class="row g-4">
-                                  <div class="col-lg-12">
-                                      <div class="form-group">
-                                          <label class="form-label" for="full-name-1">الاسم الكامل</label>
-                                          <div class="form-control-wrap">
-                                              <input type="text" value="Test guests" class="form-control" id="full-name-1" name="full_name" required>
-                                          </div>
-                                      </div>
-                                  </div>
-                                  <div class="col-lg-6">
-                                      <div class="form-group">
-                                          <label class="form-label" for="email-address-1">البريد الإلكتروني</label>
-                                          <div class="form-control-wrap">
-                                              <input type="text" value="example@gmail.com" class="form-control" name="email" id="email-address-1" required>
-                                          </div>
-                                      </div>
-                                  </div>
-                                  <div class="col-lg-6">
-                                      <div class="form-group">
-                                          <label class="form-label" for="phone-no-1">رقم الجوال</label>
-                                          <div class="form-control-wrap">
-                                              <input type="text" value="+96612345678"class="form-control" name="phone" id="phone-no-1" required>
-                                          </div>
-                                      </div>
-                                  </div>
-                                  <div class="col-lg-6">
-                                      <div class="form-group">
-                                          <ul class="custom-control-group g-3 align-center">
-                                              <li>
-                                                  <div class="custom-control custom-control-sm custom-checkbox">
-                                                      <input type="checkbox" class="custom-control-input"
-                                                             id="pay-cash-1">
-                                                      <label class="custom-control-label"
-                                                             for="pay-cash-1">
-                                                          أقوم بهذا الحجز نيابةًً عن شخص آخر ولا أنوي الإقامة في هذا
-                                                          الفندق.
-                                                      </label>
-                                                  </div>
-                                              </li>
-                                          </ul>
-                                      </div>
-                                  </div>
-                                  <div class="row mt-5 justify-content-center" style="height: 20vh">
-                                      <div class="col text-center">
-                                          <div class="form-group">
-                                              <button type="submit" class="btn btn-xl btn-primary">أرسال الطلب</button>
-                                              <p class="pt-1" style="font-size: small">
-                                                  بإكمال هذه العملية ، انت تقر بأنك قمت بمراجعة وقبول الشروط المذكورة في
-                                                  الرابط
-                                                  <a href="" class="color-lahmi sq-md" style="font-size: small">الشروط
-                                                      والأحكام</a>.
-    
-                                              </p>
-                                          </div>
-                                      </div>
-                                  </div>
-                              </div>
-                          </form>
-                      </div>
+<!-- User is authenticated, show content for authenticated users -->
+<div class="container">
+  <div class="row">
+    <div class="row justify-content-center p-3">
+      <div class="col-lg-8 m-3">
+        <div class="row mb-3">
+          <div class="col box-shdow">
+            <h5 class="">بيانات الحجز</h5>
+            <br>
+
+            <div class="row g-4">
+              <div class="col-lg-12">
+                <div class="form-group">
+                  <label class="form-label" for="full-name-1">الاسم الكامل</label>
+                  <div class="form-control-wrap">
+                    <input type="text" value="Test guests" class="form-control" id="full-name-1" name="full_name"
+                      required>
                   </div>
+                </div>
               </div>
-              <div class="col m-3">
-                  <div class="row mb-3">
-                      <div class="col box-shdow">
-                          <h5 class="p-0 m-0">تفاصيل الحجز</h5>
-                          <br>
-                          <div class="product-rating" style="font-size: 5px">
-                              <ul class="rating">
-                                  <li><em class="icon ni ni-star-fill"></em></li>
-                                  <li><em class="icon ni ni-star-fill"></em></li>
-                                  <li><em class="icon ni ni-star"></em></li>
-                                  <li><em class="icon ni ni-star"></em></li>
-                                  <li><em class="icon ni ni-star"></em></li>
-                              </ul>
-                          </div>
-                          <p class="product-title m-0" style="text-align: right; font-size: 12pt">
-                              <a href="html/product-details.html">
-                                  {{ hotel.hotel_name}}
-                              </a>
-                          <p class="text-gray" style="font-weight: normal; font-size: 9pt">
-                              {{hotel.address}}
-                          </p>
-                          <div class="row">
-                              <div class="col">
-                                  <div class="d-flex flex-column mb-3">
-                                      <div class=" "><em class="icon ni ni-calendar"></em></div>
-                                      <div class=" ">09-03-2023</div>
-                                  </div>
-                              </div>
-                              <div class="col">
-                                  <div class="d-flex flex-column mb-3">
-                                      <div class=" "><em class="icon ni ni-moon"></em></div>
-                                      <div class=" ">1 ليلة</div>
-                                  </div>
-                              </div>
-                              <div class="col">
-                                  <div class="d-flex flex-column mb-3">
-                                      <div class=" "><em class="icon ni ni-calendar"></em></div>
-                                      <div class=" ">10-03-2023</div>
-                                  </div>
-                              </div>
-                          </div>
-                          <div class="row">
-                            {% for room in hotel.rooms %}  
-                            <div class="col">
-                                  <br>
-                                  
-                                  <p class="fw-bold m-0">{{ room.roomType}}</p>
-                                  <p class="m-0 text-soft">ROOM ONLY</p>
-                                  <p class="text-danger">
-                                      غير قابل للاسترجاع
-                                      <a placement="auto" class="btn-pop-hover">
-                                          <i class="fal fa-info-circle"></i>
-                                      </a>
-                                  </p>
-                                  <span class="tb-amount fw-bold">{{ room.price}}<span
-                                          class="currency"> SAR</span>
-                                  </span>
-                              </div>
-                              {% endfor %}
-                          </div>
-                      </div>
+              <div class="col-lg-6">
+                <div class="form-group">
+                  <label class="form-label" for="email-address-1">البريد الإلكتروني</label>
+                  <div class="form-control-wrap">
+                    <input type="text" value="example@gmail.com" class="form-control" name="email" id="email-address-1"
+                      required>
                   </div>
-                  <div class="row mb-3">
-                      <div class="col box-shdow">
-                          <h5 class="p-0 m-0">ملخص السعر</h5>
-                          <br>
-                          <table style="font-size: 13px; width: 100%">
-                              <tr>
-                                  <td>ضريبة القيمة المضافة</td>
-                                  <td class="text-sm-end">SAR 7.32</td>
-                              </tr>
-                              <tr>
-                                  <td>الإجمالي شامل ضريبة القيمة المضافة</td>
-                                  <td class="text-sm-end">SAR 163.90</td>
-                              </tr>
-                              <tr>
-                                  <td>كود الخصم</td>
-                                  <td class="text-sm-end">SAR 17.08</td>
-                              </tr>
-                          </table>
-    
-                          <hr>
-                          <div class="row">
-                              <div class="col">
-                                  <h6 class="fw-bold">السعر الإجمالي</h6>
-                              </div>
-                              <div class="col">
-                                  <h5 class="text-teal text-lg-end">SAR 146.82</h5>
-                              </div>
-                          </div>
-                      </div>
-                  </div>
+                </div>
               </div>
-          </div>
-      </div>
-    </div>
-    {% else %}
-    
-    
-    <div class="container">
-      
-      <div class="row">
-        
-          <div class="row justify-content-center p-3">
-              <div class="col-lg-8 m-3">
-                  <div class="row mb-3">
-                      <div class="col box-shdow">
-                        <div class="header-caption text-center">
-                        <h3 class="fw-medium text-danger mt-3">الرجاء تسجيل الدخول اولا او انشاء حساب</h3>
-                      </div>
-                          <br>
-                          <form method="post" action="#" next="/">
-                              <div class="row g-4">
-                                  
-                                  <div class="row mt-5 justify-content-center" style="height: 20vh">
-                                      <div class="col text-center">
-                                          <div class="form-group">
-                                              <a href="{% url 'main:login' %}"><button type="button" class="btn btn-xl btn-primary btn-block">تسجيل الدخول</button></a>
-                                          </div>
-                                      </div>
-                                      <div class="col text-center">
-                                          <div class="form-group">
-                                              <a href="{% url 'main:register'%}"><button type="button" class="btn btn-xl btn-primary btn-block">انشاء حساب جديد</button></a>
-                                          </div>
-                                      </div>
-                                  </div>
-                              </div>
-                          </form>
-                      </div>
+              <div class="col-lg-6">
+                <div class="form-group">
+                  <label class="form-label" for="phone-no-1">رقم الجوال</label>
+                  <div class="form-control-wrap">
+                    <input type="text" value="+96612345678" class="form-control" name="phone" id="phone-no-1" required>
                   </div>
+                </div>
               </div>
+              <div class="col-lg-6">
+                <div class="form-group">
+                  <ul class="custom-control-group g-3 align-center">
+                    <li>
+                      <div class="custom-control custom-control-sm custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="pay-cash-1">
+                        <label class="custom-control-label" for="pay-cash-1">
+                          أقوم بهذا الحجز نيابةًً عن شخص آخر ولا أنوي الإقامة في هذا
+                          الفندق.
+                        </label>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <div class="row mt-5 justify-content-center" style="height: 20vh">
+                <div class="col text-center">
+                  <div class="form-group">
+
+
+                    <a data-bs-toggle="modal" href="#booking-confirm-modal">
+                      <button type="button" class="btn btn-xl btn-primary">
+                        متابعة
+                      </button>
+                    </a>
+                    </button>
+                    <p class="pt-1" style="font-size: small">
+                      بإكمال هذه العملية ، انت تقر بأنك قمت بمراجعة وقبول الشروط المذكورة في
+                      الرابط
+                      <a href="" class="color-lahmi sq-md" style="font-size: small">الشروط
+                        والأحكام</a>.
+
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
 
           </div>
+        </div>
+      </div>
+      <div class="col m-3">
+        <div class="row mb-3">
+          <div class="col box-shdow">
+            <h5 class="p-0 m-0">تفاصيل الحجز</h5>
+            <br>
+            <div class="product-rating" style="font-size: 5px">
+              <ul class="rating">
+                <li><em class="icon ni ni-star-fill"></em></li>
+                <li><em class="icon ni ni-star-fill"></em></li>
+                <li><em class="icon ni ni-star"></em></li>
+                <li><em class="icon ni ni-star"></em></li>
+                <li><em class="icon ni ni-star"></em></li>
+              </ul>
+            </div>
+            <p class="product-title m-0" style="text-align: right; font-size: 12pt">
+              <a href="html/product-details.html">
+                {{ hotel.hotel_name}}
+              </a>
+            <p class="text-gray" style="font-weight: normal; font-size: 9pt">
+              {{hotel.address}}
+            </p>
+            <div class="row">
+              <div class="col">
+                <div class="d-flex flex-column mb-3">
+                  <div class=" "><em class="icon ni ni-calendar"></em></div>
+                  <div class=" ">09-03-2023</div>
+                </div>
+              </div>
+              <div class="col">
+                <div class="d-flex flex-column mb-3">
+                  <div class=" "><em class="icon ni ni-moon"></em></div>
+                  <div class=" ">1 ليلة</div>
+                </div>
+              </div>
+              <div class="col">
+                <div class="d-flex flex-column mb-3">
+                  <div class=" "><em class="icon ni ni-calendar"></em></div>
+                  <div class=" ">10-03-2023</div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              {% for room in hotel.rooms %}
+              <div class="col">
+                <br>
+
+                <p class="fw-bold m-0">{{ room.roomType}}</p>
+                <p class="m-0 text-soft">ROOM ONLY</p>
+                <p class="text-danger">
+                  غير قابل للاسترجاع
+                  <a placement="auto" class="btn-pop-hover">
+                    <i class="fal fa-info-circle"></i>
+                  </a>
+                </p>
+                <span class="tb-amount fw-bold">{{ room.price}}<span class="currency"> SAR</span>
+                </span>
+              </div>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+        <div class="row mb-3">
+          <div class="col box-shdow">
+            <h5 class="p-0 m-0">ملخص السعر</h5>
+            <br>
+            <table style="font-size: 13px; width: 100%">
+              <tr>
+                <td>ضريبة القيمة المضافة</td>
+                <td class="text-sm-end">SAR 7.32</td>
+              </tr>
+              <tr>
+                <td>الإجمالي شامل ضريبة القيمة المضافة</td>
+                <td class="text-sm-end">SAR 163.90</td>
+              </tr>
+              <tr>
+                <td>كود الخصم</td>
+                <td class="text-sm-end">SAR 17.08</td>
+              </tr>
+            </table>
+
+            <hr>
+            <div class="row">
+              <div class="col">
+                <h6 class="fw-bold">السعر الإجمالي</h6>
+              </div>
+              <div class="col">
+                <h5 class="text-teal text-lg-end">SAR 146.82</h5>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
+</div>
 
-    {% endif %}
+<!-- Modal for booking confirm -->
+<div class="modal fade" tabindex="-1" role="dialog" id="booking-confirm-modal">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <a href="#" class="close" data-bs-dismiss="modal"><em class="icon ni ni-cross-sm"></em></a>
+      <div class="modal-body modal-body-md">
+        <h5 class="modal-title">تفاصيل الحجز</h5>
+        <form action="{% url 'main:booking-add' hotel.slug%}" method="post" class="mt-2">
+          {% csrf_token %}
+          <div class="row g-gs">
+
+            <!-- First Name -->
+            <div class="col-md-6 col-lg-4 col-xxl-3">
+              <div class="form-group">
+                <label class="form-label" for="first-name">الاسم الأول</label>
+                <input type="text" class="form-control" disabled id="first-name" placeholder="الأسم الأول"
+                  value="{{ customer.full_name }}">
+              </div>
+            </div>
+
+            <!-- Family Name -->
+            <div class="col-md-6 col-lg-4 col-xxl-3">
+              <div class="form-group">
+                <label class="form-label" for="last-name">اسم العائلة</label>
+                <input type="text" class="form-control" id="last-name" placeholder="اسم العائلة" value="">
+              </div>
+            </div>
+
+            <!-- Gender -->
+            <div class="col-md-6 col-lg-4 col-xxl-3">
+              <div class="form-group">
+                <label class="form-label">الجنس</label>
+                <div class="form-control-wrap">
+                  <select class="form-select js-select2" data-placeholder="Select multiple options">
+                    <option value="option_select_gender">ذكر</option>
+                    <option value="option_select_gender">أنثى</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <!-- phone -->
+            <div class="col-md-6 col-lg-4 col-xxl-3">
+              <div class="form-group">
+                <label class="form-label" for="phone-no">رقم الجوال</label>
+                <input type="text" class="form-control" disabled id="phone-no" placeholder="رقم الجوال"
+                  value="{{ customer.phone}}">
+              </div>
+            </div>
+
+            <!-- Email -->
+            <div class="col-md-6 col-lg-4 col-xxl-3">
+              <div class="form-group">
+                <label class="form-label" for="email">البريد الإلكتروني</label>
+                <input type="email" disabled class="form-control" id="email" placeholder="البريد الإلكتروني"
+                  value="{{ customer.user.email}}">
+              </div>
+            </div>
+
+            <!-- Address of customer -->
+            <div class="col-md-6 col-lg-4 col-xxl-3">
+              <div class="form-group">
+                <label class="form-label" for="address">العنوان</label>
+                <input type="text" class="form-control" id="address" placeholder="Address" value="{{customer.address}}">
+              </div>
+            </div><!--col-->
+            <!-- document -->
+            <div class="col-md-6 col-lg-4 col-xxl-3">
+              <div class="form-group">
+                <label class="form-label">رفع الوثائق</label>
+                <div class="form-control-wrap">
+                  <div class="form-file">
+                    <input type="file" multiple class="form-file-input" id="customFile">
+                    <label class="form-file-label" for="customFile">اختر ملف</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- package -->
+            <div class="col-md-6 col-lg-4 col-xxl-3">
+              <div class="form-group">
+                <label class="form-label">الباقة</label>
+                <div class="form-control-wrap">
+                  <select disabled class="form-select js-select2" data-placeholder="Select multiple options">
+                    <option value="option_select_name">{{ request.session.package }}</option>
+
+                  </select>
+                </div>
+              </div>
+            </div>
+            <!-- guests number -->
+            <div class="col-md-6 col-lg-4 col-xxl-3">
+              <div class="form-group">
+                <label class="form-label" for="total-person">إجمالي عدد الأشخاص</label>
+                <input type="number" class="form-control" id="total-person" placeholder="إجمالي عدد الأشخاص"
+                  value="{{ request.session.main_search_params.guests}}">
+              </div>
+            </div>
+
+            <!-- start date -->
+            <div class="col-md-6 col-lg-4 col-xxl-3">
+              <div class="form-group">
+                <label class="form-label">تاريخ الوصول</label>
+                <div class="form-control-wrap">
+                  <div class="form-icon form-icon-right">
+                    <em class="icon ni ni-calendar"></em>
+                  </div>
+                  <input type="date" class="form-control date-picker" data-date-format="yyyy-mm-dd"
+                    placeholder="yyyy-mm-dd">
+                </div>
+              </div>
+            </div>
+
+            <!-- end date -->
+            <div class="col-md-6 col-lg-4 col-xxl-3">
+              <div class="form-group">
+                <label class="form-label">تاريخ المغادرة</label>
+                <div class="form-control-wrap">
+                  <div class="form-icon form-icon-right">
+                    <em class="icon ni ni-calendar"></em>
+                  </div>
+                  <input type="text" class="form-control date-picker" data-date-format="yyyy-mm-dd"
+                    placeholder="yyyy-mm-dd" disabled value="{{ booking.start_date }}">
+                </div>
+              </div>
+            </div>
+
+            <!-- Rooms -->
+            <div class="row">
+              {% for room in hotel.rooms %}
+
+
+
+              <div class="col-3">
+                <br>
+
+                <p class="fw-bold m-0">{{ room.roomType}}</p>
+                <p class="m-0 text-soft">ROOM ONLY</p>
+                <p class="text-danger">
+                  غير قابل للاسترجاع
+                  <a placement="auto" class="btn-pop-hover">
+                    <i class="fal fa-info-circle"></i>
+                  </a>
+                </p>
+                <span class="tb-amount fw-bold">{{ room.price}}<span class="currency"> SAR</span>
+                </span>
+              </div>
+              {% endfor %}
+            </div>
+            <!-- </div> -->
+
+
+            <!--col-->
+            <div class="col-md-12">
+              <div class="form-group">
+                <label class="form-label" for="default-textarea">ملاحظات</label>
+                <div class="form-control-wrap">
+                  <textarea class="form-control no-resize" id="default-textarea"></textarea>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-12">
+              <ul class="align-center flex-wrap flex-sm-nowrap gx-4 gy-2">
+                <li>
+                  <button type="submit" class="btn btn-primary">تأكيد عملية الحجز</button>
+                </li>
+                <li>
+                  <a href="#" class="link" data-bs-dismiss="modal">إلغاء</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </form>
+      </div><!-- .modal-body -->
+    </div><!-- .modal-content -->
+  </div><!-- .modal-dialog -->
+</div><!-- .modal -->
+{% else %}
+
+
+<div class="container">
+
+  <div class="row">
+
+    <div class="row justify-content-center p-3">
+      <div class="col-lg-8 m-3">
+        <div class="row mb-3">
+          <div class="col box-shdow">
+            <div class="header-caption text-center">
+              <h3 class="fw-medium text-danger mt-3">الرجاء تسجيل الدخول اولا او انشاء حساب</h3>
+            </div>
+            <br>
+            <form method="post" action="#" next="/">
+              <div class="row g-4">
+
+                <div class="row mt-5 justify-content-center" style="height: 20vh">
+                  <div class="col text-center">
+                    <div class="form-group">
+                      <a href="{% url 'main:login' %}"><button type="button"
+                          class="btn btn-xl btn-primary btn-block">تسجيل الدخول</button></a>
+                    </div>
+                  </div>
+                  <div class="col text-center">
+                    <div class="form-group">
+                      <a href="{% url 'main:register'%}"><button type="button"
+                          class="btn btn-xl btn-primary btn-block">انشاء حساب جديد</button></a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+</div>
+
+{% endif %}
 
 <div class="container">
   <div class="row">
@@ -530,10 +693,7 @@
                     المنشأة.
                   </p>
                 </div>
-                <div
-                  class="col box-shdow ms-2 me-2 p-2"
-                  style="height: min-content"
-                >
+                <div class="col box-shdow ms-2 me-2 p-2" style="height: min-content">
                   <h4 style="font-weight: normal">سياسات الفندق</h4>
                   <h6 class="mt-4" style="font-weight: normal">سياسة الدخول</h6>
                   <p>وقت الدخول من , وقت الخروج حتي</p>

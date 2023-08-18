@@ -6,12 +6,20 @@ from .models import Reservation
 from django_countries.fields import CountryField
 from django_countries.widgets import CountrySelectWidget
 
-from dashboard.models import Hotel
+from dashboard.models import Booking, Hotel
 from django.forms.widgets import SelectDateWidget
 from customer.models import Customer
 # Create your forms here.
 
 User = get_user_model()
+
+class BookingForm(forms.ModelForm):
+
+    class Meta:
+        model = Booking
+        fields = ['customer', 'hotel', 'room', 'gender', 'guests', 'package', 'start_date', 'end_date']
+
+
 class NewUserForm(UserCreationForm):
     email = forms.EmailField(required=True)
 

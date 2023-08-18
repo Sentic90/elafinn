@@ -642,23 +642,36 @@ PAYMENT_STATUS = (
 )
 PAYMENT_TYPE=(
     (100, 'تحويل بنكي'),
-    (200, 'دفع الكتروني'),
-    (300, 'دفع عند الوصول'),
+    (200, 'دفع عند الوصول'),
 )
 
+# class PaymentMethodQuerySet(models.query.QuerySet):
+#     def active(self):
+#         return self.filter(status='active')
+
+# class PaymentMethodManager(models.Manager):
+
+#     def get_queryset(self):
+#         return PaymentMethodQuerySet(self.model, using=self._db)
+
+#     def all(self):
+#         return self.get_queryset().active()
+
+
 class PaymentMethod(models.Model):
-    name = models.CharField(max_length=250, verbose_name='اسم وسيلة الدفع')
-    email = models.EmailField(verbose_name='البريد الالكتروني')
-    merchant_code = models.CharField(max_length=15, verbose_name='رمز التاجر')
-    currency = models.CharField(choices=CURRENCY_CODE,max_length=3, verbose_name='العملة')
+    bank_name = models.CharField(max_length=250, verbose_name='اسم البنك', null=True, blank=True)
+    ipan = models.CharField(max_length=250, verbose_name='رقم ألاي بان',null=True, blank=True)
+    swifit_code = models.CharField(max_length=15, verbose_name='سويفت كود',null=True, blank=True)
+    currency = models.CharField(choices=CURRENCY_CODE,max_length=3, verbose_name='العملة',null=True, blank=True)
     status = models.CharField(choices=PAYMENT_STATUS,max_length=32,
         verbose_name="حالة وسيلة الدفع")
-    type = models.IntegerField(choices=PAYMENT_TYPE, default=100, verbose_name='نوع وسيلة الدفع')
+    type = models.IntegerField(choices=PAYMENT_TYPE,verbose_name='نوع وسيلة الدفع')
     hotel = models.ForeignKey(
         to=Hotel, on_delete=models.CASCADE,related_name='payment_methods', verbose_name="الفندق")
     
+    # objects = PaymentMethodManager()
     def __str__(self) -> str:
-        return self.name
+        return self.hotel.hotel_name
 
 
 # class Reservation(models.Model):

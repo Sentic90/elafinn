@@ -685,7 +685,7 @@ def payment_methods(request, slug):
     payment_methods_forms = []
 
     for payment_method in payment_methods:
-        form = PaymentMethodForm(instance=payment_method)
+        form = UpdatePaymentMethodForm(instance=payment_method)
         payment_methods_forms.append((payment_method, form))
     messages_list = messages.get_messages(request)
     rooms = Room.objects.filter(roomType__hotel__slug=slug)

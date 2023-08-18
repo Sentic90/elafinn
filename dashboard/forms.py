@@ -140,25 +140,28 @@ class BookingForm(forms.ModelForm):
 class PaymentMethodForm(forms.ModelForm):
     class Meta:
         model = PaymentMethod
-        fields = ['name', 'status', 'email', 'currency', 'merchant_code', 'type']
+        fields = ['bank_name', 'status', 'ipan', 'currency', 'swifit_code', 'type']
         widgets = {
             'status': forms.widgets.Select(),
             'type': forms.widgets.Select()
-            
+
             }
     
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['name'].widget.attrs.update({'class':'form-control', 'id':'payment-name-edit', "placeholder":"اسم طريقة الدفع"})
+        self.fields['bank_name'].widget.attrs.update({'class':'form-control', 'id':'payment-name-edit', "placeholder":"اسم البنك"})
         self.fields['status'].widget.attrs.update({'class':'form-select js-select2'})
         self.fields['currency'].widget.attrs.update({'class':'form-select js-select2'})
-        self.fields['email'].widget.attrs.update({'class':'form-control', 'id':'email-edit'})
-        self.fields['merchant_code'].widget.attrs.update({'class':'form-control', 'id':'march-id-edit', "placeholder":"رمز التاجر"})
-        self.fields['type'].widget.attrs.update({'class':'form-select js-select2', })
-        
+        self.fields['ipan'].widget.attrs.update({'class':'form-control', 'id':'email-edit'})
+        self.fields['swifit_code'].widget.attrs.update({'class':'form-control', 'id':'march-id-edit', "placeholder":"سويفت كود"})
+        self.fields['type'].widget.attrs.update({'class':'form-select js-select2', 'id':'paymentMethod'})
 
 
+class UpdatePaymentMethodForm(PaymentMethodForm):
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['type'].widget.attrs.update({'class':'form-select js-select2', 'id':'paymentMethodEdit'})
 # from django import forms
 # from django.utils.translation import gettext_lazy as _
 #

@@ -165,7 +165,7 @@
                                             <ul class="rating">
                                                     
                                                     <li><input class="form-check-input" style="cursor: pointer;"
-                                                        type="radio" {% if request.GET.category == '5' %}checked{%endif%} name="category" id="" value="5"></li>
+                                                        type="checkbox" {% if request.GET.category == '5' %}checked{%endif%} name="category" id="" value="5"></li>
                                                     <li><em class="icon ni ni-star-fill"></em></li>
                                                     <li><em class="icon ni ni-star-fill"></em></li>
                                                     <li><em class="icon ni ni-star-fill"></em></li>
@@ -176,7 +176,7 @@
                                         <div class="product-rating product-rating-filter">
                                             <ul class="rating">
                                                 <li>
-                                                    <input type="radio"
+                                                    <input type="checkbox"
                                                     class="form-check-input"
                                                     name="category" 
                                                     {% if request.GET.category == '4' %}checked{%endif%} id="" 
@@ -192,7 +192,7 @@
                                         </div>
                                         <div class="product-rating product-rating-filter">
                                             <ul class="rating">
-                                                <input type="radio" 
+                                                <input type="checkbox" 
                                                 class="form-check-input"
                                                 name="category" id="" 
                                                 {% if request.GET.category == '3' %}checked{%endif%} 
@@ -207,7 +207,7 @@
                                         </div>
                                         <div class="product-rating product-rating-filter">
                                             <ul class="rating">
-                                                <input type="radio" 
+                                                <input type="checkbox" 
                                                 class="form-check-input"
                                                 name="category" 
                                                 id="" 
@@ -224,7 +224,7 @@
                                         </div>
                                         <div class="product-rating product-rating-filter">
                                             <ul class="rating">
-                                                <input type="radio" 
+                                                <input type="checkbox" 
                                                 class="form-check-input"
                                                 name="category" {% if request.GET.category == '1' %}checked{%endif%} 
                                                 id="" 
@@ -240,7 +240,7 @@
                                         <div class="product-rating product-rating-filter">
                                             
                                             <ul class="rating">
-                                                <input type="radio" 
+                                                <input type="checkbox" 
                                                 class="form-check-input" 
                                                 name="category" 
                                                 {% if request.GET.category == '0' %}checked{%endif%} 

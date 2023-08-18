@@ -1,259 +1,343 @@
 {% extends 'dashboard/base.html' %}
 {% load static %}
 {% block sidbar %}
-    {% include 'dashboard/partials/sideBar.html' %}
+{% include 'dashboard/partials/sideBar.html' %}
 {% endblock %}
 {% block content %}
 
-      <div class="nk-content ">
-                    <div class="container-fluid">
-                        <div class="nk-content-inner">
-                            <div class="nk-content-body">
+<div class="nk-content ">
+    <div class="container-fluid">
+        <div class="nk-content-inner">
+            <div class="nk-content-body">
 
-                                 <!-- messages  -->
+                <!-- messages  -->
 
-                            {% for message in messages %}
-                            <div class="alert alert-{{ message.tags }} alert-dismissible" role="alert">
-                                {{ message }}
-                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
+                {% for message in messages %}
+                <div class="alert alert-{{ message.tags }} alert-dismissible" role="alert">
+                    {{ message }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                {% endfor %}
+
+                <!-- end message -->
+                <div class="nk-block-head nk-block-head-sm">
+                    <div class="nk-block-between g-3">
+                        <div class="nk-block-head-content">
+                            <h3 class="nk-block-title page-title">طرق الدفع</h3>
+                            <div class="nk-block-des text-soft">
+                                <p>حدد طرق الدفع المناسبة</p>
                             </div>
-                        {% endfor %}
-                        
-                            <!-- end message -->
-                                <div class="nk-block-head nk-block-head-sm">
-                                    <div class="nk-block-between g-3">
-                                        <div class="nk-block-head-content">
-                                            <h3 class="nk-block-title page-title">طرق الدفع</h3>
-                                            <div class="nk-block-des text-soft">
-                                                <p>حدد طرق الدفع المناسبة</p>
-                                            </div>
-                                        </div><!-- .nk-block-head-content -->
-                                        <div class="nk-block-head-content">
-                                            <ul class="nk-block-tools g-3">
-                                                <li>
-                                                    <div class="drodown">
-                                                        <a href="#" class="dropdown-toggle btn btn-icon btn-primary" data-bs-toggle="dropdown"><em class="icon ni ni-plus"></em></a>
-                                                        <div class="dropdown-menu dropdown-menu-end">
-                                                            <ul class="link-list-opt no-bdr">
-                                                                <li><a data-bs-toggle="modal" href="#add-pay-method"><span>إضافة طريقة دفع</span></a></li>
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                </li>
+                        </div><!-- .nk-block-head-content -->
+                        <div class="nk-block-head-content">
+                            <ul class="nk-block-tools g-3">
+                                <li>
+                                    <div class="drodown">
+                                        <a href="#" class="dropdown-toggle btn btn-icon btn-primary"
+                                            data-bs-toggle="dropdown"><em class="icon ni ni-plus"></em></a>
+                                        <div class="dropdown-menu dropdown-menu-end">
+                                            <ul class="link-list-opt no-bdr">
+                                                <li><a data-bs-toggle="modal" href="#add-pay-method"><span>إضافة طريقة
+                                                            دفع</span></a></li>
                                             </ul>
-                                        </div><!-- .nk-block-head-content -->
-                                    </div><!-- .nk-block-between -->
-                                </div><!-- .nk-block-head -->
-                                <div class="nk-block">
-                                    <div class="card card-bordered card-stretch">
-                                        <div class="card-inner-group">
-                                            <div class="card-inner p-0">
-                                                <table class="table table-tranx">
-                                                    <thead>
-                                                        <tr class="tb-tnx-head">
-                                                            <th class="tb-tnx-id"><span class="">#</span></th>
-                                                            <th class="tb-tnx-info">
-                                                                <span class="tb-tnx-desc d-none d-sm-inline-block">
-                                                                    <span>اسم طريقة الدفع</span>
-                                                                </span>
-                                                                <span class="tb-tnx-date d-md-inline-block d-none">
-                                                                    <span class="d-none d-md-block">
-                                                                        <span>البريد</span>
-                                                                        <span>رمز التاجر</span>
-                                                                    </span>
-                                                                </span>
-                                                            </th>
-                                                            <th class="tb-tnx-amount is-alt">
-                                                                <span class="tb-tnx-total">العملة</span>
-                                                                <span class="tb-tnx-status d-none d-md-inline-block">الحالة</span>
-                                                            </th>
-                                                            <th class="tb-tnx-action">
-                                                                <span>&nbsp;</span>
-                                                            </th>
-                                                        </tr><!-- tb-tnx-item -->
-                                                    </thead>
-                                                    <tbody> 
-                                                        <!-- item -->
-                                                        {% for payment_method, form in payment_methods_forms %}
-                                                        <tr class="tb-tnx-item">
-                                                            <td class="tb-tnx-id">
-                                                                <a href="#"><span>{{ payment_method.id }}</span></a>
-                                                            </td>
-                                                            <td class="tb-tnx-info">
-                                                                <div class="tb-tnx-desc">
-                                                                    <span class="title">{{ payment_method.name }}</span>
-                                                                </div>
-                                                                <div class="tb-tnx-date">
-                                                                    <span class="date">{{ payment_method.email }}</span>
-                                                                    <span class="date">{{payment_method.merchant_code}}</span>
-                                                                </div>
-                                                            </td>
-                                                            <td class="tb-tnx-amount is-alt">
-                                                                <div class="tb-tnx-total">
-                                                                    <span class="amount">{{ payment_method.currency }}</span>
-                                                                </div>
-                                                                <div class="tb-tnx-status">
-                                                                    {% if payment_method.status == 'active'%}
-                                                                    <span class="badge bg-success">Active</span>
-                                                                    {%else%}
-                                                                    <span class="badge bg-danger">Inactive</span>
-                                                                    {% endif %}
-                                                                </div>
-                                                            </td>
-                                                            <td class="tb-tnx-action">
-                                                                <div class="dropdown">
-                                                                    <a class="text-soft dropdown-toggle btn btn-icon btn-trigger" data-bs-toggle="dropdown"><em class="icon ni ni-more-h"></em></a>
-                                                                    <div class="dropdown-menu dropdown-menu-end dropdown-menu-xs">
-                                                                        <ul class="link-list-plain">
-                                                                            <li><a data-bs-toggle="modal" href="#edit-pay-method-{{payment_method.id}}">تعديل</a></li>
-                                                                            <li><a href="#">حذف</a></li>
-                                                                        </ul>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div><!-- .nk-block-head-content -->
+                    </div><!-- .nk-block-between -->
+                </div><!-- .nk-block-head -->
+                <div class="nk-block">
+                    <div class="card card-bordered card-stretch">
+                        <div class="card-inner-group">
+                            <div class="card-inner p-0">
+                                <table class="table table-tranx">
+                                    <thead>
+                                        <tr class="tb-tnx-head">
+                                            <th class="tb-tnx-id"><span class="">#</span></th>
+                                            <th class="tb-tnx-info">
+                                                <span class="tb-tnx-desc d-none d-sm-inline-block">
+                                                    <span>اسم البنك</span>
+                                                </span>
+                                                <span class="tb-tnx-date d-md-inline-block d-none">
+                                                    <span class="d-none d-md-block">
+                                                        <span>نوع العملية</span>
+                                                        <span>سويفت كود</span>
+                                                    </span>
+                                                </span>
+                                            </th>
+                                            <th class="tb-tnx-amount is-alt">
+                                                <span class="tb-tnx-total">العملة</span>
+                                                <span class="tb-tnx-status d-none d-md-inline-block">الحالة</span>
+                                            </th>
+                                            <th class="tb-tnx-action">
+                                                <span>&nbsp;</span>
+                                            </th>
+                                        </tr><!-- tb-tnx-item -->
+                                    </thead>
+                                    <tbody>
+                                        <!-- item -->
+                                        {% for payment_method, form in payment_methods_forms %}
+                                        <tr class="tb-tnx-item">
+                                            <td class="tb-tnx-id">
+                                                <a href="#"><span>{{ payment_method.id }}</span></a>
+                                            </td>
+                                            <td class="tb-tnx-info">
+                                                <div class="tb-tnx-desc">
+                                                    <span class="title">{{ payment_method.bank_name }}</span>
+                                                </div>
+                                                <div class="tb-tnx-date">
+                                                    <span class="date">{{ payment_method.get_type_display }}</span>
+                                                    <span class="date">{{payment_method.swifit_code}}</span>
+                                                </div>
+                                            </td>
+                                            <td class="tb-tnx-amount is-alt">
+                                                <div class="tb-tnx-total">
+                                                    <span class="amount">{{ payment_method.currency }}</span>
+                                                </div>
+                                                <div class="tb-tnx-status">
+                                                    {% if payment_method.status == 'active'%}
+                                                    <span class="badge bg-success">Active</span>
+                                                    {%else%}
+                                                    <span class="badge bg-danger">Inactive</span>
+                                                    {% endif %}
+                                                </div>
+                                            </td>
+                                            <td class="tb-tnx-action">
+                                                <div class="dropdown">
+                                                    <a class="text-soft dropdown-toggle btn btn-icon btn-trigger"
+                                                        data-bs-toggle="dropdown"><em
+                                                            class="icon ni ni-more-h"></em></a>
+                                                    <div class="dropdown-menu dropdown-menu-end dropdown-menu-xs">
+                                                        <ul class="link-list-plain">
+                                                            <li><a data-bs-toggle="modal"
+                                                                    href="#edit-pay-method-{{payment_method.id}}">تعديل</a>
+                                                            </li>
+                                                            <li><a href="#">حذف</a></li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <!-- Modal edit -->
+                                        <div class="modal fade" tabindex="-1" role="dialog"
+                                            id="edit-pay-method-{{ payment_method.id}}">
+                                            <div class="modal-dialog modal-lg" role="document">
+                                                <div class="modal-content">
+                                                    <a href="#" class="close" data-bs-dismiss="modal"><em
+                                                            class="icon ni ni-cross-sm"></em></a>
+                                                    <div class="modal-body modal-body-md">
+                                                        <h5 class="modal-title">تعديل طريقة الدفع</h5>
+                                                        <form
+                                                            action="{% url 'payment-methods-edit' hotel.slug payment_method.id%}"
+                                                            method="post" class="mt-2">
+                                                            {% csrf_token %}
+                                                            <div class="row g-gs">
+
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        <label class="form-label"
+                                                                            for="edit-type">{{form.type.label_tag}}</label>
+                                                                        <div class="form-control-wrap">
+                                                                            {{ form.type}}
+                                                                        </div>
                                                                     </div>
                                                                 </div>
-                                                            </td>
-                                                        </tr>
-                                                        <!-- Modal edit -->
-                                                        <div class="modal fade" tabindex="-1" role="dialog" id="edit-pay-method-{{ payment_method.id}}">
-                                                            <div class="modal-dialog modal-lg" role="document">
-                                                                <div class="modal-content">
-                                                                    <a href="#" class="close" data-bs-dismiss="modal"><em class="icon ni ni-cross-sm"></em></a>
-                                                                    <div class="modal-body modal-body-md">
-                                                                        <h5 class="modal-title">تعديل طريقة الدفع</h5>
-                                                                        <form action="{% url 'payment-methods-edit' hotel.slug payment_method.id%}" method="post" class="mt-2">
-                                                                            {% csrf_token %}
-                                                                            <div class="row g-gs">
-                                                                                <div class="col-md-6">
-                                                                                    <div class="form-group">
-                                                                                        <label class="form-label" for="payment-name-edit">{{ form.name.label_tag}}</label>
-                                                                                        {{form.name}}
-                                                                                    </div>
-                                                                                </div>
-                                                                                <div class="col-md-6">
-                                                                                    <div class="form-group">
-                                                                                        <label class="form-label" for="email-edit">{{ form.email.label_tag}}</label>
-                                                                                        {{form.email}}
-                                                                                    </div>
-                                                                                </div>
-                                                                                <div class="col-md-6">
-                                                                                    <div class="form-group">
-                                                                                        <label class="form-label" for="march-id-edit">رمز التاجر</label>
-                                                                                        {{ form.merchant_code}}
-                                                                                    </div>
-                                                                                </div>
-                                                                                <div class="col-md-6">
-                                                                                    <div class="form-group">
-                                                                                        <label class="form-label" for="currency-edit">العملة</label>
-                                                                                        {{ form.currency }}
-                                                                                    </div>
-                                                                                </div>
-                                                                                <div class="col-md-6">
-                                                                                    <div class="form-group">
-                                                                                        <label class="form-label" for="edit-status">{{form.status.label_tag}}</label>
-                                                                                        <div class="form-control-wrap">
-                                                                                            {{ form.status}}
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>
-                                                                                <div class="col-md-6">
-                                                                                    <div class="form-group">
-                                                                                        <label class="form-label" for="edit-type">{{form.type.label_tag}}</label>
-                                                                                        <div class="form-control-wrap">
-                                                                                            {{ form.type}}
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>
-                                                                                <div class="col-12">
-                                                                                    <ul class="align-center flex-wrap flex-sm-nowrap gx-4 gy-2">
-                                                                                        <li>
-                                                                                            <button type="submit" class="btn btn-primary">تحديث</button>
-                                                                                        </li>
-                                                                                        <li>
-                                                                                            <a class="link" data-bs-dismiss="modal">إلغاء</a>
-                                                                                        </li>
-                                                                                    </ul>
-                                                                                </div>
-                                                                            </div>
-                                                                        </form>
-                                                                    </div><!-- .modal-body -->
-                                                                </div><!-- .modal-content -->
-                                                            </div><!-- .modal-dialog -->
-                                                        </div><!-- .modal -->
-                                                        {% endfor %}
-                                                        
-                                                    </tbody>
-                                                </table>
-                                            </div><!-- .card-inner -->
-                                        </div><!-- .card-inner-group -->
-                                    </div><!-- .card -->
-                                </div><!-- .nk-block -->
+                                                                <div class="col-md-6" id="bankName">
+                                                                    <div class="form-group">
+                                                                        <label class="form-label"
+                                                                            for="payment-name-edit">{{form.bank_name.label_tag}}</label>
+                                                                        {{form.bank_name}}
+                                                                    </div>
+                                                                </div>
+
+                                                                <!-- Ipan -->
+                                                                <div class="col-md-6" id="ipan">
+                                                                    <div class="form-group">
+                                                                        <label class="form-label" for="email-edit">{{form.ipan.label_tag}}</label>
+                                                                        {{form.ipan}}
+                                                                    </div>
+                                                                </div>
+
+                                                                <!-- Swifit code -->
+                                                                <div class="col-md-6" id="swifitCode">
+                                                                    <div class="form-group">
+                                                                        <label class="form-label"
+                                                                            for="march-id-edit">{{ form.swifit_code.label_tag}}</label>
+                                                                        {{ form.swifit_code}}
+                                                                    </div>
+                                                                </div>
+                                                                <!-- currency -->
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        <label class="form-label"
+                                                                            for="currency-edit">العملة</label>
+                                                                        {{ form.currency }}
+                                                                    </div>
+                                                                </div>
+
+                                                                <!-- Status -->
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        <label class="form-label"
+                                                                            for="edit-status">{{form.status.label_tag}}</label>
+                                                                        <div class="form-control-wrap">
+                                                                            {{ form.status}}
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                
+                                                                <!-- Buttons -->
+                                                                <div class="col-12">
+                                                                    <ul
+                                                                        class="align-center flex-wrap flex-sm-nowrap gx-4 gy-2">
+                                                                        <li>
+                                                                            <button type="submit"
+                                                                                class="btn btn-primary">تحديث</button>
+                                                                        </li>
+                                                                        <li>
+                                                                            <a class="link"
+                                                                                data-bs-dismiss="modal">إلغاء</a>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    </div><!-- .modal-body -->
+                                                </div><!-- .modal-content -->
+                                            </div><!-- .modal-dialog -->
+                                        </div><!-- .modal -->
+                                        {% endfor %}
+
+                                    </tbody>
+                                </table>
+                            </div><!-- .card-inner -->
+                        </div><!-- .card-inner-group -->
+                    </div><!-- .card -->
+                </div><!-- .nk-block -->
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Add Payment Method-->
+<div class="modal fade" tabindex="-1" role="dialog" id="add-pay-method">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <a href="#" class="close" data-bs-dismiss="modal"><em class="icon ni ni-cross-sm"></em></a>
+            <div class="modal-body modal-body-md">
+                <h5 class="modal-title">إضافة طريقة دفع</h5>
+                <form action="{% url 'payment-methods' hotel.slug %}" method="post" class="mt-2">
+                    {% csrf_token %}
+                    <div class="row g-gs">
+                        <!-- Type of payment -->
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-label" for="type-add">{{ form.type.label_tag }}</label>
+                                {{ form.type }}
+                                
                             </div>
+                        </div>
+
+                        <!-- Bank Name -->
+                        <div class="col-md-6" id="bankNameAdd">
+                            <div class="form-group">
+                                <label class="form-label" for="payment-name-add">{{ form.bank_name.label_tag}}</label>
+                                {{ form.bank_name }}
+                            </div>
+                        </div>
+                        <div class="col-md-6" id="ipanAdd">
+                            <div class="form-group">
+                                <label class="form-label" for="email-add">{{ form.ipan.label_tag}}</label>
+                                {{ form.ipan }}
+                            </div>
+                        </div>
+                        <div class="col-md-6" id="swifitCodeAdd">
+                            <div class="form-group">
+                                <label class="form-label" for="march-id-add">{{ form.swifit_code.label_tag}}</label>
+                                {{ form.swifit_code }}
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-label" for="currency-add">{{ form.currency.label_tag}}</label>
+                                {{ form.currency}}
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-label" for="status-add">{{ form.status.label_tag }}</label>
+                                {{ form.status }}
+                            </div>
+                        </div>
+                        
+                        <div class="col-12">
+                            <ul class="align-center flex-wrap flex-sm-nowrap gx-4 gy-2">
+                                <li>
+                                    <button type="submit" class="btn btn-primary">إضافة طريقة الدفع</button>
+                                </li>
+                                <li>
+                                    <a href="#" class="link" data-bs-dismiss="modal">إلغاء</a>
+                                </li>
+                            </ul>
                         </div>
                     </div>
-                </div>
-    <!-- Add Payment Method-->
-    <div class="modal fade" tabindex="-1" role="dialog" id="add-pay-method">
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
-                <a href="#" class="close" data-bs-dismiss="modal"><em class="icon ni ni-cross-sm"></em></a>
-                <div class="modal-body modal-body-md">
-                    <h5 class="modal-title">إضافة طريقة دفع</h5>
-                    <form action="{% url 'payment-methods' hotel.slug %}" method="post" class="mt-2">
-                        {% csrf_token %}
-                        <div class="row g-gs">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="form-label" for="payment-name-add">{{ form.name.label_tag}}</label>
-                                    {{ form.name }}
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="form-label" for="email-add">{{ form.email.label_tag}}</label>
-                                    {{ form.email }}
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="form-label" for="march-id-add">{{ form.merchant_code.label_tag}}</label>
-                                    {{ form.merchant_code }}
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="form-label" for="currency-add">{{ form.currency.label_tag}}</label>
-                                    {{ form.currency}}
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="form-label" for="status-add">{{ form.status.label_tag }}</label>
-                                    {{ form.status }}
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="form-label" for="type-add">{{ form.type.label_tag }}</label>
-                                    {{ form.type }}
-                                </div>
-                            </div>
-                            <div class="col-12">
-                                <ul class="align-center flex-wrap flex-sm-nowrap gx-4 gy-2">
-                                    <li>
-                                        <button type="submit" class="btn btn-primary">إضافة طريقة الدفع</button>
-                                    </li>
-                                    <li>
-                                        <a href="#" class="link" data-bs-dismiss="modal">إلغاء</a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </form>
-                </div><!-- .modal-body -->
-            </div><!-- .modal-content -->
-        </div><!-- .modal-dialog -->
-    </div><!-- .modal -->
-    <!-- Edit Payment Method-->
+                </form>
+            </div><!-- .modal-body -->
+        </div><!-- .modal-content -->
+    </div><!-- .modal-dialog -->
+</div><!-- .modal -->
+<!-- Edit Payment Method-->
 
+
+<!-- Jquery load  -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function(){
+        // fields to Hide ..
+        $('#bankNameAdd').hide();
+        $('#ipanAdd').hide();
+        $('#swifitCodeAdd').hide();
+
+        // listen for changes in the payment methods select
+        $('#paymentMethod').change(function(){
+            // Get selected value
+            const selectedValue = $(this).val();
+
+            // conditions 
+            if (selectedValue === '100'){
+                $('#bankNameAdd').show();
+                $('#ipanAdd').show();
+                $('#swifitCodeAdd').show();
+
+
+            } else{
+                $('#bankNameAdd').hide();
+                $('#ipanAdd').hide();
+                $('#swifitCodeAdd').hide();
+
+            }
+
+        })
+        $('#paymentMethodEdit').change(function(){
+            // Get selected value
+            const selectedValue = $(this).val();
+
+            // conditions 
+            if (selectedValue === '100'){
+                $('#bankName').show();
+                $('#ipan').show();
+                $('#swifitCode').show();
+
+
+            } else{
+                $('#bankName').hide();
+                $('#ipan').hide();
+                $('#swifitCode').hide();
+
+            }
+
+        })
+    })
+</script>
 {% endblock %}

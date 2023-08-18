@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect
 from django.core.paginator import Paginator
 from django.utils.http import url_has_allowed_host_and_scheme as is_safe_url
 from django.urls import reverse
-from .forms import NewUserForm
+from .forms import BookingForm, NewUserForm
 from django.contrib import messages
 from django.contrib.auth.forms import AuthenticationForm  # add this
 from django.contrib.auth import login, authenticate, logout
@@ -110,18 +110,23 @@ def filtered_sidebar(request):
     return render(request, 'main/result.html', context)
 
 def hotel_details(request, slug):
+
+    customer = Customer.objects.get(user=request.user)
+    hotel = Hotel.objects.get(slug=slug)
     main_search_params = request.session.get('main_search_params', {})
     if request.method == 'GET':
-        hotel = Hotel.objects.get(slug=slug)
-
+        
+        form = BookingForm()
         context = {
             'hotel': hotel,
-            'main_search_params':main_search_params
+            'main_search_params':main_search_params, 
+            'customer':customer,
+            'form':form
         }
         return render(request, 'main/hotel_detail.html', context)
 
     if request.method == 'POST':
-        customer = Customer.objects.get(user=request.user) #TODO handle execptions
+
         rooms = Room.objects.values_list('id')[:2]
         hotel = Hotel.objects.get(slug=slug)
         booking = Booking.objects.create(
