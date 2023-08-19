@@ -1,0 +1,115 @@
+{% extends 'dashboard/base.html' %}
+{% load static %}
+{% block sidbar %}
+{% include 'customer/customer_sidebar.html' %}
+{% endblock %}
+{% block navSettings %}
+<li class="dropdown user-dropdown">
+    <a href="#" class="dropdown-toggle" data-bs-toggle="dropdown">
+        <div class="user-toggle">
+            <div class="user-avatar sm">
+                <em class="icon ni ni-user-alt"></em>
+            </div>
+            <div class="user-info d-none d-md-block">
+                <div class="user-status">الاعدادات</div>
+                <div class="user-name dropdown-indicator">{{ request.user.first_name }}</div>
+            </div>
+        </div>
+    </a>
+    <div class="dropdown-menu dropdown-menu-md dropdown-menu-end dropdown-menu-s1">
+        <div class="dropdown-inner user-card-wrap bg-lighter d-none d-md-block">
+            <div class="user-card">
+                <div class="user-avatar">
+                    <span>AB</span>
+                </div>
+                <div class="user-info">
+                    <span class="lead-text">{{ request.user.first_name }}</span>
+                    <span class="sub-text">{{ request.user.email }}</span>
+                </div>
+            </div>
+        </div>
+        <div class="dropdown-inner">
+            <ul class="link-list">
+                <li><a href="{% url 'customer-panel-profile' %}"><em class="icon ni ni-user-alt"></em><span>الملف
+                            الشخصي</span></a>
+                </li>
+
+                <li><a class="dark-switch" href="#"><em class="icon ni ni-moon"></em><span>Dark Mode</span></a></li>
+            </ul>
+        </div>
+        <div class="dropdown-inner">
+            <ul class="link-list">
+                <li><a href="{% url 'main:logout' %}"><em class="icon ni ni-signout"></em><span>تسجيل الخروج</span></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</li>
+{% endblock navSettings %}
+{% block content %}
+<div class="gyp-3">
+    
+    <form action="{% url 'customer-panel-profile' %}" method="post">
+        {% csrf_token %}
+        <div class="row">
+        <!-- First name -->
+        <div class="col-md-6 col-lg-4 col-xxl-3">
+            <div class="form-group">
+                <label class="form-label" for="first-name">{{ form.first_name.label_tag }}</label>
+                {{ form.first_name }}
+            </div>
+        </div>
+
+        <!-- Last name -->
+        <div class="col-md-6 col-lg-4 col-xxl-3">
+            <div class="form-group">
+                <label class="form-label" for="last-name">{{form.last_name.label_tag}}</label>
+                {{ form.last_name }}
+            </div>
+        </div><!--col-->
+
+        <!-- Gender  -->
+        <div class="col-md-6 col-lg-4 col-xxl-3">
+            <div class="form-group">
+                <label class="form-label">{{ form.gender.label_tag }}</label>
+                <div class="form-control-wrap">
+                    {{ form.gender }}
+                </div>
+            </div>
+        </div>
+
+        <!-- phone -->
+        <div class="col-md-6 col-lg-4 col-xxl-3">
+            <div class="form-group">
+                <label class="form-label" for="phone-no">{{form.phone.label_tag}}</label>
+                {{form.phone}}
+            </div>
+        </div><!--col-->
+
+        <!-- email  -->
+        <div class="col-md-6 col-lg-4 col-xxl-3">
+            <div class="form-group">
+                <label class="form-label" for="email">{{form.email.label_tag}}</label>
+                {{ form.email }}
+            </div>
+        </div><!--col-->
+
+        <!-- address -->
+        <div class="col-md-6 col-lg-4 col-xxl-3">
+            <div class="form-group">
+                <label class="form-label" for="address">{{form.address.label_tag}}</label>
+                {{form.address}}
+            </div>
+        </div>
+        
+        <!-- Button -->
+        <div class="row">
+            <div class="col-4 align-self-center mt-3">
+                <button type="submit" class="btn btn-primary btn-block">حفظ </button>
+            </div>
+        </div>
+    </div>    
+    </form>
+
+</div>
+{% endblock %}

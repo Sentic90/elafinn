@@ -702,7 +702,7 @@ def payment_methods(request, slug):
 
 def payment_method_edit(request, slug, paymentMethodId):
     instance = PaymentMethod.objects.get(id=paymentMethodId)
-    print(request.POST)
+
     if request.method == 'POST':
         form = PaymentMethodForm(request.POST, instance=instance )
 
@@ -710,7 +710,7 @@ def payment_method_edit(request, slug, paymentMethodId):
             form.save()
             messages.success(request, 'تم معالجة الطلب بنجاح')
             return redirect(reverse('payment-methods', kwargs={'slug':slug}))
-        print(form.errors)
+
         messages.error(request, form.errors)
         return redirect(reverse('payment-methods', kwargs={'slug':slug}))
 

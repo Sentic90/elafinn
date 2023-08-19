@@ -118,7 +118,9 @@
                                             </form>
                                         </ul>
                                     </div>
-                                </li><!-- .dropdown -->
+                                </li>
+                                <!-- .dropdown Settings -->
+                                {% block navSettings %}
                                 <li class="dropdown user-dropdown">
                                     <a href="#" class="dropdown-toggle" data-bs-toggle="dropdown">
                                         <div class="user-toggle">
@@ -163,7 +165,9 @@
                                             </ul>
                                         </div>
                                     </div>
-                                </li><!-- .dropdown -->
+                                </li>
+                                {% endblock navSettings %}
+                                <!-- .dropdown Notification -->
                                 <li class="dropdown notification-dropdown me-n1">
                                     <a href="#" class="dropdown-toggle nk-quick-nav-icon" data-bs-toggle="dropdown">
                                         <div class="icon-status icon-status-info"><em class="icon ni ni-bell"></em>

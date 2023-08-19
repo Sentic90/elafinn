@@ -1,11 +1,16 @@
 
+from typing import Any, Dict, Mapping, Optional, Type, Union
 from django import forms
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
-
+from django.core.files.base import File
+from django.db.models.base import Model
+from django.forms.utils import ErrorList
+from .models import Customer
 User = get_user_model()
 
 class CustomerAdminCreationForm(forms.ModelForm):
+
 
     password1 = forms.CharField(label='Password', widget=forms.PasswordInput)
     password2 = forms.CharField(
@@ -32,3 +37,20 @@ class CustomerAdminCreationForm(forms.ModelForm):
         if commit:
             user.save()
         return user
+
+
+class CustomerForm(forms.ModelForm):
+
+    class Meta:
+        model = Customer
+        fields = ['first_name', 'last_name', 'gender', 'phone', 'email', 'address']
+
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['first_name'].widget.attrs.update({ 'class':'form-control', 'placeholder':'الاسم الاول'})
+        self.fields['last_name'].widget.attrs.update({ 'class':'form-control','placeholder':'اسم العائلة'})
+        self.fields['gender'].widget.attrs.update({ 'class':'form-select form-control', 'placeholder':'رقم الهاتف'})
+        self.fields['phone'].widget.attrs.update({ 'class':'form-control', 'placeholder':'رقم الهاتف'})
+        self.fields['email'].widget.attrs.update({ 'class':'form-control'})
+        self.fields['address'].widget.attrs.update({ 'class':'form-control', 'placeholder':'العنوان'})
