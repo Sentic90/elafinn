@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.http import HttpResponse
 from customer.forms import CustomerForm
+from main.forms import BookingForm as BookingCustomerForm
 from customer.models import Customer
 from dashboard.models import Booking
 
@@ -36,9 +37,34 @@ def profile(request):
 
 def customer_booking(request):
     customer = Customer.objects.get(user=request.user)
-    bookings = Booking.objects.filter(customer=customer)
-    return render(request, 'customer/customer_booking.html', {'bookings':bookings})
+    bookings = Booking.objects.filter(customer=customer).order_by('-created')
 
+    bookings = customer.booking_set.all()
+    booking_and_forms = []
+
+    for booking in bookings:
+        form = BookingCustomerForm(instance=booking)
+        booking_and_forms.append((booking, form))
+
+    context = {
+        
+        'booking_and_forms':booking_and_forms
+        
+        }
+    return render(request, 'customer/customer_booking.html', context)
+
+@login_required
 def payments_customer(request):
+    customer = Customer.objects.get(user=request.user)
+    instance = Booking.objects.filter(customer=customer).first()
+    form = BookingCustomerForm(instance=instance)
+    if request.method == 'POST':
+        form = BookingCustomerForm(request.POST, request.FILES)
+        # if form.is_valid():
+        instance.payment_receipt = request.FILES['payment_receipt']
+        instance.document = request.FILES['document']
+        instance.save()
 
-    return HttpResponse('<h1>Customer Payments here!</h1>')
+    
+    context = {'form':form}
+    return render(request, 'customer/customer_payments.html', context)

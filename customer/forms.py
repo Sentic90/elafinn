@@ -6,6 +6,8 @@ from django.contrib.auth.forms import ReadOnlyPasswordHashField
 from django.core.files.base import File
 from django.db.models.base import Model
 from django.forms.utils import ErrorList
+
+from dashboard.models import Booking
 from .models import Customer
 User = get_user_model()
 
@@ -54,3 +56,16 @@ class CustomerForm(forms.ModelForm):
         self.fields['phone'].widget.attrs.update({ 'class':'form-control', 'placeholder':'رقم الهاتف'})
         self.fields['email'].widget.attrs.update({ 'class':'form-control'})
         self.fields['address'].widget.attrs.update({ 'class':'form-control', 'placeholder':'العنوان'})
+
+
+class BookingCustomerForm(forms.ModelForm):
+
+    payment_receipt = forms.FileField(label='إيصال الدفع',widget=forms.widgets.FileInput(attrs={
+        'class':'form-file-input'
+    }))
+    document = forms.FileField(label='الوثائق الثبوتية',widget=forms.widgets.FileInput(attrs={
+        'class':'form-file-input'
+    }))
+    class Meta:
+        model = Booking
+        fields = ['document', 'payment_receipt']

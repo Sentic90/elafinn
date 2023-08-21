@@ -9,5 +9,5 @@ urlpatterns = [
 
     # Custoemrs Booking 
     path('panel/customers/booking', views.customer_booking, name='customer-booking'),
-    path('panel/customers/payments', views.payments_customer, name='payments-customer'),
+    path('panel/customers/payments', views.payments_customer, name='customer-payments'),
 ]

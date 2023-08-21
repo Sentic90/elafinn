@@ -420,36 +420,32 @@
       <a href="#" class="close" data-bs-dismiss="modal"><em class="icon ni ni-cross-sm"></em></a>
       <div class="modal-body modal-body-md">
         <h5 class="modal-title">تفاصيل الحجز</h5>
-        <form action="{% url 'main:booking-add' hotel.slug%}" method="post" class="mt-2">
+        <form action="{% url 'main:booking-add' hotel.slug%}" method="post" class="mt-2" enctype="multipart/form-data">
           {% csrf_token %}
           <div class="row g-gs">
 
             <!-- First Name -->
             <div class="col-md-6 col-lg-4 col-xxl-3">
               <div class="form-group">
-                <label class="form-label" for="first-name">الاسم الأول</label>
-                <input type="text" class="form-control" disabled id="first-name" placeholder="الأسم الأول"
-                  value="{{ customer.full_name }}">
+                <label class="form-label" for="first-name">{{customer_form.first_name.label_tag}}</label>
+                {{ customer_form.first_name }}
               </div>
             </div>
 
-            <!-- Family Name -->
+            <!-- last Name -->
             <div class="col-md-6 col-lg-4 col-xxl-3">
               <div class="form-group">
-                <label class="form-label" for="last-name">اسم العائلة</label>
-                <input type="text" class="form-control" id="last-name" placeholder="اسم العائلة" value="">
+                <label class="form-label" for="last-name">{{ customer_form.last_name.label_tag }}</label>
+                {{ customer_form.last_name }}
               </div>
             </div>
 
             <!-- Gender -->
             <div class="col-md-6 col-lg-4 col-xxl-3">
               <div class="form-group">
-                <label class="form-label">الجنس</label>
+                <label class="form-label">{{ customer_form.gender.label_tag }}</label>
                 <div class="form-control-wrap">
-                  <select class="form-select js-select2" data-placeholder="Select multiple options">
-                    <option value="option_select_gender">ذكر</option>
-                    <option value="option_select_gender">أنثى</option>
-                  </select>
+                  {{ customer_form.gender }}
                 </div>
               </div>
             </div>
@@ -457,36 +453,35 @@
             <!-- phone -->
             <div class="col-md-6 col-lg-4 col-xxl-3">
               <div class="form-group">
-                <label class="form-label" for="phone-no">رقم الجوال</label>
-                <input type="text" class="form-control" disabled id="phone-no" placeholder="رقم الجوال"
-                  value="{{ customer.phone}}">
+                <label class="form-label" for="phone-no">{{ customer_form.phone.label_tag }}</label>
+                {{ customer_form.phone }}
               </div>
             </div>
 
             <!-- Email -->
             <div class="col-md-6 col-lg-4 col-xxl-3">
               <div class="form-group">
-                <label class="form-label" for="email">البريد الإلكتروني</label>
-                <input type="email" disabled class="form-control" id="email" placeholder="البريد الإلكتروني"
-                  value="{{ customer.user.email}}">
+                <label class="form-label" for="email">{{ customer_form.email.label_tag }}</label>
+                {{ customer_form.email}}
               </div>
             </div>
 
             <!-- Address of customer -->
             <div class="col-md-6 col-lg-4 col-xxl-3">
               <div class="form-group">
-                <label class="form-label" for="address">العنوان</label>
-                <input type="text" class="form-control" id="address" placeholder="Address" value="{{customer.address}}">
+                <label class="form-label" for="address">{{ customer_form.address.label_tag }}</label>
+                {{ customer_form.address }}
               </div>
-            </div><!--col-->
+            </div>
+
             <!-- document -->
             <div class="col-md-6 col-lg-4 col-xxl-3">
               <div class="form-group">
                 <label class="form-label">رفع الوثائق</label>
                 <div class="form-control-wrap">
                   <div class="form-file">
-                    <input type="file" multiple class="form-file-input" id="customFile">
                     <label class="form-file-label" for="customFile">اختر ملف</label>
+                    {{booking_form.document }}
                   </div>
                 </div>
               </div>
@@ -497,9 +492,14 @@
               <div class="form-group">
                 <label class="form-label">الباقة</label>
                 <div class="form-control-wrap">
-                  <select disabled class="form-select js-select2" data-placeholder="Select multiple options">
-                    <option value="option_select_name">{{ request.session.package }}</option>
+                  
+                  <select name="{{ booking_form.package.name}}" class="form-select" data-placeholder="Select multiple options">
+                    {% for value,label  in booking_form.package.field.choices %}
+                    
+                    <option value="{{value}}" {% if value == request.session.package_id %}selected{% endif %}>{{ label }}</option>
+                    
 
+                      {% endfor %}
                   </select>
                 </div>
               </div>
@@ -508,8 +508,8 @@
             <div class="col-md-6 col-lg-4 col-xxl-3">
               <div class="form-group">
                 <label class="form-label" for="total-person">إجمالي عدد الأشخاص</label>
-                <input type="number" class="form-control" id="total-person" placeholder="إجمالي عدد الأشخاص"
-                  value="{{ request.session.main_search_params.guests}}">
+                <input type="number" name="{{ booking_form.guests.name}}" class="form-control" id="total-person" placeholder="إجمالي عدد الأشخاص"
+                  value="{{ request.session.main_search_params.guests}}" required>
               </div>
             </div>
 
@@ -521,13 +521,14 @@
                   <div class="form-icon form-icon-right">
                     <em class="icon ni ni-calendar"></em>
                   </div>
-                  <input type="date" class="form-control date-picker" data-date-format="yyyy-mm-dd"
-                    placeholder="yyyy-mm-dd">
+                  <input type="date" name="{{ booking_form.start_date.name}}" class="form-control date-picker" data-date-format="yyyy-mm-dd"
+                   value="{{ request.session.main_search_params.start_date}}" required>
                 </div>
               </div>
             </div>
 
             <!-- end date -->
+            
             <div class="col-md-6 col-lg-4 col-xxl-3">
               <div class="form-group">
                 <label class="form-label">تاريخ المغادرة</label>
@@ -535,18 +536,16 @@
                   <div class="form-icon form-icon-right">
                     <em class="icon ni ni-calendar"></em>
                   </div>
-                  <input type="text" class="form-control date-picker" data-date-format="yyyy-mm-dd"
-                    placeholder="yyyy-mm-dd" disabled value="{{ booking.start_date }}">
+                  <input type="date" name="{{ booking_form.end_date.name }}" class="form-control date-picker" data-date-format="yyyy-mm-dd"
+                    placeholder="yyyy-mm-dd" required value="{{ request.session.main_search_params.end_date }}">
                 </div>
               </div>
             </div>
 
             <!-- Rooms -->
             <div class="row">
+              <!-- We have looping over rooms with specifice ids or Type -->
               {% for room in hotel.rooms %}
-
-
-
               <div class="col-3">
                 <br>
 
@@ -560,12 +559,14 @@
                 </p>
                 <span class="tb-amount fw-bold">{{ room.price}}<span class="currency"> SAR</span>
                 </span>
+                <!-- hidden field for POST -->
+                <select name="room" id="{{room.id}}" hidden multiple>
+                  <option value="{{ room.id}}" selected></option>
+                </select>
               </div>
               {% endfor %}
             </div>
             <!-- </div> -->
-
-
             <!--col-->
             <div class="col-md-12">
               <div class="form-group">
@@ -579,7 +580,7 @@
             <div class="col-12">
               <ul class="align-center flex-wrap flex-sm-nowrap gx-4 gy-2">
                 <li>
-                  <button type="submit" class="btn btn-primary">تأكيد عملية الحجز</button>
+                  <button type="submit" class="btn btn-primary">إرسال طلب الحجز</button>
                 </li>
                 <li>
                   <a href="#" class="link" data-bs-dismiss="modal">إلغاء</a>

@@ -23,4 +23,4 @@ class Customer(models.Model):
     # booking_set
 
     def __str__(self) -> str:
-        return self.full_name
+        return self.first_name + self.last_name

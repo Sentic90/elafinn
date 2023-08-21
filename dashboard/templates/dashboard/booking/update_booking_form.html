@@ -1,25 +1,25 @@
-<div class="row gy-4">
+<div class="row">
     <form action="{% url 'booking-edit' hotel.slug booking.id %}" method="post" class="gy-3 form-settings">
         {% csrf_token %}
         <div class="col-md-6 col-lg-4 col-xxl-3">
             <div class="form-group">
                 <label class="form-label" for="first-name">الاسم الأول</label>
-                <input type="text" class="form-control" disabled id="first-name" placeholder="الأسم الأول" value="{{ booking.customer.full_name}}">
+                <input type="text" class="form-control" disabled id="first-name" placeholder="الأسم الأول" value="{{ booking.customer.first_name}}">
             </div>
         </div><!--col-->
         <div class="col-md-6 col-lg-4 col-xxl-3">
             <div class="form-group">
                 <label class="form-label" for="last-name">اسم العائلة</label>
-                <input type="text" class="form-control" id="last-name" placeholder="اسم العائلة" value="العفيفي">
+                <input type="text"  disabled class="form-control" id="last-name" placeholder="اسم العائلة" value="{{booking.customer.last_name}}">
             </div>
         </div><!--col-->
         <div class="col-md-6 col-lg-4 col-xxl-3">
             <div class="form-group">
                 <label class="form-label">الجنس</label>
                 <div class="form-control-wrap">
-                    <select class="form-select js-select2" data-placeholder="Select multiple options">
-                        <option value="option_select_gender">ذكر</option>
-                        <option value="option_select_gender">أنثى</option>
+                    <select disabled class="form-select js-select2" data-placeholder="Select multiple options">
+                        <option di value="{{booking.customer.gender}}" selected>{{booking.customer.get_gender_display }}</option>
+                        
                     </select>
                 </div>
             </div>
@@ -33,26 +33,49 @@
         <div class="col-md-6 col-lg-4 col-xxl-3">
             <div class="form-group">
                 <label class="form-label" for="email">البريد الإلكتروني</label>
-                <input type="email" disabled class="form-control" id="email" placeholder="البريد الإلكتروني" value="{{ booking.customer.user.email}}">
+                <input type="email" disabled class="form-control" id="email" placeholder="البريد الإلكتروني" value="{{ booking.customer.email}}">
             </div>
         </div><!--col-->
         <div class="col-md-6 col-lg-4 col-xxl-3">
             <div class="form-group">
                 <label class="form-label" for="address">العنوان</label>
-                <input type="text" class="form-control" id="address" placeholder="Address" value="102 An Nafis">
+                <input type="text" disabled class="form-control" id="address" placeholder="Address" value="{{booking.customer.address}}">
             </div>
-        </div><!--col-->
+        </div>
+
+        <!-- Documents -->
         <div class="col-md-6 col-lg-4 col-xxl-3">
             <div class="form-group">
-                <label class="form-label">رفع الوثائق</label>
-                <div class="form-control-wrap">
-                    <div class="form-file">
-                        <input type="file" multiple class="form-file-input" id="customFile">
-                        <label class="form-file-label" for="customFile">اختر ملف</label>
-                    </div>
-                </div>
+                <label class="form-label">الوثائق الثبوتية </label>
+                <br>
+                {% if booking.document %}
+                <a href="{{ booking.document.url }}" target="_blank">
+                    <em class="icon ni ni-eye"></em>
+                    <p>معاينة الملف</p>
+                </a>
+                {% else %}
+                    <p class="text text-danger">لم يتم رفع اي ملف</p>
+                {% endif %}
             </div>
-        </div><!--col-->
+        </div>
+
+        <!-- Receipt payments -->
+        <div class="col-md-6 col-lg-4 col-xxl-3">
+            <div class="form-group">
+                <label class="form-label">ايصال الدفع</label>
+                <br>
+                {% if booking.payment_receipt %}
+                <a href="{{ booking.payment_receipt.url }}" target="_blank">
+                    <em class="icon ni ni-eye"></em>
+                    <p> معاينة ايصال الدفع</p>
+                </a>
+                {% else %}
+                    <p class="text text-danger">لم يتم رفع اي ايصال</p>
+                {% endif %}
+            </div>
+        </div>
+        
+        <!-- Season -->
         <div class="col-md-6 col-lg-4 col-xxl-3">
             <div class="form-group">
                 <label class="form-label">الباقة</label>
@@ -64,21 +87,42 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-6 col-lg-4 col-xxl-3">
-            <div class="form-group">
-                <label class="form-label">{{ form.room.label_tag}}</label>
-                <div class="form-control-wrap">
-                    {{ form.room }}
-                    <!-- <select class="form-select js-select2">
-                        <option value="default_option">Super Delux</option>
-                        <option value="option_select_room_type">Delux</option>
-                        <option value="option_select_room_type">Super Delux</option>
-                        <option value="option_select_room_type">Single</option>
-                        <option value="option_select_room_type">Double</option>
-                    </select> -->
+
+        <!-- Room -->
+        <div class="col-md-10 col-lg-8 col-xxl-3">
+            <div class="card card-bordered">
+                <div class="card-inner">
+                    <div class="card-title-group align-start mb-3">
+                        <div class="card-title">
+                            <h6 class="title">تفاصيل الغرف</h6>
+                        </div>
+                    </div>
+                    <table class="table table-responsive-md">
+                        <thead>
+                            <tr>
+                                <th >رقم الغرفة</th>
+                                <th>نوع الغرفة</th>
+                                <th> سعر الغرفة</th>
+            
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for room in booking.room.all %}
+            
+                            <tr>
+                                <td>{{room.roomNo}}</td>
+                                <td>{{room.roomType}}</td>
+                                <td>{{room.price}} SAR</td>
+            
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
                 </div>
             </div>
-        </div><!--col-->
+        </div>
+
+        <!-- start_date -->
         <div class="col-md-6 col-lg-4 col-xxl-3">
             <div class="form-group">
                 <label class="form-label">تاريخ الوصول</label>
@@ -91,6 +135,7 @@
                 </div>
             </div>
         </div>
+        <!-- end date -->
         <div class="col-md-6 col-lg-4 col-xxl-3">
             <div class="form-group">
                 <label class="form-label">تاريخ المغادرة</label>
@@ -99,37 +144,38 @@
                         <em class="icon ni ni-calendar"></em>
                     </div>
                     <input type="text" class="form-control date-picker" data-date-format="yyyy-mm-dd"
-                        placeholder="yyyy-mm-dd" disabled value="{{ booking.start_date }}">
+                        placeholder="yyyy-mm-dd" disabled value="{{ booking.end_date }}">
                 </div>
             </div>
         </div>
+        <!-- guests -->
         <div class="col-md-6 col-lg-4 col-xxl-3">
             <div class="form-group">
                 <label class="form-label" for="total-person">إجمالي عدد الأشخاص</label>
-                <input type="number" class="form-control" id="total-person" placeholder="إجمالي عدد الأشخاص" value="02">
+                <input type="number" disabled class="form-control" id="total-person" placeholder="إجمالي عدد الأشخاص" value="{{booking.guests}}">
             </div>
-        </div><!--col-->
+        </div>
+        <!-- Notes -->
         <div class="col-md-12">
             <div class="form-group">
                 <label class="form-label" for="default-textarea">ملاحظات</label>
                 <div class="form-control-wrap">
-                    <textarea class="form-control no-resize" id="default-textarea"></textarea>
+                    <textarea class="form-control no-resize" disabled id="default-textarea">
+                        {{ booking.notes }}
+                    </textarea>
                 </div>
             </div>
         </div>
+        <!-- Status of Order -->
         <div class="col-5">
             <div class="form-group">
                 <label class="form-label">{{form.status.label_tag}}</label>
                 <div class="form-control-wrap">
                     {{ form.status }}
-                    <!-- <select class="form-select js-select2">
-                        <option value="default_option"> في الانتظار</option>
-                        <option value="11">تمت المعالجة</option>
-                        <option value="1">تم الرفض</option>
-                    </select> -->
                 </div>
             </div>
         </div>
+        
         <div class="col-sm-12">
             <div class="form-group">
                 <button type="submit" class="btn btn-primary">حفظ التعديل</button>

@@ -3,7 +3,10 @@ from django.shortcuts import render, redirect
 from django.core.paginator import Paginator
 from django.utils.http import url_has_allowed_host_and_scheme as is_safe_url
 from django.urls import reverse
+
+from customer.forms import CustomerForm
 from .forms import BookingForm, NewUserForm
+from django.shortcuts import get_object_or_404
 from django.contrib import messages
 from django.contrib.auth.forms import AuthenticationForm  # add this
 from django.contrib.auth import login, authenticate, logout
@@ -50,8 +53,8 @@ def result(request):
             end_date_str = date_range[3]
             start_date = datetime.strptime(start_date_str, '%d/%m/%Y')
             end_date = datetime.strptime(end_date_str, '%d/%m/%Y')
-            main_search_params['start_date'] = str(start_date.strftime('%d/%m/%Y'))
-            main_search_params['end_date'] = str(end_date.strftime('%d/%m/%Y'))
+            main_search_params['start_date'] = start_date.strftime('%Y-%m-%d')
+            main_search_params['end_date'] = end_date.strftime('%Y-%m-%d')
 
     # Apply filters based on main search parameters
     if main_search_params['city']:
@@ -70,13 +73,10 @@ def result(request):
             Q(room__booking__end_date__gte=end_date) &
             Q(room__status=2)
         )
-    
-    
-    
-    payment_methods_choices = PaymentMethod.objects.values_list('type', flat=True).distinct()
+
     request.session['main_search_params'] = main_search_params
+    request.session['package_id'] = int(request.GET.get('package_id', 0))
     
-    request.session['payment_methods_choices'] = list(payment_methods_choices)
 
     # paginations
     queryset = Hotel.objects.all()
@@ -92,7 +92,6 @@ def result(request):
         'end_date': end_date.strftime('%m/%d/%Y') if end_date else '',
         'city': main_search_params['city'],
         'main_search_params': main_search_params,
-        'payment_methods_choices': payment_methods_choices
     }
 
     return render(request, 'main/result.html', context)
@@ -114,26 +113,36 @@ def hotel_details(request, slug):
     customer = Customer.objects.get(user=request.user)
     hotel = Hotel.objects.get(slug=slug)
     main_search_params = request.session.get('main_search_params', {})
-    if request.method == 'GET':
-        
-        form = BookingForm()
-        context = {
-            'hotel': hotel,
-            'main_search_params':main_search_params, 
-            'customer':customer,
-            'form':form
-        }
-        return render(request, 'main/hotel_detail.html', context)
-
     if request.method == 'POST':
+        form = BookingForm(request.POST, request.FILES)
+        if form.is_valid():
+            # valid
+            print(form.cleaned_data)
+            rooms = Room.objects.values_list('id')[:2]
+            hotel = Hotel.objects.get(slug=slug)
+            booking = Booking.objects.create(
+                customer=customer, hotel=hotel,start_date = datetime.now(),end_date = datetime.now()
+                )
+            booking.room.set([1,4])
+            return redirect(reverse('customer-panel'))
+        print(form.errors)
+        
+    booking_form = BookingForm()
+    customer_form = CustomerForm(instance=customer)
+    try:
+        package = get_object_or_404(Season, id=request.session.get('package_id', 0))
+    except:
+        package = None
+    context = {
+        'hotel': hotel,
+        'main_search_params':main_search_params, 
+        'customer_form':customer_form,
+        'booking_form':booking_form,
+        'package':package
+    }
+    return render(request, 'main/hotel_detail.html', context)
 
-        rooms = Room.objects.values_list('id')[:2]
-        hotel = Hotel.objects.get(slug=slug)
-        booking = Booking.objects.create(
-            customer=customer, hotel=hotel,start_date = datetime.now(),end_date = datetime.now()
-            )
-        booking.room.set([1,4])
-        return redirect(reverse('customer-panel'))
+    
 
 def room_details(request, slug, roomId):
     # hotels/hotel_detail/<slug:slug>/rooms/<int:roomId>
@@ -148,21 +157,31 @@ def room_details(request, slug, roomId):
 
     return render(request, 'main/room_details.html', context)
 
+@login_required
 def booking_add(request, slug):
+
     if request.method=='POST':
+        print(request.POST)
+        # customer = Customer.objects.get(user=request.user) #TODO handle execptions
+        # Package + Guests + start & end dates + 
+        # hotel + rooms + price (total + VAT) + Notes 
+        # document + Receipt 
+        form = BookingForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save(request, slug)
         
-        customer = Customer.objects.get(user=request.user) #TODO handle execptions
-        rooms = Room.objects.values_list('id')[:2]
-        hotel = Hotel.objects.get(slug=slug)
-        booking = Booking.objects.create(
-            customer=customer, 
-            hotel=hotel,
-            start_date = datetime.now(),
-            end_date = datetime.now(),
-            package_id=4
-            )
-        booking.room.set([1,4])
-        return redirect(reverse('customer-booking'))
+        # rooms = Room.objects.values_list('id')[:2]
+        # hotel = Hotel.objects.get(slug=slug)
+        # booking = Booking.objects.create(
+        #     customer=customer, 
+        #     hotel=hotel,
+        #     start_date = datetime.now(),
+        #     end_date = datetime.now(),
+        #     package_id=4
+        #     )
+        # booking.room.set([1,4])
+            return redirect(reverse('customer-booking'))
+        print(form.errors.as_json())
 
 def register_request(request):
     if request.method == "POST":

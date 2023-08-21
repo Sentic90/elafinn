@@ -66,7 +66,7 @@
                                                         <div class="nk-tb-col"><span class="sub-text">العميل</span></div>
                                                         <div class="nk-tb-col tb-col-mb"><span class="sub-text">الباقة</span></div>
                                                         <div class="nk-tb-col tb-col-md"><span class="sub-text">الحجز</span></div>
-                                                        <div class="nk-tb-col tb-col-lg"><span class="sub-text">نوع الغرفة</span></div>
+                                                        <!-- <div class="nk-tb-col tb-col-lg"><span class="sub-text">نوع الغرفة</span></div> -->
                                                         <div class="nk-tb-col tb-col-xxl"><span class="sub-text">الهاتف</span></div>
                                                         <div class="nk-tb-col tb-col-lg"><span class="sub-text">وقت الوصول</span></div>
                                                         <div class="nk-tb-col tb-col-xxl"><span class="sub-text">المغادرة</span></div>
@@ -114,70 +114,76 @@
                                                     </div><!-- .nk-tb-item -->
                                                     <!-- bookings Loop -->
                                                     {% for booking in hotel.booking_set.all %}
+                                                    
                                                     <div class="nk-tb-item">
+                                                        <!-- check -->
                                                         <div class="nk-tb-col nk-tb-col-check">
                                                             <div class="custom-control custom-control-sm custom-checkbox notext">
                                                                 <input type="checkbox" class="custom-control-input" id="{{ booking.id}}">
                                                                 <label class="custom-control-label" for="{{booking.id }}"></label>
                                                             </div>
                                                         </div>
+
+                                                        <!-- ID -->
                                                         <div class="nk-tb-col">
-                                                            <span class="text-primary">AB-753</span>
+                                                            <span class="text-primary">{{booking.customer.id}}</span>
                                                         </div>
+                                                        <!-- Client -->
                                                         <div class="nk-tb-col">
                                                             <div class="user-card">
-                                                                <div class="user-avatar">
-                                                                    <img src="./images/avatar/a-sm.jpg" alt="">
-                                                                </div>
+                                                                
                                                                 <div class="user-info">
-                                                                    <span class="tb-lead">{{ booking.customer}}<span class="dot dot-warning d-md-none ms-1"></span></span>
-                                                                    <span>{{booking.customer.user.email}}</span>
+                                                                    <span class="tb-lead">{{ booking.customer.first_name}}<span class="dot dot-warning d-md-none ms-1"></span></span>
+                                                                    
                                                                 </div>
                                                             </div>
                                                         </div>
+
+                                                        <!-- Package -->
                                                         <div class="nk-tb-col tb-col-mb">
-                                                            <span>{{ booking.package }} </span>
+                                                            <span class="tb-lead">{{ booking.package }} </span>
                                                         </div>
+                                                        <!-- status -->
                                                         <div class="nk-tb-col tb-col-mb">
                                                             <span class="tb-status text-{% if booking.status == 'processed' %}success{% else %}warning{% endif %}"
-                                                            >{{ booking.status}}</span>
+                                                            >{{ booking.get_status_display}}</span>
                                                         </div>
                                                         <!-- Room Type -->
-                                                        <div class="nk-tb-col tb-col-lg">
+                                                        <!-- <div class="nk-tb-col tb-col-lg">
                                                             <span>{{ booking.roomType }}</span>
-                                                        </div>
+                                                        </div> -->
                                                         <!-- Phone  -->
                                                         <div class="nk-tb-col tb-col-xxl">
                                                             <span>{{ booking.customer.phone}}</span>
                                                         </div>
+                                                        <!-- start date -->
                                                         <div class="nk-tb-col tb-col-lg">
-                                                            <span>07 Feb 2021</span>
+                                                            <span>{{booking.start_date}}</span>
                                                         </div>
+                                                        <!-- End date -->
                                                         <div class="nk-tb-col tb-col-xxl">
-                                                            <span>08 Feb 2021</span>
+                                                            <span>{{booking.end_date}}</span>
                                                         </div>
+
+                                                        <!-- Payment -->
                                                         <div class="nk-tb-col tb-col-md">
                                                             <span class="tb-status text-warning">Due</span>
                                                         </div>
-                                                        <div class="nk-tb-col nk-tb-col-tools">
-                                                            <ul class="nk-tb-actions gx-1">
-                                                                <li>
-                                                                    <div class="drodown">
-                                                                        <a href="#" class="dropdown-toggle btn btn-icon btn-trigger" data-bs-toggle="dropdown"><em class="icon ni ni-more-h"></em></a>
-                                                                        <div class="dropdown-menu dropdown-menu-end">
-                                                                            <ul class="link-list-opt no-bdr">
-                                                                                <li><a href="#"><em class="icon ni ni-mail-fill"></em><span>إرسال بريد</span></a></li>
-                                                                                <li><a href="{% url 'booking-edit' hotel.slug booking.id%}"><em class="icon ni ni-eye"></em><span>معاينة</span></a></li>
-                                                                            </ul>
-                                                                        </div>
-                                                                    </div>
-                                                                </li>
-                                                            </ul>
+                                                        
+                                                        <div class="nk-tb-col tb-col-md">
+                                                            <span><a href="{% url 'booking-edit' hotel.slug booking.id%}"><em class="icon ni ni-eye"></em><span>معاينة</span></a></span>
+                                                            <br>
+                                                            <span><a href="#"><em class="icon ni ni-mail-fill"></em><span>إرسال بريد</span></a></span>
                                                         </div>
+                                                        <div class="nk-tb-col tb-col-md">
+                                                            <span></span>
+                                                        </div>
+                                                        <!-- tools -->
+                                                        
                                                     </div>
                                                         {%endfor%}
                                                 {% endif %}
-                                                    <div class="nk-tb-item">
+                                                    <!-- <div class="nk-tb-item">
                                                         <div class="nk-tb-col nk-tb-col-check">
                                                             <div class="custom-control custom-control-sm custom-checkbox notext">
                                                                 <input type="checkbox" class="custom-control-input" id="uid10">
@@ -236,7 +242,7 @@
                                                                 </li>
                                                             </ul>
                                                         </div>
-                                                    </div><!-- .nk-tb-item -->
+                                                    </div> -->
                                                 </div><!-- .nk-tb-list -->
                                             </div><!-- .card-inner -->
                                         </div><!-- .card-inner-group -->

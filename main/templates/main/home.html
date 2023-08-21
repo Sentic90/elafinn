@@ -2,573 +2,571 @@
 {% load static %}
 
 {% block search %}
-    <style>
+<style>
+    @media (min-width: 576px) {
+        .header {
+            min-height: 100vh;
+        }
+    }
+
+    .after-opacity-95:after {
+        opacity: 0.85;
+        height: 800px;
+    }
+
+    .nav-tabs .nav-link.active {
+        border-color: transparent;
+        background-color: #fff !important;
+        color: #9a1550 !important;
+        border-bottom: 4px solid #9a1550 !important
+    }
+
+    .nav-fill .nav-item .nav-link,
+    .nav-justified .nav-item .nav-link {
+        color: #000
+    }
+
+    .nav-tabs .nav-link {
+        border-top-left-radius: 0 !important;
+        border-top-right-radius: 0 !important
+    }
+
+    .nav-tabs .nav-link.active {
+        border-color: transparent;
+        background-color: #60D0FF;
+        color: #fff;
+        font-weight: 600
+    }
+
+    .nav-link {
+        font-family: "DIN", serif;
+    }
+
+    .nav-link:hover {
+        border: none
+    }
+
+    .nav-link:focus {
+        outline: none
+    }
+
+    .tab-pane {
+        height: 300px
+    }
 
 
-        @media (min-width: 576px) {
-            .header {
-                min-height: 100vh;
-            }
+    .custom-button {
+        height: 45px;
+        background-color: #9a1550;
+        border: none;
+        color: #fff;
+        font-size: 13pt;
+    }
+
+    .custom-button:hover,
+    .custom-button:focus {
+        background-color: #9a1550;
+        box-shadow: none;
+        outline: none
+    }
+
+
+    .lh-lg {
+        line-height: 1.5 !important;
+        margin-right: 20%;
+    }
+
+    .nav-tabs .nav-link:after {
+        background: none;
+    }
+
+    .header-overlay {
+
+        background: rgb(63 61 72 / 40%);
+    }
+
+    .nav-tabs .nav-item.active .nav-link {
+        color: #2c3782;
+        font-size: large;
+        font-weight: normal;
+        border-top-right-radius: 20px !important;
+        border-top-left-radius: 20px !important;
+    }
+
+    .nav-tabs {
+        margin: 5px;
+    }
+
+
+    .staticPlaceholder {
+        white-space: nowrap;
+        width: 93%;
+        text-align: right;
+        font-size: 0.8125rem;
+        font-weight: 400;
+        line-height: 1.25rem;
+        color: #3c4d62;
+        background-color: #fff;
+        background-clip: padding-box;
+        border: 1px solid #dbdfea;
+        appearance: none;
+        border-radius: 4px;
+        transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+        position: relative;
+        padding-right: 1rem;
+    }
+
+
+    .staticPlaceholder input {
+        border: 0;
+        outline: 0;
+    }
+
+    .form-icon-new {
+        position: absolute;
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        /* top: 0; */
+        width: calc(1rem + 24px);
+        height: calc(2.125rem + 2px);
+        font-size: 17px;
+        color: #3a4553;
+    }
+
+    .tab-content {
+        margin-top: 1.25rem;
+        padding: 0 10px;
+    }
+
+
+    @media (min-width: 576px) {
+        .header {
+            min-height: 0;
         }
 
-        .after-opacity-95:after {
-            opacity: 0.85;
-            height: 800px;
-        }
+    }
 
-        .nav-tabs .nav-link.active {
-            border-color: transparent;
-            background-color: #fff !important;
-            color: #9a1550 !important;
-            border-bottom: 4px solid #9a1550 !important
-        }
-
-        .nav-fill .nav-item .nav-link,
-        .nav-justified .nav-item .nav-link {
-            color: #000
-        }
-
-        .nav-tabs .nav-link {
-            border-top-left-radius: 0 !important;
-            border-top-right-radius: 0 !important
-        }
-
-        .nav-tabs .nav-link.active {
-            border-color: transparent;
-            background-color: #60D0FF;
-            color: #fff;
-            font-weight: 600
-        }
-
-        .nav-link {
-            font-family: "DIN", serif;
-        }
-
-        .nav-link:hover {
-            border: none
-        }
-
-        .nav-link:focus {
-            outline: none
-        }
-
-        .tab-pane {
-            height: 300px
-        }
+    .datepicker {
+        display: none !important;
+    }
 
 
-        .custom-button {
-            height: 45px;
-            background-color: #9a1550;
-            border: none;
-            color: #fff;
-            font-size: 13pt;
-        }
+    .select2-container.select2-container--default.select2-container--open {
+        right: auto !important;
+        left: unset !important;
+    }
 
-        .custom-button:hover,
-        .custom-button:focus {
-            background-color: #9a1550;
-            box-shadow: none;
-            outline: none
-        }
+    .select2-container.select2-container--default.select2-container--open .select2-dropdown.select2-dropdown--below {
+        width: 405px !important;
+        left: unset !important;
+        right: 661px;
+        font-family: "DIN", serif;
+    }
 
+    .number-spinner-wrap {
+        width: fit-content !important;
+    }
 
-        .lh-lg {
-            line-height: 1.5 !important;
-            margin-right: 20%;
-        }
+    .col-auto>label {
+        width: 80px;
+        margin-top: 10px;
+    }
 
-        .nav-tabs .nav-link:after {
-            background: none;
-        }
+    .divider {
+        padding: 0;
+    }
 
-        .header-overlay {
+    .form-control {
+        height: 40px !important;
+    }
+</style>
 
-            background: rgb(63 61 72 / 40%);
-        }
-
-        .nav-tabs .nav-item.active .nav-link {
-            color: #2c3782;
-            font-size: large;
-            font-weight: normal;
-            border-top-right-radius: 20px !important;
-            border-top-left-radius: 20px !important;
-        }
-
-        .nav-tabs {
-            margin: 5px;
-        }
-
-
-        .staticPlaceholder {
-            white-space: nowrap;
-            width: 93%;
-            text-align: right;
-            font-size: 0.8125rem;
-            font-weight: 400;
-            line-height: 1.25rem;
-            color: #3c4d62;
-            background-color: #fff;
-            background-clip: padding-box;
-            border: 1px solid #dbdfea;
-            appearance: none;
-            border-radius: 4px;
-            transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-            position: relative;
-            padding-right: 1rem;
-        }
-
-
-        .staticPlaceholder input {
-            border: 0;
-            outline: 0;
-        }
-
-        .form-icon-new {
-            position: absolute;
-            display: inline-flex;
-            justify-content: center;
-            align-items: center;
-            /* top: 0; */
-            width: calc(1rem + 24px);
-            height: calc(2.125rem + 2px);
-            font-size: 17px;
-            color: #3a4553;
-        }
-
-        .tab-content {
-            margin-top: 1.25rem;
-            padding: 0 10px;
-        }
-
-
-        @media (min-width: 576px) {
-            .header {
-                min-height: 0;
-            }
-
-        }
-
-        .datepicker {
-            display: none !important;
-        }
-
-
-        .select2-container.select2-container--default.select2-container--open {
-            right: auto !important;
-            left: unset !important;
-        }
-
-        .select2-container.select2-container--default.select2-container--open .select2-dropdown.select2-dropdown--below {
-            width: 405px !important;
-            left: unset !important;
-            right: 661px;
-            font-family: "DIN", serif;
-        }
-
-        .number-spinner-wrap {
-            width: fit-content !important;
-        }
-
-        .col-auto > label {
-            width: 80px;
-            margin-top: 10px;
-        }
-
-        .divider {
-            padding: 0;
-        }
-.form-control{
-    height: 40px !important;
-}
-
-    </style>
-
-    <div class="header-content my-auto py-6 is-dark" style="padding-top: 5% !important;">
+<div class="header-content my-auto py-6 is-dark" style="padding-top: 5% !important;">
     {% include 'main/partials/_alerts.html' %}
-        <div class="container mt-n4 mt-lg-0">
-            <div class="row flex-lg-row-reverse align-items-center justify-content-between g-gs">
-                <div class="col-lg-12 col-md-8">
-                    <div class="header-caption text-center">
-                        <h3 class=" fw-medium">ابدأ بحجز إقامتك في مكة والمدينة </h3>
-                        <div class="header-text">
-                            <p>يمكن تحديد الباقة المناسبة لمواسم الحج ورمضان و الزيارة والعمرة </p>
-                        </div>
-                        <div class="container mt-5">
-                            <div class="row d-flex justify-content-center">
-                                <div class="col-md-10 col-sm-12">
-                                    <div class="bg-white" style="border-radius: 20px !important">
-                                        <ul class="nav nav-tabs nav-fill" id="myTab" role="tablist">
-                                            {% for season in seasons %}
-                                            <li class="nav-item" role="presentation">
-                                                <button class="nav-link{% if forloop.first %} active{% endif %}" 
-                                                        id="faq_tab_{{ season.id }}-tab"
-                                                        data-bs-toggle="tab" 
-                                                        data-bs-target="#faq_tab_{{ season.id }}"
-                                                        type="button" role="tab" 
-                                                        aria-controls="faq_tab_{{season.id}}"
-                                                        aria-selected="{{ season.id }}">
-                                                    <div class="d-flex flex-column lh-lg">
-                                                        <span>{{ season.season }}</span>
-                                                    </div>
-                                                </button>
-                                            </li>
-                                            {% endfor %}
-                                           
-                                        </ul>
-                                        <div class="tab-content" id="myTabContent">
-                                            <!-- باقة الحج -->
-                                            {% for season in seasons %}
-                                                <div class="tab-pane fade{% if forloop.first %} show active{% endif %}" 
-                                                        id="faq_tab_{{ season.id}}"
-                                                        role="tabpanel" 
-                                                        aria-labelledby="faq_tab_{{ season.id }}-tab">
-                                                    <div class="container p-3 ">
-                                                            <!-- filter form  -->
-                                                        {% include 'main/components/search_form.html'%}
-                                                            <!-- end -->
-                                                    </div>
-                                                    
+    <div class="container mt-n4 mt-lg-0">
+        <div class="row flex-lg-row-reverse align-items-center justify-content-between g-gs">
+            <div class="col-lg-12 col-md-8">
+                <div class="header-caption text-center">
+                    <h3 class=" fw-medium">ابدأ بحجز إقامتك في مكة والمدينة </h3>
+                    <div class="header-text">
+                        <p>يمكن تحديد الباقة المناسبة لمواسم الحج ورمضان و الزيارة والعمرة </p>
+                    </div>
+                    <div class="container mt-5">
+                        <div class="row d-flex justify-content-center">
+                            <div class="col-md-10 col-sm-12">
+                                <div class="bg-white" style="border-radius: 20px !important">
+                                    <ul class="nav nav-tabs nav-fill" id="myTab" role="tablist">
+                                        {% for season in seasons %}
+                                        <li class="nav-item" role="presentation">
+                                            <button class="nav-link{% if forloop.first %} active{% endif %}"
+                                                id="faq_tab_{{ season.id }}-tab" data-bs-toggle="tab"
+                                                data-bs-target="#faq_tab_{{ season.id }}" type="button" role="tab"
+                                                aria-controls="faq_tab_{{season.id}}" aria-selected="{{ season.id }}">
+                                                <div class="d-flex flex-column lh-lg">
+                                                    <span>{{ season.season }}</span>
                                                 </div>
-                                            {% endfor %}
-                                            
+                                            </button>
+                                        </li>
+                                        {% endfor %}
+
+                                    </ul>
+                                    <div class="tab-content" id="myTabContent">
+                                        <!-- باقة الحج -->
+                                        {% for season in seasons %}
+                                        <div class="tab-pane fade{% if forloop.first %} show active{% endif %}"
+                                            id="faq_tab_{{ season.id}}" role="tabpanel"
+                                            aria-labelledby="faq_tab_{{ season.id }}-tab">
+                                            <div class="container p-3 ">
+                                                <!-- filter form  -->
+                                                {% include 'main/components/search_form.html'%}
+                                                <!-- end -->
+                                            </div>
+
                                         </div>
+
+                                        
+                                        {% endfor %}
+
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div><!-- .header-caption -->
-                </div><!-- .col -->
-            </div><!-- .row -->
-        </div><!-- .container -->
-    </div><!-- .header-content -->
-    <div class="bg-image bg-overlay after-bg-dark after-opacity-95" style="height: 800px">
-        <img src="{% static 'main/images/bg/makkah-clock-royal-tower.jpg' %}" alt="">
-    </div>
-    <!-- Modal Default -->
+                    </div>
+                </div><!-- .header-caption -->
+            </div><!-- .col -->
+        </div><!-- .row -->
+    </div><!-- .container -->
+</div><!-- .header-content -->
+<div class="bg-image bg-overlay after-bg-dark after-opacity-95" style="height: 800px">
+    <img src="{% static 'main/images/bg/makkah-clock-royal-tower.jpg' %}" alt="">
+</div>
+<!-- Modal Default -->
 {% endblock %}
 
 
 {% block content %}
-    <div class="modal fade" tabindex="-1" id="modalDefault" style="z-index: 9909">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">اختر الغرف</h5>
-                    <a href="#" class="close" data-bs-dismiss="modal" aria-label="Close">
-                        <em class="icon ni ni-cross"></em>
-                    </a>
-                </div>
-                <div class="modal-body-sm">
-                    <ul>
-                        <li>
-                            <div class="form-group">
-                                <div class="row g-3 align-items-center">
-                                    <div class="col-auto">
-                                        <label class="form-label">غرفة فردية</label>
-                                    </div>
-                                    <div class="col-auto">
-                                        <div class="form-control-wrap number-spinner-wrap" id="single-room">
-                                            <button class="btn btn-icon btn-outline-light number-spinner-btn number-minus"
-                                                    data-number="minus"><em class="icon ni ni-minus"></em></button>
-                                            <input id="single-input" type="number"
-                                                   class="form-control number-spinner" value="0">
-                                            <button class="btn btn-icon btn-outline-light number-spinner-btn number-plus"
-                                                    data-number="plus"><em class="icon ni ni-plus"></em></button>
-                                        </div>
-                                    </div>
-                                    <div class="col-auto">
-                                        <p>النزلاء: <span id="single-span">0</span></p>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </li>
-                        <li>
-                            <div class="form-group">
-                                <div class="row g-3 align-items-center">
-                                    <div class="col-auto">
-                                        <label class="form-label">غرفة ثنائية</label>
-                                    </div>
-                                    <div class="col-auto">
-                                        <div class="form-control-wrap number-spinner-wrap" id="double-room">
-                                            <button class="btn btn-icon btn-outline-light number-spinner-btn number-minus"
-                                                    data-number="minus"><em class="icon ni ni-minus"></em></button>
-                                            <input id="double-input" type="number" class="form-control number-spinner"
-                                                   value="0">
-                                            <button class="btn btn-icon btn-outline-light number-spinner-btn number-plus"
-                                                    data-number="plus"><em class="icon ni ni-plus"></em></button>
-                                        </div>
-                                    </div>
-                                    <div class="col-auto">
-                                        <p>النزلاء: <span id="double-span">0</span></p>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </li>
-                        <li>
-                            <div class="form-group">
-                                <div class="row g-3 align-items-center">
-                                    <div class="col-auto">
-                                        <label class="form-label">غرفة ثلاثية</label>
-                                    </div>
-                                    <div class="col-auto">
-                                        <div class="form-control-wrap number-spinner-wrap" id="triple-room">
-                                            <button class="btn btn-icon btn-outline-light number-spinner-btn number-minus"
-                                                    data-number="minus"><em class="icon ni ni-minus"></em></button>
-                                            <input id="triple-input" type="number" class="form-control number-spinner"
-                                                   value="0">
-                                            <button class="btn btn-icon btn-outline-light number-spinner-btn number-plus"
-                                                    data-number="plus"><em class="icon ni ni-plus"></em></button>
-                                        </div>
-                                    </div>
-                                    <div class="col-auto">
-                                        <p>النزلاء: <span id="triple-span">0</span></p>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </li>
-                        <li>
-                            <div class="form-group">
-                                <div class="row g-3 align-items-center">
-                                    <div class="col-auto">
-                                        <label class="form-label">غرفة رباعية</label>
-                                    </div>
-                                    <div class="col-auto">
-                                        <div class="form-control-wrap number-spinner-wrap" id="quadruple-room">
-                                            <button class="btn btn-icon btn-outline-light number-spinner-btn number-minus"
-                                                    data-number="minus"><em class="icon ni ni-minus"></em></button>
-                                            <input id="quadruple-input" type="number" class="form-control number-spinner"
-                                                   value="0">
-                                            <button class="btn btn-icon btn-outline-light number-spinner-btn number-plus"
-                                                    data-number="plus"><em class="icon ni ni-plus"></em></button>
-                                        </div>
-                                    </div>
-                                    <div class="col-auto">
-                                        <p>النزلاء: <span id="quadruple-span">0</span></p>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </li>
-                        <li>
-                            <div class="form-group">
-                                <div class="row g-3 align-items-center">
-                                    <div class="col-auto">
-                                        <label class="form-label">غرفة خماسية</label>
-                                    </div>
-                                    <div class="col-auto">
-                                        <div class="form-control-wrap number-spinner-wrap" id="quintuple-room">
-                                            <button class="btn btn-icon btn-outline-light number-spinner-btn number-minus"
-                                                    data-number="minus"><em class="icon ni ni-minus"></em></button>
-                                            <input id="quintuple-input" type="number" class="form-control number-spinner"
-                                                   value="0">
-                                            <button class="btn btn-icon btn-outline-light number-spinner-btn number-plus"
-                                                    data-number="plus"><em class="icon ni ni-plus"></em></button>
-                                        </div>
-                                    </div>
-                                    <div class="col-auto">
-                                        <p>النزلاء: <span id="quintuple-span">0</span></p>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-                <div class="p-3 bg-light fw-bold text-dark" style="text-align: right; direction: rtl; right: 0">
-                    <span class="">إجمالي عدد النزلاء: </span>
-                    <input type="hidden" id="countroom">
-                    <span class="text-danger" id="countroomp"></span>                    
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" id="applyButton">Apply</button>
-                    <button type="button" class="btn btn-secondary" id="closeModalButton" data-bs-dismiss="modal">Close</button>
-                </div>
-            
+<!-- Number of guests Modal  -->
+<div class="modal fade" tabindex="-1" id="modalDefault" style="z-index: 9909">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">اختر الغرف</h5>
+                <a href="#" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <em class="icon ni ni-cross"></em>
+                </a>
             </div>
-            
+            <div class="modal-body-sm">
+                <ul>
+                    <li>
+                        <div class="form-group">
+                            <div class="row g-3 align-items-center">
+                                <div class="col-auto">
+                                    <label class="form-label">غرفة فردية</label>
+                                </div>
+                                <div class="col-auto">
+                                    <div class="form-control-wrap number-spinner-wrap" id="single-room">
+                                        <button class="btn btn-icon btn-outline-light number-spinner-btn number-minus"
+                                            data-number="minus"><em class="icon ni ni-minus"></em></button>
+                                        <input id="single-input" type="number" class="form-control number-spinner"
+                                            value="0">
+                                        <button class="btn btn-icon btn-outline-light number-spinner-btn number-plus"
+                                            data-number="plus"><em class="icon ni ni-plus"></em></button>
+                                    </div>
+                                </div>
+                                <div class="col-auto">
+                                    <p>النزلاء: <span id="single-span">0</span></p>
+                                </div>
+                            </div>
 
+                        </div>
+                    </li>
+                    <li>
+                        <div class="form-group">
+                            <div class="row g-3 align-items-center">
+                                <div class="col-auto">
+                                    <label class="form-label">غرفة ثنائية</label>
+                                </div>
+                                <div class="col-auto">
+                                    <div class="form-control-wrap number-spinner-wrap" id="double-room">
+                                        <button class="btn btn-icon btn-outline-light number-spinner-btn number-minus"
+                                            data-number="minus"><em class="icon ni ni-minus"></em></button>
+                                        <input id="double-input" type="number" class="form-control number-spinner"
+                                            value="0">
+                                        <button class="btn btn-icon btn-outline-light number-spinner-btn number-plus"
+                                            data-number="plus"><em class="icon ni ni-plus"></em></button>
+                                    </div>
+                                </div>
+                                <div class="col-auto">
+                                    <p>النزلاء: <span id="double-span">0</span></p>
+                                </div>
+                            </div>
+
+                        </div>
+                    </li>
+                    <li>
+                        <div class="form-group">
+                            <div class="row g-3 align-items-center">
+                                <div class="col-auto">
+                                    <label class="form-label">غرفة ثلاثية</label>
+                                </div>
+                                <div class="col-auto">
+                                    <div class="form-control-wrap number-spinner-wrap" id="triple-room">
+                                        <button class="btn btn-icon btn-outline-light number-spinner-btn number-minus"
+                                            data-number="minus"><em class="icon ni ni-minus"></em></button>
+                                        <input id="triple-input" type="number" class="form-control number-spinner"
+                                            value="0">
+                                        <button class="btn btn-icon btn-outline-light number-spinner-btn number-plus"
+                                            data-number="plus"><em class="icon ni ni-plus"></em></button>
+                                    </div>
+                                </div>
+                                <div class="col-auto">
+                                    <p>النزلاء: <span id="triple-span">0</span></p>
+                                </div>
+                            </div>
+
+                        </div>
+                    </li>
+                    <li>
+                        <div class="form-group">
+                            <div class="row g-3 align-items-center">
+                                <div class="col-auto">
+                                    <label class="form-label">غرفة رباعية</label>
+                                </div>
+                                <div class="col-auto">
+                                    <div class="form-control-wrap number-spinner-wrap" id="quadruple-room">
+                                        <button class="btn btn-icon btn-outline-light number-spinner-btn number-minus"
+                                            data-number="minus"><em class="icon ni ni-minus"></em></button>
+                                        <input id="quadruple-input" type="number" class="form-control number-spinner"
+                                            value="0">
+                                        <button class="btn btn-icon btn-outline-light number-spinner-btn number-plus"
+                                            data-number="plus"><em class="icon ni ni-plus"></em></button>
+                                    </div>
+                                </div>
+                                <div class="col-auto">
+                                    <p>النزلاء: <span id="quadruple-span">0</span></p>
+                                </div>
+                            </div>
+
+                        </div>
+                    </li>
+                    <li>
+                        <div class="form-group">
+                            <div class="row g-3 align-items-center">
+                                <div class="col-auto">
+                                    <label class="form-label">غرفة خماسية</label>
+                                </div>
+                                <div class="col-auto">
+                                    <div class="form-control-wrap number-spinner-wrap" id="quintuple-room">
+                                        <button class="btn btn-icon btn-outline-light number-spinner-btn number-minus"
+                                            data-number="minus"><em class="icon ni ni-minus"></em></button>
+                                        <input id="quintuple-input" type="number" class="form-control number-spinner"
+                                            value="0">
+                                        <button class="btn btn-icon btn-outline-light number-spinner-btn number-plus"
+                                            data-number="plus"><em class="icon ni ni-plus"></em></button>
+                                    </div>
+                                </div>
+                                <div class="col-auto">
+                                    <p>النزلاء: <span id="quintuple-span">0</span></p>
+                                </div>
+                            </div>
+
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="p-3 bg-light fw-bold text-dark" style="text-align: right; direction: rtl; right: 0">
+                <span class="">إجمالي عدد النزلاء: </span>
+                <input type="hidden" id="countroom">
+                <span class="text-danger" id="countroomp"></span>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="applyButton">Apply</button>
+                <button type="button" class="btn btn-secondary" id="closeModalButton"
+                    data-bs-dismiss="modal">Close</button>
+            </div>
         </div>
-
-
     </div>
+</div>
+<!-- End modal -->
 
-    <div class="modal fade" tabindex="-1" id="modalAddRoom" style="z-index: 9909">
-        <div class="modal-dialog modal-xl" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">إضافة الغرف</h5>
-                    <a href="#" class="close" data-bs-dismiss="modal" aria-label="Close">
-                        <em class="icon ni ni-cross"></em>
-                    </a>
-                </div>
-                <div class="modal-body-sm">
-                    <div class="row p-1">
-                        <div class="col-4 p-2 border" dir="rtl" style="text-align: right">
-                             <p><span id="adult-span"></span> بالغ </p>
-                            <p> <span id="children-span"></span> طفل</p>
-                            <p><span id="number-of-room-span"></span> غرف</p>
-                        </div>
-                        <div class="col p-2 border">
-                            <ul>
-                                <li>
-                                    <div class="form-group">
-                                        <div class="row g-3 align-items-center">
-                                            <div class="col-auto">
-                                                <label class="form-label">البالغين</label>
-                                            </div>
-                                            <div class="col-auto">
-
-                                                <div class="form-control-wrap number-spinner-wrap" id="adult">
-                                                    <button class="btn btn-icon btn-outline-light number-spinner-btn number-minus"
-                                                            data-number="minus"><em class="icon ni ni-minus"></em>
-                                                    </button>
-                                                    <input id="adult-input" type="number"
-                                                           class="form-control number-spinner" value="0">
-                                                    <button class="btn btn-icon btn-outline-light number-spinner-btn number-plus"
-                                                            data-number="plus"><em class="icon ni ni-plus"></em>
-                                                    </button>
-                                                </div>
-                                            </div>
-                                            <div class="col-auto">
-
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="form-group">
-                                        <div class="row g-3 align-items-center">
-                                            <div class="col-auto">
-                                                <label class="form-label">الأطفال</label>
-                                            </div>
-                                            <div class="col-auto">
-
-                                                <div class="form-control-wrap number-spinner-wrap" id="children">
-                                                    <button class="btn btn-icon btn-outline-light number-spinner-btn number-minus"
-                                                            data-number="minus"><em class="icon ni ni-minus"></em>
-                                                    </button>
-                                                    <input id="children-input" type="number"
-                                                           class="form-control number-spinner"
-                                                           value="0">
-                                                    <button class="btn btn-icon btn-outline-light number-spinner-btn number-plus"
-                                                            data-number="plus"><em class="icon ni ni-plus"></em>
-                                                    </button>
-                                                </div>
-                                            </div>
-                                            <div class="col-auto">
-
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="form-group">
-                                        <div class="row g-3 align-items-center">
-                                            <div class="col-auto">
-                                                <label class="form-label">عدد الغرف</label>
-                                            </div>
-                                            <div class="col-auto">
-
-                                                <div class="form-control-wrap number-spinner-wrap" id="number-of-room">
-                                                    <button class="btn btn-icon btn-outline-light number-spinner-btn number-minus"
-                                                            data-number="minus"><em class="icon ni ni-minus"></em>
-                                                    </button>
-                                                    <input id="number-of-room-input" type="number"
-                                                           class="form-control number-spinner"
-                                                           value="0">
-                                                    <button class="btn btn-icon btn-outline-light number-spinner-btn number-plus"
-                                                            data-number="plus"><em class="icon ni ni-plus"></em>
-                                                    </button>
-                                                </div>
-                                            </div>
-                                            <div class="col-auto">
-
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                </li>
-
-                            </ul>
-                        </div>
+<div class="modal fade" tabindex="-1" id="modalAddRoom" style="z-index: 9909">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">إضافة الغرف</h5>
+                <a href="#" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <em class="icon ni ni-cross"></em>
+                </a>
+            </div>
+            <div class="modal-body-sm">
+                <div class="row p-1">
+                    <div class="col-4 p-2 border" dir="rtl" style="text-align: right">
+                        <p><span id="adult-span"></span> بالغ </p>
+                        <p> <span id="children-span"></span> طفل</p>
+                        <p><span id="number-of-room-span"></span> غرف</p>
                     </div>
+                    <div class="col p-2 border">
+                        <ul>
+                            <li>
+                                <div class="form-group">
+                                    <div class="row g-3 align-items-center">
+                                        <div class="col-auto">
+                                            <label class="form-label">البالغين</label>
+                                        </div>
+                                        <div class="col-auto">
 
-                </div>
-                <div class="p-3 bg-light fw-bold text-dark" style="text-align: right; direction: rtl; right: 0">
-                    <span class="">إجمالي عدد النزلاء: </span>
+                                            <div class="form-control-wrap number-spinner-wrap" id="adult">
+                                                <button
+                                                    class="btn btn-icon btn-outline-light number-spinner-btn number-minus"
+                                                    data-number="minus"><em class="icon ni ni-minus"></em>
+                                                </button>
+                                                <input id="adult-input" type="number"
+                                                    class="form-control number-spinner" value="0">
+                                                <button
+                                                    class="btn btn-icon btn-outline-light number-spinner-btn number-plus"
+                                                    data-number="plus"><em class="icon ni ni-plus"></em>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="col-auto">
 
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </li>
+                            <li>
+                                <div class="form-group">
+                                    <div class="row g-3 align-items-center">
+                                        <div class="col-auto">
+                                            <label class="form-label">الأطفال</label>
+                                        </div>
+                                        <div class="col-auto">
+
+                                            <div class="form-control-wrap number-spinner-wrap" id="children">
+                                                <button
+                                                    class="btn btn-icon btn-outline-light number-spinner-btn number-minus"
+                                                    data-number="minus"><em class="icon ni ni-minus"></em>
+                                                </button>
+                                                <input id="children-input" type="number"
+                                                    class="form-control number-spinner" value="0">
+                                                <button
+                                                    class="btn btn-icon btn-outline-light number-spinner-btn number-plus"
+                                                    data-number="plus"><em class="icon ni ni-plus"></em>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="col-auto">
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </li>
+                            <li>
+                                <div class="form-group">
+                                    <div class="row g-3 align-items-center">
+                                        <div class="col-auto">
+                                            <label class="form-label">عدد الغرف</label>
+                                        </div>
+                                        <div class="col-auto">
+
+                                            <div class="form-control-wrap number-spinner-wrap" id="number-of-room">
+                                                <button
+                                                    class="btn btn-icon btn-outline-light number-spinner-btn number-minus"
+                                                    data-number="minus"><em class="icon ni ni-minus"></em>
+                                                </button>
+                                                <input id="number-of-room-input" type="number"
+                                                    class="form-control number-spinner" value="0">
+                                                <button
+                                                    class="btn btn-icon btn-outline-light number-spinner-btn number-plus"
+                                                    data-number="plus"><em class="icon ni ni-plus"></em>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="col-auto">
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </li>
+
+                        </ul>
+                    </div>
                 </div>
+
+            </div>
+            <div class="p-3 bg-light fw-bold text-dark" style="text-align: right; direction: rtl; right: 0">
+                <span class="">إجمالي عدد النزلاء: </span>
+
             </div>
         </div>
-
-
     </div>
 
 
-    <script src="{% static 'js/jquery.min.js' %}"></script>
+</div>
 
-{#    room type#}
-    <script>
-        $(document).ready(function () {
-            $('#single-room').click(function () {
-                let a = ($('#single-input').val());
-                $('#single-span').text(a);
-            });
+
+<script src="{% static 'js/jquery.min.js' %}"></script>
+
+{# room type#}
+<script>
+    $(document).ready(function () {
+        $('#single-room').click(function () {
+            let a = ($('#single-input').val());
+            $('#single-span').text(a);
         });
-        $(document).ready(function () {
-            $('#double-room').click(function () {
-                let a = ($('#double-input').val());
-                let b = a *2;
-                $('#double-span').text(b);
-            });
+    });
+    $(document).ready(function () {
+        $('#double-room').click(function () {
+            let a = ($('#double-input').val());
+            let b = a * 2;
+            $('#double-span').text(b);
         });
-        $(document).ready(function () {
-            $('#triple-room').click(function () {
-                let a = ($('#triple-input').val());
-                let b = a *3;
-                $('#triple-span').text(b);
-            });
+    });
+    $(document).ready(function () {
+        $('#triple-room').click(function () {
+            let a = ($('#triple-input').val());
+            let b = a * 3;
+            $('#triple-span').text(b);
         });
-        $(document).ready(function () {
-            $('#quadruple-room').click(function () {
-                let a = ($('#quadruple-input').val());
-                let b = a *4;
-                $('#quadruple-span').text(b);
-            });
+    });
+    $(document).ready(function () {
+        $('#quadruple-room').click(function () {
+            let a = ($('#quadruple-input').val());
+            let b = a * 4;
+            $('#quadruple-span').text(b);
         });
-        $(document).ready(function () {
-            $('#quintuple-room').click(function () {
-                let a = ($('#quintuple-input').val());
-                let b = a *5;
-                $('#quintuple-span').text(b);
-            });
+    });
+    $(document).ready(function () {
+        $('#quintuple-room').click(function () {
+            let a = ($('#quintuple-input').val());
+            let b = a * 5;
+            $('#quintuple-span').text(b);
+        });
+    });
+
+    $(document).ready(function () {
+        $('.number-spinner-wrap').click(function () {
+            let a = $("#single-span").text();
+            let b = $("#double-span").text();
+            let c = $("#triple-span").text();
+            let d = $("#quadruple-span").text();
+            let e = $("#quintuple-span").text();
+
+            let countroom = parseInt(a) + parseInt(b) + parseInt(c) + parseInt(d) + parseInt(e)
+            console.log(countroom)
+            $('#countroom').val(countroom);
+            $('#countroomp').text(countroom);
         });
 
-        $(document).ready(function () {
-            $('.number-spinner-wrap').click(function () {
-                let a = $("#single-span").text();
-                let b = $("#double-span").text();
-                let c = $("#triple-span").text();
-                let d = $("#quadruple-span").text();
-                let e = $("#quintuple-span").text();
-
-              let countroom =   parseInt(a) + parseInt(b) + parseInt(c) + parseInt(d) + parseInt(e)
-                console.log(countroom)
-                $('#countroom').val(countroom);
-                $('#countroomp').text(countroom);
-            });
-            
-});
-    </script>
+    });
+</script>
 <!-- add values to Main form -->
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
         // Modal data
         const singleRoomInput = document.getElementById('single-input');
         const doubleRoomInput = document.getElementById('double-input');
@@ -578,7 +576,7 @@
 
         const totalGuestsNumber = document.getElementById('countroom')
         // End Modal data
-        
+
 
         // main form input fields 
         const mainSingleRoomInput = document.getElementById('mainSingleRoom');
@@ -588,11 +586,11 @@
         const mainQuintupleRoomInput = document.getElementById('mainQuintupleRoom')
 
         const mainGuestsNumberInput = document.getElementById('guests');
-        
+
         const applyButton = document.getElementById('applyButton');
         const closeModalButton = document.getElementById('closeModalButton');
 
-        applyButton.addEventListener('click', function() {
+        applyButton.addEventListener('click', function () {
             // Get values from modal inputs
             const singleRoomValue = singleRoomInput.value;
             const doubleRoomValue = doubleRoomInput.value;
@@ -601,7 +599,7 @@
             const quintupleRoomInputValue = quintupleRoomInput.value;
 
             const totalGuestsNumberValue = totalGuestsNumber.value
-            
+
             // Update main form inputs with modal values
             mainSingleRoomInput.value = singleRoomValue;
             mainDoubleRoomInput.value = doubleRoomValue;
@@ -619,25 +617,25 @@
 
 
 
-    {#    add rooms#}
-    <script>
-        $(document).ready(function () {
-            $('#adult').click(function () {
-                let a = ($('#adult-input').val());
-                console.log(a);
-                $('#adult-span').text(a);
-            });
-            $('#children').click(function () {
-                let a = ($('#children-input').val());
-                console.log(a);
-                $('#children-span').text(a);
-            });
-            $('#number-of-room').click(function () {
-                let a = ($('#number-of-room-input').val());
-                console.log(a);
-                $('#number-of-room-span').text(a);
-            });
+{# add rooms#}
+<script>
+    $(document).ready(function () {
+        $('#adult').click(function () {
+            let a = ($('#adult-input').val());
+            console.log(a);
+            $('#adult-span').text(a);
         });
-    </script>
+        $('#children').click(function () {
+            let a = ($('#children-input').val());
+            console.log(a);
+            $('#children-span').text(a);
+        });
+        $('#number-of-room').click(function () {
+            let a = ($('#number-of-room-input').val());
+            console.log(a);
+            $('#number-of-room-span').text(a);
+        });
+    });
+</script>
 
 {% endblock %}

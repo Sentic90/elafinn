@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from .models import *
 from .forms import *
 from django.views import generic
+from django.contrib.auth.decorators import login_required
 from django.views.generic.detail import DetailView
 from django.urls import reverse, reverse_lazy
 from django.contrib import messages, auth
@@ -291,6 +292,7 @@ def gallery_upload(request, slug):
     return JsonResponse({"Message": ""})
 
 
+@login_required
 def bookings(request, slug):
     hotels = Hotel.objects.filter(user=request.user)
     h = get_object_or_404(Hotel, slug=slug)

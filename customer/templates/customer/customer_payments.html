@@ -1,0 +1,96 @@
+{% extends 'dashboard/base.html' %}
+{% load static %}
+{% block sidbar %}
+{% include 'customer/customer_sidebar.html' %}
+{% endblock %}
+{% block navSettings %}
+<li class="dropdown user-dropdown">
+    <a href="#" class="dropdown-toggle" data-bs-toggle="dropdown">
+        <div class="user-toggle">
+            <div class="user-avatar sm">
+                <em class="icon ni ni-user-alt"></em>
+            </div>
+            <div class="user-info d-none d-md-block">
+                <div class="user-status">الاعدادات</div>
+                <div class="user-name dropdown-indicator">{{ request.user.first_name }}</div>
+            </div>
+        </div>
+    </a>
+    <div class="dropdown-menu dropdown-menu-md dropdown-menu-end dropdown-menu-s1">
+        <div class="dropdown-inner user-card-wrap bg-lighter d-none d-md-block">
+            <div class="user-card">
+                <div class="user-avatar">
+                    <span>AB</span>
+                </div>
+                <div class="user-info">
+                    <span class="lead-text">{{ request.user.first_name }}</span>
+                    <span class="sub-text">{{ request.user.email }}</span>
+                </div>
+            </div>
+        </div>
+        <div class="dropdown-inner">
+            <ul class="link-list">
+                <li><a href="{% url 'customer-panel-profile' %}"><em class="icon ni ni-user-alt"></em><span>الملف
+                            الشخصي</span></a>
+                </li>
+
+                <li><a class="dark-switch" href="#"><em class="icon ni ni-moon"></em><span>Dark Mode</span></a></li>
+            </ul>
+        </div>
+        <div class="dropdown-inner">
+            <ul class="link-list">
+                <li><a href="{% url 'main:logout' %}"><em class="icon ni ni-signout"></em><span>تسجيل الخروج</span></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</li>
+{% endblock navSettings %}
+{% block content %}
+
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo">رفع الوثائق</button>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Upload Files</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form enctype="multipart/form-data" method="post" action="{% url 'customer-payments' %}">
+          {% csrf_token %}
+          <div class="col-md-6 col-lg-4 col-xxl-3">
+            <div class="form-group">
+              <label class="form-label">رفع الوثائق</label>
+              <div class="form-control-wrap">
+                <div class="form-file">
+                  <label class="form-file-label" for="customFile">اختر ملف</label>
+                  {{ form.document }}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-4 col-xxl-3">
+            <div class="form-group">
+              <label class="form-label">{{ form.payment_receipt.label_tag}}</label>
+              <div class="form-control-wrap">
+                <div class="form-file">
+                  <label class="form-file-label" for="customFile">اختر ملف</label>
+                  {{form.payment_receipt }}
+                </div>
+              </div>
+            </div>
+          </div>
+        
+      </div>
+      <div class="modal-footer" lang="ar">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">إلغاء</button>
+        <button type="submit" class="btn btn-primary">رفع الملفات</button>
+      </div>
+    </form>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
