@@ -1,57 +1,3 @@
-{% extends 'dashboard/base.html' %}
-{% load static %}
-
-{% block sidbar %}
-{% include 'customer/customer_sidebar.html' %}
-{% endblock %}
-
-<!-- Nav settings  -->
-{% block navSettings %}
-<li class="dropdown user-dropdown">
-    <a href="#" class="dropdown-toggle" data-bs-toggle="dropdown">
-        <div class="user-toggle">
-            <div class="user-avatar sm">
-                <em class="icon ni ni-user-alt"></em>
-            </div>
-            <div class="user-info d-none d-md-block">
-                <div class="user-status">الاعدادات</div>
-                <div class="user-name dropdown-indicator">{{ request.user.first_name }}</div>
-            </div>
-        </div>
-    </a>
-    <div class="dropdown-menu dropdown-menu-md dropdown-menu-end dropdown-menu-s1">
-        <div class="dropdown-inner user-card-wrap bg-lighter d-none d-md-block">
-            <div class="user-card">
-                <div class="user-avatar">
-                    <span>AB</span>
-                </div>
-                <div class="user-info">
-                    <span class="lead-text">{{ request.user.first_name }}</span>
-                    <span class="sub-text">{{ request.user.email }}</span>
-                </div>
-            </div>
-        </div>
-        <div class="dropdown-inner">
-            <ul class="link-list">
-                <li><a href="{% url 'customer-panel-profile' %}"><em
-                        class="icon ni ni-user-alt"></em><span>الملف الشخصي</span></a>
-                </li>
-                
-                <li><a class="dark-switch" href="#"><em
-                        class="icon ni ni-moon"></em><span>Dark Mode</span></a></li>
-            </ul>
-        </div>
-        <div class="dropdown-inner">
-            <ul class="link-list">
-                <li><a href="{% url 'main:logout' %}"><em
-                        class="icon ni ni-signout"></em><span>تسجيل الخروج</span></a>
-                </li>
-            </ul>
-        </div>
-    </div>
-</li>
-{% endblock navSettings %}
-{% block notification %}
 <li class="dropdown notification-dropdown me-n1">
     <a href="#" class="dropdown-toggle nk-quick-nav-icon" data-bs-toggle="dropdown">
         <div class="icon-status icon-status-info"><em class="icon ni ni-bell"></em>
@@ -66,20 +12,27 @@
         
         <div class="dropdown-body">
             <div class="nk-notification">
-                {% for notification in notifications %}
                 <div class="nk-notification-item dropdown-inner">
                     <div class="nk-notification-icon">
                         <em class="icon icon-circle bg-warning-dim ni ni-curve-down-right"></em>
                     </div>
                     
                     <div class="nk-notification-content">
-                        <div class="nk-notification-text">{{ notification.message }}
-                            <span>{{ notification.recipient.first_name}}</span></div>
-                        <div class="nk-notification-time">{{notification.time|timesince}}</div>
+                        <div class="nk-notification-text">لديك طلب من
+                            <span>اسم العميل</span></div>
+                        <div class="nk-notification-time">2 hrs ago</div>
                     </div>
                 </div>
-                {% endfor %}
-                
+                <div class="nk-notification-item dropdown-inner">
+                    <div class="nk-notification-icon">
+                        <em class="icon icon-circle bg-warning-dim ni ni-curve-down-right"></em>
+                    </div>
+                    <div class="nk-notification-content">
+                        <div class="nk-notification-text">لديك طلب من
+                            <span>اسم العميل</span></div>
+                        <div class="nk-notification-time">2 hrs ago</div>
+                    </div>
+                </div>
                 {#                                                    <div class="nk-notification-item dropdown-inner">#}
                 {#                                                        <div class="nk-notification-icon">#}
                 {#                                                            <em class="icon icon-circle bg-success-dim ni ni-curve-down-left"></em>#}
@@ -114,21 +67,3 @@
         </div>
     </div>
 </li>
-{% endblock notification %}
-{% block page_title %}لوحة المستخدم {% endblock %}
-{% block content %}
-<!-- messages  -->
-
-{% for message in messages %}
-<div class="alert alert-{{ message.tags }} alert-dismissible" role="alert">
-    {{ message }}
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-    </button>
-</div>
-{% endfor %}
-
-<!-- end message -->
-
-<!-- content @e -->
-{% endblock %}

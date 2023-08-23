@@ -44,6 +44,13 @@ urlpatterns = [
     path('dashboard/my_hotel/<slug:slug>/bookings/edit/<int:bookingId>',
          views.booking_edit, name='booking-edit'),
 
+     # Requests
+    path('dashboard/my_hotel/<slug:slug>/requests',
+         views.requests, name='request-list'),
+
+    path('dashboard/my_hotel/<slug:slug>/requests/edit/<int:requestId>',
+         views.request_details, name='request-details'),
+
     path('dashboard/my_hotel/<slug:slug>/rooms-list',
          views.room_list, name='room-list'),
     path('dashboard/my_hotel/<slug:slug>/rooms-grid',

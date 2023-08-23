@@ -6,12 +6,54 @@ from .models import Reservation
 from django_countries.fields import CountryField
 from django_countries.widgets import CountrySelectWidget
 
-from dashboard.models import Booking, Hotel, Season
+from dashboard.models import Booking, Hotel, Season, Request
 from django.forms.widgets import SelectDateWidget
 from customer.models import Customer
 # Create your forms here.
 
 User = get_user_model()
+
+class RequestForm(forms.ModelForm):
+    package = forms.ModelChoiceField(queryset=Season.objects.all(), widget=forms.widgets.Select(
+        attrs={'class':'form-select form-select2'}
+    ))
+    
+
+    class Meta:
+        model = Request
+        fields = ['room', 'guests', 'package', 'start_date', 'end_date']
+
+
+    def save(self, request, slug, commit=True):
+        # Get the customer from request.user
+        customer = Customer.objects.get(user=request.user)
+
+        # get Hotel from slug
+        hotel = Hotel.objects.get(slug=slug)
+        # Get the room from request.POST
+        rooms_data = self.cleaned_data.get('room')  # Assuming 'room' is the name of the room field in the form
+
+        fetched_rooms = hotel.room_set.filter(id__in=rooms_data).values('id')
+        rooms = [room['id'] for room in fetched_rooms]
+
+        # Create a new instance of the associated model using form data
+        request = super().save(commit=False)
+
+        # Assign the fields
+        request.hotel = hotel
+        request.customer = customer
+        
+        # Save the booking instance to the database if commit is True
+        if commit:
+            request.save()
+
+        request.room.set(rooms)
+        
+        hotel.room_set.filter(id__in=rooms).update(status=4) #booked
+        # send confirmation emails,
+
+        return request
+
 
 class BookingForm(forms.ModelForm):
     package = forms.ModelChoiceField(queryset=Season.objects.all(), widget=forms.widgets.Select(
@@ -54,6 +96,8 @@ class BookingForm(forms.ModelForm):
             booking.save()
 
         booking.room.set(rooms)
+        
+        hotel.room_set.filter(id__in=rooms).update(status=4) #booked
         # send confirmation emails,
 
         return booking

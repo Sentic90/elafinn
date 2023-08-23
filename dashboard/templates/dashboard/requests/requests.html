@@ -89,7 +89,7 @@
                                                     </div><!-- .nk-tb-item -->
                                                     
                                                     </div><!-- .nk-tb-item -->
-                                                  {% include 'dashboard/components/orders_list.html' with orders=orders hotel=hotel%}
+                                                  {% include 'dashboard/components/request_list.html' with requests=hotel.request_set.all %}
                                                   <div class="nk-tb-item">
                                                       <div class="nk-tb-col nk-tb-col-check">
                                                           <div class="custom-control custom-control-sm custom-checkbox notext">

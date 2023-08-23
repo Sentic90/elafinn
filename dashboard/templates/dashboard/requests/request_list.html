@@ -1,5 +1,5 @@
 
-{% for order in orders %}
+{% for request in requests %}
 <div class="nk-tb-item">
     <div class="nk-tb-col nk-tb-col-check">
         <div class="custom-control custom-control-sm custom-checkbox notext">
@@ -8,7 +8,7 @@
         </div>
     </div>
     <div class="nk-tb-col">
-        <span class="text-primary">{{order.id}}</span>
+        <span class="text-primary">{{request.id}}</span>
     </div>
     <div class="nk-tb-col">
         <div class="user-card">
@@ -16,8 +16,8 @@
                 <img src="./images/avatar/a-sm.jpg" alt="">
             </div>
             <div class="user-info">
-                <span class="tb-lead">{{order.full_name}} <span class="dot dot-warning d-md-none ms-1"></span></span>
-                <span>{{ order.email}}</span>
+                <span class="tb-lead">{{request.full_name}} <span class="dot dot-warning d-md-none ms-1"></span></span>
+                <span>{{ request.email}}</span>
             </div>
         </div>
     </div>
@@ -28,13 +28,13 @@
         <span class="tb-status text-warning">Pending</span>
     </div>
     <div class="nk-tb-col tb-col-lg">
-        <span>{{ order.room.roomType}}</span>
+        <span>{{ request.room.roomType}}</span>
     </div>
     <div class="nk-tb-col tb-col-xxl">
         <span>+124 394-1787</span>
     </div>
     <div class="nk-tb-col tb-col-lg">
-        <span>{{ order.created}}</span>
+        <span>{{ request.created}}</span>
     </div>
     <div class="nk-tb-col tb-col-xxl">
         <span>08 Feb 2021</span>

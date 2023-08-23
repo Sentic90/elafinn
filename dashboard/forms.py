@@ -137,6 +137,18 @@ class BookingForm(forms.ModelForm):
         self.fields['status'].widget.attrs.update({'class':'form-select js-select2'})
         self.fields['room'].widget.attrs.update({'class': 'form-control'})
 
+
+class RequestForm(forms.ModelForm):
+    class Meta:
+        model = Request
+        fields = ['status', 'room']
+        widgets = {'room': forms.widgets.SelectMultiple()}
+        # exclude = []
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['status'].widget.attrs.update({'class':'form-select js-select2'})
+        self.fields['room'].widget.attrs.update({'class': 'form-control'})
+
 class PaymentMethodForm(forms.ModelForm):
     class Meta:
         model = PaymentMethod

@@ -5,7 +5,7 @@ from django.utils.http import url_has_allowed_host_and_scheme as is_safe_url
 from django.urls import reverse
 
 from customer.forms import CustomerForm
-from .forms import BookingForm, NewUserForm
+from .forms import BookingForm, NewUserForm, RequestForm
 from django.shortcuts import get_object_or_404
 from django.contrib import messages
 from django.contrib.auth.forms import AuthenticationForm  # add this
@@ -31,7 +31,7 @@ def index(request):
 def result(request):
     # Initial queryset with active hotels
     queryset = Hotel.objects.filter(is_active=True)
-    
+
     # Main search parameters
     main_search_params = {
         'city': request.GET.get('city', ''),
@@ -39,11 +39,16 @@ def result(request):
         'guests': request.GET.get('guests', 0),
         'datefilter': request.GET.get('datefilter', ''),
     }
-    # if 'both' and 'all' and 0 in main_search_params.values():
-    # # No main search parameters provided, return all hotels
-    #     return render(request, 'main/result.html', {'hotels': queryset})
-    # assining to User session #TODO Room in cookies
-    # Convert start and end date strings to datetime objects
+    rooms = {
+        # Rooms
+        'single_room':request.GET.get('single_room', 0),
+        'double_room':request.GET.get('double_room', 0),
+
+        'triple_room':request.GET.get('triple_room', 0),
+        'quadruple_room':request.GET.get('quadruple_room', 0),
+        'quintuple_room':request.GET.get('quintuple_room', 0),
+    }
+
     start_date = None
     end_date = None
     if main_search_params['datefilter']:
@@ -75,6 +80,8 @@ def result(request):
         )
 
     request.session['main_search_params'] = main_search_params
+    request.session['rooms'] = rooms
+    
     request.session['package_id'] = int(request.GET.get('package_id', 0))
     
 
@@ -110,25 +117,15 @@ def filtered_sidebar(request):
 
 def hotel_details(request, slug):
 
-    customer = Customer.objects.get(user=request.user)
+    if request.user.is_authenticated:
+        customer = Customer.objects.get(user=request.user)
+        customer_form = CustomerForm(instance=customer)
+    else:
+        customer_form = None
     hotel = Hotel.objects.get(slug=slug)
     main_search_params = request.session.get('main_search_params', {})
-    if request.method == 'POST':
-        form = BookingForm(request.POST, request.FILES)
-        if form.is_valid():
-            # valid
-            print(form.cleaned_data)
-            rooms = Room.objects.values_list('id')[:2]
-            hotel = Hotel.objects.get(slug=slug)
-            booking = Booking.objects.create(
-                customer=customer, hotel=hotel,start_date = datetime.now(),end_date = datetime.now()
-                )
-            booking.room.set([1,4])
-            return redirect(reverse('customer-panel'))
-        print(form.errors)
-        
-    booking_form = BookingForm()
-    customer_form = CustomerForm(instance=customer)
+    booking_form = RequestForm()
+    
     try:
         package = get_object_or_404(Season, id=request.session.get('package_id', 0))
     except:
@@ -161,25 +158,10 @@ def room_details(request, slug, roomId):
 def booking_add(request, slug):
 
     if request.method=='POST':
-        print(request.POST)
-        # customer = Customer.objects.get(user=request.user) #TODO handle execptions
-        # Package + Guests + start & end dates + 
-        # hotel + rooms + price (total + VAT) + Notes 
-        # document + Receipt 
-        form = BookingForm(request.POST, request.FILES)
+        form = RequestForm(request.POST)
         if form.is_valid():
             form.save(request, slug)
         
-        # rooms = Room.objects.values_list('id')[:2]
-        # hotel = Hotel.objects.get(slug=slug)
-        # booking = Booking.objects.create(
-        #     customer=customer, 
-        #     hotel=hotel,
-        #     start_date = datetime.now(),
-        #     end_date = datetime.now(),
-        #     package_id=4
-        #     )
-        # booking.room.set([1,4])
             return redirect(reverse('customer-booking'))
         print(form.errors.as_json())
 

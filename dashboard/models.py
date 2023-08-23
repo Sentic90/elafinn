@@ -1,5 +1,7 @@
 import random
 import string
+from django.dispatch import receiver
+from django.db.models.signals import post_save
 from geopy.distance import distance as geopy_distance
 from django.db import models
 from multiselectfield import MultiSelectField
@@ -8,7 +10,7 @@ from django_countries.fields import CountryField
 from PIL import Image
 from django.urls import reverse
 from django.template.defaultfilters import slugify
-
+from core.models import Notification
 
 Admin = get_user_model()
 
@@ -417,17 +419,33 @@ class Hotel(models.Model):
 
     @property
     def rooms(self):
+        """"
+            return: QuerySet (avaliable rooms)
+        
+        """
         return self.room_set.filter(status=2)
     @property 
     def total_room(self):
-        return self.room_set.all().count()
+        """"
+            return: Number (total avaliable rooms)
+        
+        """
+        return self.room_set.filter(status=2).count()
 
     @property
     def total_capacity(self):
+        """"
+            return: Number (total guests capacity including booked room)
+        
+        """
         return self.room_set.all().aggregate(total_capacity=models.Sum('capacity'))['total_capacity']
 
     @property 
     def accomadate_space(self):
+        """"
+            return: Number (total guests capacity avaliable )
+        
+        """
         return self.room_set.filter(status=2).aggregate(accomadate_space=models.Sum('capacity'))['accomadate_space']
 
 
@@ -530,7 +548,7 @@ class Room(models.Model):
     updated = models.DateTimeField(auto_now=True)
 
     price = models.FloatField(verbose_name='سعر الغرفة')
-
+    # Owner --> The room can be rented by someone
     def __str__(self):
         return self.roomNo
 
@@ -592,7 +610,7 @@ class AnnualRent(models.Model):
 
 
 BOOKING_STATUS = (
-    ("pending", 'في الانتظار'),
+    ("pending", 'بانتظار الدفع'),
     ("processed", "تم الحجز"),
     ("rejected", "مرفوض")
 )
@@ -614,8 +632,8 @@ class Booking(models.Model):
     room = models.ManyToManyField(to=Room,verbose_name="الغرفة")
     status = models.CharField(
         choices=BOOKING_STATUS, verbose_name="حالة الطلب", max_length=50, default="pending")
-    gender = models.CharField(max_length=10, choices=GENDER_TYPE, verbose_name='الجنس', default='Male')
     guests = models.PositiveIntegerField(verbose_name='عدد الضيوف', default=1)
+    nationality = models.CharField(choices=NATIONALITY,max_length=3,verbose_name="جنسية الضيوف", default='ALL')
     notes = models.TextField(null=True, blank=True,verbose_name='ملاحظات')
     # docuemnts
     document = models.FileField(upload_to='documents/', null=True, blank=True, verbose_name='المستندات')
@@ -644,6 +662,67 @@ PAYMENT_TYPE=(
     (100, 'تحويل بنكي'),
     (200, 'دفع عند الوصول'),
 )
+
+REQUEST_STATUS = (
+('pending', 'في الانتظار'),
+('accepted', 'مقبول'),
+('rejected', 'مرفوض'),
+)
+class Request(models.Model):
+    customer = models.ForeignKey(to='customer.Customer', on_delete=models.CASCADE, verbose_name='العميل')
+    hotel = models.ForeignKey(
+        to=Hotel, on_delete=models.CASCADE, verbose_name="الفندق")
+    vat = models.FloatField(verbose_name="ضريبة القيمة المضافة", default=7)
+    total_with_vat = models.FloatField(
+        verbose_name="الاجمالي مع القيمة المضافة", default=0)
+    coupon = models.FloatField(verbose_name="كوبون خصم", default=1)
+    room = models.ManyToManyField(to=Room,verbose_name="الغرفة")
+    status = models.CharField(
+        choices=REQUEST_STATUS, verbose_name="حالة الطلب", max_length=50, default="pending")
+    guests = models.PositiveIntegerField(verbose_name='عدد الضيوف', default=1)
+    nationality = models.CharField(choices=NATIONALITY,max_length=3,verbose_name="جنسية الضيوف", default='ALL')
+    notes = models.TextField(null=True, blank=True,verbose_name='ملاحظات')
+    # date
+    start_date = models.DateField(verbose_name='تاريخ الوصول')
+    end_date = models.DateField(verbose_name='تاريخ المغادرة')
+
+    package = models.ForeignKey(to=Season, on_delete=models.CASCADE,verbose_name='الباقة')
+    created = models.DateTimeField(
+        auto_now_add=True, verbose_name="تاريخ الطلب")
+    updated = models.DateTimeField(auto_now=True)
+
+
+    def accept_and_create_booking(self):
+        if self.status == 'accepted':
+            booking = Booking.objects.create(
+                customer=self.customer,
+                hotel=self.hotel,
+                vat=self.vat,
+                total_with_vat=self.total_with_vat,
+                coupon=self.coupon,
+                guests = self.guests,
+                nationality = self.nationality,
+                notes = self.notes,
+                start_date = self.start_date,
+                end_date = self.end_date,
+                package = self.package,
+
+                status='pending'
+            )
+            booking.room.set(self.room.all())
+
+            # notifications 
+            Notification.objects.create(
+                recipient=self.customer.user,
+                message='تم قبول الطلب بنجاح في انتظار الدفع'
+            )
+            return booking
+        return None
+
+@receiver(post_save, sender=Request)
+def create_booking_from_request(sender, instance, **kwargs):
+    if instance.status == 'accepted':
+        instance.accept_and_create_booking()
 
 # class PaymentMethodQuerySet(models.query.QuerySet):
 #     def active(self):

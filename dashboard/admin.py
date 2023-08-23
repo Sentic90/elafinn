@@ -7,12 +7,11 @@ from .models import *
 class HotelAdmin(admin.ModelAdmin):
     list_display = ['id','hotel_name', 'total_room', 'total_capacity', 'accomadate_space']
 
+    # inlines = ['RoomInline']
+
 class RoomAdmin(admin.ModelAdmin):
     list_display = ['roomNo', 'status','capacity', 'hotel']
-
-
-
-
+    list_editable = ['status']
 
 class RoomInline(admin.TabularInline):
     # autocomplete_fields = ['roomNo']
@@ -28,6 +27,8 @@ class BookingAdmin(admin.ModelAdmin):
     readonly_fields = ['vat', 'total_with_vat', 'created']
     filter_horizontal = ['room']
 
+    
+
 class AnnualRentAdmin(admin.ModelAdmin):
     filter_horizontal = ['rooms']
 
@@ -38,6 +39,12 @@ class HotelLocationAdmin(admin.ModelAdmin):
 @admin.register(PaymentMethod)
 class HotelLocationAdmin(admin.ModelAdmin):
     list_display = ['id', 'bank_name', 'currency', 'status','type', 'hotel']
+
+
+@admin.register(Request)
+class RequestAdmin(admin.ModelAdmin):
+    list_display = ['id', 'status']
+    list_editable = ['status']
 
 admin.site.register(Hotel, HotelAdmin)
 admin.site.register(Booking, BookingAdmin)

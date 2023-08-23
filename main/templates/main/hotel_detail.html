@@ -250,47 +250,7 @@
             <br>
 
             <div class="row g-4">
-              <div class="col-lg-12">
-                <div class="form-group">
-                  <label class="form-label" for="full-name-1">الاسم الكامل</label>
-                  <div class="form-control-wrap">
-                    <input type="text" value="Test guests" class="form-control" id="full-name-1" name="full_name"
-                      required>
-                  </div>
-                </div>
-              </div>
-              <div class="col-lg-6">
-                <div class="form-group">
-                  <label class="form-label" for="email-address-1">البريد الإلكتروني</label>
-                  <div class="form-control-wrap">
-                    <input type="text" value="example@gmail.com" class="form-control" name="email" id="email-address-1"
-                      required>
-                  </div>
-                </div>
-              </div>
-              <div class="col-lg-6">
-                <div class="form-group">
-                  <label class="form-label" for="phone-no-1">رقم الجوال</label>
-                  <div class="form-control-wrap">
-                    <input type="text" value="+96612345678" class="form-control" name="phone" id="phone-no-1" required>
-                  </div>
-                </div>
-              </div>
-              <div class="col-lg-6">
-                <div class="form-group">
-                  <ul class="custom-control-group g-3 align-center">
-                    <li>
-                      <div class="custom-control custom-control-sm custom-checkbox">
-                        <input type="checkbox" class="custom-control-input" id="pay-cash-1">
-                        <label class="custom-control-label" for="pay-cash-1">
-                          أقوم بهذا الحجز نيابةًً عن شخص آخر ولا أنوي الإقامة في هذا
-                          الفندق.
-                        </label>
-                      </div>
-                    </li>
-                  </ul>
-                </div>
-              </div>
+              
               <div class="row mt-5 justify-content-center" style="height: 20vh">
                 <div class="col text-center">
                   <div class="form-group">
@@ -440,15 +400,6 @@
               </div>
             </div>
 
-            <!-- Gender -->
-            <div class="col-md-6 col-lg-4 col-xxl-3">
-              <div class="form-group">
-                <label class="form-label">{{ customer_form.gender.label_tag }}</label>
-                <div class="form-control-wrap">
-                  {{ customer_form.gender }}
-                </div>
-              </div>
-            </div>
 
             <!-- phone -->
             <div class="col-md-6 col-lg-4 col-xxl-3">
@@ -471,19 +422,6 @@
               <div class="form-group">
                 <label class="form-label" for="address">{{ customer_form.address.label_tag }}</label>
                 {{ customer_form.address }}
-              </div>
-            </div>
-
-            <!-- document -->
-            <div class="col-md-6 col-lg-4 col-xxl-3">
-              <div class="form-group">
-                <label class="form-label">رفع الوثائق</label>
-                <div class="form-control-wrap">
-                  <div class="form-file">
-                    <label class="form-file-label" for="customFile">اختر ملف</label>
-                    {{booking_form.document }}
-                  </div>
-                </div>
               </div>
             </div>
 

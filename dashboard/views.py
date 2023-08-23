@@ -291,6 +291,48 @@ def gallery_upload(request, slug):
         return JsonResponse({"Message": "File Uploaded Successfully"})
     return JsonResponse({"Message": ""})
 
+# requests
+def requests(request, slug):
+    # url -> dashboard/my_hotel/<slug:slug>/requests
+    # namespace -> request-list-> 
+    h = get_object_or_404(Hotel, slug=slug)
+    slug = h.slug
+    hotel = Hotel.objects.get(slug=slug)
+    rooms = Room.objects.filter(roomType__hotel__slug=slug)
+    messages_list = messages.get_messages(request)
+    context = {
+        'hotel': hotel,
+        'slug': slug,
+        'rooms': rooms, 
+        'messages':messages_list
+    }
+    return render(request, 'dashboard/requests/requests.html', context)
+
+def request_details(request, slug, requestId):
+    instance = Request.objects.get(id=requestId)
+    
+    if request.method == 'POST':
+        form = RequestForm(request.POST, instance=instance)
+        if form.is_valid():
+            form.save()
+
+            messages.success(request, 'تم معالجة الطلب بنجاح')
+            return redirect(reverse('request-list', kwargs={'slug':slug}))
+    # GET
+    hotels = Hotel.objects.filter(user=request.user)
+    h = get_object_or_404(Hotel, slug=slug)
+    slug = h.slug
+    hotel = Hotel.objects.get(slug=slug)
+
+    form = RequestForm(instance=instance)
+    context = {
+        'hotel': hotel,
+        'slug': slug,
+        'booking':instance,
+        'form':form
+    }
+    return render(request, 'dashboard/booking/request_details.html', context)
+
 
 @login_required
 def bookings(request, slug):
@@ -334,17 +376,11 @@ def booking_edit(request, slug, bookingId):
 
             messages.success(request, 'تم معالجة الطلب بنجاح')
             return redirect(reverse('booking-list', kwargs={'slug':slug}))
-
-
-    if request.method == 'DELETE':
-        pass
     # GET
     hotels = Hotel.objects.filter(user=request.user)
     h = get_object_or_404(Hotel, slug=slug)
     slug = h.slug
     hotel = Hotel.objects.get(slug=slug)
-    if request.method == 'PUT':
-        pass
 
     form = BookingForm(instance=instance)
     context = {

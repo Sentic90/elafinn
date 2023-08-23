@@ -3,6 +3,7 @@ from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.http import HttpResponse
+from core.models import Notification
 from customer.forms import CustomerForm
 from main.forms import BookingForm as BookingCustomerForm
 from customer.models import Customer
@@ -10,9 +11,12 @@ from dashboard.models import Booking
 
 
 def panel(request):
+
     messages_list = messages.get_messages(request)
+    notifications = Notification.objects.filter(recipient=request.user)
     context = {
-        'messages':messages_list
+        'messages':messages_list,
+        'notifications':notifications
     }
     return render(request, 'customer/customer_panel.html', context)
 
@@ -37,6 +41,7 @@ def profile(request):
 
 def customer_booking(request):
     customer = Customer.objects.get(user=request.user)
+    notifications = Notification.objects.filter(recipient=request.user)
     bookings = Booking.objects.filter(customer=customer).order_by('-created')
 
     bookings = customer.booking_set.all()
@@ -48,7 +53,8 @@ def customer_booking(request):
 
     context = {
         
-        'booking_and_forms':booking_and_forms
+        'booking_and_forms':booking_and_forms,
+        'notifications':notifications
         
         }
     return render(request, 'customer/customer_booking.html', context)
