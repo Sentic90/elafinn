@@ -331,7 +331,7 @@
                     <i class="fal fa-info-circle"></i>
                   </a>
                 </p>
-                <span class="tb-amount fw-bold">{{ room.price}}<span class="currency"> SAR</span>
+                <span class="room-price tb-amount fw-bold">{{ room.price}}<span class="currency"> SAR</span>
                 </span>
               </div>
               {% endfor %}
@@ -345,15 +345,15 @@
             <table style="font-size: 13px; width: 100%">
               <tr>
                 <td>ضريبة القيمة المضافة</td>
-                <td class="text-sm-end">SAR 7.32</td>
+                <td class="text-sm-end">SAR <span id="vatAmount">{{hotel.vat}}</span></td>
               </tr>
               <tr>
                 <td>الإجمالي شامل ضريبة القيمة المضافة</td>
-                <td class="text-sm-end">SAR 163.90</td>
+                <td class="text-sm-end">SAR <span id="totalWithVat">0</span></td>
               </tr>
               <tr>
                 <td>كود الخصم</td>
-                <td class="text-sm-end">SAR 17.08</td>
+                <td class="text-sm-end">0</td>
               </tr>
             </table>
 
@@ -363,7 +363,7 @@
                 <h6 class="fw-bold">السعر الإجمالي</h6>
               </div>
               <div class="col">
-                <h5 class="text-teal text-lg-end">SAR 146.82</h5>
+                <h5 class="text-teal text-lg-end">SAR <span id="totalPrice">0</span></h5>
               </div>
             </div>
           </div>
@@ -653,4 +653,20 @@
   </div>
 </div>
 
+<script src="{% static 'js/jquery.min.js'%}"></script>
+<script>
+  $(document).ready( function(){
+    var vatAmount = parseFloat($('#vatAmount').text())
+    var totalPrice = 0;
+    $('.room-price').each(function (){
+      totalPrice += parseInt($(this).text());
+      console.log($(this).text())
+    })
+    var totalPriceWithVat = totalPrice * parseFloat((vatAmount / 100) + 1)
+    console.log(totalPriceWithVat)
+    $('#totalWithVat').text(totalPriceWithVat)
+    $('#totalPrice').text(totalPriceWithVat)
+    
+  })
+</script>
 {% endblock %}

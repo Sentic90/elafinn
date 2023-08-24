@@ -392,7 +392,8 @@ class Hotel(models.Model):
     logo = models.ImageField(upload_to='images/gallery/',
                              null=True, blank=True, verbose_name='صورة رمزية')
     is_active = models.BooleanField(default=False)
-    slug = models.SlugField(null=True, blank=True, unique=True)  # new
+    slug = models.SlugField(null=True, blank=True, unique=True)
+    vat = models.FloatField(verbose_name="ضريبة القيمة المضافة", default=7)
     location = models.OneToOneField(
         to='HotelLocation', on_delete=models.CASCADE, verbose_name='الموقع', 
         blank=True, null=True, related_name='hotels')
@@ -566,8 +567,8 @@ SEASON_TYPE = (
 class Season(models.Model):
     season = models.CharField(max_length=250, verbose_name='الموسم')
     startDate = models.DateField(verbose_name='بداية الموسم')
-    year = models.PositiveIntegerField(verbose_name='للعام')
     endDate = models.DateField(verbose_name='نهاية الموسم')
+    year = models.PositiveIntegerField(verbose_name='للعام')
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     is_active = models.BooleanField(default=True)
@@ -626,7 +627,7 @@ class Booking(models.Model):
     hotel = models.ForeignKey(
         to=Hotel, on_delete=models.CASCADE, verbose_name="الفندق")
     vat = models.FloatField(verbose_name="ضريبة القيمة المضافة", default=7)
-    total_with_vat = models.FloatField(
+    total_price_with_vat = models.FloatField(
         verbose_name="الاجمالي مع القيمة المضافة", default=0)
     coupon = models.FloatField(verbose_name="كوبون خصم", default=1)
     room = models.ManyToManyField(to=Room,verbose_name="الغرفة")
@@ -673,7 +674,7 @@ class Request(models.Model):
     hotel = models.ForeignKey(
         to=Hotel, on_delete=models.CASCADE, verbose_name="الفندق")
     vat = models.FloatField(verbose_name="ضريبة القيمة المضافة", default=7)
-    total_with_vat = models.FloatField(
+    total_price_with_vat = models.FloatField(
         verbose_name="الاجمالي مع القيمة المضافة", default=0)
     coupon = models.FloatField(verbose_name="كوبون خصم", default=1)
     room = models.ManyToManyField(to=Room,verbose_name="الغرفة")
@@ -694,11 +695,12 @@ class Request(models.Model):
 
     def accept_and_create_booking(self):
         if self.status == 'accepted':
-            booking = Booking.objects.create(
+            try:
+                booking = Booking.objects.create(
                 customer=self.customer,
                 hotel=self.hotel,
                 vat=self.vat,
-                total_with_vat=self.total_with_vat,
+                total_price_with_vat=self.total_price_with_vat,
                 coupon=self.coupon,
                 guests = self.guests,
                 nationality = self.nationality,
@@ -709,14 +711,16 @@ class Request(models.Model):
 
                 status='pending'
             )
-            booking.room.set(self.room.all())
+                booking.room.set(self.room.all())
 
-            # notifications 
-            Notification.objects.create(
-                recipient=self.customer.user,
-                message='تم قبول الطلب بنجاح في انتظار الدفع'
-            )
-            return booking
+                # notifications 
+                Notification.objects.create(
+                    recipient=self.customer.user,
+                    message='تم قبول الطلب بنجاح في انتظار الدفع'
+                )
+                return booking
+            except:
+                return None
         return None
 
 @receiver(post_save, sender=Request)

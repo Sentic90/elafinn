@@ -22,9 +22,9 @@ class RoomInline(admin.TabularInline):
     extra = 0
 
 class BookingAdmin(admin.ModelAdmin):
-    list_display = ['hotel', 'status', 'total_with_vat', 'customer']
+    list_display = ['hotel', 'status', 'total_price_with_vat', 'customer']
     list_editable = ['status']
-    readonly_fields = ['vat', 'total_with_vat', 'created']
+    readonly_fields = ['total_price_with_vat', 'created']
     filter_horizontal = ['room']
 
     

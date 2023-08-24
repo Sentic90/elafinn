@@ -1,4 +1,4 @@
-
+{% load static %}
 <form method="get" action="{% url 'main:result'%}">
     <div class="container p-3 ">
         <div class="row">
@@ -10,7 +10,8 @@
                                 <em class="icon ni ni-map-pin-fill" style="font-size: large;"></em>
                             </span>
                         </div>
-                        <select class="form-select form-control" id="{{ forloop.counter }}" style="margin-left: 3%" name="city">
+                        <select class="form-select form-control" id="{{ forloop.counter }}" style="margin-left: 3%"
+                            name="city">
                             <option selected value="both">اختر الوجهة</option>
                             <option value="Makkah">مكة المكرمة</option>
                             <option value="Madinah">المدينة المنورة
@@ -28,21 +29,25 @@
                             </span>
                         </div>
                         {{ form.nationality }}
-                       
-                        </div>
+
+                    </div>
                 </div>
             </div>
         </div>
 
         <div class="row mt-5">
+            <!-- datepicker -->
             <div class="col-lg-6">
-                <div class="form-group">
+                <div class="form-group datefilter-container">
                     <div class="form-control-wrap focused">
                         <div class="form-text-hint">
                             <span class="overline-title">
                                 <em class="icon ni ni-calendar" style="font-size: large;"></em>
                             </span>
                         </div>
+                        <input type="hidden" class="season-start-date" value="{{ season.startDate }}">
+                        <input type="hidden" class="season-end-date" value="{{ season.endDate }}">
+
                         <input type="text" name="datefilter"
                             class="form-control form-control-xl  form-control-outlined date-picker"
                             id="outlined-date-picker" autocomplete="off"
@@ -52,6 +57,8 @@
                     </div>
                 </div>
             </div>
+            
+            <!-- Rooms type -->
             <div class="col-lg-6">
                 <div class="form-group">
                     <div class="form-control-warp">
@@ -67,17 +74,13 @@
                                 </button>
                             </div>
                             <!-- Above there a field for nationality + date  -->
-                            <input class="form-control"
-                            data-bs-toggle="modal"
-                            data-bs-target="#modalDefault"
-                                name="guests"
-                                id="guests"
-                                value="0">
-                                <input type="text" hidden id="mainSingleRoom" name="single_room" value="0" />
-                                <input type="text" hidden id="mainDoubleRoom" name="double_room" value="0" />
-                                <input type="text" hidden id="mainTripleRoom" name="triple_room" value="0">
-                                <input type="text" hidden id="mainQuadrupleRoom" name="quadruple_room" value="0">
-                                <input type="text" hidden id="mainQuintupleRoom" name="quintuple_room" value="0">
+                            <input class="form-control" data-bs-toggle="modal" data-bs-target="#modalDefault"
+                                name="guests" id="guests" value="0">
+                            <input type="text" hidden id="mainSingleRoom" name="single_room" value="0" />
+                            <input type="text" hidden id="mainDoubleRoom" name="double_room" value="0" />
+                            <input type="text" hidden id="mainTripleRoom" name="triple_room" value="0">
+                            <input type="text" hidden id="mainQuadrupleRoom" name="quadruple_room" value="0">
+                            <input type="text" hidden id="mainQuintupleRoom" name="quintuple_room" value="0">
                         </div>
                     </div>
                 </div>
@@ -88,7 +91,15 @@
             <div class="col-lg-4">
                 <div class="form-group">
                     <div class="form-control-wrap">
+                        <!-- Hidden fiedls -->
+                        <!-- Season ID -->
                         <input type="hidden" name="package_id" value="{{ season.id }}">
+                        <!-- season start date -->
+                        <input type="hidden" class="seasonStartDate-{{season.id}}" value="{{ season.startDate }}">
+                        <!-- season end date -->
+                        <input type="hidden" class="seasonEndDate" value="{{ season.endDate }}">
+
+                        <!-- submit Button -->
                         <input type="submit" class="btn btn-outline-light btn-block custom-button" value="بحث">
                     </div>
                 </div>
@@ -96,3 +107,52 @@
         </div>
     </div>
 </form>
+
+<script src="{% static 'js/jquery.min.js'%}"></script>
+<script type="text/javascript" src="{% static 'js/daterangepicker.min.js' %}"></script>
+<!-- <script>
+    $(document).ready(function () {
+        // start dates
+        $('.seasonStartDate-{{season.id}}').each(function () {
+            console.log('{{season.season}}', '->: {{season.startDate}}')
+        })
+    })
+</script> -->
+
+<!-- date picker -->
+<script>
+    $(document).ready(function () {
+        // Initialize date pickers within each datefilter-container
+        $(".datefilter-container").each(function () {
+            var seasonStartDate = $(this).find(".season-start-date").val();
+            var seasonEndDate = $(this).find(".season-end-date").val();
+    
+            var inputElement = $(this).find(".date-picker");
+    
+            inputElement.daterangepicker({
+                autoUpdateInput: false,
+                autoApply: false,
+                showCustomRangeLabel: false,
+                locale: {
+                    cancelLabel: "مسح",
+                    applyLabel: "حفظ التاريخ",
+                },
+                minDate: new Date(seasonStartDate),
+                maxDate: new Date(seasonEndDate),
+            });
+    
+            inputElement.on("apply.daterangepicker", function (ev, picker) {
+                $(this).val(
+                    picker.startDate.format("DD/MM/YYYY") +
+                    " إلى تاريخ " +
+                    picker.endDate.format("DD/MM/YYYY")
+                );
+            });
+    
+            inputElement.on("cancel.daterangepicker", function (ev, picker) {
+                $(this).val("");
+            });
+        });
+    });
+    </script>
+    

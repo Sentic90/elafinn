@@ -328,10 +328,10 @@ def request_details(request, slug, requestId):
     context = {
         'hotel': hotel,
         'slug': slug,
-        'booking':instance,
+        'request':instance,
         'form':form
     }
-    return render(request, 'dashboard/booking/request_details.html', context)
+    return render(request, 'dashboard/requests/request_details.html', context)
 
 
 @login_required

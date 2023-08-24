@@ -192,40 +192,8 @@
       type="text/javascript"
       src="{% static 'js/daterangepicker.min.js' %}"
     ></script>
-    <script>
-      $(document).ready(function() {
-          // Initialize the datepicker
-          $(".date-picker-range").datepicker();
-      
-          // Initialize the date range picker
-          $('input[name="datefilter"]').daterangepicker({
-              autoUpdateInput: false,
-              autoApply: false,
-              showCustomRangeLabel: false,
-              locale: {
-                  cancelLabel: "مسح",
-                  applyLabel: "حفظ التاريخ",
-              },
-              
-              minDate: new Date(2023, 7, 10), // Set the minimum allowed date (year, month, day)
-              maxDate: new Date(2023, 7, 30) // Set the maximum allowed date (year, month, day)
-          });
-      
-          // Apply the selected date range to the input field
-          $('input[name="datefilter"]').on("apply.daterangepicker", function (ev, picker) {
-              $(this).val(
-                  picker.startDate.format("DD/MM/YYYY") +
-                  " إلى تاريخ " +
-                  picker.endDate.format("DD/MM/YYYY")
-              );
-          });
-      
-          // Clear the input field on cancel
-          $('input[name="datefilter"]').on("cancel.daterangepicker", function (ev, picker) {
-              $(this).val("");
-          });
-      });
-      </script>
+
+    
       
 
     <script>

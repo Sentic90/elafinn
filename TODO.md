@@ -27,6 +27,12 @@
 
 
 ##  filtering (working)
+    - q1 = Q(city='Madinah')  // from Form
+    - q2 = Q(nationality__contains='SA') // from form
+    - q3 = 
+    - qs.filter(q1 & q2) (Done)
+            * filtering by city & nationality 
+
     - add rooms to Sessions 
     - matching nationality 
         - adding coutnries from Backend 
@@ -35,13 +41,23 @@
     - Queries:
         rooms
         nationality
-        datefilter
+        datefilter:
+            q1 = Q(start_date__lte=startDate, end_date__gte=startDate)
+            q2 = Q(start_date__lte=endDate, end_date__gte=endDate)
+            q3 = Q( start_date__gte=startDate, end_date__lte=endDate)
+            Booking.objects.filter(q1 | q2 | q3).values_list('room_id', flat=True)
+
+            # hotels without these booked rooms 
+            available_hotels = Hotel.objects.(room__id__in=booked_room_ids)
+            # to remove redundant 
+            final_hotels = available_hotels.distinct()
+
         city
 
     - accommodate space 
         number of avaliable room
 
-## Sidebar Filtering 
+## Sidebar Filtering  (done)
     - filtering by distance
         - away from hrm 
 
@@ -58,7 +74,7 @@
 ## Payment methods 
     - updating (done)
     - viewing (done)
-    - adding from dashboard ...
+    - adding from dashboard ...(done)
     - 
 
 

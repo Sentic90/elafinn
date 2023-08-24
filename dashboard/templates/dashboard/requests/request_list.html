@@ -1,47 +1,40 @@
-
 {% for request in requests %}
 <div class="nk-tb-item">
     <div class="nk-tb-col nk-tb-col-check">
         <div class="custom-control custom-control-sm custom-checkbox notext">
-            <input type="checkbox" class="custom-control-input" id="uid2">
-            <label class="custom-control-label" for="uid2"></label>
+            <input type="checkbox" class="custom-control-input" id="uid3">
+            <label class="custom-control-label" for="uid3"></label>
         </div>
     </div>
     <div class="nk-tb-col">
         <span class="text-primary">{{request.id}}</span>
     </div>
     <div class="nk-tb-col">
-        <div class="user-card">
-            <div class="user-avatar">
-                <img src="./images/avatar/a-sm.jpg" alt="">
+        <a href="#">
+            <div class="user-card">
+                
+                <div class="user-info">
+                    <span class="tb-lead">{{request.customer.first_name}} <span class="dot dot-success d-md-none ms-1"></span></span>
+                </div>
             </div>
-            <div class="user-info">
-                <span class="tb-lead">{{request.full_name}} <span class="dot dot-warning d-md-none ms-1"></span></span>
-                <span>{{ request.email}}</span>
-            </div>
-        </div>
+        </a>
     </div>
     <div class="nk-tb-col tb-col-mb">
-        <span>Strater </span>
+        <span>{{request.package}}</span>
     </div>
     <div class="nk-tb-col tb-col-md">
-        <span class="tb-status text-warning">Pending</span>
+        <span class="tb-status text-success">{{request.get_status_display}}</span>
     </div>
+    
+    
     <div class="nk-tb-col tb-col-lg">
-        <span>{{ request.room.roomType}}</span>
+        <span>{{request.start_date}}</span>
     </div>
     <div class="nk-tb-col tb-col-xxl">
-        <span>+124 394-1787</span>
+        <span>{{request.end_date}}</span>
     </div>
-    <div class="nk-tb-col tb-col-lg">
-        <span>{{ request.created}}</span>
-    </div>
-    <div class="nk-tb-col tb-col-xxl">
-        <span>08 Feb 2021</span>
-    </div>
-    <div class="nk-tb-col tb-col-md">
-        <span class="tb-status text-warning">Due</span>
-    </div>
+    
+    
     <div class="nk-tb-col nk-tb-col-tools">
         <ul class="nk-tb-actions gx-1">
             <li>
@@ -49,14 +42,96 @@
                     <a href="#" class="dropdown-toggle btn btn-icon btn-trigger" data-bs-toggle="dropdown"><em class="icon ni ni-more-h"></em></a>
                     <div class="dropdown-menu dropdown-menu-end">
                         <ul class="link-list-opt no-bdr">
-                            <li><a href="#"><em class="icon ni ni-mail-fill"></em><span>إرسال بريد</span></a></li>
-                            <li><a href="{% url 'booking-edit' hotel.slug %}"><em class="icon ni ni-edit-fill"></em><span>تعديل</span></a></li>
+                            <li><a href="#" data-bs-toggle="modal" data-bs-target="#confirmRequestModal-{{request.id}}"><em class="icon ni ni-user-check"></em><span>قبول</span></a></li>
+                            <li><a href="{% url 'request-details' hotel.slug request.id%}"><em class="icon ni ni-eye"></em><span>معاينة</span></a></li>
+                            
                         </ul>
                     </div>
                 </div>
             </li>
         </ul>
     </div>
-</div><!-- .nk-tb-item -->
-
+</div>
+<div class="modal fade" id="confirmRequestModal-{{request.id}}" tabindex="-1" aria-labelledby="confirmRequestModal-{{request.id}}-Label" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="confirmRequestModal-{{request.id}}-Label">Confirm Request</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form enctype="multipart/form-data" method="post" action="{% url 'customer-payments' %}">
+            {% csrf_token %}
+            
+            <div class="col-md-6 col-lg-4 col-xxl-3">
+                <div class="form-group">
+                    <label class="form-label" for="first-name">الاسم الأول</label>
+                    <input type="text" class="form-control" disabled id="first-name" placeholder="الأسم الأول" value="{{ request.customer.first_name}}">
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4 col-xxl-3">
+                <div class="form-group">
+                    <label class="form-label" for="last-name">اسم العائلة</label>
+                    <input type="text"  disabled class="form-control" id="last-name" placeholder="اسم العائلة" value="{{request.customer.last_name}}">
+                </div>
+            </div>
+            <!-- package -->
+            <div class="col-md-6 col-lg-4 col-xxl-3">
+                <div class="form-group">
+                    <label class="form-label">الباقة</label>
+                    <div class="form-control-wrap">
+                        <select disabled class="form-select js-select2" data-placeholder="Select multiple options">
+                            <option value="option_select_name">{{ request.package}}</option>
+                            
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <!-- start_date -->
+        <div class="col-md-6 col-lg-4 col-xxl-3">
+            <div class="form-group">
+                <label class="form-label">تاريخ الوصول</label>
+                <div class="form-control-wrap">
+                    <div class="form-icon form-icon-right">
+                        <em class="icon ni ni-calendar"></em>
+                    </div>
+                    <input type="text" class="form-control date-picker" data-date-format="yyyy-mm-dd"
+                        placeholder="yyyy-mm-dd" disabled value="{{ request.start_date }}">
+                </div>
+            </div>
+        </div>
+        <!-- end date -->
+        <div class="col-md-6 col-lg-4 col-xxl-3">
+            <div class="form-group">
+                <label class="form-label">تاريخ المغادرة</label>
+                <div class="form-control-wrap">
+                    <div class="form-icon form-icon-right">
+                        <em class="icon ni ni-calendar"></em>
+                    </div>
+                    <input type="text" class="form-control date-picker" data-date-format="yyyy-mm-dd"
+                        placeholder="yyyy-mm-dd" disabled value="{{ request.end_date }}">
+                </div>
+            </div>
+        </div>
+        <!-- guests -->
+        <div class="col-md-6 col-lg-4 col-xxl-3">
+            <div class="form-group">
+                <label class="form-label" for="total-person">إجمالي عدد الأشخاص</label>
+                <input type="number" disabled class="form-control" id="total-person" placeholder="إجمالي عدد الأشخاص" value="{{request.guests}}">
+            </div>
+        </div>
+            
+            
+            <!-- Room -->
+            
+          
+        </div>
+        <div class="modal-footer" lang="ar">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">إلغاء</button>
+          <button type="submit" class="btn btn-primary">قبول الطلب </button>
+        </div>
+      </form>
+      </div>
+    </div>
+  </div>
 {% endfor %}

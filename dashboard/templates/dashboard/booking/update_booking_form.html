@@ -6,24 +6,14 @@
                 <label class="form-label" for="first-name">الاسم الأول</label>
                 <input type="text" class="form-control" disabled id="first-name" placeholder="الأسم الأول" value="{{ booking.customer.first_name}}">
             </div>
-        </div><!--col-->
+        </div>
         <div class="col-md-6 col-lg-4 col-xxl-3">
             <div class="form-group">
                 <label class="form-label" for="last-name">اسم العائلة</label>
                 <input type="text"  disabled class="form-control" id="last-name" placeholder="اسم العائلة" value="{{booking.customer.last_name}}">
             </div>
-        </div><!--col-->
-        <div class="col-md-6 col-lg-4 col-xxl-3">
-            <div class="form-group">
-                <label class="form-label">الجنس</label>
-                <div class="form-control-wrap">
-                    <select disabled class="form-select js-select2" data-placeholder="Select multiple options">
-                        <option di value="{{booking.customer.gender}}" selected>{{booking.customer.get_gender_display }}</option>
-                        
-                    </select>
-                </div>
-            </div>
         </div>
+        
         <div class="col-md-6 col-lg-4 col-xxl-3">
             <div class="form-group">
                 <label class="form-label" for="phone-no">رقم الجوال</label>

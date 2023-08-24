@@ -33,13 +33,21 @@ class RequestForm(forms.ModelForm):
         # Get the room from request.POST
         rooms_data = self.cleaned_data.get('room')  # Assuming 'room' is the name of the room field in the form
 
-        fetched_rooms = hotel.room_set.filter(id__in=rooms_data).values('id')
+        fetched_rooms = hotel.room_set.filter(id__in=rooms_data).values('id','price')
         rooms = [room['id'] for room in fetched_rooms]
+        totalPrice = 0
+        for room in fetched_rooms:
+            totalPrice += room['price']
+        vat = hotel.vat
+        total_with_vat = totalPrice * ((vat / 100) + 1)
+        
 
         # Create a new instance of the associated model using form data
         request = super().save(commit=False)
 
         # Assign the fields
+        request.total_price_with_vat = total_with_vat
+        request.vat = vat
         request.hotel = hotel
         request.customer = customer
         

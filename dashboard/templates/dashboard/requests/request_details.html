@@ -19,7 +19,151 @@
                                     <div class="card card-bordered">
                                         <div class="card-inner">
                                             
-                                            {% include 'dashboard/booking/update_booking_form.html'%}
+                                            <div class="row">
+                                                <form action="{% url 'request-details' hotel.slug request.id %}" method="post" class="gy-3 form-settings">
+                                                    {% csrf_token %}
+                                                    <div class="col-md-6 col-lg-4 col-xxl-3">
+                                                        <div class="form-group">
+                                                            <label class="form-label" for="first-name">الاسم الأول</label>
+                                                            <input type="text" class="form-control" disabled id="first-name" placeholder="الأسم الأول" value="{{ request.customer.first_name}}">
+                                                        </div>
+                                                    </div><!--col-->
+                                                    <div class="col-md-6 col-lg-4 col-xxl-3">
+                                                        <div class="form-group">
+                                                            <label class="form-label" for="last-name">اسم العائلة</label>
+                                                            <input type="text"  disabled class="form-control" id="last-name" placeholder="اسم العائلة" value="{{request.customer.last_name}}">
+                                                        </div>
+                                                    </div><!--col-->
+                                                   
+                                                    <div class="col-md-6 col-lg-4 col-xxl-3">
+                                                        <div class="form-group">
+                                                            <label class="form-label" for="phone-no">رقم الجوال</label>
+                                                            <input type="text" class="form-control" disabled id="phone-no" placeholder="رقم الجوال" value="{{ request.customer.phone}}">
+                                                        </div>
+                                                    </div><!--col-->
+                                                    <div class="col-md-6 col-lg-4 col-xxl-3">
+                                                        <div class="form-group">
+                                                            <label class="form-label" for="email">البريد الإلكتروني</label>
+                                                            <input type="email" disabled class="form-control" id="email" placeholder="البريد الإلكتروني" value="{{ request.customer.email}}">
+                                                        </div>
+                                                    </div><!--col-->
+                                                    <div class="col-md-6 col-lg-4 col-xxl-3">
+                                                        <div class="form-group">
+                                                            <label class="form-label" for="address">العنوان</label>
+                                                            <input type="text" disabled class="form-control" id="address" placeholder="Address" value="{{request.customer.address}}">
+                                                        </div>
+                                                    </div>
+                                            
+                                                    
+                                                    
+                                                    <!-- Season -->
+                                                    <div class="col-md-6 col-lg-4 col-xxl-3">
+                                                        <div class="form-group">
+                                                            <label class="form-label">الباقة</label>
+                                                            <div class="form-control-wrap">
+                                                                <select disabled class="form-select js-select2" data-placeholder="Select multiple options">
+                                                                    <option value="option_select_name">{{ request.package}}</option>
+                                                                    
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                            
+                                                    <!-- Room -->
+                                                    <div class="col-md-10 col-lg-8 col-xxl-3">
+                                                        <div class="card card-bordered">
+                                                            <div class="card-inner">
+                                                                <div class="card-title-group align-start mb-3">
+                                                                    <div class="card-title">
+                                                                        <h6 class="title">تفاصيل الغرف</h6>
+                                                                    </div>
+                                                                </div>
+                                                                <table class="table table-responsive-md">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th >رقم الغرفة</th>
+                                                                            <th>نوع الغرفة</th>
+                                                                            <th> سعر الغرفة</th>
+                                                        
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        {% for room in request.room.all %}
+                                                        
+                                                                        <tr>
+                                                                            <td>{{room.roomNo}}</td>
+                                                                            <td>{{room.roomType}}</td>
+                                                                            <td>{{room.price}} SAR</td>
+                                                        
+                                                                        </tr>
+                                                                        {% endfor %}
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                            
+                                                    <!-- start_date -->
+                                                    <div class="col-md-6 col-lg-4 col-xxl-3">
+                                                        <div class="form-group">
+                                                            <label class="form-label">تاريخ الوصول</label>
+                                                            <div class="form-control-wrap">
+                                                                <div class="form-icon form-icon-right">
+                                                                    <em class="icon ni ni-calendar"></em>
+                                                                </div>
+                                                                <input type="text" class="form-control date-picker" data-date-format="yyyy-mm-dd"
+                                                                    placeholder="yyyy-mm-dd" disabled value="{{ request.start_date }}">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!-- end date -->
+                                                    <div class="col-md-6 col-lg-4 col-xxl-3">
+                                                        <div class="form-group">
+                                                            <label class="form-label">تاريخ المغادرة</label>
+                                                            <div class="form-control-wrap">
+                                                                <div class="form-icon form-icon-right">
+                                                                    <em class="icon ni ni-calendar"></em>
+                                                                </div>
+                                                                <input type="text" class="form-control date-picker" data-date-format="yyyy-mm-dd"
+                                                                    placeholder="yyyy-mm-dd" disabled value="{{ request.end_date }}">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!-- guests -->
+                                                    <div class="col-md-6 col-lg-4 col-xxl-3">
+                                                        <div class="form-group">
+                                                            <label class="form-label" for="total-person">إجمالي عدد الأشخاص</label>
+                                                            <input type="number" disabled class="form-control" id="total-person" placeholder="إجمالي عدد الأشخاص" value="{{request.guests}}">
+                                                        </div>
+                                                    </div>
+                                                    <!-- Notes -->
+                                                    <div class="col-md-12">
+                                                        <div class="form-group">
+                                                            <label class="form-label" for="default-textarea">ملاحظات</label>
+                                                            <div class="form-control-wrap">
+                                                                <textarea class="form-control no-resize" disabled id="default-textarea">
+                                                                    {{ request.notes }}
+                                                                </textarea>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!-- Status of Order -->
+                                                    <div class="col-5">
+                                                        <div class="form-group">
+                                                            <label class="form-label">{{form.status.label_tag}}</label>
+                                                            <div class="form-control-wrap">
+                                                                {{ form.status }}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <div class="col-sm-12">
+                                                        <div class="form-group">
+                                                            <button type="submit" class="btn btn-primary">حفظ التعديل</button>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
                                             <!--row-->
                                         </div><!-- .card-inner-group -->
                                     </div><!-- .card -->
