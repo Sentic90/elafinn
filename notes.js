@@ -1,5 +1,24 @@
 /**
  * 
+ * 2023/08/28   Tasks 
+ * Employee:
+ *    - URLs list details (done)
+ *    - Views List Details (done)
+ *    - template (done)
+ *    - models ...working
+ * Invoices 
+ *    - URLs list details (done)
+ *    - Views List Details (done)
+ *    - template (done)
+ *    - models ...(done)
+ * Expenses 
+ *    - URLs list details 
+ *    - Views List details 
+ *    - template (done)
+ *    - models ...etc 
+ * 
+ * Reports
+ *    - working with PDFs
  * 2023/08/24   Tasks 
  * Filtering Query
  *          q1 = Q(city='Madinah')  // from Form

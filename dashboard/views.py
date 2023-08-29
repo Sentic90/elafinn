@@ -63,6 +63,111 @@ def add_hotel(request):
             return HttpResponseRedirect(reverse('my-hotel'))
     return render(request, "dashboard/add-hotel.html", {"form": form})
 
+############  Employee area ########
+
+def employee_list(request, slug):
+
+    hotel = Hotel.objects.get(slug=slug)
+    # employee
+    context = {
+        'hotel': hotel
+    }
+    return render(request, 'dashboard/employee/employee_list.html', context)
+
+def employee_details(request, slug, empolyeeId):
+    # try:
+    #     get_object_or_404(Employee)
+    # except:
+        # pass
+    hotel = Hotel.objects.get(slug=slug)
+    context = {
+        'hotel': hotel
+    }
+    return render(request, 'dashboard/employee/employee_details.html', context)
+
+########### End employee ########
+
+############  Invoice area ########
+
+def invoice_list(request, slug):
+    hotel = Hotel.objects.get(slug=slug)
+    context = {
+        'hotel': hotel, 
+        'invoice':{'id':1}
+    }
+    return render(request, 'dashboard/invoice/invoice_list.html', context)
+
+def invoice_details(request, slug, invoiceId):
+
+    # Invoice.objects.get(id=invoiceId)
+
+    hotel = Hotel.objects.get(slug=slug)
+    context = {
+        'hotel': hotel
+    }
+    return render(request, 'dashboard/invoice/invoice_details.html', context)
+
+def invoice_print(request, invoiceId):
+
+
+    # invoice = Invoice.objects.get(id=invoiceID)
+    context = {
+        'invoice':{'id':1}
+    }
+    return render(request, 'dashboard/invoice/invoice_print.html', context)
+
+############  End Invoice area ########
+
+############  Expenses area ########
+
+def expense_list(request, slug):
+    hotel = Hotel.objects.get(slug=slug)
+    context = {
+        'hotel': hotel, 
+        
+    }
+    return render(request, 'dashboard/expense/expense_list.html', context)
+
+def expense_details(request, slug, expenseId):
+
+    # expense.objects.get(id=expenseId)
+
+    hotel = Hotel.objects.get(slug=slug)
+    context = {
+        'hotel': hotel
+    }
+    return render(request, 'dashboard/expense/expense_details.html', context)
+
+def expense_print(request, expenseId):
+
+
+    # expense = expense.objects.get(id=expenseID)
+    context = {
+        # 'expense':{'id':1}
+    }
+    return render(request, 'dashboard/expense/expense_print.html', context)
+
+############  End Expense area ########
+
+############  Report area ########
+def report_stock(request, slug):
+    hotel = Hotel.objects.get(slug=slug)
+    context = {
+        'hotel': hotel, 
+        
+    }
+    return render(request, 'dashboard/report/report_stocks.html', context)
+
+
+def report_expense(request, slug):
+
+    hotel = Hotel.objects.get(slug=slug)
+    context = {
+        'hotel': hotel,
+    }
+    return render(request, 'dashboard/report/report_expenses.html', context)
+
+############  End Expense area ########
 
 class HotelDashboard(DetailView):
     # specify the model to use

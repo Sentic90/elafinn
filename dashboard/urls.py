@@ -81,6 +81,33 @@ urlpatterns = [
     path('dashboard/my_hotel/<slug:slug>/annual_rent/list/add',
          views.AnnualRentAddView.as_view(), name='add_annual_rent'),
 
+     # Employee
+    path('dashboard/my_hotel/<slug:slug>/employee/employee-list',
+         views.employee_list, name='employee-list'),
+
+     # Invoice
+     path('dashboard/my_hotel/<slug:slug>/invoice/invoice-list',
+         views.invoice_list, name='invoice-list'),
+     path('dashboard/my_hotel/<slug:slug>/invoice/<int:invoiceId>/view',
+         views.invoice_details, name='invoice-details'),
+     path('dashboard/my_hotel/<slug:slug>/invoice/<int:invoiceId>/print',
+         views.invoice_print, name='invoice-print'),
+     
+     # expense
+     path('dashboard/my_hotel/<slug:slug>/expense/expense-list',
+         views.expense_list, name='expense-list'),
+     path('dashboard/my_hotel/<slug:slug>/expense/<int:expenseId>/view',
+         views.expense_details, name='expense-details'),
+     path('dashboard/my_hotel/<slug:slug>/expense/<int:expenseId>/print',
+         views.expense_print, name='expense-print'),
+
+     # Report 
+     path('dashboard/my_hotel/<slug:slug>/report/expense-list',
+         views.report_expense, name='report-expenses'),
+     path('dashboard/my_hotel/<slug:slug>/report/stock-list',
+         views.report_stock, name='report-stocks'),
+
+     # customer
     path('dashboard/my_hotel/<slug:slug>/customer/customer-list',
          views.customer, name='customer-list'),
 

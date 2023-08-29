@@ -82,6 +82,7 @@
                             </li>
                         </ul>
                     </li><!-- .nk-menu-item -->
+                    <!-- Bookings -->
                     <li class="nk-menu-item has-sub">
                         <a href="#" class="nk-menu-link nk-menu-toggle">
                             <span class="nk-menu-icon"><em class="icon ni ni-calendar-booking-fill"></em></span>
@@ -99,6 +100,7 @@
                             </li>
                         </ul>
                     </li><!-- .nk-menu-item -->
+                    <!-- Rooms -->
                     <li class="nk-menu-item has-sub">
                         <a href="#" class="nk-menu-link nk-menu-toggle">
                             <span class="nk-menu-icon"><em class="icon ni ni-home-fill"></em></span>
@@ -115,6 +117,35 @@
                             </li>
                         </ul>
                     </li><!-- .nk-menu-item -->
+                    <li class="nk-menu-item has-sub">
+                        <a href="#" class="nk-menu-link nk-menu-toggle">
+                            <span class="nk-menu-icon"><em class="icon ni ni-file-docs"></em></span>
+                            <span class="nk-menu-text">الفواتير</span>
+                        </a>
+                        <ul class="nk-menu-sub">
+                            <li class="nk-menu-item">
+                                <a href="{% url 'invoice-list' hotel.slug %}" class="nk-menu-link"><span class="nk-menu-text">قائمة الفواتير</span></a>
+                            </li>
+
+                        </ul><!-- .nk-menu-sub -->
+                    </li>
+                    <!-- Reports -->
+                    <li class="nk-menu-item has-sub">
+                        <a href="#" class="nk-menu-link nk-menu-toggle">
+                            <span class="nk-menu-icon"><em class="icon ni ni-reports"></em></span>
+                            <span class="nk-menu-text">التقارير</span>
+                        </a>
+                        <ul class="nk-menu-sub">
+                            <li class="nk-menu-item">
+                                <a href="{% url 'report-stocks' hotel.slug%}" class="nk-menu-link"><span class="nk-menu-text">المخزون </span></a>
+                            </li>
+                            <li class="nk-menu-item">
+                                <a href="{% url 'report-expenses' hotel.slug %}" class="nk-menu-link"><span
+                                        class="nk-menu-text">المنصرفات</span></a>
+                            </li>
+                        </ul>
+                    </li>
+
                     <li class="nk-menu-item">
                         <a href="{% url 'season-price-list' hotel.slug %}" class="nk-menu-link">
                             <span class="nk-menu-icon"><em class="icon ni ni-sign-dollar"></em></span>
@@ -122,25 +153,22 @@
                         </a>
                     </li><!-- .nk-menu-item -->
 
-{#                    <li class="nk-menu-item has-sub">#}
-{#                        <a href="#" class="nk-menu-link nk-menu-toggle">#}
-{#                            <span class="nk-menu-icon"><em class="icon ni ni-reports"></em></span>#}
-{#                            <span class="nk-menu-text">التقارير</span>#}
-{#                        </a>#}
-{#                        <ul class="nk-menu-sub">#}
-{#                            <li class="nk-menu-item">#}
-{#                                <a href="html/hotel/report-stocks.html" class="nk-menu-link"><span class="nk-menu-text">Stocks</span></a>#}
-{#                            </li>#}
-{#                            <li class="nk-menu-item">#}
-{#                                <a href="html/hotel/report-expenses.html" class="nk-menu-link"><span#}
-{#                                        class="nk-menu-text">Expenses</span></a>#}
-{#                            </li>#}
-{#                            <li class="nk-menu-item">#}
-{#                                <a href="html/hotel/report-booking.html" class="nk-menu-link"><span#}
-{#                                        class="nk-menu-text">Booking</span></a>#}
-{#                            </li>#}
-{#                        </ul>#}
-{#                    </li>#}
+                    <!-- Employee -->
+                    <li class="nk-menu-item">
+                        <a href="{% url 'employee-list'  hotel.slug %}" class="nk-menu-link">
+                            <span class="nk-menu-icon"><em class="icon ni ni-layers-fill"></em></span>
+                            <span class="nk-menu-text">الموظفين</span>
+                        </a>
+                    </li>
+
+                    <!-- Expense Management -->
+                    <li class="nk-menu-item">
+                        <a href="{% url 'expense-list'  hotel.slug %}" class="nk-menu-link">
+                            <span class="nk-menu-icon"><em class="icon ni ni-coin"></em></span>
+                            <span class="nk-menu-text">إدارة المنصرفات</span>
+                        </a>
+                    </li>
+                    <li class="nk-menu-item">
                     <!-- .nk-menu-item -->
                     <li class="nk-menu-item">
                         <a href="{% url 'customer-list' hotel.slug %}" class="nk-menu-link">
@@ -167,12 +195,12 @@
                             </li>
                         </ul>
                     </li><!-- .nk-menu-item -->
-{#                    <li class="nk-menu-item">#}
-{#                        <a href="html/hotel/support.html" class="nk-menu-link">#}
-{#                            <span class="nk-menu-icon"><em class="icon ni ni-chat-circle-fill"></em></span>#}
-{#                            <span class="nk-menu-text">الدعم</span>#}
-{#                        </a>#}
-{#                    </li>#}
+                    <li class="nk-menu-item">
+                        <a href="html/hotel/support.html" class="nk-menu-link">
+                            <span class="nk-menu-icon"><em class="icon ni ni-chat-circle-fill"></em></span>
+                            <span class="nk-menu-text">الدعم</span>
+                        </a>
+                    </li>
                     <!-- .nk-menu-item -->
                 </ul><!-- .nk-menu -->
             </div><!-- .nk-sidebar-menu -->
