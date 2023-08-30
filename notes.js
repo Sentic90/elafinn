@@ -16,6 +16,11 @@
  *    - Views List details 
  *    - template (done)
  *    - models ...etc 
+ * Stocks 
+ *    - URLs list details  (done)
+ *    - Views List details (done)
+ *    - template (done)
+ *    - models ... (done) 
  * 
  * Reports
  *    - working with PDFs

@@ -12,9 +12,9 @@
                                 <div class="nk-block-head nk-block-head-sm">
                                     <div class="nk-block-between g-3">
                                         <div class="nk-block-head-content">
-                                            <h3 class="nk-block-title page-title">Expenses List</h3>
+                                            <h3 class="nk-block-title page-title">قائمة المنصرفات</h3>
                                             <div class="nk-block-des text-soft">
-                                                <p>Here is our verious expenses list.</p>
+                                                <p>هنا قائمة بمختلف المنصرفات.</p>
                                             </div>
                                         </div><!-- .nk-block-head-content -->
                                         <div class="nk-block-head-content">
@@ -24,8 +24,8 @@
                                                         <a href="#" class="dropdown-toggle btn btn-icon btn-primary" data-bs-toggle="dropdown"><em class="icon ni ni-plus"></em></a>
                                                         <div class="dropdown-menu dropdown-menu-end">
                                                             <ul class="link-list-opt no-bdr">
-                                                                <li><a data-bs-toggle="modal" href="#add-expenses"><span>Add Expenses</span></a></li>
-                                                                <li><a href="#"><span>Import Expenses</span></a></li>
+                                                                <li><a data-bs-toggle="modal" href="#add-expenses"><span>اضافة منصرف</span></a></li>
+                                                                <li><a href="#"><span>استيراد منصرفات</span></a></li>
                                                             </ul>
                                                         </div>
                                                     </div>
@@ -167,11 +167,11 @@
                                                                 <label class="custom-control-label" for="uid"></label>
                                                             </div>
                                                         </div>
-                                                        <div class="nk-tb-col"><span class="sub-text">ID</span></div>
-                                                        <div class="nk-tb-col tb-col-mb"><span class="sub-text">Supplier Name</span></div>
-                                                        <div class="nk-tb-col tb-col-md"><span class="sub-text">Description</span></div>
-                                                        <div class="nk-tb-col tb-col-md"><span class="sub-text">Date</span></div>
-                                                        <div class="nk-tb-col"><span class="sub-text">Amount</span></div>
+                                                        <div class="nk-tb-col"><span class="sub-text">رقم المنصرف</span></div>
+                                                        <div class="nk-tb-col tb-col-mb"><span class="sub-text">اسم المورد</span></div>
+                                                        <div class="nk-tb-col tb-col-md"><span class="sub-text">البيان</span></div>
+                                                        <div class="nk-tb-col tb-col-md"><span class="sub-text">التاريخ</span></div>
+                                                        <div class="nk-tb-col"><span class="sub-text">المبلغ</span></div>
                                                         <div class="nk-tb-col nk-tb-col-tools text-end">
                                                             <div class="dropdown">
                                                                 <a href="#" class="btn btn-xs btn-outline-light btn-icon dropdown-toggle" data-bs-toggle="dropdown" data-offset="0,5"><em class="icon ni ni-plus"></em></a>
@@ -193,28 +193,30 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                    </div><!-- .nk-tb-item -->
+                                                    </div>
+                                                    {% for expense in hotel.expense_set.all %}
+                                                    <!-- .nk-tb-item -->
                                                     <div class="nk-tb-item">
                                                         <div class="nk-tb-col nk-tb-col-check">
                                                             <div class="custom-control custom-control-sm custom-checkbox notext">
-                                                                <input type="checkbox" class="custom-control-input" id="uid1">
-                                                                <label class="custom-control-label" for="uid1"></label>
+                                                                <input type="checkbox" class="custom-control-input" id="{{expense.id}}">
+                                                                <label class="custom-control-label" for="{{expense.id}}"></label>
                                                             </div>
                                                         </div>
                                                         <div class="nk-tb-col">
-                                                            <span class="text-primary">#565601</span>
+                                                            <a href="#edit-expense-{{expense.expense_number}}" data-bs-toggle="modal"><span class="text-primary">#{{expense.expense_number}}</span></a>
                                                         </div>
                                                         <div class="nk-tb-col tb-col-mb">
-                                                            <span>XYY Enterprise</span>
+                                                            <span>{{expense.supplier_name}}</span>
                                                         </div>
                                                         <div class="nk-tb-col tb-col-md">
-                                                            <span>Internet Bill</span>
+                                                            <span>{{expense.description}}</span>
                                                         </div>
                                                         <div class="nk-tb-col tb-col-md">
-                                                            <span>01 Jan 2021</span>
+                                                            <span>{{expense.created}}</span>
                                                         </div>
                                                         <div class="nk-tb-col" data-order="1229.99">
-                                                            <span class="tb-amount">1229.99<span class="currency">USD</span></span>
+                                                            <span class="tb-amount">{{expense.amount}} <span class="currency">SAR</span></span>
                                                         </div>
                                                         <div class="nk-tb-col nk-tb-col-tools">
                                                             <ul class="nk-tb-actions gx-1">
@@ -223,7 +225,7 @@
                                                                         <a href="#" class="dropdown-toggle btn btn-icon btn-trigger" data-bs-toggle="dropdown"><em class="icon ni ni-more-h"></em></a>
                                                                         <div class="dropdown-menu dropdown-menu-end">
                                                                             <ul class="link-list-opt no-bdr">
-                                                                                <li><a href="#"><em class="icon ni ni-edit"></em><span>Edit</span></a></li>
+                                                                                <li><a href="#edit-expense-{{expense.expense_number}}" data-bs-toggle="modal"><em class="icon ni ni-edit"></em><span>Edit</span></a></li>
                                                                                 <li><a href="#"><em class="icon ni ni-trash"></em><span>Delete</span></a></li>
                                                                             </ul>
                                                                         </div>
@@ -232,386 +234,62 @@
                                                             </ul>
                                                         </div>
                                                     </div><!-- .nk-tb-item  -->
-                                                    <div class="nk-tb-item">
-                                                        <div class="nk-tb-col nk-tb-col-check">
-                                                            <div class="custom-control custom-control-sm custom-checkbox notext">
-                                                                <input type="checkbox" class="custom-control-input" id="uid2">
-                                                                <label class="custom-control-label" for="uid2"></label>
-                                                            </div>
-                                                        </div>
-                                                        <div class="nk-tb-col">
-                                                            <span class="text-primary">#658742</span>
-                                                        </div>
-                                                        <div class="nk-tb-col tb-col-mb">
-                                                            <span>Easy Fix</span>
-                                                        </div>
-                                                        <div class="nk-tb-col tb-col-md">
-                                                            <span>Maintenance Bill</span>
-                                                        </div>
-                                                        <div class="nk-tb-col tb-col-md">
-                                                            <span>01 Jan 2021</span>
-                                                        </div>
-                                                        <div class="nk-tb-col" data-order="10229.99">
-                                                            <span class="tb-amount">10229.99<span class="currency">USD</span></span>
-                                                        </div>
-                                                        <div class="nk-tb-col nk-tb-col-tools">
-                                                            <ul class="nk-tb-actions gx-1">
-                                                                <li>
-                                                                    <div class="drodown">
-                                                                        <a href="#" class="dropdown-toggle btn btn-icon btn-trigger" data-bs-toggle="dropdown"><em class="icon ni ni-more-h"></em></a>
-                                                                        <div class="dropdown-menu dropdown-menu-end">
-                                                                            <ul class="link-list-opt no-bdr">
-                                                                                <li><a href="#"><em class="icon ni ni-edit"></em><span>Edit</span></a></li>
-                                                                                <li><a href="#"><em class="icon ni ni-trash"></em><span>Delete</span></a></li>
-                                                                            </ul>
+                                                    
+                                                    <!-- Edit Moal -->
+                                                    <div class="modal fade" tabindex="-1" role="dialog" id="edit-expense-{{expense.expense_number}}">
+                                                        <div class="modal-dialog modal-lg" role="document">
+                                                            <div class="modal-content">
+                                                                <a href="#" class="close" data-bs-dismiss="modal"><em class="icon ni ni-cross-sm"></em></a>
+                                                                <div class="modal-body modal-body-md">
+                                                                    <h5 class="modal-title">اضافة منصرف</h5>
+                                                                    <form action="#" class="mt-2">
+                                                                        <div class="row g-gs">
+                                                                            <div class="col-md-6">
+                                                                                <div class="form-group">
+                                                                                    <label class="form-label" for="supplier-name">اسم المزود</label>
+                                                                                    <input type="text" class="form-control" id="supplier-name" placeholder="Supplier Name">
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-md-6">
+                                                                                <div class="form-group">
+                                                                                    <label class="form-label" for="description">البيان</label>
+                                                                                    <input type="text" class="form-control" id="description" placeholder="Description">
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-md-6">
+                                                                                <div class="form-group">
+                                                                                    <label class="form-label">التاريخ</label>
+                                                                                    <div class="form-control-wrap">
+                                                                                        <div class="form-icon form-icon-right">
+                                                                                            <em class="icon ni ni-calendar"></em>
+                                                                                        </div>
+                                                                                        <input type="text" class="form-control date-picker" data-date-format="yyyy-mm-dd" placeholder="yyyy-mm-dd">
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-md-6">
+                                                                                <div class="form-group">
+                                                                                    <label class="form-label" for="amount">المبلغ</label>
+                                                                                    <input type="number" class="form-control" id="amount" placeholder="300.99 USD">
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-12">
+                                                                                <ul class="align-center flex-wrap flex-sm-nowrap gx-4 gy-2">
+                                                                                    <li>
+                                                                                        <button class="btn btn-primary">اضافة منصرف</button>
+                                                                                    </li>
+                                                                                    <li>
+                                                                                        <a href="#" class="link" data-bs-dismiss="modal">إلغاء</a>
+                                                                                    </li>
+                                                                                </ul>
+                                                                            </div>
                                                                         </div>
-                                                                    </div>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
-                                                    </div><!-- .nk-tb-item  -->
-                                                    <div class="nk-tb-item">
-                                                        <div class="nk-tb-col nk-tb-col-check">
-                                                            <div class="custom-control custom-control-sm custom-checkbox notext">
-                                                                <input type="checkbox" class="custom-control-input" id="uid3">
-                                                                <label class="custom-control-label" for="uid3"></label>
-                                                            </div>
-                                                        </div>
-                                                        <div class="nk-tb-col">
-                                                            <span class="text-primary">#658882</span>
-                                                        </div>
-                                                        <div class="nk-tb-col tb-col-mb">
-                                                            <span>Easy Shop</span>
-                                                        </div>
-                                                        <div class="nk-tb-col tb-col-md">
-                                                            <span>Food Transport Bill</span>
-                                                        </div>
-                                                        <div class="nk-tb-col tb-col-md">
-                                                            <span>01 Jan 2021</span>
-                                                        </div>
-                                                        <div class="nk-tb-col" data-order="3229.99">
-                                                            <span class="tb-amount">3229.99<span class="currency">USD</span></span>
-                                                        </div>
-                                                        <div class="nk-tb-col nk-tb-col-tools">
-                                                            <ul class="nk-tb-actions gx-1">
-                                                                <li>
-                                                                    <div class="drodown">
-                                                                        <a href="#" class="dropdown-toggle btn btn-icon btn-trigger" data-bs-toggle="dropdown"><em class="icon ni ni-more-h"></em></a>
-                                                                        <div class="dropdown-menu dropdown-menu-end">
-                                                                            <ul class="link-list-opt no-bdr">
-                                                                                <li><a href="#"><em class="icon ni ni-edit"></em><span>Edit</span></a></li>
-                                                                                <li><a href="#"><em class="icon ni ni-trash"></em><span>Delete</span></a></li>
-                                                                            </ul>
-                                                                        </div>
-                                                                    </div>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
-                                                    </div><!-- .nk-tb-item  -->
-                                                    <div class="nk-tb-item">
-                                                        <div class="nk-tb-col nk-tb-col-check">
-                                                            <div class="custom-control custom-control-sm custom-checkbox notext">
-                                                                <input type="checkbox" class="custom-control-input" id="uid4">
-                                                                <label class="custom-control-label" for="uid4"></label>
-                                                            </div>
-                                                        </div>
-                                                        <div class="nk-tb-col">
-                                                            <span class="text-primary">#659982</span>
-                                                        </div>
-                                                        <div class="nk-tb-col tb-col-mb">
-                                                            <span>Fixable</span>
-                                                        </div>
-                                                        <div class="nk-tb-col tb-col-md">
-                                                            <span>Maintenance Bill</span>
-                                                        </div>
-                                                        <div class="nk-tb-col tb-col-md">
-                                                            <span>01 Fab 2021</span>
-                                                        </div>
-                                                        <div class="nk-tb-col" data-order="4229.99">
-                                                            <span class="tb-amount">4229.99<span class="currency">USD</span></span>
-                                                        </div>
-                                                        <div class="nk-tb-col nk-tb-col-tools">
-                                                            <ul class="nk-tb-actions gx-1">
-                                                                <li>
-                                                                    <div class="drodown">
-                                                                        <a href="#" class="dropdown-toggle btn btn-icon btn-trigger" data-bs-toggle="dropdown"><em class="icon ni ni-more-h"></em></a>
-                                                                        <div class="dropdown-menu dropdown-menu-end">
-                                                                            <ul class="link-list-opt no-bdr">
-                                                                                <li><a href="#"><em class="icon ni ni-edit"></em><span>Edit</span></a></li>
-                                                                                <li><a href="#"><em class="icon ni ni-trash"></em><span>Delete</span></a></li>
-                                                                            </ul>
-                                                                        </div>
-                                                                    </div>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
-                                                    </div><!-- .nk-tb-item  -->
-                                                    <div class="nk-tb-item">
-                                                        <div class="nk-tb-col nk-tb-col-check">
-                                                            <div class="custom-control custom-control-sm custom-checkbox notext">
-                                                                <input type="checkbox" class="custom-control-input" id="uid5">
-                                                                <label class="custom-control-label" for="uid5"></label>
-                                                            </div>
-                                                        </div>
-                                                        <div class="nk-tb-col">
-                                                            <span class="text-primary">#657782</span>
-                                                        </div>
-                                                        <div class="nk-tb-col tb-col-mb">
-                                                            <span>Fast Delivery</span>
-                                                        </div>
-                                                        <div class="nk-tb-col tb-col-md">
-                                                            <span>Food Delivery</span>
-                                                        </div>
-                                                        <div class="nk-tb-col tb-col-md">
-                                                            <span>02 Fab 2021</span>
-                                                        </div>
-                                                        <div class="nk-tb-col" data-order="4339.99">
-                                                            <span class="tb-amount">4339.99<span class="currency">USD</span></span>
-                                                        </div>
-                                                        <div class="nk-tb-col nk-tb-col-tools">
-                                                            <ul class="nk-tb-actions gx-1">
-                                                                <li>
-                                                                    <div class="drodown">
-                                                                        <a href="#" class="dropdown-toggle btn btn-icon btn-trigger" data-bs-toggle="dropdown"><em class="icon ni ni-more-h"></em></a>
-                                                                        <div class="dropdown-menu dropdown-menu-end">
-                                                                            <ul class="link-list-opt no-bdr">
-                                                                                <li><a href="#"><em class="icon ni ni-edit"></em><span>Edit</span></a></li>
-                                                                                <li><a href="#"><em class="icon ni ni-trash"></em><span>Delete</span></a></li>
-                                                                            </ul>
-                                                                        </div>
-                                                                    </div>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
-                                                    </div><!-- .nk-tb-item  -->
-                                                    <div class="nk-tb-item">
-                                                        <div class="nk-tb-col nk-tb-col-check">
-                                                            <div class="custom-control custom-control-sm custom-checkbox notext">
-                                                                <input type="checkbox" class="custom-control-input" id="uid6">
-                                                                <label class="custom-control-label" for="uid6"></label>
-                                                            </div>
-                                                        </div>
-                                                        <div class="nk-tb-col">
-                                                            <span class="text-primary">#653482</span>
-                                                        </div>
-                                                        <div class="nk-tb-col tb-col-mb">
-                                                            <span>Connect Fast</span>
-                                                        </div>
-                                                        <div class="nk-tb-col tb-col-md">
-                                                            <span>Telephone Bill</span>
-                                                        </div>
-                                                        <div class="nk-tb-col tb-col-md">
-                                                            <span>02 Fab 2021</span>
-                                                        </div>
-                                                        <div class="nk-tb-col" data-order="4339.99">
-                                                            <span class="tb-amount">4339.99<span class="currency">USD</span></span>
-                                                        </div>
-                                                        <div class="nk-tb-col nk-tb-col-tools">
-                                                            <ul class="nk-tb-actions gx-1">
-                                                                <li>
-                                                                    <div class="drodown">
-                                                                        <a href="#" class="dropdown-toggle btn btn-icon btn-trigger" data-bs-toggle="dropdown"><em class="icon ni ni-more-h"></em></a>
-                                                                        <div class="dropdown-menu dropdown-menu-end">
-                                                                            <ul class="link-list-opt no-bdr">
-                                                                                <li><a href="#"><em class="icon ni ni-edit"></em><span>Edit</span></a></li>
-                                                                                <li><a href="#"><em class="icon ni ni-trash"></em><span>Delete</span></a></li>
-                                                                            </ul>
-                                                                        </div>
-                                                                    </div>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
-                                                    </div><!-- .nk-tb-item  -->
-                                                    <div class="nk-tb-item">
-                                                        <div class="nk-tb-col nk-tb-col-check">
-                                                            <div class="custom-control custom-control-sm custom-checkbox notext">
-                                                                <input type="checkbox" class="custom-control-input" id="uid7">
-                                                                <label class="custom-control-label" for="uid7"></label>
-                                                            </div>
-                                                        </div>
-                                                        <div class="nk-tb-col">
-                                                            <span class="text-primary">#643482</span>
-                                                        </div>
-                                                        <div class="nk-tb-col tb-col-mb">
-                                                            <span>Buy Best</span>
-                                                        </div>
-                                                        <div class="nk-tb-col tb-col-md">
-                                                            <span>Furniture Bill</span>
-                                                        </div>
-                                                        <div class="nk-tb-col tb-col-md">
-                                                            <span>02 Fab 2021</span>
-                                                        </div>
-                                                        <div class="nk-tb-col" data-order="3639.99">
-                                                            <span class="tb-amount">3639.99<span class="currency">USD</span></span>
-                                                        </div>
-                                                        <div class="nk-tb-col nk-tb-col-tools">
-                                                            <ul class="nk-tb-actions gx-1">
-                                                                <li>
-                                                                    <div class="drodown">
-                                                                        <a href="#" class="dropdown-toggle btn btn-icon btn-trigger" data-bs-toggle="dropdown"><em class="icon ni ni-more-h"></em></a>
-                                                                        <div class="dropdown-menu dropdown-menu-end">
-                                                                            <ul class="link-list-opt no-bdr">
-                                                                                <li><a href="#"><em class="icon ni ni-edit"></em><span>Edit</span></a></li>
-                                                                                <li><a href="#"><em class="icon ni ni-trash"></em><span>Delete</span></a></li>
-                                                                            </ul>
-                                                                        </div>
-                                                                    </div>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
-                                                    </div><!-- .nk-tb-item  -->
-                                                    <div class="nk-tb-item">
-                                                        <div class="nk-tb-col nk-tb-col-check">
-                                                            <div class="custom-control custom-control-sm custom-checkbox notext">
-                                                                <input type="checkbox" class="custom-control-input" id="uid8">
-                                                                <label class="custom-control-label" for="uid8"></label>
-                                                            </div>
-                                                        </div>
-                                                        <div class="nk-tb-col">
-                                                            <span class="text-primary">#743482</span>
-                                                        </div>
-                                                        <div class="nk-tb-col tb-col-mb">
-                                                            <span>Buy Best</span>
-                                                        </div>
-                                                        <div class="nk-tb-col tb-col-md">
-                                                            <span>Kitchenware Bill</span>
-                                                        </div>
-                                                        <div class="nk-tb-col tb-col-md">
-                                                            <span>02 Fab 2021</span>
-                                                        </div>
-                                                        <div class="nk-tb-col" data-order="6934.20">
-                                                            <span class="tb-amount">6934.20<span class="currency">USD</span></span>
-                                                        </div>
-                                                        <div class="nk-tb-col nk-tb-col-tools">
-                                                            <ul class="nk-tb-actions gx-1">
-                                                                <li>
-                                                                    <div class="drodown">
-                                                                        <a href="#" class="dropdown-toggle btn btn-icon btn-trigger" data-bs-toggle="dropdown"><em class="icon ni ni-more-h"></em></a>
-                                                                        <div class="dropdown-menu dropdown-menu-end">
-                                                                            <ul class="link-list-opt no-bdr">
-                                                                                <li><a href="#"><em class="icon ni ni-edit"></em><span>Edit</span></a></li>
-                                                                                <li><a href="#"><em class="icon ni ni-trash"></em><span>Delete</span></a></li>
-                                                                            </ul>
-                                                                        </div>
-                                                                    </div>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
-                                                    </div><!-- .nk-tb-item  -->
-                                                    <div class="nk-tb-item">
-                                                        <div class="nk-tb-col nk-tb-col-check">
-                                                            <div class="custom-control custom-control-sm custom-checkbox notext">
-                                                                <input type="checkbox" class="custom-control-input" id="uid9">
-                                                                <label class="custom-control-label" for="uid9"></label>
-                                                            </div>
-                                                        </div>
-                                                        <div class="nk-tb-col">
-                                                            <span class="text-primary">#843482</span>
-                                                        </div>
-                                                        <div class="nk-tb-col tb-col-mb">
-                                                            <span>Buy Best</span>
-                                                        </div>
-                                                        <div class="nk-tb-col tb-col-md">
-                                                            <span>Kitchen Furniture Bill</span>
-                                                        </div>
-                                                        <div class="nk-tb-col tb-col-md">
-                                                            <span>02 Fab 2021</span>
-                                                        </div>
-                                                        <div class="nk-tb-col" data-order="6120.20">
-                                                            <span class="tb-amount">6120.20<span class="currency">USD</span></span>
-                                                        </div>
-                                                        <div class="nk-tb-col nk-tb-col-tools">
-                                                            <ul class="nk-tb-actions gx-1">
-                                                                <li>
-                                                                    <div class="drodown">
-                                                                        <a href="#" class="dropdown-toggle btn btn-icon btn-trigger" data-bs-toggle="dropdown"><em class="icon ni ni-more-h"></em></a>
-                                                                        <div class="dropdown-menu dropdown-menu-end">
-                                                                            <ul class="link-list-opt no-bdr">
-                                                                                <li><a href="#"><em class="icon ni ni-edit"></em><span>Edit</span></a></li>
-                                                                                <li><a href="#"><em class="icon ni ni-trash"></em><span>Delete</span></a></li>
-                                                                            </ul>
-                                                                        </div>
-                                                                    </div>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
-                                                    </div><!-- .nk-tb-item  -->
-                                                    <div class="nk-tb-item">
-                                                        <div class="nk-tb-col nk-tb-col-check">
-                                                            <div class="custom-control custom-control-sm custom-checkbox notext">
-                                                                <input type="checkbox" class="custom-control-input" id="uid10">
-                                                                <label class="custom-control-label" for="uid10"></label>
-                                                            </div>
-                                                        </div>
-                                                        <div class="nk-tb-col">
-                                                            <span class="text-primary">#943482</span>
-                                                        </div>
-                                                        <div class="nk-tb-col tb-col-mb">
-                                                            <span>Buy Best</span>
-                                                        </div>
-                                                        <div class="nk-tb-col tb-col-md">
-                                                            <span>Bed Sheet Bill</span>
-                                                        </div>
-                                                        <div class="nk-tb-col tb-col-md">
-                                                            <span>02 Fab 2021</span>
-                                                        </div>
-                                                        <div class="nk-tb-col" data-order="7120.20">
-                                                            <span class="tb-amount">7120.20<span class="currency">USD</span></span>
-                                                        </div>
-                                                        <div class="nk-tb-col nk-tb-col-tools">
-                                                            <ul class="nk-tb-actions gx-1">
-                                                                <li>
-                                                                    <div class="drodown">
-                                                                        <a href="#" class="dropdown-toggle btn btn-icon btn-trigger" data-bs-toggle="dropdown"><em class="icon ni ni-more-h"></em></a>
-                                                                        <div class="dropdown-menu dropdown-menu-end">
-                                                                            <ul class="link-list-opt no-bdr">
-                                                                                <li><a href="#"><em class="icon ni ni-edit"></em><span>Edit</span></a></li>
-                                                                                <li><a href="#"><em class="icon ni ni-trash"></em><span>Delete</span></a></li>
-                                                                            </ul>
-                                                                        </div>
-                                                                    </div>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
-                                                    </div><!-- .nk-tb-item  -->
-                                                    <div class="nk-tb-item">
-                                                        <div class="nk-tb-col nk-tb-col-check">
-                                                            <div class="custom-control custom-control-sm custom-checkbox notext">
-                                                                <input type="checkbox" class="custom-control-input" id="uid11">
-                                                                <label class="custom-control-label" for="uid11"></label>
-                                                            </div>
-                                                        </div>
-                                                        <div class="nk-tb-col">
-                                                            <span class="text-primary">#103482</span>
-                                                        </div>
-                                                        <div class="nk-tb-col tb-col-mb">
-                                                            <span>Buy Best</span>
-                                                        </div>
-                                                        <div class="nk-tb-col tb-col-md">
-                                                            <span>Chai Cover Bill</span>
-                                                        </div>
-                                                        <div class="nk-tb-col tb-col-md">
-                                                            <span>02 Fab 2021</span>
-                                                        </div>
-                                                        <div class="nk-tb-col" data-order="720.20">
-                                                            <span class="tb-amount">720.20<span class="currency">USD</span></span>
-                                                        </div>
-                                                        <div class="nk-tb-col nk-tb-col-tools">
-                                                            <ul class="nk-tb-actions gx-1">
-                                                                <li>
-                                                                    <div class="drodown">
-                                                                        <a href="#" class="dropdown-toggle btn btn-icon btn-trigger" data-bs-toggle="dropdown"><em class="icon ni ni-more-h"></em></a>
-                                                                        <div class="dropdown-menu dropdown-menu-end">
-                                                                            <ul class="link-list-opt no-bdr">
-                                                                                <li><a href="#"><em class="icon ni ni-edit"></em><span>Edit</span></a></li>
-                                                                                <li><a href="#"><em class="icon ni ni-trash"></em><span>Delete</span></a></li>
-                                                                            </ul>
-                                                                        </div>
-                                                                    </div>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
-                                                    </div><!-- .nk-tb-item  -->
+                                                                    </form>
+                                                                </div><!-- .modal-body -->
+                                                            </div><!-- .modal-content -->
+                                                        </div><!-- .modal-dialog -->
+                                                    </div><!-- .modal -->
+                                                    {% endfor %}
                                                 </div><!-- .nk-tb-list -->
                                             </div><!-- .card-inner -->
                                             <div class="card-inner">
@@ -666,4 +344,59 @@
                     </div>
                 </div>
                 <!-- content @e -->
-{% endblock %}   
+
+<!-- Add Expenses-->
+<div class="modal fade" tabindex="-1" role="dialog" id="add-expenses">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <a href="#" class="close" data-bs-dismiss="modal"><em class="icon ni ni-cross-sm"></em></a>
+            <div class="modal-body modal-body-md">
+                <h5 class="modal-title">اضافة منصرف</h5>
+                <form action="#" class="mt-2">
+                    <div class="row g-gs">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-label" for="supplier-name">اسم المزود</label>
+                                <input type="text" class="form-control" id="supplier-name" placeholder="Supplier Name">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-label" for="description">البيان</label>
+                                <input type="text" class="form-control" id="description" placeholder="Description">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-label">التاريخ</label>
+                                <div class="form-control-wrap">
+                                    <div class="form-icon form-icon-right">
+                                        <em class="icon ni ni-calendar"></em>
+                                    </div>
+                                    <input type="text" class="form-control date-picker" data-date-format="yyyy-mm-dd" placeholder="yyyy-mm-dd">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-label" for="amount">المبلغ</label>
+                                <input type="number" class="form-control" id="amount" placeholder="300.99 USD">
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <ul class="align-center flex-wrap flex-sm-nowrap gx-4 gy-2">
+                                <li>
+                                    <button class="btn btn-primary">اضافة منصرف</button>
+                                </li>
+                                <li>
+                                    <a href="#" class="link" data-bs-dismiss="modal">إلغاء</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </form>
+            </div><!-- .modal-body -->
+        </div><!-- .modal-content -->
+    </div><!-- .modal-dialog -->
+</div><!-- .modal -->
+                {% endblock %}

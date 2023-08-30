@@ -1,15 +1,19 @@
 
 
+{% extends 'dashboard/base.html' %}
+{% load static %}
+
+{% block content %}
 <body class="bg-white" onload="printPromot()">
     <div class="nk-block">
         <div class="invoice invoice-print">
             <div class="invoice-wrap">
                 <div class="invoice-brand text-center">
-                    <img src="./images/logo-dark.png" srcset="./images/logo-dark2x.png 2x" alt="">
+                    <img src="{% static '/images/logo-dark.png' %}" srcset="./images/logo-dark2x.png 2x" alt="">
                 </div>
                 <div class="invoice-head">
                     <div class="invoice-contact">
-                        <span class="overline-title">Invoice To</span>
+                        <span class="overline-title">فاتورة الى </span>
                         <div class="invoice-contact-info">
                             <h4 class="title">Gregory Ander son</h4>
                             <ul class="list-plain">
@@ -19,10 +23,10 @@
                         </div>
                     </div>
                     <div class="invoice-desc">
-                        <h3 class="title">Invoice</h3>
+                        <h3 class="title">فاتورة</h3>
                         <ul class="list-plain">
-                            <li class="invoice-id"><span>Invoice ID</span>:<span>66K5W3</span></li>
-                            <li class="invoice-date"><span>Date</span>:<span>10 March 2021, 10:45pm</span></li>
+                            <li class="invoice-id"><span>رقم الفاتورة</span>:<span>{{invoice.invoice_number}}</span></li>
+                            <li class="invoice-date"><span>التاريخ</span>:<span>{{invoice.issue_date}}</span></li>
                         </ul>
                     </div>
                 </div><!-- .invoice-head -->
@@ -32,10 +36,10 @@
                             <thead>
                                 <tr>
                                     <th class="w-150px">Item Code</th>
-                                    <th class="w-60">Description</th>
-                                    <th>Price</th>
-                                    <th>Qty</th>
-                                    <th>Amount</th>
+                                    <th class="w-60">البيان</th>
+                                    <th>السعر</th>
+                                    <th>الكمية</th>
+                                    <th>المبلغ</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -76,17 +80,17 @@
                                 </tr>
                                 <tr>
                                     <td colspan="2"></td>
-                                    <td colspan="2">Processing fee</td>
+                                    <td colspan="2">رسوم المعالجة</td>
                                     <td>$10.00</td>
                                 </tr>
                                 <tr>
                                     <td colspan="2"></td>
-                                    <td colspan="2">TAX</td>
+                                    <td colspan="2">الضريبة</td>
                                     <td>$43.50</td>
                                 </tr>
                                 <tr>
                                     <td colspan="2"></td>
-                                    <td colspan="2">Grand Total</td>
+                                    <td colspan="2">إجمالي المبلغ</td>
                                     <td>$2,734.50</td>
                                 </tr>
                             </tfoot>
@@ -103,3 +107,6 @@
         }
     </script>
 </body>
+
+
+{% endblock %}

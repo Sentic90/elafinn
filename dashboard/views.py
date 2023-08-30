@@ -1,4 +1,7 @@
 from django.shortcuts import render, redirect
+from management.forms import EmployeeForm, ExpenseForm, StockForm
+
+from management.models import Invoice
 from .models import *
 from .forms import *
 from django.views import generic
@@ -65,20 +68,33 @@ def add_hotel(request):
 
 ############  Employee area ########
 
+
 def employee_list(request, slug):
 
+    if request.method == 'POST':
+        pass
     hotel = Hotel.objects.get(slug=slug)
+    employee_list = hotel.employee_set.all()
+    employee_forms = []
+
+    for employee in employee_list:
+        form = EmployeeForm(instance=employee)
+        employee_forms.append((employee, form))
+    form = EmployeeForm()
     # employee
     context = {
-        'hotel': hotel
+        'hotel': hotel,
+        'employee_forms': employee_forms,
+        'form': form
     }
     return render(request, 'dashboard/employee/employee_list.html', context)
+
 
 def employee_details(request, slug, empolyeeId):
     # try:
     #     get_object_or_404(Employee)
     # except:
-        # pass
+    # pass
     hotel = Hotel.objects.get(slug=slug)
     context = {
         'hotel': hotel
@@ -89,44 +105,52 @@ def employee_details(request, slug, empolyeeId):
 
 ############  Invoice area ########
 
+
 def invoice_list(request, slug):
     hotel = Hotel.objects.get(slug=slug)
     context = {
-        'hotel': hotel, 
-        'invoice':{'id':1}
+        'hotel': hotel,
+        'invoice': {'id': 1}
     }
     return render(request, 'dashboard/invoice/invoice_list.html', context)
 
+
 def invoice_details(request, slug, invoiceId):
 
-    # Invoice.objects.get(id=invoiceId)
+    invoice = Invoice.objects.get(id=invoiceId)
 
     hotel = Hotel.objects.get(slug=slug)
     context = {
-        'hotel': hotel
+        'hotel': hotel,
+        'invoice': invoice
     }
     return render(request, 'dashboard/invoice/invoice_details.html', context)
 
-def invoice_print(request, invoiceId):
 
+def invoice_print(request, slug, invoiceId):
 
-    # invoice = Invoice.objects.get(id=invoiceID)
+    hotel = Hotel.objects.get(slug=slug)
+    invoice = Invoice.objects.get(id=invoiceId)
     context = {
-        'invoice':{'id':1}
+        'hotel': hotel,
+        'invoice': invoice
     }
+
     return render(request, 'dashboard/invoice/invoice_print.html', context)
 
 ############  End Invoice area ########
 
 ############  Expenses area ########
 
+
 def expense_list(request, slug):
     hotel = Hotel.objects.get(slug=slug)
     context = {
-        'hotel': hotel, 
-        
+        'hotel': hotel,
+
     }
     return render(request, 'dashboard/expense/expense_list.html', context)
+
 
 def expense_details(request, slug, expenseId):
 
@@ -138,8 +162,8 @@ def expense_details(request, slug, expenseId):
     }
     return render(request, 'dashboard/expense/expense_details.html', context)
 
-def expense_print(request, expenseId):
 
+def expense_print(request, expenseId):
 
     # expense = expense.objects.get(id=expenseID)
     context = {
@@ -150,11 +174,25 @@ def expense_print(request, expenseId):
 ############  End Expense area ########
 
 ############  Report area ########
+
+
 def report_stock(request, slug):
+
+    if request.method == 'POST':
+        pass
     hotel = Hotel.objects.get(slug=slug)
+    stock_list = hotel.employee_set.all()
+    stock_forms = []
+
+    for stock in stock_list:
+        form = StockForm(instance=stock)
+        stock_forms.append((stock, form))
+
+    form = StockForm()
     context = {
-        'hotel': hotel, 
-        
+        'hotel': hotel,
+        'stock_forms': stock_forms,
+        'form': form
     }
     return render(request, 'dashboard/report/report_stocks.html', context)
 
@@ -162,12 +200,24 @@ def report_stock(request, slug):
 def report_expense(request, slug):
 
     hotel = Hotel.objects.get(slug=slug)
+
+    expense_list = hotel.employee_set.all()
+    expense_forms = []
+
+    for expense in expense_list:
+        form = ExpenseForm(instance=expense)
+        expense_forms.append((expense, form))
+
+    form = ExpenseForm()
     context = {
         'hotel': hotel,
+        'expense_forms': expense_forms,
+        'form': form
     }
     return render(request, 'dashboard/report/report_expenses.html', context)
 
 ############  End Expense area ########
+
 
 class HotelDashboard(DetailView):
     # specify the model to use
@@ -192,7 +242,6 @@ class HotelInformation(SuccessMessageMixin, generic.UpdateView):
         else:
             slug = 'demo'
         return reverse('hotel_information', kwargs={'slug': slug})
-
 
 
 def change_hotel_status(self, hotelId):
@@ -397,9 +446,11 @@ def gallery_upload(request, slug):
     return JsonResponse({"Message": ""})
 
 # requests
+
+
 def requests(request, slug):
     # url -> dashboard/my_hotel/<slug:slug>/requests
-    # namespace -> request-list-> 
+    # namespace -> request-list->
     h = get_object_or_404(Hotel, slug=slug)
     slug = h.slug
     hotel = Hotel.objects.get(slug=slug)
@@ -408,21 +459,22 @@ def requests(request, slug):
     context = {
         'hotel': hotel,
         'slug': slug,
-        'rooms': rooms, 
-        'messages':messages_list
+        'rooms': rooms,
+        'messages': messages_list
     }
     return render(request, 'dashboard/requests/requests.html', context)
 
+
 def request_details(request, slug, requestId):
     instance = Request.objects.get(id=requestId)
-    
+
     if request.method == 'POST':
         form = RequestForm(request.POST, instance=instance)
         if form.is_valid():
             form.save()
 
             messages.success(request, 'تم معالجة الطلب بنجاح')
-            return redirect(reverse('request-list', kwargs={'slug':slug}))
+            return redirect(reverse('request-list', kwargs={'slug': slug}))
     # GET
     hotels = Hotel.objects.filter(user=request.user)
     h = get_object_or_404(Hotel, slug=slug)
@@ -433,8 +485,8 @@ def request_details(request, slug, requestId):
     context = {
         'hotel': hotel,
         'slug': slug,
-        'request':instance,
-        'form':form
+        'request': instance,
+        'form': form
     }
     return render(request, 'dashboard/requests/request_details.html', context)
 
@@ -450,8 +502,8 @@ def bookings(request, slug):
     context = {
         'hotel': hotel,
         'slug': slug,
-        'rooms': rooms, 
-        'messages':messages_list
+        'rooms': rooms,
+        'messages': messages_list
     }
     return render(request, 'dashboard/booking/bookings.html', context)
 
@@ -471,16 +523,16 @@ def booking_add(request, slug):
 
 
 def booking_edit(request, slug, bookingId):
-    
+
     instance = Booking.objects.get(id=bookingId)
-    
+
     if request.method == 'POST':
         form = BookingForm(request.POST, instance=instance)
         if form.is_valid():
             form.save()
 
             messages.success(request, 'تم معالجة الطلب بنجاح')
-            return redirect(reverse('booking-list', kwargs={'slug':slug}))
+            return redirect(reverse('booking-list', kwargs={'slug': slug}))
     # GET
     hotels = Hotel.objects.filter(user=request.user)
     h = get_object_or_404(Hotel, slug=slug)
@@ -491,8 +543,8 @@ def booking_edit(request, slug, bookingId):
     context = {
         'hotel': hotel,
         'slug': slug,
-        'booking':instance,
-        'form':form
+        'booking': instance,
+        'form': form
     }
     return render(request, 'dashboard/booking/booking-edit.html', context)
 
@@ -810,20 +862,19 @@ def customer(request, slug):
 
 def payment_methods(request, slug):
     hotel = Hotel.objects.get(slug=slug)
-    
+
     if request.method == 'POST':
         form = PaymentMethodForm(request.POST)
         if form.is_valid():
             myform = form.save(commit=False)
-            myform.hotel = hotel 
+            myform.hotel = hotel
             myform.save()
             messages.success(request, 'تم اضافة وسيلة الدفع بنجاح')
-            return redirect(reverse('payment-methods', kwargs={'slug':slug}))
+            return redirect(reverse('payment-methods', kwargs={'slug': slug}))
         print(form.errors.as_text)
         messages.error(request, form.errors)
-        return redirect(reverse('payment-methods', kwargs={'slug':slug}))
+        return redirect(reverse('payment-methods', kwargs={'slug': slug}))
 
-    
     payment_methods = hotel.payment_methods.all()
     payment_methods_forms = []
 
@@ -837,26 +888,26 @@ def payment_methods(request, slug):
         'hotel': hotel,
         'slug': slug,
         'rooms': rooms,
-        'payment_methods_forms':payment_methods_forms,
-        'messages':messages_list,
-        'form':form
+        'payment_methods_forms': payment_methods_forms,
+        'messages': messages_list,
+        'form': form
     }
     return render(request, 'dashboard/payment/payment-methods.html', context)
+
 
 def payment_method_edit(request, slug, paymentMethodId):
     instance = PaymentMethod.objects.get(id=paymentMethodId)
 
     if request.method == 'POST':
-        form = PaymentMethodForm(request.POST, instance=instance )
+        form = PaymentMethodForm(request.POST, instance=instance)
 
         if form.is_valid():
             form.save()
             messages.success(request, 'تم معالجة الطلب بنجاح')
-            return redirect(reverse('payment-methods', kwargs={'slug':slug}))
+            return redirect(reverse('payment-methods', kwargs={'slug': slug}))
 
         messages.error(request, form.errors)
-        return redirect(reverse('payment-methods', kwargs={'slug':slug}))
-
+        return redirect(reverse('payment-methods', kwargs={'slug': slug}))
 
 
 def rooms_for_annual_rent(request, slug):
