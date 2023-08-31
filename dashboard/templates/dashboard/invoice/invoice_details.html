@@ -33,7 +33,7 @@
                                         </div><!-- .invoice-actions -->
                                         <div class="invoice-wrap">
                                             <div class="invoice-brand text-center">
-                                                <img src="./images/logo-dark.png" srcset="./images/logo-dark2x.png 2x" alt="">
+                                                <img src="{% static 'images/logo/ElafInn_logo 4.png' %}" srcset="./images/logo-dark2x.png 2x" alt="Image_logo_of_Elafin">
                                             </div>
                                             <div class="invoice-head">
                                                 <div class="invoice-contact">
@@ -67,55 +67,36 @@
                                                             </tr>
                                                         </thead>
                                                         <tbody>
+                                                            {% for item in invoice.items.all %}
                                                             <tr>
-                                                                <td>#3H4J60</td>
-                                                                <td>Customer Relationship Management - Regular License</td>
-                                                                <td>$450.00</td>
-                                                                <td>5</td>
-                                                                <td>$2200.00</td>
+                                                                <td>#{{item.id}}</td>
+                                                                <td>{{item.description}}</td>
+                                                                <td>{{ item.unit_price }}</td>
+                                                                <td>{{item.quantity }}</td>
+                                                                <td class="lineTotal">{{item.line_total}}</td>
                                                             </tr>
-                                                            <tr>
-                                                                <td>24108054</td>
-                                                                <td>6 months premium support</td>
-                                                                <td>$250.00</td>
-                                                                <td>1</td>
-                                                                <td>$250.00</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>23604094</td>
-                                                                <td>Invest Management Dashboard - Regular License</td>
-                                                                <td>$131.25</td>
-                                                                <td>1</td>
-                                                                <td>$131.25</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>23604094</td>
-                                                                <td>6 months premium support</td>
-                                                                <td>$99.75</td>
-                                                                <td>1</td>
-                                                                <td>$99.75</td>
-                                                            </tr>
+                                                            {% endfor %}
                                                         </tbody>
                                                         <tfoot>
                                                             <tr>
                                                                 <td colspan="2"></td>
                                                                 <td colspan="2">Subtotal</td>
-                                                                <td>$2,681</td>
+                                                                <td id="subTotal">0</td>
                                                             </tr>
                                                             <tr>
                                                                 <td colspan="2"></td>
                                                                 <td colspan="2">Processing fee</td>
-                                                                <td>$10.00</td>
+                                                                <td id="processingFee">0</td>
                                                             </tr>
                                                             <tr>
                                                                 <td colspan="2"></td>
                                                                 <td colspan="2">الضريبة</td>
-                                                                <td>$43.50</td>
+                                                                <td id="vatAmount">{{ hotel.vat }} %</td>
                                                             </tr>
                                                             <tr>
                                                                 <td colspan="2"></td>
                                                                 <td colspan="2">إجمالي المبلغ</td>
-                                                                <td>$2,734.50</td>
+                                                                <td id="totalDueAmount">0</td>
                                                             </tr>
                                                         </tfoot>
                                                     </table>
@@ -130,4 +111,27 @@
                     </div>
                 </div>
                 <!-- content @e -->
+
+<script src="{% static 'js/jquery.min.js'%}"></script>
+<script>
+    $(document).ready( function(){
+      var vatAmount = parseFloat($('#vatAmount').text())
+    //   const processingFee = $('#processingFee')
+
+      var subTotal = 0;
+      var totalPrice = 0;
+
+      $('.lineTotal').each(function (){
+        subTotal += parseFloat($(this).text());
+      })
+      
+      $('#subTotal').text('SAR' + ' ' + parseFloat(subTotal))
+      var totalPriceWithVat = subTotal * parseFloat((vatAmount / 100) + 1)
+
+
+      $('#totalDueAmount').text(parseFloat(totalPriceWithVat).toFixed(2) + ' ' + 'SAR')
+    //   $('#totalPrice').text(totalPriceWithVat)
+      
+    })
+  </script>
 {% endblock %}

@@ -9,6 +9,7 @@ from django.contrib.auth.decorators import login_required
 from django.views.generic.detail import DetailView
 from django.urls import reverse, reverse_lazy
 from django.contrib import messages, auth
+from django.core.paginator import Paginator
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.messages.views import SuccessMessageMixin
 from geopy.distance import distance as geopy_distance
@@ -129,10 +130,19 @@ def employee_update(request, slug, employeeId):
 
 
 def invoice_list(request, slug):
+
     hotel = Hotel.objects.get(slug=slug)
+    queryset = hotel.invoice_set.all()
+
+    # Paginations
+    paginator = Paginator(queryset, 10)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    
+
     context = {
         'hotel': hotel,
-        'invoice': {'id': 1}
+        'invoices':page_obj,
     }
     return render(request, 'dashboard/invoice/invoice_list.html', context)
 
@@ -167,8 +177,16 @@ def invoice_print(request, slug, invoiceId):
 
 def expense_list(request, slug):
     hotel = Hotel.objects.get(slug=slug)
+    queryset = hotel.expense_set.all()
+    
+    # Paginations
+    paginator = Paginator(queryset, 10)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
     context = {
         'hotel': hotel,
+        'expenses':page_obj
 
     }
     return render(request, 'dashboard/expense/expense_list.html', context)
@@ -201,6 +219,7 @@ def expense_print(request, expenseId):
 def report_stock(request, slug):
     # List + Add stock
     hotel = Hotel.objects.get(slug=slug)
+    
     if request.method == 'POST':
         form = StockForm(request.POST)
 
@@ -216,19 +235,27 @@ def report_stock(request, slug):
                        extra_tags='danger')
         return redirect(reverse('report-stocks', kwargs={'slug': hotel.slug}))
 
+        
+    # Paginations
+    queryset = hotel.stock_set.all().order_by('-created')
     
-    stock_list = hotel.stock_set.all().order_by('-created')
-    stock_forms = []
+    paginator = Paginator(queryset, 3)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
 
-    for stock in stock_list:
+    stock_forms = []
+    for stock in page_obj:
         form = StockForm(instance=stock)
         stock_forms.append((stock, form))
 
     form = StockForm()
+
+
     context = {
         'hotel': hotel,
         'stock_forms': stock_forms,
-        'form': form
+        'form': form, 
+        'stocks': page_obj
     }
     return render(request, 'dashboard/report/report_stocks.html', context)
 
@@ -270,12 +297,16 @@ def report_expense(request, slug):
         # TODO handling the error message 
         messages.error(request, message='خطأ في إضافة المنصرف',
                        extra_tags='danger')
-        return redirect(reverse('report-stocks', kwargs={'slug': hotel.slug}))
+        return redirect(reverse('report-expenses', kwargs={'slug': hotel.slug}))
+
+    queryset = hotel.expense_set.all().order_by('-created')
+    paginator = Paginator(queryset, 3)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
     
-    expense_list = hotel.expense_set.all().order_by('-created')
     expense_forms = []
 
-    for expense in expense_list:
+    for expense in page_obj:
         form = ExpenseForm(instance=expense)
         expense_forms.append((expense, form))
 
@@ -283,7 +314,8 @@ def report_expense(request, slug):
     context = {
         'hotel': hotel,
         'expense_forms': expense_forms,
-        'form': form
+        'form': form,
+        'expenses':page_obj
     }
     return render(request, 'dashboard/report/report_expenses.html', context)
 
@@ -327,6 +359,9 @@ def get_statistics_data(request, slug):
     total_booked_room_this_month = 10
     total_booked_room_this_week = 10
 
+    # Seasons الباقات
+    items = Season.objects.values('season')
+    seasons = [item['season'] for item in items]
     data = {
         'requests':{
         'total_request': total_request,
@@ -345,6 +380,11 @@ def get_statistics_data(request, slug):
             'total_booked_room_this_month':total_booked_room_this_month,
             'total_booked_room_this_week':total_booked_room_this_week,
         },
+        
+        'seasons':{
+            'packages':seasons
+        },
+        
         'chart_data': {
             'labels': ['This Month', 'This Week'],
             'data': [this_month_request, this_week_request],

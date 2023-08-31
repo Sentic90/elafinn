@@ -1,24 +1,37 @@
-
-
-{% extends 'dashboard/base.html' %}
 {% load static %}
+<head>
+    <base href="../../">
+    <meta charset="utf-8">
+    <meta name="author" content="Softnio">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description"
+          content="A powerful and conceptual apps base dashboard template that especially build for developers and programmers.">
+    <!-- Fav Icon  -->
+    <link rel="shortcut icon" href="{% static 'images/logo/ElafInn_icon 1.png' %}">
+    <!-- Page Title  -->
+    <title>ُايلاف ان - لوحة التحكم</title>
+    <!-- StyleSheets  -->
+    <link rel="stylesheet" href="{% static 'assets/css/dashlite.rtl.css' %}">
+    <link id="skin-default" rel="stylesheet" href="{% static 'assets/css/theme.css' %}">
+    <!-- Premade Skin style -->
+    <link rel="stylesheet" href="{% static 'assets/css/skins/theme-egyptian.css' %}">
 
-{% block content %}
-<body class="bg-white" onload="printPromot()">
+</head>
+<body class="bg-white" onload="printPromot()" dir="rtl">
     <div class="nk-block">
         <div class="invoice invoice-print">
             <div class="invoice-wrap">
                 <div class="invoice-brand text-center">
-                    <img src="{% static '/images/logo-dark.png' %}" srcset="./images/logo-dark2x.png 2x" alt="">
+                    <img src="{% static 'images/logo/ElafInn_logo 4.png' %}" srcset="./images/logo-dark2x.png 2x" alt="Image_logo_of_Elafin">
                 </div>
                 <div class="invoice-head">
                     <div class="invoice-contact">
                         <span class="overline-title">فاتورة الى </span>
                         <div class="invoice-contact-info">
-                            <h4 class="title">Gregory Ander son</h4>
+                            <h4 class="title">{{invoice.customer.first_name}} {{invoice.customer.last_name}}</h4>
                             <ul class="list-plain">
-                                <li><em class="icon ni ni-map-pin-fill"></em><span>House #65, 4328 Marion Street<br>Newbury, VT 05051</span></li>
-                                <li><em class="icon ni ni-call-fill"></em><span>+012 8764 556</span></li>
+                                <li><em class="icon ni ni-map-pin-fill"></em><span>{{invoice.customer.address}}</span></li>
+                                <li><em class="icon ni ni-call-fill"></em><span>{{invoice.customer.phone}}</span></li>
                             </ul>
                         </div>
                     </div>
@@ -26,7 +39,7 @@
                         <h3 class="title">فاتورة</h3>
                         <ul class="list-plain">
                             <li class="invoice-id"><span>رقم الفاتورة</span>:<span>{{invoice.invoice_number}}</span></li>
-                            <li class="invoice-date"><span>التاريخ</span>:<span>{{invoice.issue_date}}</span></li>
+                            <li class="invoice-date"><span>التاريخ</span>:<span>{{invoice.issue_date|date:""}}</span></li>
                         </ul>
                     </div>
                 </div><!-- .invoice-head -->
@@ -43,55 +56,36 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                {% for item in invoice.items.all %}
                                 <tr>
-                                    <td>#3H4J60</td>
-                                    <td>Customer Relationship Management - Regular License</td>
-                                    <td>$450.00</td>
-                                    <td>5</td>
-                                    <td>$2200.00</td>
+                                    <td>#{{item.id}}</td>
+                                    <td>{{item.description}}</td>
+                                    <td>{{ item.unit_price }}</td>
+                                    <td>{{item.quantity }}</td>
+                                    <td class="lineTotal">{{item.line_total}}</td>
                                 </tr>
-                                <tr>
-                                    <td>24108054</td>
-                                    <td>6 months premium support</td>
-                                    <td>$250.00</td>
-                                    <td>1</td>
-                                    <td>$250.00</td>
-                                </tr>
-                                <tr>
-                                    <td>23604094</td>
-                                    <td>Invest Management Dashboard - Regular License</td>
-                                    <td>$131.25</td>
-                                    <td>1</td>
-                                    <td>$131.25</td>
-                                </tr>
-                                <tr>
-                                    <td>23604094</td>
-                                    <td>6 months premium support</td>
-                                    <td>$99.75</td>
-                                    <td>1</td>
-                                    <td>$99.75</td>
-                                </tr>
+                                {% endfor %}
                             </tbody>
                             <tfoot>
                                 <tr>
                                     <td colspan="2"></td>
                                     <td colspan="2">Subtotal</td>
-                                    <td>$2,681</td>
+                                    <td id="subTotal">0</td>
                                 </tr>
                                 <tr>
                                     <td colspan="2"></td>
-                                    <td colspan="2">رسوم المعالجة</td>
-                                    <td>$10.00</td>
+                                    <td colspan="2">Processing fee</td>
+                                    <td id="processingFee">0</td>
                                 </tr>
                                 <tr>
                                     <td colspan="2"></td>
                                     <td colspan="2">الضريبة</td>
-                                    <td>$43.50</td>
+                                    <td id="vatAmount">{{ hotel.vat }} %</td>
                                 </tr>
                                 <tr>
                                     <td colspan="2"></td>
                                     <td colspan="2">إجمالي المبلغ</td>
-                                    <td>$2,734.50</td>
+                                    <td id="totalDueAmount">0</td>
                                 </tr>
                             </tfoot>
                         </table>
@@ -101,6 +95,29 @@
             </div><!-- .invoice-wrap -->
         </div><!-- .invoice -->
     </div><!-- .nk-block -->
+    
+    <script src="{% static 'js/jquery.min.js'%}"></script>
+<script>
+    $(document).ready( function(){
+      var vatAmount = parseFloat($('#vatAmount').text())
+    //   const processingFee = $('#processingFee')
+
+      var subTotal = 0;
+      var totalPrice = 0;
+
+      $('.lineTotal').each(function (){
+        subTotal += parseFloat($(this).text());
+      })
+      
+      $('#subTotal').text('SAR' + ' ' + parseFloat(subTotal))
+      var totalPriceWithVat = subTotal * parseFloat((vatAmount / 100) + 1)
+
+
+      $('#totalDueAmount').text(parseFloat(totalPriceWithVat).toFixed(2) + ' ' + 'SAR')
+    //   $('#totalPrice').text(totalPriceWithVat)
+      
+    })
+  </script>
     <script>
         function printPromot() {
             window.print();
@@ -108,5 +125,3 @@
     </script>
 </body>
 
-
-{% endblock %}

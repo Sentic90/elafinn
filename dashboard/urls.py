@@ -110,7 +110,7 @@ urlpatterns = [
      #  expense
     path('dashboard/my_hotel/<slug:slug>/report/expense-list',
          views.report_expense, name='report-expenses'),
-     path('dashboard/my_hotel/<slug:slug>/report/stock/<int:expenseId>/update',
+     path('dashboard/my_hotel/<slug:slug>/report/expense/<int:expenseId>/update',
          views.report_expense_update, name='report-expense-update'),
 
      # Stock

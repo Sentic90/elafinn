@@ -21,11 +21,12 @@ class StockForm(forms.ModelForm):
 
 
 class ExpenseForm(forms.ModelForm):
-
+    
     class Meta:
         model = models.Expense
         fields = [
             'supplier_name',
             'description',
             'amount',
+            
         ]

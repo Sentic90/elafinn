@@ -103,7 +103,7 @@
                                     <tbody class="tb-odr-body">
 
 
-                                        {% for invoice in hotel.invoice_set.all %}
+                                        {% for invoice in invoices %}
                                         <tr class="tb-odr-item">
                                             <td class="tb-odr-info">
                                                 <span class="tb-odr-id"><a href="{% url 'invoice-details' hotel.slug invoice.id %}">#{{invoice.invoice_number}}</a></span>
@@ -130,17 +130,8 @@
                                     </tbody>
                                 </table>
                             </div><!-- .card-inner -->
-                            <div class="card-inner">
-                                <ul class="pagination justify-content-center justify-content-md-start">
-                                    <li class="page-item"><a class="page-link" href="#">Prev</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                    <li class="page-item"><span class="page-link"><em class="icon ni ni-more-h"></em></span></li>
-                                    <li class="page-item"><a class="page-link" href="#">6</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">7</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">Next</a></li>
-                                </ul><!-- .pagination -->
-                            </div><!-- .card-inner -->
+                                {% include 'dashboard/components/paginator.html' with page_obj=invoices %}
+                            <!-- .card-inner -->
                         </div><!-- .card-inner-group -->
                     </div><!-- .card -->
                 </div><!-- .nk-block -->

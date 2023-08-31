@@ -21,17 +21,27 @@ class Invoice(models.Model):
     total_amount = models.DecimalField(max_digits=10, decimal_places=2)
     status = models.CharField(max_length=15, choices=INVOICE_STATUS, default='pending')
     payment_date = models.DateTimeField(blank=True, null=True, auto_now=True)
-
+    
+    # processing_fee
     def __str__(self):
         return str(self.invoice_number)
 
+    # def save(self, *args, **kwargs):
+    #     # Calculate the total amount by summing up the amounts of related InvoiceItems
+    #     self.total_amount = self.items.aggregate(total=models.Sum('amount'))['total'] or 0
+        
+    #     super().save(*args, **kwargs)
 
 class InvoiceItem(models.Model):
     invoice = models.ForeignKey(Invoice, on_delete=models.CASCADE, related_name='items')
     description = models.CharField(max_length=200)
     quantity = models.PositiveIntegerField()
     unit_price = models.DecimalField(max_digits=10, decimal_places=2)
-    line_total = models.DecimalField(max_digits=10, decimal_places=2)
+
+    @property
+    def line_total(self):
+        return float(self.unit_price * self.quantity)
+
 
     def __str__(self):
         return self.description
