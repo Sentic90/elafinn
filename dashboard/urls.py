@@ -5,14 +5,17 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
-
+     # statistics data
+     path('dashboard/my_hotel/<slug:slug>/statistics', views.get_statistics_data, name='get-statistics-data'),
+    
     # path('signup/', views.signup, name='signup'),
     # path('signup_clinic/', views.signup_clinic, name='signup_clinic'),
     #
     # path('passwords_change/', views.change_password, name='change_password'),
 
     path('dashboard/my_hotel/', views.my_hotel, name='my-hotel'),
-    path('dashboard/my_hotel/edit/status/<int:hotelId>', views.change_hotel_status, name='change_status'),
+    path('dashboard/my_hotel/edit/status/<int:hotelId>',
+         views.change_hotel_status, name='change_status'),
 
     path('dashboard/my_hotel/add', views.add_hotel, name='add-hotel'),
     path('dashboard/my_hotel/<slug>',
@@ -44,7 +47,7 @@ urlpatterns = [
     path('dashboard/my_hotel/<slug:slug>/bookings/edit/<int:bookingId>',
          views.booking_edit, name='booking-edit'),
 
-     # Requests
+    # Requests
     path('dashboard/my_hotel/<slug:slug>/requests',
          views.requests, name='request-list'),
 
@@ -81,33 +84,42 @@ urlpatterns = [
     path('dashboard/my_hotel/<slug:slug>/annual_rent/list/add',
          views.AnnualRentAddView.as_view(), name='add_annual_rent'),
 
-     # Employee
+    # Employee
     path('dashboard/my_hotel/<slug:slug>/employee/employee-list',
          views.employee_list, name='employee-list'),
+    path('dashboard/my_hotel/<slug:slug>/employee/employee/<int:employeeId>/update',
+         views.employee_update, name='employee-update'),
 
-     # Invoice
-     path('dashboard/my_hotel/<slug:slug>/invoice/invoice-list',
+    # Invoice
+    path('dashboard/my_hotel/<slug:slug>/invoice/invoice-list',
          views.invoice_list, name='invoice-list'),
-     path('dashboard/my_hotel/<slug:slug>/invoice/<int:invoiceId>/view',
+    path('dashboard/my_hotel/<slug:slug>/invoice/<int:invoiceId>/view',
          views.invoice_details, name='invoice-details'),
-     path('dashboard/my_hotel/<slug:slug>/invoice/<int:invoiceId>/print',
+    path('dashboard/my_hotel/<slug:slug>/invoice/<int:invoiceId>/print',
          views.invoice_print, name='invoice-print'),
-     
-     # expense
-     path('dashboard/my_hotel/<slug:slug>/expense/expense-list',
+
+    # expense
+    path('dashboard/my_hotel/<slug:slug>/expense/expense-list',
          views.expense_list, name='expense-list'),
-     path('dashboard/my_hotel/<slug:slug>/expense/<int:expenseId>/view',
+    path('dashboard/my_hotel/<slug:slug>/expense/<int:expenseId>/view',
          views.expense_details, name='expense-details'),
-     path('dashboard/my_hotel/<slug:slug>/expense/<int:expenseId>/print',
+    path('dashboard/my_hotel/<slug:slug>/expense/<int:expenseId>/print',
          views.expense_print, name='expense-print'),
 
-     # Report 
-     path('dashboard/my_hotel/<slug:slug>/report/expense-list',
+    # Reports
+     #  expense
+    path('dashboard/my_hotel/<slug:slug>/report/expense-list',
          views.report_expense, name='report-expenses'),
-     path('dashboard/my_hotel/<slug:slug>/report/stock-list',
-         views.report_stock, name='report-stocks'),
+     path('dashboard/my_hotel/<slug:slug>/report/stock/<int:expenseId>/update',
+         views.report_expense_update, name='report-expense-update'),
 
-     # customer
+     # Stock
+    path('dashboard/my_hotel/<slug:slug>/report/stock-list',
+         views.report_stock, name='report-stocks'),
+    path('dashboard/my_hotel/<slug:slug>/report/stock/<int:stockId>/update',
+         views.report_stock_update, name='report-stock-update'),
+
+    # customer
     path('dashboard/my_hotel/<slug:slug>/customer/customer-list',
          views.customer, name='customer-list'),
 

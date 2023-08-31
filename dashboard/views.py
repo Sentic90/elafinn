@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from management.forms import EmployeeForm, ExpenseForm, StockForm
 
-from management.models import Invoice
+from management.models import Employee, Expense, Invoice, Stock
 from .models import *
 from .forms import *
 from django.views import generic
@@ -67,39 +67,61 @@ def add_hotel(request):
     return render(request, "dashboard/add-hotel.html", {"form": form})
 
 ############  Employee area ########
+# REDIRECTION_EMPLOYEE = redirect(reverse('employee-list', kwargs={'slug': hotel.slug}))
 
 
 def employee_list(request, slug):
-
-    if request.method == 'POST':
-        pass
+    """List + Add"""
     hotel = Hotel.objects.get(slug=slug)
+    if request.method == 'POST':
+        form = EmployeeForm(request.POST)
+        if form.is_valid():
+            instance = form.save(commit=False)
+            instance.hotel = hotel
+            instance.save()
+
+            messages.success(request, 'تم اضافة موظف جديد بنجاح')
+            return redirect(reverse('employee-list', kwargs={'slug': hotel.slug}))
+
+        messages.error(request, message='خطأ في اضافة الموظف',
+                       extra_tags='danger')
+        return redirect(reverse('employee-list', kwargs={'slug': hotel.slug}))
+
     employee_list = hotel.employee_set.all()
     employee_forms = []
 
     for employee in employee_list:
         form = EmployeeForm(instance=employee)
         employee_forms.append((employee, form))
+
     form = EmployeeForm()
-    # employee
+    messages_list = messages.get_messages(request)
+
     context = {
         'hotel': hotel,
         'employee_forms': employee_forms,
-        'form': form
+        'form': form,
+        'messages': messages_list
     }
+
     return render(request, 'dashboard/employee/employee_list.html', context)
 
 
-def employee_details(request, slug, empolyeeId):
-    # try:
-    #     get_object_or_404(Employee)
-    # except:
-    # pass
+def employee_update(request, slug, employeeId):
     hotel = Hotel.objects.get(slug=slug)
-    context = {
-        'hotel': hotel
-    }
-    return render(request, 'dashboard/employee/employee_details.html', context)
+    instance = Employee.objects.get(id=employeeId)
+
+    if request.method == 'POST':
+        form = EmployeeForm(request.POST, instance=instance)
+
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'تم التعديل بنجاح')
+            return redirect(reverse('employee-list', kwargs={'slug': hotel.slug}))
+        # TODO
+        messages.error(request, message='خطأ في اضافة الموظف',
+                       extra_tags='danger')
+        return redirect(reverse('employee-list', kwargs={'slug': hotel.slug}))
 
 ########### End employee ########
 
@@ -173,15 +195,29 @@ def expense_print(request, expenseId):
 
 ############  End Expense area ########
 
-############  Report area ########
+############  Report Stock area ########
 
 
 def report_stock(request, slug):
-
-    if request.method == 'POST':
-        pass
+    # List + Add stock
     hotel = Hotel.objects.get(slug=slug)
-    stock_list = hotel.employee_set.all()
+    if request.method == 'POST':
+        form = StockForm(request.POST)
+
+        if form.is_valid():
+            instance = form.save(commit=False)
+            instance.hotel = hotel
+            instance.save()
+            messages.success(request, 'تم إضافة بنجاح')
+            return redirect(reverse('report-stocks', kwargs={'slug': hotel.slug}))
+        
+        # TODO handling the error case 
+        messages.error(request, message='خطأ في إضافة المخزون',
+                       extra_tags='danger')
+        return redirect(reverse('report-stocks', kwargs={'slug': hotel.slug}))
+
+    
+    stock_list = hotel.stock_set.all().order_by('-created')
     stock_forms = []
 
     for stock in stock_list:
@@ -196,12 +232,47 @@ def report_stock(request, slug):
     }
     return render(request, 'dashboard/report/report_stocks.html', context)
 
-
-def report_expense(request, slug):
-
+def report_stock_update(request, slug, stockId):
     hotel = Hotel.objects.get(slug=slug)
+    instance = Stock.objects.get(id=stockId)
 
-    expense_list = hotel.employee_set.all()
+    if request.method == 'POST':
+        form = StockForm(request.POST, instance=instance)
+
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'تم التعديل بنجاح')
+            return redirect(reverse('report-stocks', kwargs={'slug': hotel.slug}))
+        # TODO
+        messages.error(request, message='خطأ في تعديل المخزون',
+                       extra_tags='danger')
+        return redirect(reverse('report-stocks', kwargs={'slug': hotel.slug}))
+
+############  End Report Stock area ########
+
+
+############  Report Expense area ########
+def report_expense(request, slug):
+    # list + add
+    hotel = Hotel.objects.get(slug=slug)
+    
+    if request.method == 'POST':
+
+        form = ExpenseForm(request.POST)
+
+        if form.is_valid():
+            instance = form.save(commit=False)
+            instance.hotel = hotel
+            instance.save()
+            messages.success(request, 'تم إضافة بنجاح')
+            return redirect(reverse('report-expenses', kwargs={'slug': hotel.slug}))
+        
+        # TODO handling the error message 
+        messages.error(request, message='خطأ في إضافة المنصرف',
+                       extra_tags='danger')
+        return redirect(reverse('report-stocks', kwargs={'slug': hotel.slug}))
+    
+    expense_list = hotel.expense_set.all().order_by('-created')
     expense_forms = []
 
     for expense in expense_list:
@@ -216,7 +287,74 @@ def report_expense(request, slug):
     }
     return render(request, 'dashboard/report/report_expenses.html', context)
 
+def report_expense_update(request, slug, expenseId):
+    hotel = Hotel.objects.get(slug=slug)
+    instance = Expense.objects.get(id=expenseId)
+
+    if request.method == 'POST':
+        form = ExpenseForm(request.POST, instance=instance)
+
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'تم التعديل بنجاح')
+            return redirect(reverse('report-expenses', kwargs={'slug': hotel.slug}))
+        # TODO
+        print(form.errors)
+        messages.error(request, message='خطأ في تعديل المنصرف',
+                       extra_tags='danger')
+        return redirect(reverse('report-expenses', kwargs={'slug': hotel.slug}))
+
 ############  End Expense area ########
+
+
+############  Statistic Data ########
+
+def get_statistics_data(request, slug):
+    hotel = Hotel.objects.get(slug=slug)
+
+    # Requests 
+    total_request = hotel.request_set.all().count()
+    this_month_request = 300
+    this_week_request = 97
+
+    # Expenses  hotel.expenses_set.all().count
+    total_expenses = hotel.total_expenses_amount
+    this_month_expenses = 3000
+    this_week_expenses = 1250
+    
+    # Rooms 
+    total_rooms = hotel.room_set.all().count()
+    total_booked_room_this_month = 10
+    total_booked_room_this_week = 10
+
+    data = {
+        'requests':{
+        'total_request': total_request,
+        'this_month_request': this_month_request,
+        'this_week_request': this_week_request,
+        },
+        
+        'expenses':{
+            'total_expenses':total_expenses,
+            'this_month_expenses':this_month_expenses,
+            'this_week_expenses':this_week_expenses,
+        },
+
+        'rooms':{
+            'total_rooms':total_rooms,
+            'total_booked_room_this_month':total_booked_room_this_month,
+            'total_booked_room_this_week':total_booked_room_this_week,
+        },
+        'chart_data': {
+            'labels': ['This Month', 'This Week'],
+            'data': [this_month_request, this_week_request],
+        },
+    }
+
+    return JsonResponse(data)
+
+
+############  End Statistic Data ########
 
 
 class HotelDashboard(DetailView):

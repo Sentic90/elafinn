@@ -4,6 +4,8 @@ from . import models
 
 
 class EmployeeForm(forms.ModelForm):
+    department = forms.ModelChoiceField(
+        queryset=models.Department.objects.all())
 
     class Meta:
         model = models.Employee
@@ -12,7 +14,7 @@ class EmployeeForm(forms.ModelForm):
 
 
 class StockForm(forms.ModelForm):
-
+    # status = forms.CharField(choices=models.Stock.PRODUCT_STATUS)
     class Meta:
         model = models.Stock
         fields = ['product_name', 'quantity', 'price_per_unit', 'status',]

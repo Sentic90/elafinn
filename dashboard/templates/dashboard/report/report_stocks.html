@@ -9,6 +9,22 @@
                 <div class="nk-content ">
                     <div class="container-fluid">
                         <div class="nk-content-inner">
+                {% for message in messages %}
+      <div
+        class="alert alert-{{ message.tags }} alert-dismissible"
+        role="alert"
+      >
+        {{ message }}
+        <button
+          type="button"
+          class="close"
+          data-dismiss="alert"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      {% endfor %}
                             <div class="nk-content-body">
                                 <div class="nk-block-head nk-block-head-sm">
                                     <div class="nk-block-between g-3">
@@ -25,8 +41,8 @@
                                                         <a href="#" class="dropdown-toggle btn btn-icon btn-primary" data-bs-toggle="dropdown"><em class="icon ni ni-plus"></em></a>
                                                         <div class="dropdown-menu dropdown-menu-end">
                                                             <ul class="link-list-opt no-bdr">
-                                                                <li><a data-bs-toggle="modal" href="#add-stock"><span>إضافة مخزون</span></a></li>
-                                                                <li><a href="#"><span>إستيراد منصرف</span></a></li>
+                                                                <li><a data-bs-toggle="modal" href="#add-stock-modal"><span>إضافة مخزون</span></a></li>
+                                                                <li><a href="#"><span>إستيراد مخزون</span></a></li>
                                                             </ul>
                                                         </div>
                                                     </div>
@@ -201,7 +217,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    {% for stock in hotel.stock_set.all %}
+                                                    {% for stock, form in stock_forms %}
                                                     <div class="nk-tb-item">
                                                         <div class="nk-tb-col nk-tb-col-check">
                                                             <div class="custom-control custom-control-sm custom-checkbox notext">
@@ -219,7 +235,7 @@
                                                             <span>{{stock.quantity}} pcs</span>
                                                         </div>
                                                         <div class="nk-tb-col tb-col-sm" data-order="30.00">
-                                                            <span class="tb-amount">{{stock.total_price}} <span class="currency">SAR</span></span>
+                                                            <span class="tb-amount">{{stock.price_per_unit}} <span class="currency">SAR</span></span>
                                                         </div>
 
                                                         <div class="nk-tb-col tb-col-md">
@@ -255,40 +271,56 @@
                                                                 <a href="#" class="close" data-bs-dismiss="modal"><em class="icon ni ni-cross-sm"></em></a>
                                                                 <div class="modal-body modal-body-md">
                                                                     <h5 class="modal-title">تعديل تفاصيل المخزون</h5>
-                                                                    <form action="#" class="mt-2">
+                                                                    <form action="{% url 'report-stock-update' hotel.slug stock.id %}" method='post' class="mt-2">
+                                                                        {% csrf_token %}
                                                                         <div class="row g-gs">
+                                                                            <!-- product_name -->
                                                                             <div class="col-md-6">
                                                                                 <div class="form-group">
                                                                                     <label class="form-label" for="product-name-edit">اسم المنتج</label>
-                                                                                    <input type="text" class="form-control" id="product-name-edit" value="Soup spoon" placeholder="اسم المنتج">
+                                                                                    <input type="text"  class="form-control" 
+                                                                                    id="product-name-edit" placeholder="اسم المنتج"
+                                                                                    value="{{form.product_name.value}}" name="{{form.product_name.name}}"
+                                                                                    >
                                                                                 </div>
                                                                             </div>
+                                                                            <!-- Quantity -->
                                                                             <div class="col-md-6">
                                                                                 <div class="form-group">
                                                                                     <label class="form-label" for="quantity-edit">الكمية</label>
-                                                                                    <input type="text" class="form-control" id="quantity-edit" value="70 pcs" placeholder="Quantity">
+                                                                                    <input type="text" class="form-control" id="quantity-edit" 
+                                                                                    placeholder="الكمية"
+                                                                                    name="{{form.quantity.name}}"
+                                                                                    value="{{form.quantity.value}}" >
                                                                                 </div>
                                                                             </div>
+                                                                            <!-- Unit price -->
                                                                             <div class="col-md-6">
                                                                                 <div class="form-group">
                                                                                     <label class="form-label" for="peice-edit">السعر</label>
-                                                                                    <input type="number" class="form-control" id="peice-edit" value="30.00" placeholder="300.99 USD">
+                                                                                    <input type="number" class="form-control" id="peice-edit" 
+                                                                                    value="{{form.price_per_unit.value}}" 
+                                                                                    name="{{form.price_per_unit.name}}"
+                                                                                    placeholder="300.99 SAR">
                                                                                 </div>
                                                                             </div>
+                                                                            <!-- status -->
                                                                             <div class="col-md-6">
                                                                                 <div class="form-group">
                                                                                     <label class="form-label" for="edit-status">الحالة</label>
-                                                                                    <select class="form-select js-select2" id="edit-status">
-                                                                                        <option>Available</option>
-                                                                                        <option>Low</option>
-                                                                                        <option>Out of Stock</option>
+                                                                                    <select name="{{form.status.name}}" class="form-select js-select2" id="edit-status">
+                                                                                        {% for choice in form.fields.status.choices %}
+                                                                                        <option value="{{choice.0}}" {% if choice.0 == form.status.value %}selected{% endif %}>{{ choice.1}}</option>
+                                                                                        {% endfor %}
+                                                                                        
                                                                                     </select>
                                                                                 </div>
                                                                             </div>
+                                                                            <!-- Submit Button -->
                                                                             <div class="col-12">
                                                                                 <ul class="align-center flex-wrap flex-sm-nowrap gx-4 gy-2">
                                                                                     <li>
-                                                                                        <button class="btn btn-primary" data-bs-dismiss="modal">تحديث المخزون</button>
+                                                                                        <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">تحديث المخزون</button>
                                                                                     </li>
                                                                                     <li>
                                                                                         <a href="#" class="link" data-bs-dismiss="modal">الغاء</a>
@@ -304,6 +336,76 @@
                                                     {% endfor %}
                                                 </div>
                                             </div><!-- .card-inner -->
+                                            <!-- Add new Stock -->
+                                            <!-- Modal Area -->
+                                            <div class="modal fade" tabindex="-1" role="dialog" id="add-stock-modal">
+                                                <div class="modal-dialog modal-lg" role="document">
+                                                    <div class="modal-content">
+                                                        <a href="#" class="close" data-bs-dismiss="modal"><em class="icon ni ni-cross-sm"></em></a>
+                                                        <div class="modal-body modal-body-md">
+                                                            <h5 class="modal-title">إضافة تفاصيل المخزون</h5>
+                                                            <form action="{% url 'report-stocks' hotel.slug %}" method='post' class="mt-2">
+                                                                {% csrf_token %}
+                                                                <div class="row g-gs">
+                                                                    <!-- product_name -->
+                                                                    <div class="col-md-6">
+                                                                        <div class="form-group">
+                                                                            <label class="form-label" for="product-name-edit">اسم المنتج</label>
+                                                                            <input type="text"  class="form-control" 
+                                                                            id="product-name-edit" placeholder="اسم المنتج"
+                                                                             name="{{form.product_name.name}}"
+                                                                            >
+                                                                        </div>
+                                                                    </div>
+                                                                    <!-- Quantity -->
+                                                                    <div class="col-md-6">
+                                                                        <div class="form-group">
+                                                                            <label class="form-label" for="quantity-edit">الكمية</label>
+                                                                            <input type="text" class="form-control" id="quantity-edit" 
+                                                                            placeholder="الكمية"
+                                                                            name="{{form.quantity.name}}"
+                                                                             >
+                                                                        </div>
+                                                                    </div>
+                                                                    <!-- Unit price -->
+                                                                    <div class="col-md-6">
+                                                                        <div class="form-group">
+                                                                            <label class="form-label" for="peice-edit">السعر</label>
+                                                                            <input type="number" class="form-control" id="peice-edit" 
+                                                                             
+                                                                            name="{{form.price_per_unit.name}}"
+                                                                            placeholder="300.99 SAR">
+                                                                        </div>
+                                                                    </div>
+                                                                    <!-- status -->
+                                                                    <div class="col-md-6">
+                                                                        <div class="form-group">
+                                                                            <label class="form-label" for="edit-status">الحالة</label>
+                                                                            <select name="{{form.status.name}}" class="form-select js-select2" id="edit-status">
+                                                                                {% for choice in form.fields.status.choices %}
+                                                                                <option value="{{choice.0}}" {% if choice.0 == form.status.value %}selected{% endif %}>{{ choice.1}}</option>
+                                                                                {% endfor %}
+                                                                                
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+                                                                    <!-- Submit Button -->
+                                                                    <div class="col-12">
+                                                                        <ul class="align-center flex-wrap flex-sm-nowrap gx-4 gy-2">
+                                                                            <li>
+                                                                                <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">إضافة المخزون</button>
+                                                                            </li>
+                                                                            <li>
+                                                                                <a href="#" class="link" data-bs-dismiss="modal">الغاء</a>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </div>
+                                                                </div>
+                                                            </form>
+                                                        </div><!-- .modal-body -->
+                                                    </div><!-- .modal-content -->
+                                                </div><!-- .modal-dialog -->
+                                            </div>
                                             <div class="card-inner">
                                                 <div class="nk-block-between-md g-3">
                                                     <div class="g">

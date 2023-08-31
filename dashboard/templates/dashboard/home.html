@@ -20,19 +20,23 @@
                                 title="Total Booking"></em>
                         </div>
                     </div>
-                    <div class="card-amount">
-                        <span class="amount"> {{hotel.request_set.count }} </span>
+                    <div id="loading-spinner" class="spinner-border text-primary loading-spinner" role="status" style="display: none;">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                    <div class="card-amount" id="cardRequestCount" style="display: none;">
+                        <span class="amount" id="totalRequestCount"> 0 </span>
                         <span class="change down text-danger"><em class="icon ni ni-arrow-long-down"></em>0</span>
                     </div>
+                    
                     <div class="invest-data">
                         <div class="invest-data-amount g-2">
                             <div class="invest-data-history">
                                 <div class="title">هذا الشهر</div>
-                                <div class="amount">0</div>
+                                <div class="amount" id="totalRequestCountMonth">0</div>
                             </div>
                             <div class="invest-data-history">
                                 <div class="title">هذا الأسبوع</div>
-                                <div class="amount">0</div>
+                                <div class="amount" id="totalRequestCountWeek">0</div>
                             </div>
                         </div>
                         <div class="invest-data-ck">
@@ -42,6 +46,7 @@
                 </div>
             </div><!-- .card -->
         </div><!-- .col -->
+        <!-- Rooms -->
         <div class="col-md-4">
             <div class="card card-bordered card-full">
                 <div class="card-inner">
@@ -54,18 +59,21 @@
                                 title="Total Room"></em>
                         </div>
                     </div>
-                    <div class="card-amount">
-                        <span class="amount"> {{hotel.room_set.count}} </span>
+                    <div id="loading-spinner" class="spinner-border text-primary loading-spinner" role="status" style="display: none;">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                    <div class="card-amount" id="cardRooms" style="display: none;">
+                        <span class="amount" id="totalRooms"> 0 </span>
                     </div>
                     <div class="invest-data">
                         <div class="invest-data-amount g-2">
                             <div class="invest-data-history">
                                 <div class="title">حُجزت (هذا الشهر)</div>
-                                <div class="amount">0</div>
+                                <div class="amount" id="totalRoomBookedMonth">0</div>
                             </div>
                             <div class="invest-data-history">
                                 <div class="title">حُجزت (هذا الأسبوع)</div>
-                                <div class="amount">0</div>
+                                <div class="amount" id="totalRoomBookedWeek">0</div>
                             </div>
                         </div>
                         <div class="invest-data-ck">
@@ -75,6 +83,7 @@
                 </div>
             </div><!-- .card -->
         </div><!-- .col -->
+       <!-- Expneses -->
         <div class="col-md-4">
             <div class="card card-bordered  card-full">
                 <div class="card-inner">
@@ -87,19 +96,24 @@
                                 title="Total Expenses"></em>
                         </div>
                     </div>
-                    <div class="card-amount">
-                        <span class="amount"> 0 <span class="currency currency-usd">SAR</span>
+                    <!-- spinner -->
+                    <div id="loading-spinner" class="spinner-border text-primary loading-spinner" role="status" style="display: none;">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+
+                    <div class="card-amount" id="cardExpenses" style="display: none;">
+                        <span class="amount" id="totalExpensesAmount"> 0 <span class="currency currency-usd">SAR</span>
                         </span>
                     </div>
                     <div class="invest-data">
                         <div class="invest-data-amount g-2">
                             <div class="invest-data-history">
-                                <div class="title">هذا الشهر</div>
+                                <div class="title" id="totalExpensesMonth">هذا الشهر</div>
                                 <div class="amount">0 <span class="currency currency-usd">SAR</span></div>
                             </div>
                             <div class="invest-data-history">
                                 <div class="title">هذا الأسبوع</div>
-                                <div class="amount">0 <span class="currency currency-usd">SAR</span></div>
+                                <div class="amount" id="totalExpensesWeek">0 <span class="currency currency-usd">SAR</span></div>
                             </div>
                         </div>
                         <div class="invest-data-ck">
@@ -495,5 +509,66 @@
     </div><!-- .row -->
 </div><!-- .nk-block -->
 
-<!-- content @e -->
+
+
+
+<script src="{% static 'js/jquery.min.js'%}"></script>
+<script>
+    $(document).ready(function () {
+
+        $('.loading-spinner').show();
+
+        $.ajax({
+            url: '{% url "get-statistics-data" hotel.slug %}',
+            method: 'GET',
+            dataType: 'json',
+            success: function (data) {
+                $('.loading-spinner').hide();
+
+                $('#cardRequestCount').show();
+                $('#cardExpenses').show();
+                $('#cardRooms').show();
+                // Requests
+                $('#totalRequestCount').text(data.requests.total_request);
+                $('#totalRequestCountMonth').text(data.requests.this_month_request);
+                $('#totalRequestCountWeek').text(data.requests.this_week_request);
+                
+                // Rooms
+                $('#totalRooms').text(data.rooms.total_rooms);
+                $('#totalRoomBookedMonth').text(data.rooms.total_booked_room_this_month);
+                $('#totalRoomBookedWeek').text(data.rooms.total_booked_room_this_week);
+                
+                // expenses
+                $('#totalExpensesAmount').text(parseFloat(data.expenses.total_expenses) +' ' +'SAR')
+                $('#totalExpensesMonth').text(data.expenses.this_month_expenses)
+                $('#totalExpensesWeek').text(data.expenses.this_week_expenses)
+
+                
+                
+            },
+            error: function () {
+                $('#loading-spinner').hide();
+                console.error('Error fetching statistics data.');
+            }
+            // const chartData = data.chart_data;
+                // const ctx = document.getElementById('totalBooking').getContext('2d');
+                // new Chart(ctx, {
+                //     type: 'bar',
+                //     data: {
+                //         labels: chartData.labels,
+                //         datasets: [{
+                //             label: 'Bookings',
+                //             data: chartData.data,
+                //             backgroundColor: ['#36a2eb', '#ff6384'],
+                //         }],
+                //     },
+                //     options: {
+                //         // Customize chart options as needed
+                //     },
+                // });
+        });
+    });
+</script>
+
+
 {% endblock %}

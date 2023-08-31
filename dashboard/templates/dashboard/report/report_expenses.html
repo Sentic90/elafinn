@@ -8,6 +8,22 @@
                 <div class="nk-content ">
                     <div class="container-fluid">
                         <div class="nk-content-inner">
+                            {% for message in messages %}
+      <div
+        class="alert alert-{{ message.tags }} alert-dismissible"
+        role="alert"
+      >
+        {{ message }}
+        <button
+          type="button"
+          class="close"
+          data-dismiss="alert"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      {% endfor %}
                             <div class="nk-content-body">
                                 <div class="nk-block-head nk-block-head-sm">
                                     <div class="nk-block-between g-3">
@@ -24,7 +40,7 @@
                                                         <a href="#" class="dropdown-toggle btn btn-icon btn-primary" data-bs-toggle="dropdown"><em class="icon ni ni-plus"></em></a>
                                                         <div class="dropdown-menu dropdown-menu-end">
                                                             <ul class="link-list-opt no-bdr">
-                                                                <li><a data-bs-toggle="modal" href="#add-expenses"><span>اضافة منصرف</span></a></li>
+                                                                <li><a data-bs-toggle="modal" href="#add-expense-modal"><span>اضافة منصرف</span></a></li>
                                                                 <li><a href="#"><span>استيراد منصرفات</span></a></li>
                                                             </ul>
                                                         </div>
@@ -194,7 +210,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    {% for expense in hotel.expense_set.all %}
+                                                    {% for expense, form in expense_forms %}
                                                     <!-- .nk-tb-item -->
                                                     <div class="nk-tb-item">
                                                         <div class="nk-tb-col nk-tb-col-check">
@@ -204,7 +220,7 @@
                                                             </div>
                                                         </div>
                                                         <div class="nk-tb-col">
-                                                            <a href="#edit-expense-{{expense.expense_number}}" data-bs-toggle="modal"><span class="text-primary">#{{expense.expense_number}}</span></a>
+                                                            <a href="#edit-expense-{{expense.id}}" data-bs-toggle="modal"><span class="text-primary">#{{expense.expense_number}}</span></a>
                                                         </div>
                                                         <div class="nk-tb-col tb-col-mb">
                                                             <span>{{expense.supplier_name}}</span>
@@ -225,7 +241,7 @@
                                                                         <a href="#" class="dropdown-toggle btn btn-icon btn-trigger" data-bs-toggle="dropdown"><em class="icon ni ni-more-h"></em></a>
                                                                         <div class="dropdown-menu dropdown-menu-end">
                                                                             <ul class="link-list-opt no-bdr">
-                                                                                <li><a href="#edit-expense-{{expense.expense_number}}" data-bs-toggle="modal"><em class="icon ni ni-edit"></em><span>Edit</span></a></li>
+                                                                                <li><a href="#edit-expense-{{expense.id}}" data-bs-toggle="modal"><em class="icon ni ni-edit"></em><span>Edit</span></a></li>
                                                                                 <li><a href="#"><em class="icon ni ni-trash"></em><span>Delete</span></a></li>
                                                                             </ul>
                                                                         </div>
@@ -236,24 +252,28 @@
                                                     </div><!-- .nk-tb-item  -->
                                                     
                                                     <!-- Edit Moal -->
-                                                    <div class="modal fade" tabindex="-1" role="dialog" id="edit-expense-{{expense.expense_number}}">
+                                                    <div class="modal fade" tabindex="-1" role="dialog" id="edit-expense-{{expense.id}}">
+
                                                         <div class="modal-dialog modal-lg" role="document">
                                                             <div class="modal-content">
                                                                 <a href="#" class="close" data-bs-dismiss="modal"><em class="icon ni ni-cross-sm"></em></a>
                                                                 <div class="modal-body modal-body-md">
-                                                                    <h5 class="modal-title">اضافة منصرف</h5>
-                                                                    <form action="#" class="mt-2">
+                                                                    <h5 class="modal-title"> تعديل على منصرف</h5>
+                                                                    <form action="{% url 'report-expense-update' hotel.slug expense.id %}" method='post' class="mt-2">
+                                                                        {% csrf_token %}
                                                                         <div class="row g-gs">
                                                                             <div class="col-md-6">
                                                                                 <div class="form-group">
                                                                                     <label class="form-label" for="supplier-name">اسم المزود</label>
-                                                                                    <input type="text" class="form-control" id="supplier-name" placeholder="Supplier Name">
+                                                                                    <input type="text" name="{{form.supplier_name.name}}" value="{{form.supplier_name.value}}" class="form-control" id="supplier-name" placeholder="اسم المزود">
                                                                                 </div>
                                                                             </div>
                                                                             <div class="col-md-6">
                                                                                 <div class="form-group">
                                                                                     <label class="form-label" for="description">البيان</label>
-                                                                                    <input type="text" class="form-control" id="description" placeholder="Description">
+                                                                                    <input type="text"  class="form-control" id="description" placeholder="Description"
+                                                                                    name="{{form.description.name}}" value="{{form.description.value}}"
+                                                                                    >
                                                                                 </div>
                                                                             </div>
                                                                             <div class="col-md-6">
@@ -263,20 +283,24 @@
                                                                                         <div class="form-icon form-icon-right">
                                                                                             <em class="icon ni ni-calendar"></em>
                                                                                         </div>
-                                                                                        <input type="text" class="form-control date-picker" data-date-format="yyyy-mm-dd" placeholder="yyyy-mm-dd">
+                                                                                        <input type="text" class="form-control date-picker" data-date-format="yyyy-mm-dd" placeholder="yyyy-mm-dd"
+                                                                                        name="{{form.created}}" value="{{form.created.value}}"
+                                                                                        >
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
                                                                             <div class="col-md-6">
                                                                                 <div class="form-group">
                                                                                     <label class="form-label" for="amount">المبلغ</label>
-                                                                                    <input type="number" class="form-control" id="amount" placeholder="300.99 USD">
+                                                                                    <input type="number" step="0.01" class="form-control" id="amount" placeholder="300.99 USD"
+                                                                                    name="{{form.amount.name}}" value="{{form.amount.value}}"
+                                                                                    >
                                                                                 </div>
                                                                             </div>
                                                                             <div class="col-12">
                                                                                 <ul class="align-center flex-wrap flex-sm-nowrap gx-4 gy-2">
                                                                                     <li>
-                                                                                        <button class="btn btn-primary">اضافة منصرف</button>
+                                                                                        <button type="submit" class="btn btn-primary">اضافة منصرف</button>
                                                                                     </li>
                                                                                     <li>
                                                                                         <a href="#" class="link" data-bs-dismiss="modal">إلغاء</a>
@@ -292,6 +316,70 @@
                                                     {% endfor %}
                                                 </div><!-- .nk-tb-list -->
                                             </div><!-- .card-inner -->
+
+                                            <!-- add Modal -->
+                                            <div class="modal fade" tabindex="-1" role="dialog" id="add-expense-modal">
+                                                <div class="modal-dialog modal-lg" role="document">
+                                                    <div class="modal-content">
+                                                        <a href="#" class="close" data-bs-dismiss="modal"><em class="icon ni ni-cross-sm"></em></a>
+                                                        <div class="modal-body modal-body-md">
+                                                            <h5 class="modal-title"> إضافة منصرف </h5>
+                                                            <form action="{% url 'report-expenses' hotel.slug %}" method='post' class="mt-2">
+                                                                {% csrf_token %}
+                                                                <div class="row g-gs">
+                                                                    <div class="col-md-6">
+                                                                        <div class="form-group">
+                                                                            <label class="form-label" for="supplier-name">اسم المزود</label>
+                                                                            <input type="text" name="{{form.supplier_name.name}}"  class="form-control" id="supplier-name" placeholder="اسم المزود">
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-6">
+                                                                        <div class="form-group">
+                                                                            <label class="form-label" for="description">البيان</label>
+                                                                            <input type="text"  class="form-control" id="description" placeholder="Description"
+                                                                            name="{{form.description.name}}" 
+                                                                            >
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-6">
+                                                                        <div class="form-group">
+                                                                            <label class="form-label">التاريخ</label>
+                                                                            <div class="form-control-wrap">
+                                                                                <div class="form-icon form-icon-right">
+                                                                                    <em class="icon ni ni-calendar"></em>
+                                                                                </div>
+                                                                                <input type="text" class="form-control date-picker" data-date-format="yyyy-mm-dd" placeholder="yyyy-mm-dd"
+                                                                                name="{{form.created.name}}" 
+                                                                                >
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-6">
+                                                                        <div class="form-group">
+                                                                            <label class="form-label" for="amount">المبلغ</label>
+                                                                            <input type="number" class="form-control" id="amount" placeholder="300.99 USD"
+                                                                            name="{{form.amount.name}}" 
+                                                                            >
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-12">
+                                                                        <ul class="align-center flex-wrap flex-sm-nowrap gx-4 gy-2">
+                                                                            <li>
+                                                                                <button type="submit" class="btn btn-primary">اضافة منصرف</button>
+                                                                            </li>
+                                                                            <li>
+                                                                                <a href="#" class="link" data-bs-dismiss="modal">إلغاء</a>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </div>
+                                                                </div>
+                                                            </form>
+                                                        </div><!-- .modal-body -->
+                                                    </div><!-- .modal-content -->
+                                                </div><!-- .modal-dialog -->
+                                            </div><!-- .modal -->
+
+
                                             <div class="card-inner">
                                                 <div class="nk-block-between-md g-3">
                                                     <div class="g">
@@ -344,59 +432,4 @@
                     </div>
                 </div>
                 <!-- content @e -->
-
-<!-- Add Expenses-->
-<div class="modal fade" tabindex="-1" role="dialog" id="add-expenses">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <a href="#" class="close" data-bs-dismiss="modal"><em class="icon ni ni-cross-sm"></em></a>
-            <div class="modal-body modal-body-md">
-                <h5 class="modal-title">اضافة منصرف</h5>
-                <form action="#" class="mt-2">
-                    <div class="row g-gs">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label class="form-label" for="supplier-name">اسم المزود</label>
-                                <input type="text" class="form-control" id="supplier-name" placeholder="Supplier Name">
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label class="form-label" for="description">البيان</label>
-                                <input type="text" class="form-control" id="description" placeholder="Description">
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label class="form-label">التاريخ</label>
-                                <div class="form-control-wrap">
-                                    <div class="form-icon form-icon-right">
-                                        <em class="icon ni ni-calendar"></em>
-                                    </div>
-                                    <input type="text" class="form-control date-picker" data-date-format="yyyy-mm-dd" placeholder="yyyy-mm-dd">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label class="form-label" for="amount">المبلغ</label>
-                                <input type="number" class="form-control" id="amount" placeholder="300.99 USD">
-                            </div>
-                        </div>
-                        <div class="col-12">
-                            <ul class="align-center flex-wrap flex-sm-nowrap gx-4 gy-2">
-                                <li>
-                                    <button class="btn btn-primary">اضافة منصرف</button>
-                                </li>
-                                <li>
-                                    <a href="#" class="link" data-bs-dismiss="modal">إلغاء</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </form>
-            </div><!-- .modal-body -->
-        </div><!-- .modal-content -->
-    </div><!-- .modal-dialog -->
-</div><!-- .modal -->
                 {% endblock %}

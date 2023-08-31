@@ -449,6 +449,14 @@ class Hotel(models.Model):
         """
         return self.room_set.filter(status=2).aggregate(accomadate_space=models.Sum('capacity'))['accomadate_space']
 
+    @property
+    def total_expenses_amount(self):
+        """"
+            return: amount (total expenses)
+        
+        """
+        return self.expense_set.all().aggregate(total_expenses_amount=models.Sum('amount'))['total_expenses_amount']
+    
 
 class HotelLocation(models.Model):
     latitude = models.FloatField(blank=True, verbose_name='Latitude')
