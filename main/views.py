@@ -86,14 +86,16 @@ def result(request):
     
 
     # paginations
-    queryset = Hotel.objects.all()
-    paginator = Paginator(queryset, 3)
-    page_number = request.GET.get('page')
-    page_obj = paginator.get_page(page_number)
+
+    queryset = Hotel.objects.search(request.GET)
+    
+    # paginator = Paginator(queryset, 3)
+    # page_number = request.GET.get('page')
+    # page_obj = paginator.get_page(page_number)
 
     # end pagination
     context = {
-        'hotels': page_obj,
+        'hotels': queryset,
         'guests_number': main_search_params['guests'] if main_search_params['guests'] else None,
         'start_date': start_date.strftime('%m/%d/%Y') if start_date else '',
         'end_date': end_date.strftime('%m/%d/%Y') if end_date else '',

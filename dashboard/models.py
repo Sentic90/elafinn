@@ -1,9 +1,11 @@
+from datetime import datetime
 import random
 import string
 from django.dispatch import receiver
 from django.db.models.signals import post_save
 from geopy.distance import distance as geopy_distance
 from django.db import models
+from django.db.models import Q
 from multiselectfield import MultiSelectField
 from django.contrib.auth import get_user_model
 from django_countries.fields import CountryField
@@ -360,8 +362,54 @@ VIEW = (
 def rand_slug():
     return ''.join(random.choice(string.ascii_letters + string.digits) for _ in range(6))
 
+class HotelQuerySet(models.query.QuerySet):
+    def active(self):
+        return self.filter(is_active=True)
 
-# Create your models here.
+    def get_formated_date(self, query):
+        date_range = query['datefilter'].split(" ")
+        
+        start_date = datetime.strptime(date_range[0], '%d/%m/%Y')
+        end_date = datetime.strptime(date_range[3], '%d/%m/%Y')
+
+        return start_date, end_date
+
+    def get_booked_hotel(self, query):
+        
+        start_date, end_date = self.get_formated_date(query)
+        print(start_date, end_date)
+        booked_room_ids = Booking.objects.filter(
+            Q(start_date__lte=start_date, end_date__gte=start_date) |  # Overlapping start date
+            Q(start_date__lte=end_date, end_date__gte=end_date) |      # Overlapping end date
+            Q(start_date__gte=start_date, end_date__lte=end_date)      # Fully contained within the range
+        ).values_list("room__id", flat=True)
+
+        print(booked_room_ids)
+        return booked_room_ids
+    
+    def search(self, query):
+        Q1 =  Q(city=query.get('city'))
+
+        Q2 = Q(nationality__contains=query.get('nationality'))
+
+        # Q3    excluded
+        booked_room_ids = self.get_booked_hotel(query)
+        Q3 = Q(room__id__in=booked_room_ids)
+        # Q4 Rooms type 
+        lookups = (
+            Q1 & Q2  & Q3
+        )
+        return self.filter(lookups).exclude(Q3).distinct()
+
+
+class HotelManager(models.Manager):
+    def get_queryset(self):
+        return HotelQuerySet(self.model, using=self._db)
+
+    def search(self, query):
+        return self.get_queryset().active().search(query)
+
+
 class Hotel(models.Model):
     user = models.ForeignKey(
         Admin, on_delete=models.CASCADE, verbose_name='اسم المالك')
@@ -398,6 +446,8 @@ class Hotel(models.Model):
         to='HotelLocation', on_delete=models.CASCADE, verbose_name='الموقع', 
         blank=True, null=True, related_name='hotels')
     
+    objects = HotelManager()
+
     def __str__(self):
         return self.hotel_name
 
@@ -736,18 +786,6 @@ class Request(models.Model):
 def create_booking_from_request(sender, instance, **kwargs):
     if instance.status == 'accepted':
         instance.accept_and_create_booking()
-
-# class PaymentMethodQuerySet(models.query.QuerySet):
-#     def active(self):
-#         return self.filter(status='active')
-
-# class PaymentMethodManager(models.Manager):
-
-#     def get_queryset(self):
-#         return PaymentMethodQuerySet(self.model, using=self._db)
-
-#     def all(self):
-#         return self.get_queryset().active()
 
 
 class PaymentMethod(models.Model):
