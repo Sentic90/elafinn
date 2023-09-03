@@ -123,6 +123,8 @@
                 </div>
             </div><!-- .card -->
         </div><!-- .col -->
+
+        <!-- Packges & Progress bar -->
         <div class="col-md-6 col-xxl-5">
             <div class="card card-bordered card-full">
                 <div class="card-inner d-flex flex-column h-100">
@@ -147,19 +149,25 @@
                         </div>
                     </div>
                     <div class="progress-list gy-3">
+                        {% for season in seasons %}
                         <div class="progress-wrap">
                             <div class="progress-text">
-                                <div class="progress-label">باقة العمرة</div>
-                                <div class="progress-amount">0%</div>
+                                <div class="progress-label">{{ season.season }}</div>
+                                <div class="progress-amount" id="progress-amount-{{season.id}}">0%</div>
                             </div>
                             <div class="progress progress-md">
-                                <div class="progress-bar" data-progress="0"></div>
+                                <div class="progress-bar" id="progress-bar-{{season.id}}" data-progress="0"></div>
                             </div>
                         </div>
+                        {% endfor %}
                         
+                        
+                    </div>  
                 </div>
             </div>
         </div><!-- .col -->
+
+        <!-- Steps to Activate Hotel -->
         <div class="col-md-6 col-xxl-3">
             <div class="card card-bordered">
                 <div class="card-inner border-bottom">
@@ -187,9 +195,11 @@
                                     </div>
                                 </div>
                             </li>
-                            <li class="timeline-item">
-                                <div class="timeline-status bg-success is-outline"></div>
-                                <div class="timeline-date">تم <em class="icon ni ni-check-circle text-success"></em>
+
+                            <!-- Images & Location -->
+                            <li class="timeline-item" id="imageAndLocation">
+                                    <div class="timeline-status bg-warning"></div>
+                                    <div class="timeline-date">انتظار <em class="icon ni ni-alert-circle text-warning"></em>
                                 </div>
                                 <div class="timeline-data">
                                     <h6 class="timeline-title">إضافة الموقع الجغرافي والصور</h6>
@@ -199,9 +209,10 @@
                                     </div>
                                 </div>
                             </li>
-                            <li class="timeline-item">
-                                <div class="timeline-status bg-success is-outline"></div>
-                                <div class="timeline-date">تم <em class="icon ni ni-check-circle text-success"></em>
+                            <!-- Rooms -->
+                            <li class="timeline-item" id="rooms">
+                                <div class="timeline-status bg-warning"></div>
+                                <div class="timeline-date">انتظار <em class="icon ni ni-alert-circle text-warning"></em>
                                 </div>
                                 <div class="timeline-data">
                                     <h6 class="timeline-title">إضافة الغرف</h6>
@@ -211,7 +222,9 @@
                                     </div>
                                 </div>
                             </li>
-                            <li class="timeline-item">
+
+                            <!-- Activate -->
+                            <li class="timeline-item" id="hotelStatus">
                                 <div class="timeline-status bg-warning"></div>
                                 <div class="timeline-date">انتظار <em class="icon ni ni-alert-circle text-warning"></em>
                                 </div>
@@ -473,11 +486,14 @@
 
         $('.loading-spinner').show();
 
+
         $.ajax({
             url: '{% url "get-statistics-data" hotel.slug %}',
             method: 'GET',
             dataType: 'json',
             success: function (data) {
+
+                console.log(data)
                 $('.loading-spinner').hide();
 
                 $('#cardRequestCount').show();
@@ -498,11 +514,70 @@
                 $('#totalExpensesMonth').text(data.expenses.this_month_expenses)
                 $('#totalExpensesWeek').text(data.expenses.this_week_expenses)
 
+                // packages
                 
+                data.seasons.forEach(season => {
+                    $('#progress-amount-' + season.id).text(season.progress + '%');
+                    $('#progress-bar-' + season.id).attr({
+                        'data-progress': season.progress,
+                        'style': 'width:' + season.progress + '%'
+                    });
+                });
+
+                // steps of Hotel 
+                // Image & locations
+                var imageAndLocationHasAdded = data.hotel_status.imageAndLocationHasAdded;
+
+                var $imageAndLocation = $('#imageAndLocation');
+
+                var $timelineStatus = $imageAndLocation.find('.timeline-status');
                 
+                var $iconElement = $imageAndLocation.find('em');
+                var $timelineText = $imageAndLocation.find('.timeline-date');
+
+                if(imageAndLocationHasAdded){
+                    $timelineStatus.removeClass('bg-warning').addClass('bg-success is-outline');
+                    
+                    // $iconElement.removeClass('ni ni-alert-circle text-warning').addClass('ni ni-check-circle text-success')
+                    $timelineText.text('تم ').append('<em class="icon ni ni-check-circle text-success"></em>');
+                }
+
+                // Rooms Has Added ?
+                var roomsHasAdded = data.hotel_status.roomsHasAdded;
+
+                var $rooms = $('#rooms');
+
+                var $timelineStatus = $rooms.find('.timeline-status');
+                
+                var $iconElement = $rooms.find('em');
+                var $timelineText = $rooms.find('.timeline-date');
+
+                if(roomsHasAdded){
+                    $timelineStatus.removeClass('bg-warning').addClass('bg-success is-outline');
+                    
+                    // $iconElement.removeClass('ni ni-alert-circle text-warning').addClass('ni ni-check-circle text-success')
+                    $timelineText.text('تم ').append('<em class="icon ni ni-check-circle text-success"></em>');
+                }
+
+                // Is Activated
+                var isActivated = data.hotel_status.isActivated;
+
+                var $hotelStatus = $('#hotelStatus');
+
+                var $timelineStatus = $hotelStatus.find('.timeline-status');
+
+                var $iconElement = $hotelStatus.find('em');
+                var $timelineText = $hotelStatus.find('.timeline-date');
+
+                if(isActivated){
+                    $timelineStatus.removeClass('bg-warning').addClass('bg-success is-outline');
+                    
+                    // $iconElement.removeClass('ni ni-alert-circle text-warning').addClass('ni ni-check-circle text-success')
+                    $timelineText.text('تم ').append('<em class="icon ni ni-check-circle text-success"></em>');
+                }
             },
             error: function () {
-                $('#loading-spinner').hide();
+                $('.loading-spinner').hide();
                 console.error('Error fetching statistics data.');
             }
             // const chartData = data.chart_data;

@@ -82,7 +82,9 @@ def result(request):
     request.session['main_search_params'] = main_search_params
     request.session['rooms'] = rooms
     
-    request.session['package_id'] = int(request.GET.get('package_id', 0))
+    package_id = int(request.GET.get('package_id', 0))
+    request.session['package_id'] = package_id
+    request.session['package_name'] = Season.objects.get(id=package_id).season
     
 
     # paginations

@@ -268,6 +268,7 @@ NATIONALITY = (
     ("ZW", "Zimbabwe"),
     ("AX", "Åland Islands")
 )
+
 BANK_CHOICE = (
     (1, 'البنك الأهلي التجاري'),
     (2, 'البنك السعودي البريطاني'),
@@ -310,12 +311,12 @@ CANCELLATION_HOURS = (
 )
 
 RTYPE = (
-    (1, 'مفردة'),
-    (2, 'ثنائية'),
-    (3, 'ثلاثية'),
-    (4, 'رباعية'),
-    (5, 'خماسية'),
-    (6, 'سداسية'),
+    ('single', 'مفردة'),
+    ('double', 'ثنائية'),
+    ('triple', 'ثلاثية'),
+    ('quadruple', 'رباعية'),
+    ('quintuple', 'خماسية'),
+    ('6', 'سداسية'),
 )
 
 ELECTRIC = (
@@ -333,23 +334,27 @@ FACILITIES = (
     ('2', 'غرفة غسيل'),
     ('3', 'بانيو/ جاكوزي'),
 )
+
 SERVICES = (
     ('1', 'واي فاي'),
     ('2', 'خدمة الغسيل'),
     ('3', 'خدمة الغرف'),
 )
+
 STATUS = (
     (1, 'غير مفعلة'),
     (2, 'متاحة'),
     (3, 'انتظار'),
     (4, 'محجوزة'),
 )
+
 RENT_STATUS = (
     (1, 'ملغي'),
     (2, 'متاح لاستقبال الطلبات'),
     (3, 'قيد إجراءات التأجير'),
     (4, 'تم التأجير'),
 )
+
 VIEW = (
     (1, 'إطلالة كاملة على الحرم'),
     (2, 'إطلالة جزئية على الحرم'),
@@ -367,8 +372,10 @@ class HotelQuerySet(models.query.QuerySet):
         return self.filter(is_active=True)
 
     def get_formated_date(self, query):
-        date_range = query['datefilter'].split(" ")
-        
+        date_range = query.get('datefilter', '')
+        #TODO if not date_range:
+        #     pass
+        date_range = date_range.split(" ")
         start_date = datetime.strptime(date_range[0], '%d/%m/%Y')
         end_date = datetime.strptime(date_range[3], '%d/%m/%Y')
 
@@ -377,29 +384,61 @@ class HotelQuerySet(models.query.QuerySet):
     def get_booked_hotel(self, query):
         
         start_date, end_date = self.get_formated_date(query)
-        print(start_date, end_date)
+
         booked_room_ids = Booking.objects.filter(
+            # 
             Q(start_date__lte=start_date, end_date__gte=start_date) |  # Overlapping start date
+            
             Q(start_date__lte=end_date, end_date__gte=end_date) |      # Overlapping end date
+            
             Q(start_date__gte=start_date, end_date__lte=end_date)      # Fully contained within the range
         ).values_list("room__id", flat=True)
 
-        print(booked_room_ids)
+
         return booked_room_ids
     
+    def get_q_room_type(self, query):
+        # take out the rooms type
+        rooms = {
+        'single': int(query.get('single_room', 0)),
+        'double': int(query.get('double_room', 0)),
+        'triple': int(query.get('triple_room', 0)),
+        'quadruple': int(query.get('quadruple_room', 0)),
+        'quintuple': int(query.get('quintuple_room', 0)),
+    }   
+        print(rooms)
+
+        room_q_objects = []
+        for room_type, count in rooms.items():
+            if count > 0:
+                room_q_objects.append(Q(room__roomType__roomType=room_type))
+
+        combined_q_object = Q()
+        for q_object in room_q_objects:
+            combined_q_object |= q_object
+        
+        print(Hotel.objects.filter(combined_q_object).distinct())
+
+        return combined_q_object
+
+
     def search(self, query):
         Q1 =  Q(city=query.get('city'))
 
         Q2 = Q(nationality__contains=query.get('nationality'))
 
-        # Q3    excluded
-        booked_room_ids = self.get_booked_hotel(query)
-        Q3 = Q(room__id__in=booked_room_ids)
+        # Q3    excluded reprent the Date Range
+
+        # booked_room_ids = self.get_booked_hotel(query)
+        Q3 = Q(room__status=2)
+        # Q4 
+        Q4 = self.get_q_room_type(query)
+        
         # Q4 Rooms type 
         lookups = (
-            Q1 & Q2  & Q3
+            Q1 & Q2  & Q3 & Q4
         )
-        return self.filter(lookups).exclude(Q3).distinct()
+        return self.filter(lookups).distinct()
 
 
 class HotelManager(models.Manager):
@@ -516,21 +555,23 @@ class HotelLocation(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
-    # def save(self, *args, **kwargs):TODO
-    #     if self.latitude and self.longitude:
-    #         hrm_coordinates_makkah = (21.4230884, 39.8305041)
-    #         hrm_coordinates_madinah = (24.4672018, 39.6156392)
+    def save(self, *args, **kwargs):
+        if self.latitude and self.longitude:
+            hrm_coordinates_makkah = (21.423064802559917, 39.82498712936757)
+            hrm_coordinates_madinah = (24.4672018, 39.6156392)
 
-    #         if self.hotel.city == 'Makkah':
-    #             hrm_coordinates = hrm_coordinates_makkah
-    #         elif self.hotel.city == 'Madinah':
-    #             hrm_coordinates = hrm_coordinates_madinah
+            if self.hotel.city == 'Makkah':
+                hrm_coordinates = hrm_coordinates_makkah
+            elif self.hotel.city == 'Madinah':
+                hrm_coordinates = hrm_coordinates_madinah
 
-    #         hotel_coordinates = (self.latitude, self.longitude)
-    #         distance_km = geopy_distance(hrm_coordinates, hotel_coordinates).kilometers
-    #         self.hrm = format(distance_km, '.2f')
+            hotel_coordinates = (self.latitude, self.longitude)
+            distance_km = geopy_distance(hrm_coordinates, hotel_coordinates).kilometers
+            self.hrm = format(distance_km, '.2f')
 
-    #     super().save(*args, **kwargs)
+        super().save(*args, **kwargs)
+
+
     def __str__(self):
         return str(self.hrm)+ 'كم'
     @property
@@ -559,8 +600,8 @@ class HotelMultipleImage(models.Model):
 class RoomType(models.Model):
     hotel = models.ForeignKey(
         Hotel, on_delete=models.CASCADE, verbose_name='اسم الفندق')
-    roomType = models.IntegerField(
-        default=1, choices=RTYPE, blank=True, verbose_name='نوع الغرفة')
+    roomType = models.CharField(
+        default='single', choices=RTYPE, blank=True, verbose_name='نوع الغرفة', max_length=32)
     # Delete
     # NoOfRoom = models.IntegerField(blank=True, verbose_name='عدد الغرف من هذا النوع')
     capacity = models.IntegerField(
@@ -575,7 +616,7 @@ class RoomType(models.Model):
     updated = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.get_roomType_display()
+        return self.roomType
 
     def get_absolute_url(self):
         return reverse("room_type_detail", kwargs={"slug": self.hotel.slug, "pk": self.pk})
@@ -631,6 +672,10 @@ class Season(models.Model):
     updated = models.DateTimeField(auto_now=True)
     is_active = models.BooleanField(default=True)
     
+    @property
+    def total_booking(self):
+        return self.booking_set.count()
+
     def __str__(self):
         return self.season + ' -' + str(self.year)
 
@@ -803,11 +848,3 @@ class PaymentMethod(models.Model):
     def __str__(self) -> str:
         return self.hotel.hotel_name
 
-
-# class Reservation(models.Model):
-#     room = models.ForeignKey(Room, on_delete=models.CASCADE)
-#     start_date = models.DateField()
-#     end_date = models.DateField()
-#
-#     def __str__(self):
-#         return f"{self.room} ({self.start_date} to {self.end_date})"

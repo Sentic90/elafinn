@@ -360,8 +360,32 @@ def get_statistics_data(request, slug):
     total_booked_room_this_week = 10
 
     # Seasons الباقات
-    items = Season.objects.values('season')
-    seasons = [item['season'] for item in items]
+    total_booking_count_in_season = 0
+
+    for item in Season.objects.all():
+        total_booking_count_in_season += item.total_booking
+
+    seasons = []
+    for item in Season.objects.all():
+        progress = (item.total_booking / total_booking_count_in_season) * 100
+        seasons.append({'id':item.id, 'name': item.season, 'progress': progress})
+
+    # hotel Steps Status
+    hotel_status = {
+            'imageAndLocationHasAdded': 'false',
+            'roomsHasAdded':'false',
+            'isActivated':'false'
+        }
+
+    if hotel.hotelmultipleimage_set.count() and hotel.location.count():
+        hotel_status.update({'imageAndLocationHasAdded': True})
+
+    if hotel.total_room > 0:
+        hotel_status.update({'roomsHasAdded': True})
+
+    if hotel.is_active:
+        hotel_status.update({'isActivated':True})
+
     data = {
         'requests':{
         'total_request': total_request,
@@ -381,10 +405,9 @@ def get_statistics_data(request, slug):
             'total_booked_room_this_week':total_booked_room_this_week,
         },
         
-        'seasons':{
-            'packages':seasons
-        },
+        'seasons':seasons,
         
+        'hotel_status':hotel_status,
         'chart_data': {
             'labels': ['This Month', 'This Week'],
             'data': [this_month_request, this_week_request],
@@ -402,6 +425,13 @@ class HotelDashboard(DetailView):
     model = Hotel
     template_name = 'dashboard/home.html'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        # Add the 'seasons' queryset to the context
+        context['seasons'] = Season.objects.all()
+
+        return context
 
 def index(request):
     return render(request, 'dashboard/home.html')
