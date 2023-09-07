@@ -1,5 +1,8 @@
 /**
- * 
+ * Notes:
+ *    to add Layer corrdinate:
+ *          - check the city if it's Makkah or Maddinah.
+ *          - then make a var to hold the cordinate of selectedCity
  * 2023/08/28   Tasks 
  * Employee:
  *    - URLs list details (done)

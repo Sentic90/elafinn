@@ -3,6 +3,36 @@ from django import forms
 import django_filters
 
 
+DISTANCE_FILTER = {
+        'less_than_1km':(0, 1),
+        'between_5_10km': (5,10),
+        'greater_than_10km': (10, 10000)
+    }
+class SidebarFilterForm(forms.Form):
+
+    DISTANCE = [
+        ((0,1), 'أقل من كيلو'),
+        ((5,10), 'من 5 إلى 10 كيلو'),
+        ((10,100000), '10 كيلو فأكثر'),
+    ]
+
+    CATEGORY_CHOICES = [
+            ('0', '0 stars'),
+            ('1', '1 star'),
+            ('2', '2 stars'),
+            ('3', '3 stars'),
+            ('4', '4 stars'),
+            ('5', '5 stars'),
+        ]
+
+    payment_method = forms.ChoiceField(choices=PAYMENT_TYPE)
+    distance = forms.ChoiceField(choices=DISTANCE)
+    category = forms.MultipleChoiceField(choices=CATEGORY_CHOICES, required=False, widget=forms.widgets.CheckboxSelectMultiple(
+        attrs={
+            'class': 'form-check-input'
+        }))
+
+
 class HotelSidebarFilter(django_filters.FilterSet):
 
     # distance = django_filters.NumberFilter(lookup_expr=)

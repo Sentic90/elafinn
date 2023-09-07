@@ -253,6 +253,7 @@
             </div><!-- .card -->
 
         </div>
+        <!-- Income  -->
         <div class="col-md-6 col-xxl-5">
             <div class="card card-bordered h-100">
                 <div class="card-inner">
@@ -298,6 +299,8 @@
                 </div>
             </div><!-- .card -->
         </div><!-- .col -->
+
+        <!-- Rooms Booked  -->
         <div class="col-md-6 col-xxl-3">
             <div class="card card-bordered h-100">
                 <div class="card-inner">
@@ -354,6 +357,7 @@
                 </div>
             </div><!-- .card -->
         </div><!-- .col -->
+        <!-- Income vs Expense -->
         <div class="col-xxl-5">
             <div class="card card-bordered h-100">
                 <div class="card-inner">
@@ -375,13 +379,13 @@
                         <div class="analytic-data-group analytic-ov-group g-3">
                             <div class="analytic-data analytic-ov-data">
                                 <div class="title text-primary">الدخل</div>
-                                <div class="amount">0K</div>
+                                <div class="amount" id="totalIncomes">0K</div>
                                 <div class="change down"><em class="icon ni ni-arrow-long-down"></em>0%
                                 </div>
                             </div>
                             <div class="analytic-data analytic-ov-data">
                                 <div class="title text-danger">المصروفات</div>
-                                <div class="amount">0K</div>
+                                <div class="amount" id="totalExpensesAmountVsIncome">0K</div>
                                 <div class="change down"><em class="icon ni ni-arrow-long-up"></em>0%
                                 </div>
                             </div>
@@ -526,7 +530,12 @@
                 $('#totalExpensesMonth').text(data.expenses.this_month_expenses)
                 $('#totalExpensesWeek').text(data.expenses.this_week_expenses)
 
+                // Incomes 
+                $('#totalIncomes').text(data.incomes.total_income_amount)
+                $('#totalExpensesAmountVsIncome').text(parseFloat(data.expenses.total_expenses))
                 // packages
+
+                bookedRoom(data.booked_rooms)
                 
                 data.seasons.forEach(season => {
                     $('#progress-amount-' + season.id).text(season.progress + '%');
@@ -595,6 +604,8 @@
                 $('.loading-spinner').hide();
                 console.error('Error fetching statistics data.');
             }
+           
+           
             // const chartData = data.chart_data;
                 // const ctx = document.getElementById('totalBooking').getContext('2d');
                 // new Chart(ctx, {
@@ -612,7 +623,40 @@
                 //     },
                 // });
         });
+    
+    
+        
     });
+    function activateButton() {
+        // button Clicked
+        // send http GET -> /dashboard/hotel/<slug:hotel>/activate
+        // if success -> show sweetAlert other.
+        // error not activated -> show error 
+        // 
+    }
+    function bookedRoom(booked_rooms) {
+            
+
+        var data = {
+            labels: booked_rooms.map(d => d.room_type),
+            datasets: [{
+                data: booked_rooms.map(d => d.booked_time),
+                backgroundColor: ['#9cabff', '#1ee0ac', '#f9db7b', 'tomato']
+            }]
+        };
+        var ctx = document.getElementById('BookingData').getContext('2d');
+        var doughnutChart = new Chart(ctx, {
+            type: 'doughnut',
+            data: data,
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+            }
+        });
+        
+    
+    }
+    
 </script>
 
 
