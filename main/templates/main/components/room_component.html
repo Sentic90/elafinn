@@ -11,7 +11,7 @@
                     {% if hotel.total_room%}
                     <h6 class="nk-block-title page-title" style="font-weight: normal">
 
-                      الغرف المتاحة <span class="color-lahmi">{{ hotel.total_room}} غرفة</span>
+                      الغرف المتاحة <span class="color-lahmi">{{ selected_rooms.count}} غرفة</span>
                     </h6>
                     {%else%}
                     <h6 class="nk-block-title page-title" style="font-weight: normal">
@@ -56,7 +56,7 @@
 
                         <!-- Room Loop -->
 
-                        {% for room in hotel.rooms %}
+                        {% for room in selected_rooms %}
                         <!-- .nk-tb-item -->
                         <div class="nk-tb-item">
 

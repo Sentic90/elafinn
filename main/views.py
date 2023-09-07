@@ -152,14 +152,38 @@ def hotel_details(request, slug):
         customer_form = None
     hotel = Hotel.objects.get(slug=slug)
     main_search_params = request.session.get('main_search_params', {})
+    # Rooms
+    rooms_in_sessions = request.session.get('rooms',{})
+    rooms = {
+        'single': int(rooms_in_sessions.get('single_room', 0)),
+        'double': int(rooms_in_sessions.get('double_room', 0)),
+        'triple': int(rooms_in_sessions.get('triple_room', 0)),
+        'quadruple': int(rooms_in_sessions.get('quadruple_room', 0)),
+        'quintuple': int(rooms_in_sessions.get('quintuple_room', 0)),
+    }   
+
+    selected_rooms_ids = []
+    for room_type, count in rooms.items():
+        if count > 0:
+            rooms = hotel.room_set.filter(roomType__roomType=room_type)[:count].values('id')
+            # looping through each Room QuerySet and extract ID + append to selected_rooms_ids 
+            [selected_rooms_ids.append(room['id']) for room in rooms ]
+
+    selected_rooms = hotel.room_set.filter(id__in=selected_rooms_ids)
+
+    # end Rooms
+
     booking_form = RequestForm()
-    
+
     try:
+        # get the each type of room & the count of each one triple:3 single:5 ...etc
+        # selected_rooms = hotel.room_set.filter(roomType__roomType='triple')[:2]
         package = get_object_or_404(Season, id=request.session.get('package_id', 0))
     except:
         package = None
     context = {
         'hotel': hotel,
+        'selected_rooms':selected_rooms,
         'main_search_params':main_search_params, 
         'customer_form':customer_form,
         'booking_form':booking_form,
@@ -175,7 +199,6 @@ def room_details(request, slug, roomId):
     context = {
         'hotel': hotel,
         'room': room
-
     }
 
     return render(request, 'main/room_details.html', context)
