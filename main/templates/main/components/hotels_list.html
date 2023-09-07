@@ -115,6 +115,14 @@
         </div>
     </div>
 </div>
+<!-- Cordinate of Each Hotel  -->
+    <div class="hotel-location-group">
+        <span style="display: none;" class="hotel-latitude">{{ hotel.location.latitude}}</span>
+        <span style="display: none;" class="hotel-longitude">{{ hotel.location.longitude}}</span>
+        <span style="display: none;" class="hotel-name">{{ hotel.hotel_name}}</span>
+    </div>
+
+<!-- end -->
 <!-- End Hotel row -->
 {% endfor %}
 {% else %}

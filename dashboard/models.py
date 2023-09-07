@@ -3,7 +3,7 @@ import random
 import string
 from django.dispatch import receiver
 from django.db.models.signals import post_save
-from geopy.distance import distance as geopy_distance
+from geopy.distance import geodesic as geopy_distance
 from django.db import models
 from django.db.models import Q
 from multiselectfield import MultiSelectField
@@ -481,9 +481,7 @@ class Hotel(models.Model):
     is_active = models.BooleanField(default=False)
     slug = models.SlugField(null=True, blank=True, unique=True)
     vat = models.FloatField(verbose_name="ضريبة القيمة المضافة", default=7)
-    location = models.OneToOneField(
-        to='HotelLocation', on_delete=models.CASCADE, verbose_name='الموقع', 
-        blank=True, null=True, related_name='hotels')
+    
     
     objects = HotelManager()
 
@@ -514,6 +512,13 @@ class Hotel(models.Model):
         
         """
         return self.room_set.filter(status=2)
+    @property
+    def booked_rooms(self):
+        """"
+            return: QuerySet (Booked rooms)
+        """
+        return self.room_set.filter(status=4)
+    
     @property 
     def total_room(self):
         """"
@@ -542,22 +547,31 @@ class Hotel(models.Model):
     def total_expenses_amount(self):
         """"
             return: amount (total expenses)
-        
         """
         return self.expense_set.all().aggregate(total_expenses_amount=models.Sum('amount'))['total_expenses_amount']
     
+    @property
+    def total_income_amount(self):
+
+        return self.booking_set.all().aggregate(total_income_amount=models.Sum('total_price_with_vat'))['total_income_amount']
 
 class HotelLocation(models.Model):
     latitude = models.FloatField(blank=True, verbose_name='Latitude')
     longitude = models.FloatField(blank=True, verbose_name='Longitude')
     hrm = models.FloatField(
         verbose_name='المسافة عن الحرم', blank=True, null=True)
+    hotel = models.OneToOneField(
+        to=Hotel, on_delete=models.CASCADE, verbose_name='الفندق', 
+        blank=True, null=True, related_name='location')
+
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
     def save(self, *args, **kwargs):
         if self.latitude and self.longitude:
-            hrm_coordinates_makkah = (21.423064802559917, 39.82498712936757)
+
+            # 21 North the Equator & 39 Earth of meridian
+            hrm_coordinates_makkah = (21.40375934132539, 39.8139652157445)
             hrm_coordinates_madinah = (24.4672018, 39.6156392)
 
             if self.hotel.city == 'Makkah':
@@ -566,17 +580,18 @@ class HotelLocation(models.Model):
                 hrm_coordinates = hrm_coordinates_madinah
 
             hotel_coordinates = (self.latitude, self.longitude)
-            distance_km = geopy_distance(hrm_coordinates, hotel_coordinates).kilometers
-            self.hrm = format(distance_km, '.2f')
+            d = geopy_distance(hrm_coordinates, hotel_coordinates)
+            distance = d.km
+
+
+            self.hrm = format(distance, '.2f')
 
         super().save(*args, **kwargs)
 
 
     def __str__(self):
         return str(self.hrm)+ 'كم'
-    @property
-    def hotel(self):
-        return self.hotels
+    
     # def get_absolute_url(self):
     #     return reverse("update_hotel_location", kwargs={"slug": self.hotel.slug, "pk": self.pk})
 
@@ -846,5 +861,5 @@ class PaymentMethod(models.Model):
     
     # objects = PaymentMethodManager()
     def __str__(self) -> str:
-        return self.hotel.hotel_name
+        return self.get_type_display()
 

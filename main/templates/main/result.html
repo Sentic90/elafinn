@@ -118,7 +118,12 @@
         }
     </style>
     <link id="skin-default" rel="stylesheet" href="{% static 'assets/css/nouislider.css' %}">
-    <link type="text/css" rel="stylesheet" href="https://api.mqcdn.com/sdk/mapquest-js/v1.3.2/mapquest.css" />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+      crossorigin=""
+    />
     <div class="row text-center box-shdow">
         <div class="col search-filter" style="height: 10vh;">
             <div class="row py-4 pe-7 ps-7">
@@ -159,7 +164,7 @@
                                  
                                  <form method="get" action="{% url 'main:filtered-sidebar'%}">
                                     <!-- Star Filter -->
-                                 <div class="ms-2 mt-4 filter-section-star">
+                                    <div class="ms-2 mt-4 filter-section-star">
                                     
                                         <p style="font-size: large" class="text-bg-light text-center">التصنيف</p>
                                         <div class="product-rating product-rating-filter ">
@@ -227,10 +232,12 @@
                                             <ul class="rating">
                                                 <input type="checkbox" 
                                                 class="form-check-input"
-                                                name="category" {% if request.GET.category == '1' %}checked{%endif%} 
+                                                value="1"
+                                                name="category" 
+                                                {% if choice in sidebar_filter_form.category.value %}checked{% endif %} 
                                                 id="" 
                                                 style="cursor: pointer;"
-                                                value="1">
+                                                >
                                                 <li><em class="icon ni ni-star-fill"></em></li>
                                                 <li><em class="icon ni ni-star"></em></li>
                                                 <li><em class="icon ni ni-star"></em></li>
@@ -274,66 +281,68 @@
                                 <div class="ms-2 mt-3 filter-section-star">
                                 
                                     <p style="font-size: large" class="text-bg-light text-center">طريقة الدفع</p>
-                                    {{ hotel_sidebar_filter.form.payment_methods__type}}
-                                    <!-- <select 
-                                        name="payment_methods_name" 
-                                        id="payment_methods_name"
-                                        class="form-select"
-                                        >
-                                        <option value="1" selected>اختر وسيلة الدفع</option>
-                                        {% for choice in request.session.payment_methods_choices%}
-                                        <option value="{{ choice }}" {% if request.GET.payment_methods_name == choice %} selected {% endif %}>{{ choice }}</option>
-                                        {% endfor %}
-                                    </select> -->
+                                    <!-- {{ hotel_sidebar_filter.form.payment_methods__type}} -->
+                                        <select 
+                                            name="{{sidebar_filter_form.payment_method.name}}"
+                                            id="id_payment_method"
+                                            class="form-select"
+                                            >
+                                        <option value="{{sidebar_filter_form.payment_method.value}}">اختر وسيلة الدفع</option>
+                                        {% for choice in sidebar_filter_form.payment_method.field.choices %}
+                                      <option value="{{choice.0}}" {% if value == sidebar_filter_form.payment_method.value %}selected{% endif %}>
+                                        {{choice.1}}
+                                      </option>
+                                      {% endfor %}
+                                    </select>
                             </div>
 
                                 <!-- Location Filter -->
                                 
                                 <div class="ms-2 mt-3 filter-section-star">
-                                    
-                                         <p style="font-size: large" class="text-bg-light text-center">الموقع</p>
-                                        <ul class="custom-control-group g-3 align-center flex-wrap">
-                                            <li>
-                                                <div class="custom-control custom-radio">
-                                                    <input type="radio" class="custom-control-input" 
-                                                           name="location__hrm__lte" id="reg-enable" value="1"
-                                                           {% if request.GET.location__hrm__lte == '1' %} checked {%else%} {% endif %}
-                                                           >
-                                                    <label class="custom-control-label" for="reg-enable">أقل من
-                                                        كيلو</label>
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <div class="custom-control custom-radio">
-                                                    <input type="radio" class="custom-control-input" name="location__hrm__range"
-                                                    value="5"
-                                                    {% if request.GET.location__hrm__range == '5' %} checked {%else%} {% endif %}
-                                                           id="reg-disable">
-                                                    <label class="custom-control-label"
-                                                           for="reg-disable">من 5 إلى 10 كيلو</label>
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <div class="custom-control custom-radio checked">
-                                                    <input type="radio" class="custom-control-input" name="location__hrm__gte"
-                                                           id="reg-request"
-                                                           {% if request.GET.location__hrm__gte == '10' %} checked {%else%} {% endif %}
-                                                           value="10"
-                                                           >
-                                                    <label class="custom-control-label" for="reg-request">
-                                                        10 كيلو فأكثر
-                                                    </label>
-                                                </div>
-                                            </li>
-                                        </ul>
+                                
+                                    <p style="font-size: large" class="text-bg-light text-center">الموقع</p>
+                                    <ul class="custom-control-group g-3 align-center flex-wrap">
+                                        <li>
+                                            <div class="custom-control custom-radio">
+                                                <input type="radio" class="custom-control-input" name="distance" id="reg-enable" value="less_than_1km"
+                                                    {% if sidebar_filter_form.distance.value == request.GET.distance %} checked{% endif %}>
+                                                <label class="custom-control-label" for="reg-enable">أقل من
+                                                    كيلو</label>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="custom-control custom-radio">
+                                                <input type="radio" class="custom-control-input" name="distance" value="between_5_10km" id="reg-disable"
+                                                    {% if sidebar_filter_form.distance.value == request.GET.distance %} checked{% endif %}>
+                                                <label class="custom-control-label" for="reg-disable">من 5 إلى 10 كيلو</label>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="custom-control custom-radio">
+                                                <input type="radio" class="custom-control-input" name="distance" id="reg-request"
+                                                    value="greater_than_10km" {% if sidebar_filter_form.distance.value == request.GET.distance %}
+                                                    checked{% endif %}>
+                                                <label class="custom-control-label" for="reg-request">
+                                                    10 كيلو فأكثر
+                                
+                                
+                                                </label>
+                                            </div>
+                                        </li>
+                                    </ul>
                                 </div>
+
+
+
                                 <div class="ms-2 mt-3 filter-section-star">
-                                    <button type="submit" class="btn btn-outline-secondary btn-block"id="filter-submit">بحث</button>    
+                                    <button type="submit" class="btn btn-outline-secondary btn-block" id="filter-submit">بحث</button>
                                 </div>
                                 <input type="hidden" name="city" value="{{ main_search_params.city }}">
                                 <input type="hidden" name="nationality" value="{{ main_search_params.nationality }}">
                                 <input type="hidden" name="guests" value="{{ main_search_params.guests }}">
                                 <input type="hidden" name="datefilter" value="{{ main_search_params.datefilter }}">
+                                <input type="hidden" name="min_price" id="minPrice" value="0">
+                                <input type="hidden" name="max_price" id="maxPrice" value="0">
                             </form>
                             
                             </div>
@@ -343,45 +352,44 @@
                                     <div class="nk-block-between">
                                         <div class="nk-block-head-content">
                                             <div>
-                                                <em class="icon ni ni-map-pin" style="font-size: 20pt"></em>
+                            
                                                 <a href="#showMapModal" data-bs-toggle="modal">
-                                                    
+                            
                                                     <button class="btn btn-primary btn-primary-outline map-show-btn">
-                                                        اعرض النتائج على الخريطة
+                                                        اعرض النتائج على الخريطة<em class="icon ni ni-map-pin" style="font-size: 20pt"></em>
                                                     </button>
                                                 </a>
-                                              </div>
+                                            </div>
                                         </div>
-                                        
+                            
                                         <div class="nk-block-head-content w-75">
-                                            
+                            
                                             {% if hotels.count > 0%}
-                                            <h6 class="text-center"
-                                                style="font-weight: normal; color: #21ad21;">
+                                            <h6 class="text-center" style="font-weight: normal; color: #21ad21;">
                                                 <em class="icon ni ni-check-circle"></em>
-                                                تم العثور على ({{hotels.count}}) فندق/فنادق</h6>
-                                            
-                                                <!-- No results -->
-                                                {%else %}
-                                            <h6 class="text-center"
-                                                style="font-weight: normal; color: #d61010;">
-                                                
-                                                لم يتم العثور على فندق 
+                                                تم العثور على ({{hotels.count}}) فندق/فنادق
+                                            </h6>
+                            
+                                            <!-- No results -->
+                                            {%else %}
+                                            <h6 class="text-center" style="font-weight: normal; color: #d61010;">
+                            
+                                                لم يتم العثور على فندق
                                             </h6>
                                             {% endif%}
-
+                            
                                         </div><!-- .nk-block-head-content -->
                                         <div class="nk-block-head-content">
                                             <div class="toggle-wrap nk-block-tools-toggle">
-                                                <a href="#" class="btn btn-icon btn-trigger toggle-expand me-n1"
-                                                   data-target="pageMenu"><em class="icon ni ni-more-v"></em></a>
+                                                <a href="#" class="btn btn-icon btn-trigger toggle-expand me-n1" data-target="pageMenu"><em
+                                                        class="icon ni ni-more-v"></em></a>
                                                 <div class="toggle-expand-content" data-content="pageMenu">
                                                     <ul class="nk-block-tools g-3">
                                                         <li>
                                                             <div class="drodown">
                                                                 <a href="#"
-                                                                   class="dropdown-toggle dropdown-indicator btn btn-outline-light btn-white"
-                                                                   data-bs-toggle="dropdown">فرز حسب</a>
+                                                                    class="dropdown-toggle dropdown-indicator btn btn-outline-light btn-white"
+                                                                    data-bs-toggle="dropdown">فرز حسب</a>
                                                                 <div class="dropdown-menu dropdown-menu-end">
                                                                     <ul class="link-list-opt no-bdr">
                                                                         <li><a href="#"><span>الاسم</span></a></li>
@@ -404,7 +412,7 @@
                                 </div>
                                 <!-- paginations -->
                                 {% include 'main/components/paginator.html' with page_obj=hotels %}
-                                
+                            
                             </div>
                         </div>
 
@@ -413,71 +421,62 @@
             </div>
         </div>
     </div>
-    <!-- Modal for booking confirm -->
+    <!-- Modal for Map view -->
 <div class="modal fade" tabindex="-1" role="dialog" id="showMapModal">
     <div class="modal-dialog modal-xl" role="document">
-      <div class="modal-content">
-        <a href="#" class="close" data-bs-dismiss="modal"><em class="icon ni ni-cross-sm"></em></a>
-        <div class="modal-body modal-body-md">
-          <h5 class="modal-title"> نتائج البحث</h5>
-          <div id="map" style="width: 100%; height: 400px"></div>
-        </div><!-- .modal-body -->
-      </div><!-- .modal-content -->
+        <div class="modal-content">
+            <a href="#" class="close" data-bs-dismiss="modal"><em class="icon ni ni-cross-sm"></em></a>
+            <div class="modal-body modal-body-md">
+                <h5 class="modal-title"> نتائج البحث</h5>
+                <div id="map" style="height: 90vh"></div>
+            </div><!-- .modal-body -->
+        </div><!-- .modal-content -->
     </div><!-- .modal-dialog -->
-  </div><!-- .Show Map modal -->
+</div><!-- .Show Map modal -->
 
 <!-- Map view -->
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <script src="https://api.mqcdn.com/sdk/mapquest-js/v1.3.2/mapquest.js"></script>
+<script src="{% static 'js/jquery.min.js'%}"></script>
+<script
+      src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="{% static 'map.js'%}"></script>
+    <!-- End Map view -->
 
-  <script type="text/javascript">
-    $(document).ready(function() {
-        L.mapquest.key = 'ck2OXUAJsF0iz999XGQ62jyXo8AXOVp7';
+    <!-- Price Filter  -->
 
-        var map = L.mapquest.map('map', {
-            center: [21.423143002366803, 39.825785944084515],
-            layers: L.mapquest.tileLayer('map'),
-            zoom: 15
-        });
-        var hotels = [
-          {name: 'Hotel A', long:'21.420539719173252', lat:'39.82396170050014'},
-          {name: 'Hotel B', long:'21.421229529556324', lat:'39.82374720455358'},
-          {name: 'Hotel C', long:'21.420170096478994', lat:'39.826354420313066'},
-        ]
-// 21.420170096478994, 39.826354420313066
-        hotels.forEach( hotel => {
-          L.marker([hotel.long, hotel.lat], {
-            icon: L.mapquest.icons.marker(),
-            draggable: false
-        }).bindPopup(hotel.name).addTo(map);
-
-        })
-    });
-</script>
-  <!-- End Map view -->
     <script src="{% static 'assets/js/nouislider.js' %}"></script>
+
     <script>
-        var slider = document.getElementById('slider-round');
-
-        noUiSlider.create(slider, {
-            start: [100, 10000],
-            connect: true,
-            margin: 100,
-            direction: 'rtl',
-            range: {
-                'min': 100,
-                'max': 10000
-            }
-        });
-        var paddingMin = document.getElementById('slider-margin-value-min');
-        var paddingMax = document.getElementById('slider-margin-value-max');
-
-        slider.noUiSlider.on('update', function (values, handle) {
-            if (handle) {
-                paddingMax.innerHTML = values[handle];
-            } else {
-                paddingMin.innerHTML = values[handle];
-            }
+        $(document).ready(function () {
+            var slider = document.getElementById('slider-round');
+            var minPrice = $("#slider-margin-value-min");
+            var maxPrice = $("#slider-margin-value-max");
+    
+            noUiSlider.create(slider, {
+                start: [100, 10000],
+                connect: true,
+                margin: 100,
+                direction: 'rtl',
+                range: {
+                    'min': 100,
+                    'max': 10000
+                }
+            });
+    
+            slider.noUiSlider.on('update', function (values, handle) {
+                if (handle) {
+                    maxPrice.text(values[handle]);
+                } else {
+                    minPrice.text(values[handle]);
+                }
+    
+                // populate fields
+                var retrievedMinPrice = minPrice.text();
+                var retrievedMaxPrice = maxPrice.text();
+    
+                $('#minPrice').val(retrievedMinPrice);
+                $('#maxPrice').val(retrievedMaxPrice);
+            });
         });
     </script>
+    
 {% endblock %}

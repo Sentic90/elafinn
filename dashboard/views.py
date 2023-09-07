@@ -88,10 +88,15 @@ def employee_list(request, slug):
                        extra_tags='danger')
         return redirect(reverse('employee-list', kwargs={'slug': hotel.slug}))
 
-    employee_list = hotel.employee_set.all()
+    queryset = hotel.employee_set.all()
     employee_forms = []
 
-    for employee in employee_list:
+    # Paginations
+    paginator = Paginator(queryset, 3)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    for employee in page_obj:
         form = EmployeeForm(instance=employee)
         employee_forms.append((employee, form))
 
@@ -102,7 +107,8 @@ def employee_list(request, slug):
         'hotel': hotel,
         'employee_forms': employee_forms,
         'form': form,
-        'messages': messages_list
+        'messages': messages_list,
+        'employees':page_obj
     }
 
     return render(request, 'dashboard/employee/employee_list.html', context)
@@ -354,6 +360,11 @@ def get_statistics_data(request, slug):
     this_month_expenses = 3000
     this_week_expenses = 1250
     
+    # Incomes  hotel.expenses_set.all().count
+    total_income_amount = hotel.total_income_amount
+    this_month_incomes = 3000
+    this_week_incomes = 1250
+    
     # Rooms 
     total_rooms = hotel.room_set.all().count()
     total_booked_room_this_month = 10
@@ -372,12 +383,12 @@ def get_statistics_data(request, slug):
 
     # hotel Steps Status
     hotel_status = {
-            'imageAndLocationHasAdded': 'false',
-            'roomsHasAdded':'false',
-            'isActivated':'false'
+            'imageAndLocationHasAdded': False,
+            'roomsHasAdded':False,
+            'isActivated':False
         }
 
-    if hotel.hotelmultipleimage_set.count() and hotel.location.count():
+    if hotel.hotelmultipleimage_set.count() and hotel.location:
         hotel_status.update({'imageAndLocationHasAdded': True})
 
     if hotel.total_room > 0:
@@ -385,6 +396,23 @@ def get_statistics_data(request, slug):
 
     if hotel.is_active:
         hotel_status.update({'isActivated':True})
+
+    # Booked Room
+    
+    booked_rooms = []
+    # for room in hotel.booked_rooms:
+    #     room_type = room.roomType.roomType
+    #     booked_time = room.booking_set.count()
+    #     booked_rooms.append({'room_type':room_type, 'booked_time':booked_time})
+
+    # print(booked_rooms)
+
+    booked_rooms_test = [
+        {'room_type':'single', 'booked_time': 20},
+        {'room_type':'double', 'booked_time':45},
+        {'room_type':'triple', 'booked_time':12},
+        {'room_type':'quadrble', 'booked_time':8},
+    ]
 
     data = {
         'requests':{
@@ -408,10 +436,16 @@ def get_statistics_data(request, slug):
         'seasons':seasons,
         
         'hotel_status':hotel_status,
-        'chart_data': {
-            'labels': ['This Month', 'This Week'],
-            'data': [this_month_request, this_week_request],
+        
+        'incomes':{
+            'total_income_amount':total_income_amount
         },
+
+        'booked_rooms':booked_rooms_test
+        # 'chart_data': {
+        #     'labels': ['This Month', 'This Week'],
+        #     'data': [this_month_request, this_week_request],
+        # },
     }
 
     return JsonResponse(data)

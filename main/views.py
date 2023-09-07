@@ -20,7 +20,7 @@ from .forms import SearchForm, RoomSearchForm
 from django.shortcuts import render
 from itertools import groupby
 from django.db.models import Count
-from .filters import HotelSidebarFilter
+from .filters import HotelSidebarFilter, SidebarFilterForm, DISTANCE_FILTER
 
 def index(request):
     seasons = Season.objects.all().order_by('-created')
@@ -89,13 +89,16 @@ def result(request):
 
     # paginations
 
-    queryset = Hotel.objects.search(request.GET)
+    queryset = Hotel.objects.all()       #search(request.GET)
     
     # paginator = Paginator(queryset, 3)
     # page_number = request.GET.get('page')
     # page_obj = paginator.get_page(page_number)
 
     # end pagination
+
+    # Additional Forms 
+    sidebar_filter_form = SidebarFilterForm()
     context = {
         'hotels': queryset,
         'guests_number': main_search_params['guests'] if main_search_params['guests'] else None,
@@ -103,6 +106,7 @@ def result(request):
         'end_date': end_date.strftime('%m/%d/%Y') if end_date else '',
         'city': main_search_params['city'],
         'main_search_params': main_search_params,
+        'sidebar_filter_form':sidebar_filter_form
     }
 
     return render(request, 'main/result.html', context)
@@ -110,12 +114,32 @@ def result(request):
 def filtered_sidebar(request):
     queryset = Hotel.objects.filter(is_active=True)
 
-    hotel_sidebar_filter = HotelSidebarFilter(request.GET, queryset=queryset)
-    hotels = hotel_sidebar_filter.qs
+    # hotel_sidebar_filter = HotelSidebarFilter(request.GET, queryset=queryset)
+    # hotels = hotel_sidebar_filter.qs
+    payment_method_status = request.GET.get('payment_method', None)
+    category = request.GET.getlist('category', [])
+    distance_query = request.GET.get('distance')
+    distance = DISTANCE_FILTER[distance_query]
+    min_price = request.GET.get('min_price')
+    max_price = request.GET.get('max_price')
+    price = (min_price, max_price)
 
+    # Optional 
+    Q1 = Q(category__in=category)
+    Q2 = Q(payment_methods__type=payment_method_status)
+    Q3 = Q(location__hrm__range=distance)
+
+    # main_filter_hotels = Hotel.objects.search(request.GET)
+
+    hotels = Hotel.objects.filter(Q1 & Q2 & Q3).distinct()
+
+    
+
+    sidebar_filter_form = SidebarFilterForm(request.GET)
     context = {
         'hotels':hotels,
-        'hotel_sidebar_filter':hotel_sidebar_filter
+        'hotel_sidebar_filter':'hotel_sidebar_filter',
+        'sidebar_filter_form':sidebar_filter_form, 
     }
     return render(request, 'main/result.html', context)
 
@@ -142,8 +166,6 @@ def hotel_details(request, slug):
         'package':package
     }
     return render(request, 'main/hotel_detail.html', context)
-
-    
 
 def room_details(request, slug, roomId):
     # hotels/hotel_detail/<slug:slug>/rooms/<int:roomId>
@@ -271,14 +293,12 @@ def logout_request(request):
 def home(request):
     return render(request, 'main/search/home.html')
 
-
 def search(request):
     form = RoomSearchForm
     context = {
         'form': form
     }
     return render(request, 'main/search/search.html', context)
-
 
 def search_rooms(request):
     if request.method == 'GET':

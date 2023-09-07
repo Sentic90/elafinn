@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.utils.html import format_html, urlencode
 from django.db.models import Count
 # Register your models here.
 from .models import *
@@ -36,10 +37,19 @@ class AnnualRentAdmin(admin.ModelAdmin):
 class HotelLocationAdmin(admin.ModelAdmin):
     list_display = ['id', 'hrm', 'latitude','longitude', 'hotel']
 
-@admin.register(PaymentMethod)
-class HotelLocationAdmin(admin.ModelAdmin):
-    list_display = ['id', 'bank_name', 'currency', 'status','type', 'hotel']
+    def hotel(self, hotellocation):
+        url = (
+            reverse('admin:dashboard_hotel_changelist')
+            + '?'
+            + urlencode({
+                'hotellocation__id': str(hotellocation.id)
+            }))
+        return format_html('<a href="{}">{} Products</a>', url, hotellocation.hotel.id)
 
+@admin.register(PaymentMethod)
+class PaymentMethodAdmin(admin.ModelAdmin):
+    list_display = ['id', 'bank_name', 'currency', 'status','type', 'hotel']
+    
 
 @admin.register(Request)
 class RequestAdmin(admin.ModelAdmin):
