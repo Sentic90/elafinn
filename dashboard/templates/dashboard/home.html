@@ -229,7 +229,19 @@
                                 <div class="timeline-date">انتظار <em class="icon ni ni-alert-circle text-warning"></em>
                                 </div>
                                 <div class="timeline-data">
-                                    <h6 class="timeline-title">إطلاق الفندق</h6>
+                                    <h6 class="timeline-title">إطلاق الفندق 
+                                        {% if hotel.is_active %}
+                                                <a href="{% url 'change_status' hotel.id%}">
+                                                    <span class="badge bg-success m-0"
+                                                          style="font-family: DIN, serif">نشط</span>
+                                                </a>
+                                            {% else %}
+                                                <a href="{% url 'change_status' hotel.id%}">
+                                                    <span class="badge bg-danger m-0"
+                                                          style="font-family: DIN, serif">معطل</span>
+                                                </a>
+                                            {% endif %}
+                                    </h6>
                                     <div class="timeline-des">
                                         <p>يجب تفعيل الفندق للتتمكن من استقبال طلبات الحجوزات</p>
                                     </div>
@@ -575,6 +587,9 @@
                     // $iconElement.removeClass('ni ni-alert-circle text-warning').addClass('ni ni-check-circle text-success')
                     $timelineText.text('تم ').append('<em class="icon ni ni-check-circle text-success"></em>');
                 }
+                
+                // Change Hotel status
+                // ajax call to that endPoint 
             },
             error: function () {
                 $('.loading-spinner').hide();
